@@ -1,0 +1,65 @@
+{%- comment -%}
+  related-articles.liquid — Gus & Frost
+  Section "articles liés" DYNAMIQUE, par tags. Remplace les blocs de liens
+  qui étaient codés en dur en bas de chaque article.
+
+  Logique :
+   - On lit le tag de cluster de l'article courant (commence par "cluster-").
+   - Si l'article est un SATELLITE : on affiche le PILIER du même cluster,
+     puis les satellites frères (même cluster, sauf l'article courant).
+   - Si l'article est un PILIER : on affiche tous ses satellites.
+
+  Pré-requis : chaque article porte les tags du manifest.csv
+   (ex. "cluster-anxiete-separation", "pilier" OU "satellite", + tags thématiques).
+  À inclure dans le template article du blog, après {{ article.content }}.
+{%- endcomment -%}
+
+{%- assign cluster_tag = '' -%}
+{%- for t in article.tags -%}
+  {%- if t contains 'cluster-' -%}{%- assign cluster_tag = t -%}{%- endif -%}
+{%- endfor -%}
+
+{%- if cluster_tag != '' -%}
+  {%- assign is_pilier = false -%}
+  {%- if article.tags contains 'pilier' -%}{%- assign is_pilier = true -%}{%- endif -%}
+
+  <aside class="gf-related">
+    {%- if is_pilier -%}
+      <h2>Le dossier complet</h2>
+      <ul>
+        {%- for a in blog.articles -%}
+          {%- if a.tags contains cluster_tag and a.tags contains 'satellite' -%}
+            <li><a href="{{ a.url }}">{{ a.title }}</a></li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      {%- comment -%} Satellite : d'abord le pilier, puis les frères {%- endcomment -%}
+      {%- for a in blog.articles -%}
+        {%- if a.tags contains cluster_tag and a.tags contains 'pilier' -%}
+          <p class="gf-related-parent">
+            Cet article fait partie du dossier :
+            <a href="{{ a.url }}">{{ a.title }}</a>.
+          </p>
+        {%- endif -%}
+      {%- endfor -%}
+      <h2>À lire aussi dans ce dossier</h2>
+      <ul>
+        {%- for a in blog.articles -%}
+          {%- if a.tags contains cluster_tag and a.tags contains 'satellite' and a.id != article.id -%}
+            <li><a href="{{ a.url }}">{{ a.title }}</a></li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </aside>
+{%- endif -%}
+
+{%- comment -%}
+  Style suggéré (réutilise l'esthétique des anciens blocs) :
+  .gf-related { background:#faf8f3; border:1px solid #e3ddcf; border-radius:8px;
+                padding:1.2rem 1.6rem; margin-top:2.4rem; max-width:760px;
+                margin-left:auto; margin-right:auto; }
+  .gf-related h2 { color:#314431; border:none; margin-top:0; }
+  .gf-related a { color:#314431; }
+{%- endcomment -%}
