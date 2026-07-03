@@ -1,16 +1,21 @@
 {%- comment -%}
   related-articles.liquid — Gus & Frost
-  Section "articles liés" DYNAMIQUE, par tags. Remplace les blocs de liens
-  qui étaient codés en dur en bas de chaque article.
+  Section "articles liés" DYNAMIQUE, par tags, avec vignette (image à la une) + titre.
 
   Logique :
    - On lit le tag de cluster de l'article courant (commence par "cluster-").
-   - Si l'article est un SATELLITE : on affiche le PILIER du même cluster,
-     puis les satellites frères (même cluster, sauf l'article courant).
-   - Si l'article est un PILIER : on affiche tous ses satellites.
+   - Si l'article est un SATELLITE : on rappelle le PILIER du même cluster,
+     puis on liste les satellites frères (même cluster, sauf l'article courant).
+   - Si l'article est un PILIER : on liste tous ses satellites.
+
+  Mise en page : chaque lien = carte (vignette 4:3 de l'image à la une + titre).
+  Si l'article cible n'a pas d'image à la une, un bloc neutre remplace la vignette.
+  Le nombre de liens décide de la grille : ≤ 3 → 1 colonne ; > 3 → 2 colonnes
+  (retour automatique à 1 colonne sur mobile via gf-article.css).
 
   Pré-requis : chaque article porte les tags du manifest.csv
-   (ex. "cluster-anxiete-separation", "pilier" OU "satellite", + tags thématiques).
+   (ex. "cluster-anxiete-separation", "pilier" OU "satellite", + tags thématiques),
+   et une image à la une (article.image).
   À inclure dans le template article du blog, après {{ article.content }}.
 {%- endcomment -%}
 
@@ -23,18 +28,18 @@
   {%- assign is_pilier = false -%}
   {%- if article.tags contains 'pilier' -%}{%- assign is_pilier = true -%}{%- endif -%}
 
+  {%- comment -%} Compte les frères (satellites du cluster, hors article courant) {%- endcomment -%}
+  {%- assign sib_count = 0 -%}
+  {%- for a in blog.articles -%}
+    {%- if a.tags contains cluster_tag and a.tags contains 'satellite' and a.id != article.id -%}
+      {%- assign sib_count = sib_count | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign grid_class = 'gf-related-grid' -%}
+  {%- if sib_count > 3 -%}{%- assign grid_class = 'gf-related-grid gf-related-grid--2col' -%}{%- endif -%}
+
   <aside class="gf-related">
-    {%- if is_pilier -%}
-      <h2>Le dossier complet</h2>
-      <ul>
-        {%- for a in blog.articles -%}
-          {%- if a.tags contains cluster_tag and a.tags contains 'satellite' -%}
-            <li><a href="{{ a.url }}">{{ a.title }}</a></li>
-          {%- endif -%}
-        {%- endfor -%}
-      </ul>
-    {%- else -%}
-      {%- comment -%} Satellite : d'abord le pilier, puis les frères {%- endcomment -%}
+    {%- unless is_pilier -%}
       {%- for a in blog.articles -%}
         {%- if a.tags contains cluster_tag and a.tags contains 'pilier' -%}
           <p class="gf-related-parent">
@@ -44,22 +49,26 @@
         {%- endif -%}
       {%- endfor -%}
       <h2>À lire aussi dans ce dossier</h2>
-      <ul>
-        {%- for a in blog.articles -%}
-          {%- if a.tags contains cluster_tag and a.tags contains 'satellite' and a.id != article.id -%}
-            <li><a href="{{ a.url }}">{{ a.title }}</a></li>
-          {%- endif -%}
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
+    {%- else -%}
+      <h2>Le dossier complet</h2>
+    {%- endunless -%}
+
+    <div class="{{ grid_class }}">
+      {%- for a in blog.articles -%}
+        {%- if a.tags contains cluster_tag and a.tags contains 'satellite' and a.id != article.id -%}
+          <a class="gf-related-card" href="{{ a.url }}">
+            {%- if a.image -%}
+              <img class="gf-related-thumb"
+                   src="{{ a.image | image_url: width: 240 }}"
+                   alt="{{ a.image.alt | escape }}"
+                   width="240" height="180" loading="lazy">
+            {%- else -%}
+              <span class="gf-related-thumb gf-related-thumb--empty" aria-hidden="true"></span>
+            {%- endif -%}
+            <span class="gf-related-title">{{ a.title }}</span>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
   </aside>
 {%- endif -%}
-
-{%- comment -%}
-  Style suggéré (réutilise l'esthétique des anciens blocs) :
-  .gf-related { background:#faf8f3; border:1px solid #e3ddcf; border-radius:8px;
-                padding:1.2rem 1.6rem; margin-top:2.4rem; max-width:760px;
-                margin-left:auto; margin-right:auto; }
-  .gf-related h2 { color:#314431; border:none; margin-top:0; }
-  .gf-related a { color:#314431; }
-{%- endcomment -%}
