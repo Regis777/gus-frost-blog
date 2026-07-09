@@ -3,18 +3,18 @@
    Identité : vert #314431, beige #EFE7DA, accent #3d4f3d. */
 
 /* ---------- Base ---------- */
-.gf-article { max-width: 760px; margin: 0 auto; padding: 0 1rem; font-family: Georgia, 'Times New Roman', serif; line-height: 1.75; color: #2a2a2a; }
-.gf-article p, .gf-article li { font-size: 1.06rem; }
+.gf-article { max-width: 760px; margin: 0 auto; padding: 0 1rem; font-family: var(--font-body-family, Georgia, 'Times New Roman', serif); line-height: 1.75; color: #2a2a2a; }
+.gf-article p, .gf-article li { font-size: 1.7rem; }
 .gf-article a { color: #314431; text-underline-offset: 2px; }
 .gf-article a:hover { color: #3d4f3d; }
 
 /* ---------- Titres ---------- */
-.gf-article h1 { font-size: 2.15rem; line-height: 1.22; color: #314431; margin: 0 0 1.1rem; }
-.gf-article h2 { font-size: 1.55rem; color: #314431; margin: 2.6rem 0 0.9rem; border-bottom: 2px solid #EFE7DA; padding-bottom: 0.45rem; }
-.gf-article h3 { font-size: 1.2rem; color: #3d4f3d; margin: 1.8rem 0 0.6rem; }
+.gf-article h1 { font-size: 3.4rem; line-height: 1.22; color: #314431; margin: 0 0 1.1rem; }
+.gf-article h2 { font-size: 2.5rem; color: #314431; margin: 2.6rem 0 0.9rem; border-bottom: 2px solid #EFE7DA; padding-bottom: 0.45rem; }
+.gf-article h3 { font-size: 1.9rem; color: #3d4f3d; margin: 1.8rem 0 0.6rem; }
 
 /* Chapeau : le 1er paragraphe sous le H1 ressort */
-.gf-article > h1 + p { font-size: 1.2rem; line-height: 1.65; color: #3d4f3d; margin-bottom: 1.6rem; }
+.gf-article > h1 + p { font-size: 2.0rem; line-height: 1.65; color: #3d4f3d; margin-bottom: 1.6rem; }
 
 /* ---------- Listes ---------- */
 .gf-article ul, .gf-article ol { margin: 0.8rem 0; padding-left: 1.4rem; }
@@ -24,29 +24,29 @@
 /* ---------- Images & figures ---------- */
 .gf-article figure { margin: 1.8rem 0; text-align: center; }
 .gf-article img { max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 6px 22px rgba(49, 68, 49, 0.12); }
-.gf-article figcaption { font-size: 0.92rem; color: #6b6b6b; font-style: italic; margin-top: 0.5rem; }
+.gf-article figcaption { font-size: 1.45rem; color: #6b6b6b; font-style: italic; margin-top: 0.5rem; }
 
 /* ---------- Tableaux ---------- */
-.gf-article table { width: 100%; border-collapse: collapse; margin: 1.6rem 0; font-size: 0.99rem; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(49, 68, 49, 0.08); }
-.gf-article th { background: #314431; color: #fff; text-align: left; padding: 0.7rem 0.9rem; font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 0.95rem; }
+.gf-article table { width: 100%; border-collapse: collapse; margin: 1.6rem 0; font-size: 1.6rem; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(49, 68, 49, 0.08); }
+.gf-article th { background: #314431; color: #fff; text-align: left; padding: 0.7rem 0.9rem; font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 1.5rem; }
 .gf-article td { border: 1px solid #e3ddcf; padding: 0.65rem 0.9rem; vertical-align: top; }
 .gf-article tr:nth-child(even) td { background: #faf8f3; }
 
 /* ---------- Encadré conseil ---------- */
 .gf-conseil { background: #EFE7DA; border-left: 4px solid #314431; padding: 1.1rem 1.3rem 1.1rem 1.4rem; margin: 1.8rem 0; border-radius: 0 8px 8px 0; }
-.gf-conseil strong { display: inline-block; color: #314431; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.82rem; font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; margin-bottom: 0.2rem; }
+.gf-conseil strong { display: inline-block; color: #314431; letter-spacing: 0.04em; text-transform: uppercase; font-size: 1.3rem; font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; margin-bottom: 0.2rem; }
 .gf-conseil strong::before { content: '💡 '; }
 
 /* ---------- Bloc CTA produit ---------- */
-.gf-cta { background: #314431; color: #fff; padding: 1.5rem 1.7rem; border-radius: 10px; margin: 2.4rem 0; font-size: 1.05rem; }
+.gf-cta { background: #314431; color: #fff; padding: 1.5rem 1.7rem; border-radius: 10px; margin: 2.4rem 0; font-size: 1.7rem; }
 .gf-cta-call { display: block; margin-top: 0.9rem; }
 .gf-cta a { display: block; width: fit-content; max-width: 100%; margin: 0.45rem auto 0; background: #EFE7DA; color: #314431 !important; font-weight: bold; text-decoration: none; padding: 0.3rem 0.95rem; border-radius: 5px; }
 .gf-cta a:hover { background: #fff; }
 
 /* ---------- FAQ ---------- */
 .gf-faq { margin-top: 1rem; }
-.gf-faq h3 { font-size: 1.1rem; color: #314431; background: #faf8f3; border: 1px solid #e3ddcf; border-radius: 8px; padding: 0.7rem 0.9rem 0.7rem 2.1rem; position: relative; margin: 0.8rem 0 0.4rem; }
-.gf-faq h3::before { content: '?'; position: absolute; left: 0.75rem; top: 0.7rem; width: 1.05rem; height: 1.05rem; line-height: 1.05rem; text-align: center; background: #314431; color: #fff; border-radius: 50%; font-size: 0.78rem; }
+.gf-faq h3 { font-size: 1.75rem; color: #314431; background: #faf8f3; border: 1px solid #e3ddcf; border-radius: 8px; padding: 0.7rem 0.9rem 0.7rem 3.1rem; position: relative; margin: 0.8rem 0 0.4rem; }
+.gf-faq h3::before { content: '?'; position: absolute; left: 1.1rem; top: 0.95rem; width: 1.7rem; height: 1.7rem; line-height: 1.7rem; text-align: center; background: #314431; color: #fff; border-radius: 50%; font-size: 1.25rem; }
 .gf-faq p { margin: 0 0 1rem; }
 
 /* ---------- Anciens blocs (compat) ---------- */
@@ -55,8 +55,8 @@
 .gf-pilier { background: #faf8f3; border: 1px solid #e3ddcf; border-radius: 8px; padding: 1rem 1.4rem; margin-top: 2.4rem; }
 
 /* ---------- Section « articles liés » dynamique (related-articles.liquid) ---------- */
-.gf-related { background: #faf8f3; border: 1px solid #e3ddcf; border-radius: 10px; padding: 1.3rem 1.7rem; margin: 2.8rem auto 0; max-width: 760px; font-family: Georgia, 'Times New Roman', serif; }
-.gf-related h2 { color: #314431; border: none; margin-top: 0; font-size: 1.3rem; }
+.gf-related { background: #faf8f3; border: 1px solid #e3ddcf; border-radius: 10px; padding: 1.3rem 1.7rem; margin: 2.8rem auto 0; max-width: 760px; font-family: var(--font-body-family, Georgia, 'Times New Roman', serif); }
+.gf-related h2 { color: #314431; border: none; margin-top: 0; font-size: 2.05rem; }
 .gf-related a { color: #314431; text-decoration: none; }
 .gf-related a:hover { text-decoration: underline; }
 .gf-related-grid { display: grid; grid-template-columns: 1fr; gap: 0.7rem; margin-top: 0.6rem; }
@@ -72,9 +72,9 @@
 /* ---------- Encadrés & blocs cluster C5 (repas / gamelle) ---------- */
 /* Scopés sous .gf-article et via .gf-box.xxx pour ne pas toucher le rendu C1–C4
    (le .gf-conseil « nu » de C4 conserve son style ci-dessus). */
-.gf-article .gf-chapo { font-size: 1.2rem; line-height: 1.6; color: #5c6a5f; margin-bottom: 2rem; }
+.gf-article .gf-chapo { font-size: 2.0rem; line-height: 1.6; color: #5c6a5f; margin-bottom: 2rem; }
 .gf-article .gf-box { border-radius: 12px; padding: 1.25rem 1.4rem; margin: 2rem 0; border-left: 5px solid; }
-.gf-article .gf-box .gf-box-label { display: block; margin-bottom: 0.5rem; font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-weight: 600; letter-spacing: 0.09em; font-size: 0.78rem; text-transform: uppercase; }
+.gf-article .gf-box .gf-box-label { display: block; margin-bottom: 0.5rem; font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; font-weight: 600; letter-spacing: 0.09em; font-size: 1.25rem; text-transform: uppercase; }
 .gf-article .gf-box p:last-child { margin-bottom: 0; }
 .gf-article .gf-box.gf-conseil { background: #eef3e6; border-color: #9dae8b; }
 .gf-article .gf-box.gf-conseil .gf-box-label { color: #314431; }
@@ -82,6 +82,6 @@
 .gf-article .gf-box.gf-cas .gf-box-label { color: #c16b47; }
 .gf-article .gf-recette { background: #fff; border: 1px solid #e4ddce; border-radius: 12px; padding: 1.25rem 1.4rem; margin: 1.5rem 0; }
 .gf-article .gf-recette h3 { margin-top: 0; }
-.gf-article .gf-recette .gf-meta { font-size: 0.92rem; color: #5c6a5f; margin: -0.2rem 0 0.7rem; }
+.gf-article .gf-recette .gf-meta { font-size: 1.45rem; color: #5c6a5f; margin: -0.2rem 0 0.7rem; }
 .gf-article .gf-etapes { background: #fff; border: 1px solid #e4ddce; border-radius: 12px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; }
 .gf-article .gf-etapes li { margin: 0.5rem 0; }
