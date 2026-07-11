@@ -70,14 +70,28 @@ def main():
         '  .gf-hub-list li:first-child{border-top:0;}\n'
         '  .gf-hub-list a{text-decoration:none;}\n'
         '  .gf-hub-list a:hover,.gf-hub-pilier a:hover{text-decoration:underline;}\n'
+        '  .gf-hub-search{display:flex;gap:.5rem;max-width:34rem;margin:0 auto 2rem;}\n'
+        '  .gf-hub-search input[type=search]{flex:1;padding:.7rem 1rem;font-size:1rem;border:1px solid rgba(0,0,0,.2);border-radius:999px;background:rgb(var(--color-background));color:inherit;}\n'
+        '  .gf-hub-search button{padding:.7rem 1.3rem;font-size:1rem;border:0;border-radius:999px;cursor:pointer;background:rgb(var(--color-foreground,26 26 26));color:rgb(var(--color-background,255 255 255));}\n'
+        '  .gf-hub-search button:hover{opacity:.9;}\n'
         '</style>'
+    )
+    search = (
+        '<form action="/search" method="get" role="search" class="gf-hub-search">\n'
+        '  <input type="hidden" name="type" value="article">\n'
+        '  <input type="hidden" name="options[prefix]" value="last">\n'
+        '  <input type="search" name="q" placeholder="Rechercher un conseil…" '
+        'aria-label="Rechercher dans les articles du blog" required>\n'
+        '  <button type="submit">Rechercher</button>\n'
+        '</form>'
     )
     intro_txt = args.intro.strip() or (
         "Tous nos guides et conseils pour comprendre et accompagner votre chien, "
         "organisés par thème. Chaque thème s'ouvre sur un guide principal, complété par des articles détaillés."
     )
     intro = '<p class="gf-hub-intro">%s</p>' % esc(intro_txt)
-    body = "%s\n%s\n<div class=\"gf-hub-grid\">\n%s\n</div>\n" % (style, intro, "\n".join(sections))
+    body = "%s\n%s\n%s\n<div class=\"gf-hub-grid\">\n%s\n</div>\n" % (
+        style, intro, search, "\n".join(sections))
 
     outp = os.path.join(ROOT, args.out)
     os.makedirs(os.path.dirname(outp), exist_ok=True)
