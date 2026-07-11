@@ -1,0 +1,37 @@
+{%- comment -%}
+  Section « Recherche blog » — barre de recherche scopée aux articles (type=article).
+  Résultats limités aux articles de blog (pas de produits ni de pages).
+  Ajoutée aux templates blog.json (en tête) et article.json (en pied) par gf-blog-search push.
+{%- endcomment -%}
+<div class="gf-blog-search-section page-width">
+  {%- if section.settings.heading != blank -%}
+    <p class="gf-blog-search-heading">{{ section.settings.heading | escape }}</p>
+  {%- endif -%}
+  <form action="{{ routes.search_url }}" method="get" role="search" class="gf-blog-search">
+    <input type="hidden" name="type" value="article">
+    <input type="hidden" name="options[prefix]" value="last">
+    <input type="search" name="q" value="{{ search.terms | escape }}"
+           placeholder="{{ section.settings.placeholder | escape }}"
+           aria-label="{{ section.settings.placeholder | escape }}" required>
+    <button type="submit">{{ section.settings.button_label | escape }}</button>
+  </form>
+</div>
+<style>
+  .gf-blog-search-section{margin:2.5rem auto;}
+  .gf-blog-search-heading{text-align:center;margin:0 0 .8rem;font-weight:600;}
+  .gf-blog-search{display:flex;gap:.5rem;max-width:34rem;margin:0 auto;}
+  .gf-blog-search input[type=search]{flex:1;min-width:0;padding:.7rem 1rem;font-size:1rem;border:1px solid rgba(0,0,0,.2);border-radius:999px;background:rgb(var(--color-background));color:rgb(var(--color-foreground));}
+  .gf-blog-search button{padding:.7rem 1.3rem;font-size:1rem;border:0;border-radius:999px;cursor:pointer;background:rgb(var(--color-foreground));color:rgb(var(--color-background));}
+  .gf-blog-search button:hover{opacity:.9;}
+</style>
+{% schema %}
+{
+  "name": "Recherche blog",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titre au-dessus (optionnel)" },
+    { "type": "text", "id": "placeholder", "label": "Texte indicatif", "default": "Rechercher un conseil…" },
+    { "type": "text", "id": "button_label", "label": "Libellé du bouton", "default": "Rechercher" }
+  ],
+  "presets": [{ "name": "Recherche blog" }]
+}
+{% endschema %}
