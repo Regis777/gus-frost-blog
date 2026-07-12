@@ -25,6 +25,7 @@ except Exception:
 from publish import load_env, Shopify, read_manifest, make_payload          # noqa: E402
 from upload_images import (staged_upload, existing_file_url, file_create,    # noqa: E402
                            wait_ready)
+from img_optim import build_img, png_dims                                    # noqa: E402
 
 PH_LINK = re.compile(r'PLACEHOLDER_([A-Za-z0-9\-]+)')
 IMGPH = re.compile(r'<div class="gf-imgph">\s*Image\s*(\d+)\b[^<]*</div>', re.IGNORECASE)
@@ -59,7 +60,7 @@ def cluster_rows(n):
     return rows
 
 
-def prepare(raw, slug, slug_set, by_num, cdn_map):
+def prepare(raw, slug, slug_set, by_num, cdn_map, dim_map):
     body = raw[raw.find("<article"):].rstrip()
     body = H1_HEAD.sub(r"\1", body, count=1)
     unknown = sorted({s for s in PH_LINK.findall(body) if s not in slug_set})
@@ -76,7 +77,8 @@ def prepare(raw, slug, slug_set, by_num, cdn_map):
             mismatch.append((n, row["article_slug"]))
         src = cdn_map.get(row["nouveau_fichier"], row["nouveau_fichier"])
         alt = row["alt"].replace('"', "&quot;")
-        return '<img src="%s" alt="%s">' % (src, alt)
+        dims = dim_map.get(row["nouveau_fichier"])
+        return build_img(src, alt, dims, row.get("role") == "hero")
 
     body = IMGPH.sub(repl, body)
     return body, unknown, nums, mismatch, missing
@@ -103,6 +105,7 @@ def main():
 
     all_files = sorted({r["nouveau_fichier"] for r in by_num.values()})
     local_missing = [f for f in all_files if not os.path.exists(os.path.join(imgdir, f))]
+    dim_map = {f: png_dims(os.path.join(imgdir, f)) for f in all_files}
     cdn_map = {}
     for f in all_files:
         u = existing_file_url(sh, f)
@@ -128,7 +131,7 @@ def main():
         slug = r["slug"]
         path = os.path.join(ROOT, r["file"].replace("/", os.sep))
         raw = open(path, encoding="utf-8").read()
-        body, unknown, nums, mismatch, missing = prepare(raw, slug, slug_set, by_num, cdn_map)
+        body, unknown, nums, mismatch, missing = prepare(raw, slug, slug_set, by_num, cdn_map, dim_map)
         hero = next((x for x in by_slug.get(slug, []) if x["role"] == "hero"), None)
         want = int(r["images_to_resolve"])
         n_links = body.count("/blogs/%s/" % env["BLOG_HANDLE"])
