@@ -1,0 +1,33 @@
+num,fichier_origine,nouveau_fichier,article_slug,type,role,alt
+1,1.png,hero-alimentation-chiot-guide-complet.png,alimentation-chiot-guide-complet,PILIER,hero,"Chiot assis devant sa gamelle dans une cuisine, lumière douce et chaude."
+2,2.png,alimentation-chiot-guide-complet-2.png,alimentation-chiot-guide-complet,PILIER,secondaire,"Infographie « rythme des repas par âge » : 4 repas, puis 3, puis 2 selon les mois."
+3,3.png,hero-chiot-mange-trop-vite.png,chiot-mange-trop-vite,SAT01,hero,"Chiot penché sur sa gamelle, museau plongé, mangeant avec avidité."
+4,4.png,chiot-mange-trop-vite-2.png,chiot-mange-trop-vite,SAT01,secondaire,Comparatif visuel : gamelle plate classique face à une gamelle anti-glouton à reliefs.
+5,5.png,hero-ralentir-repas-chiot.png,ralentir-repas-chiot,SAT02,hero,"Chiot mangeant calmement dans une gamelle ludique à reliefs, posture détendue."
+6,6.png,ralentir-repas-chiot-2.png,ralentir-repas-chiot,SAT02,secondaire,"Chiot museau plongé dans un tapis de fouille, en pleine recherche de croquettes."
+7,7.png,hero-chiot-glouton-toujours-faim.png,chiot-glouton-toujours-faim,SAT03,hero,"Chiot assis, regard insistant levé vers son maître pendant un repas."
+8,8.png,chiot-glouton-toujours-faim-2.png,chiot-glouton-toujours-faim,SAT03,secondaire,"Chiot debout, pattes sur la table, quémandant pendant le repas de la famille."
+9,9.png,hero-occuper-chiot-avec-nourriture.png,occuper-chiot-avec-nourriture,SAT04,hero,Chiot joyeux et concentré en train de lécher un tapis de léchage garni.
+10,10.png,occuper-chiot-avec-nourriture-2.png,occuper-chiot-avec-nourriture,SAT04,secondaire,"Trio d'occupations : tapis de léchage, tapis de fouille et boule distributrice côte à côte."
+11,11.png,hero-recettes-tapis-lechage-chiot.png,recettes-tapis-lechage-chiot,SAT05,hero,"Tapis de léchage coloré généreusement garni, cadrage vertical lumineux."
+12,12.png,recettes-tapis-lechage-chiot-2.png,recettes-tapis-lechage-chiot,SAT05,secondaire,"Étapes de préparation d'un tapis de léchage : étaler, garnir, congeler."
+13,13.png,hero-choisir-gamelle-chiot.png,choisir-gamelle-chiot,SAT06,hero,"Plusieurs gamelles de chiot alignées : inox, céramique, modèle anti-glouton."
+14,14.png,choisir-gamelle-chiot-2.png,choisir-gamelle-chiot,SAT06,secondaire,"Gros plan comparatif des matières de gamelle : inox, céramique et plastique."
+15,15.png,hero-combien-repas-chiot-par-jour.png,combien-repas-chiot-par-jour,SAT07,hero,"Jeune chiot mangeant dans sa gamelle, ambiance matinale douce."
+16,16.png,combien-repas-chiot-par-jour-2.png,combien-repas-chiot-par-jour,SAT07,secondaire,"Tableau visuel du rythme des repas par âge, du sevrage à l'âge adulte."
+17,17.png,hero-quantite-nourriture-chiot.png,quantite-nourriture-chiot,SAT08,hero,Croquettes pesées sur une petite balance à côté d'une gamelle de chiot.
+18,18.png,quantite-nourriture-chiot-2.png,quantite-nourriture-chiot,SAT08,secondaire,"Illustration de la note d'état corporel du chiot : trop maigre, idéal, surpoids."
+19,19.png,hero-aliments-dangereux-chiot.png,aliments-dangereux-chiot,SAT09,hero,"Aliments courants dangereux pour le chien disposés sur un plan de travail, chiot à l'écart."
+20,20.png,aliments-dangereux-chiot-2.png,aliments-dangereux-chiot,SAT09,secondaire,"Infographie des principaux aliments toxiques pour le chien, format vertical à épingler."
+21,21.png,hero-transition-alimentaire-chiot.png,transition-alimentaire-chiot,SAT10,hero,"Deux aliments de chiot mélangés dans une gamelle, ancien et nouveau."
+22,22.png,transition-alimentaire-chiot-2.png,transition-alimentaire-chiot,SAT10,secondaire,"Planning visuel de la transition sur 7 jours, proportions ancien/nouveau aliment."
+23,23.png,hero-croquettes-patee-ration-chiot.png,croquettes-patee-ration-chiot,SAT11,hero,"Comparatif visuel : croquettes, pâtée et ration ménagère dans trois gamelles."
+24,24.png,croquettes-patee-ration-chiot-2.png,croquettes-patee-ration-chiot,SAT11,secondaire,"Étiquette d'un aliment pour chiot annotée : mention croissance, composition, rationnement."
+25,25.png,hero-alimentation-chiot-grande-race.png,alimentation-chiot-grande-race,SAT12,hero,"Chiot de grande race (type berger, dogue) devant sa gamelle, pattes hautes."
+26,26.png,alimentation-chiot-grande-race-2.png,alimentation-chiot-grande-race,SAT12,secondaire,"Courbe de croissance illustrée d'un chiot de grande race, progression régulière."
+27,27.png,hero-friandises-chiot.png,friandises-chiot,SAT13,hero,Main tendant une petite friandise à un chiot attentif et assis.
+28,28.png,friandises-chiot-2.png,friandises-chiot,SAT13,secondaire,Comparatif : friandises adaptées au chiot vs aliments à éviter.
+29,29.png,hero-chiot-ne-mange-pas.png,chiot-ne-mange-pas,SAT14,hero,"Chiot assis devant une gamelle pleine, détournant la tête."
+30,30.png,chiot-ne-mange-pas-2.png,chiot-ne-mange-pas,SAT14,secondaire,Chiot reniflant avec curiosité une gamelle enrichie d'un peu de pâtée.
+31,31.png,hero-complements-alimentaires-chiot.png,complements-alimentaires-chiot,SAT15,hero,Chiot en pleine forme entouré de sa gamelle et d'aliments naturels sains.
+32,32.png,complements-alimentaires-chiot-2.png,complements-alimentaires-chiot,SAT15,secondaire,Illustration « bien nourri = base solide » : un chiot en forme et une gamelle équilibrée.
