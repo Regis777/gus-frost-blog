@@ -10,9 +10,13 @@
         "cta_heading": "",
         "cta_text": "",
         "cta_label": "",
-        "cta_url": ""
+        "cta_url": "",
+        "klaviyo_cle": "VyiAUH",
+        "klaviyo_liste": "W9XEBU"
       }
     }
   },
-  "order": ["carnet"]
+  "order": [
+    "carnet"
+  ]
 }
