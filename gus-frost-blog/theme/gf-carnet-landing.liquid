@@ -66,6 +66,14 @@
       {%- if section.settings.privacy_text != blank -%}
         <p>{{ section.settings.privacy_text | escape }}</p>
       {%- endif -%}
+      {%- comment -%}
+        À REMPLIR le jour où les rappels par e-mail sont activés (clé Klaviyo posée
+        sur la section « Le Carnet »). Sans ce paragraphe, la page promet que rien
+        ne sort de l'appareil, ce qui deviendrait faux. Voir le libellé par défaut.
+      {%- endcomment -%}
+      {%- if section.settings.privacy_mail != blank -%}
+        <p>{{ section.settings.privacy_mail | escape }}</p>
+      {%- endif -%}
       {%- if section.settings.privacy_note != blank -%}
         <p class="gfl-privacy-note">{{ section.settings.privacy_note | escape }}</p>
       {%- endif -%}
@@ -157,6 +165,13 @@
       "id": "privacy_text",
       "label": "Texte",
       "default": "Tout est enregistré dans votre navigateur, sur votre appareil. Rien ne transite par un serveur, y compris les nôtres. C'est aussi pour cela qu'il n'y a aucun compte à créer : nous n'avons rien à stocker."
+    },
+    {
+      "type": "textarea",
+      "id": "privacy_mail",
+      "label": "Exception rappels e-mail",
+      "info": "À REMPLIR dès que les rappels par e-mail sont activés, sinon la page promet à tort que rien ne sort de l'appareil. Le texte par défaut ci-dessous est prêt à coller.",
+      "default": "Une seule exception, et c'est vous qui la déclenchez : si vous activez les rappels par e-mail, votre adresse et vos dates d'échéance sont transmises à notre outil d'envoi. Le reste — poids, budget, souvenirs, photos — ne quitte jamais votre appareil."
     },
     {
       "type": "textarea",

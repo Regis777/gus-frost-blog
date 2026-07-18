@@ -270,6 +270,25 @@
   background: var(--gfc-beige); border: 1px solid var(--gfc-bord);
 }
 
+/* ---------- Rappels par e-mail ---------- */
+.gfc-mail {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  border-left: 5px solid var(--gfc-vert);
+}
+.gfc-mail-txt { flex: 1; min-width: 230px; }
+.gfc-mail .gfc-btn { flex: none; }
+.gfc-mail--on { background: #eef3e6; border-color: #9dae8b; border-left-color: var(--gfc-ok); }
+
+.gfc-consent {
+  display: flex; gap: 10px; align-items: flex-start;
+  margin: 4px 0 6px; font-size: 14px; line-height: 1.5; color: var(--gfc-texte);
+  cursor: pointer;
+}
+.gfc-consent input {
+  flex: none; width: 18px; height: 18px; margin: 2px 0 0; cursor: pointer;
+  accent-color: var(--gfc-vert);
+}
+
 /* ---------- Pied : sauvegarde & outils ---------- */
 .gfc-tools { border-top: 1px solid var(--gfc-bord); margin-top: 34px; padding-top: 22px; }
 .gfc-tools h2 { font-size: 19px; margin-bottom: 6px; }

@@ -7,7 +7,9 @@
 
 {{ 'gf-carnet.css' | asset_url | stylesheet_tag }}
 
-<div class="gfc-app" id="gfc-{{ section.id }}">
+<div class="gfc-app" id="gfc-{{ section.id }}"
+     data-klaviyo-cle="{{ section.settings.klaviyo_cle | escape }}"
+     data-klaviyo-liste="{{ section.settings.klaviyo_liste | escape }}">
 
   <header class="gfc-head">
     {%- if section.settings.heading != blank -%}
@@ -111,6 +113,22 @@
       "id": "privacy_label",
       "label": "Texte du bandeau",
       "default": "Vos données restent sur votre appareil"
+    },
+    {
+      "type": "header",
+      "content": "Rappels par e-mail (Klaviyo)",
+      "info": "Laisser vide pour désactiver complètement la fonctionnalité. La clé publique se trouve dans Klaviyo → Settings → API keys (Public API key / Site ID) ; l'id de liste dans l'URL de la liste."
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_cle",
+      "label": "Clé publique Klaviyo (Site ID)",
+      "info": "Clé PUBLIQUE uniquement. Ne jamais coller ici une clé privée (pk_...)."
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_liste",
+      "label": "Identifiant de la liste"
     },
     {
       "type": "header",

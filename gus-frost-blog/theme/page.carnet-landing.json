@@ -89,7 +89,19 @@
           }
         }
       },
-      "block_order": ["atout1", "atout2", "atout3", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8"],
+      "block_order": [
+        "atout1",
+        "atout2",
+        "atout3",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6",
+        "f7",
+        "f8"
+      ],
       "settings": {
         "hero_heading": "Le carnet de santé de votre chien, toujours dans votre poche",
         "hero_text": "Vaccins, poids, rappels du vétérinaire, budget, souvenirs. Tout au même endroit — sans rien installer et sans créer de compte.",
@@ -100,12 +112,15 @@
         "fonctions_heading": "Ce que vous pouvez suivre",
         "fonctions_chapo": "Un animal ou toute la maisonnée : chacun a sa fiche.",
         "privacy_heading": "Où vont vos données ? Nulle part.",
-        "privacy_text": "Tout est enregistré dans votre navigateur, sur votre appareil. Rien ne transite par un serveur, y compris les nôtres. C'est aussi pour cela qu'il n'y a aucun compte à créer : nous n'avons rien à stocker.",
+        "privacy_text": "Le carnet est enregistré dans votre navigateur, sur votre appareil. Par défaut, rien n'en sort : ni vers nos serveurs, ni ailleurs. C'est aussi pour cela qu'il n'y a aucun compte à créer — nous n'avons rien à stocker.",
         "privacy_note": "Revers de la médaille : pensez à exporter votre sauvegarde de temps en temps. C'est votre copie de sécurité, et elle vous appartient.",
         "final_heading": "Commencez par un animal, ça prend trois secondes",
-        "final_text": "Pas de formulaire, pas de mot de passe. Vous remplissez, c'est enregistré."
+        "final_text": "Pas de formulaire, pas de mot de passe. Vous remplissez, c'est enregistré.",
+        "privacy_mail": ""
       }
     }
   },
-  "order": ["presentation"]
+  "order": [
+    "presentation"
+  ]
 }

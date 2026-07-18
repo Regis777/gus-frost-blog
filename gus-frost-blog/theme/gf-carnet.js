@@ -92,11 +92,14 @@
   var etat = null;      // données structurées
   var photos = {};      // id -> dataURL (cache mémoire, source = IndexedDB)
 
+  // Les collections du carnet : tout le reste de l'état n'est pas un tableau.
+  var LISTES = ['animaux', 'vaccins', 'traitements', 'poids',
+    'visites', 'rappels', 'depenses', 'souvenirs'];
+
   function etatVide() {
-    return {
-      v: 1, animaux: [], vaccins: [], traitements: [], poids: [],
-      visites: [], rappels: [], depenses: [], souvenirs: []
-    };
+    var e = { v: 1, rappelMail: { actif: false, email: '', maj: '' } };
+    LISTES.forEach(function (k) { e[k] = []; });
+    return e;
   }
 
   function charge() {
@@ -104,10 +107,12 @@
       var brut = localStorage.getItem(CLE);
       if (!brut) return etatVide();
       var d = JSON.parse(brut);
-      var vide = etatVide();
-      Object.keys(vide).forEach(function (k) {
-        if (k !== 'v' && !Array.isArray(d[k])) d[k] = [];
+      LISTES.forEach(function (k) {
+        if (!Array.isArray(d[k])) d[k] = [];
       });
+      if (!d.rappelMail || typeof d.rappelMail !== 'object') {
+        d.rappelMail = { actif: false, email: '', maj: '' };
+      }
       return d;
     } catch (e) {
       console.warn('[carnet] données illisibles, on repart à vide', e);
@@ -511,7 +516,7 @@
         });
       }).join('') + '</div></div>' : '';
 
-    return '<section class="gfc-sec">' +
+    return '<section class="gfc-sec">' + carteMail() +
       '<div class="gfc-card">' +
         '<div class="gfc-sec-head"><h3>À venir — tous vos animaux</h3>' +
         '<button type="button" class="gfc-btn gfc-btn--sm" data-act="new" data-type="rappels">+&nbsp;Rappel</button></div>' +
@@ -867,6 +872,7 @@
       sauve();
       fermeModal();
       rendu();
+      planifieSync();
       toast('Enregistré.');
     })['catch'](function (e) {
       console.warn('[carnet] enregistrement incomplet', e);
@@ -904,6 +910,7 @@
       sauve();
       fermeModal();
       rendu();
+      planifieSync();
       toast('Supprimé.');
     });
   }
@@ -944,10 +951,12 @@
       if (!window.confirm('Remplacer le carnet actuel par cette sauvegarde ? Le contenu présent sur cet appareil sera écrasé.')) return;
 
       var lot = d.photos || {};
-      var vide2 = etatVide();
-      Object.keys(vide2).forEach(function (k) {
-        if (k !== 'v') etat[k] = Array.isArray(d[k]) ? d[k] : [];
+      LISTES.forEach(function (k) {
+        etat[k] = Array.isArray(d[k]) ? d[k] : [];
       });
+      etat.rappelMail = (d.rappelMail && typeof d.rappelMail === 'object')
+        ? d.rappelMail
+        : { actif: false, email: '', maj: '' };
       animalActif = etat.animaux.length ? etat.animaux[0].id : null;
 
       Promise.all(Object.keys(lot).map(function (id) { return photoEcrit(id, lot[id]); }))
@@ -1196,6 +1205,226 @@
     });
   }
 
+  /* ================= Rappels par e-mail (Klaviyo) =================
+     Tout passe par les endpoints CLIENT de Klaviyo, prévus pour le navigateur :
+     ils n'acceptent que la clé PUBLIQUE, jamais une clé privée. Rien de secret
+     n'est exposé ici.
+     La fonctionnalité entière reste masquée tant que la clé et la liste ne sont
+     pas renseignées dans les réglages de la section. */
+
+  var KLAVIYO_REVISION = '2024-10-15';
+  var config = { cle: '', liste: '' };
+
+  function mailActif() { return !!(config.cle && config.liste); }
+
+  function emailValide(s) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(s || '').trim());
+  }
+
+  /* Résumé texte des échéances des 60 prochains jours, pour l'e-mail récapitulatif. */
+  function resumeEcheances() {
+    var limite = 60;
+    var lignes = echeances().filter(function (e) {
+      var j = statut(e.date).j;
+      return j <= limite;
+    }).map(function (e) {
+      var titre = e.titre.replace(/&nbsp;/g, ' ').replace(/<[^>]+>/g, '');
+      return nomAnimal(e.petId) + ' — ' + titre + ' le ' + dateFr(e.date).replace(/&nbsp;/g, ' ');
+    });
+    return lignes.join(' ; ');
+  }
+
+  function prochaineEcheance() {
+    var l = echeances();
+    return l.length ? l[0] : null;
+  }
+
+  function prochainVaccin() {
+    var l = etat.vaccins.filter(function (v) { return v.rappel; })
+      .sort(parDate('rappel', 'asc'));
+    return l.length ? l[0] : null;
+  }
+
+  /* Propriétés poussées sur le profil : de quoi alimenter un flow « date » et
+     un récapitulatif, sans jamais envoyer le carnet lui-même. */
+  function proprietesKlaviyo() {
+    var p = prochaineEcheance();
+    var v = prochainVaccin();
+    return {
+      carnet_utilisateur: true,
+      carnet_nb_animaux: etat.animaux.length,
+      carnet_animaux: etat.animaux.map(function (a) { return a.nom; }).join(', '),
+      carnet_prochaine_echeance: p ? p.date : null,
+      carnet_prochain_libelle: p ? p.titre.replace(/&nbsp;/g, ' ').replace(/<[^>]+>/g, '') : null,
+      carnet_prochain_animal: p ? nomAnimal(p.petId) : null,
+      carnet_vaccin_date: v ? v.rappel : null,
+      carnet_vaccin_libelle: v ? v.nom : null,
+      carnet_vaccin_animal: v ? nomAnimal(v.petId) : null,
+      carnet_resume: resumeEcheances(),
+      carnet_maj: isoJour(aujourdhui())
+    };
+  }
+
+  function klaviyoPost(chemin, corps) {
+    return fetch('https://a.klaviyo.com/client/' + chemin + '/?company_id=' + encodeURIComponent(config.cle), {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', revision: KLAVIYO_REVISION },
+      body: JSON.stringify(corps)
+    }).then(function (r) {
+      if (r.ok || r.status === 202) return true;
+      return r.text().then(function (t) {
+        throw new Error('Klaviyo ' + r.status + ' ' + t.slice(0, 200));
+      });
+    });
+  }
+
+  /* Inscription : consentement explicite + abonnement à la liste. */
+  function klaviyoInscrit(email) {
+    return klaviyoPost('subscriptions', {
+      data: {
+        type: 'subscription',
+        attributes: {
+          profile: {
+            data: {
+              type: 'profile',
+              attributes: {
+                email: email,
+                properties: proprietesKlaviyo()
+              }
+            }
+          }
+        },
+        relationships: { list: { data: { type: 'list', id: config.liste } } }
+      }
+    });
+  }
+
+  /* Mise à jour des dates après une modification du carnet. */
+  function klaviyoMaj() {
+    if (!mailActif() || !etat.rappelMail.actif || !etat.rappelMail.email) {
+      return Promise.resolve(false);
+    }
+    return klaviyoPost('profiles', {
+      data: {
+        type: 'profile',
+        attributes: {
+          email: etat.rappelMail.email,
+          properties: proprietesKlaviyo()
+        }
+      }
+    }).then(function () {
+      etat.rappelMail.maj = isoJour(aujourdhui());
+      sauve();
+      return true;
+    }).catch(function (e) {
+      console.warn('[carnet] synchronisation des rappels impossible', e);
+      return false;
+    });
+  }
+
+  /* Resynchronise après coup, sans bloquer l'interface ni gêner en cas de panne. */
+  var minuteurSync = null;
+  function planifieSync() {
+    if (!mailActif() || !etat.rappelMail.actif) return;
+    clearTimeout(minuteurSync);
+    minuteurSync = setTimeout(klaviyoMaj, 2500);
+  }
+
+  function ouvreFormMail() {
+    var m = $('[data-gfc-modal]');
+    m.innerHTML = '<div class="gfc-modal-box" role="dialog" aria-modal="true" aria-labelledby="gfc-mail-t">' +
+      '<h2 id="gfc-mail-t">Recevoir les rappels par e-mail</h2>' +
+      '<p class="gfc-hint" style="margin:0 0 16px">Votre navigateur ne peut pas vous prévenir tout seul&nbsp;: ' +
+        'nous envoyons le rappel par e-mail à votre place.</p>' +
+      '<form data-gfc-mail-form novalidate>' +
+        '<div class="gfc-field">' +
+          '<label for="gfc-mail">Votre adresse e-mail</label>' +
+          '<input type="email" id="gfc-mail" name="email" inputmode="email" autocomplete="email" placeholder="vous@exemple.fr">' +
+        '</div>' +
+        '<label class="gfc-consent">' +
+          '<input type="checkbox" name="consent">' +
+          '<span>J’accepte que mon adresse et mes <strong>dates d’échéance</strong> ' +
+            '(vaccins, traitements, rappels) soient transmises pour recevoir ces e-mails. ' +
+            'Le reste du carnet — poids, budget, souvenirs, photos — ne quitte pas cet appareil.</span>' +
+        '</label>' +
+        '<div class="gfc-field-err" data-gfc-err hidden></div>' +
+        '<div class="gfc-modal-foot">' +
+          '<button type="button" class="gfc-btn gfc-btn--sm" data-act="modal-close">Annuler</button>' +
+          '<button type="submit" class="gfc-btn gfc-btn--sm gfc-btn--primary">Activer les rappels</button>' +
+        '</div>' +
+      '</form></div>';
+    m.hidden = false;
+    var champ = m.querySelector('#gfc-mail');
+    if (champ) champ.focus();
+  }
+
+  function soumetMail(form) {
+    var err = form.querySelector('[data-gfc-err]');
+    var email = String(form.querySelector('[name="email"]').value).trim();
+    var consent = form.querySelector('[name="consent"]').checked;
+
+    if (!emailValide(email)) {
+      err.innerHTML = 'Cette adresse e-mail ne semble pas valide.';
+      err.hidden = false;
+      return;
+    }
+    if (!consent) {
+      err.innerHTML = 'Merci de cocher la case pour donner votre accord.';
+      err.hidden = false;
+      return;
+    }
+
+    var bouton = form.querySelector('button[type="submit"]');
+    bouton.disabled = true;
+    bouton.textContent = 'Activation…';
+
+    klaviyoInscrit(email).then(function () {
+      etat.rappelMail = { actif: true, email: email, maj: isoJour(aujourdhui()) };
+      sauve();
+      fermeModal();
+      rendu();
+      toast('C’est activé. Ouvrez l’e-mail de confirmation pour finaliser&nbsp;: sans ce clic, rien ne partira.', 8000);
+    }).catch(function (e) {
+      console.warn('[carnet] inscription impossible', e);
+      err.innerHTML = 'L’activation a échoué. Vérifiez votre connexion et réessayez.';
+      err.hidden = false;
+      bouton.disabled = false;
+      bouton.textContent = 'Activer les rappels';
+    });
+  }
+
+  function desactiveMail() {
+    if (!window.confirm('Ne plus recevoir les rappels par e-mail ?')) return;
+    etat.rappelMail = { actif: false, email: '', maj: '' };
+    sauve();
+    rendu();
+    toast('Rappels désactivés sur cet appareil. Pour être retiré de la liste, utilisez le lien de désabonnement en bas de nos e-mails.', 8000);
+  }
+
+  /* Carte affichée en tête de l'onglet Rappels. */
+  function carteMail() {
+    if (!mailActif()) return '';
+    var r = etat.rappelMail;
+    if (r.actif) {
+      return '<div class="gfc-card gfc-mail gfc-mail--on">' +
+        '<div class="gfc-mail-txt">' +
+          '<div class="gfc-row-title">✅ Rappels par e-mail activés</div>' +
+          '<div class="gfc-row-sub">Envoyés à ' + esc(r.email) + '. ' +
+            'Si vous n’avez rien reçu, pensez à confirmer votre inscription depuis l’e-mail de Klaviyo.</div>' +
+        '</div>' +
+        '<button type="button" class="gfc-btn gfc-btn--sm" data-act="mail-off">Désactiver</button>' +
+      '</div>';
+    }
+    return '<div class="gfc-card gfc-mail">' +
+      '<div class="gfc-mail-txt">' +
+        '<div class="gfc-row-title">📬 Recevoir les rappels par e-mail</div>' +
+        '<div class="gfc-row-sub">Un e-mail avant chaque échéance, sans rien installer. ' +
+          'Seules vos dates sont transmises&nbsp;; le reste du carnet ne bouge pas.</div>' +
+      '</div>' +
+      '<button type="button" class="gfc-btn gfc-btn--sm gfc-btn--primary" data-act="mail-on">Activer</button>' +
+    '</div>';
+  }
+
   /* ================= Message flottant ================= */
 
   var minuteurToast = null;
@@ -1244,6 +1473,8 @@
         case 'rappel-fait': basculeRappel(id, true); break;
         case 'rappel-refait': basculeRappel(id, false); break;
         case 'trait-fait': traitementFait(id); break;
+        case 'mail-on': ouvreFormMail(); break;
+        case 'mail-off': desactiveMail(); break;
         case 'export': exporte(); break;
         case 'import': $('[data-gfc-import]').click(); break;
         case 'ics': exporteIcs(); break;
@@ -1254,6 +1485,11 @@
     });
 
     racine.addEventListener('submit', function (ev) {
+      var mail = ev.target.closest('[data-gfc-mail-form]');
+      if (mail) {
+        ev.preventDefault();
+        return soumetMail(mail);
+      }
       var f = ev.target.closest('[data-gfc-form]');
       if (!f) return;
       ev.preventDefault();
@@ -1295,6 +1531,7 @@
     r.fait = !!fait;
     sauve();
     rendu();
+    planifieSync();
   }
 
   function traitementFait(id) {
@@ -1304,6 +1541,7 @@
     t.prochaine = t.freq ? ajouteJours(t.date, Number(t.freq)) : '';
     sauve();
     rendu();
+    planifieSync();
     toast(t.prochaine
       ? 'Noté. Prochaine prise le&nbsp;' + dateFr(t.prochaine) + '.'
       : 'Noté pour aujourd’hui.');
@@ -1347,6 +1585,11 @@
     racine = el;
     etat = charge();
     animalActif = etat.animaux.length ? etat.animaux[0].id : null;
+
+    // Clé PUBLIQUE Klaviyo + id de liste, posés par la section.
+    // Tant que les deux ne sont pas renseignés, les rappels e-mail n'existent pas.
+    config.cle = (el.getAttribute('data-klaviyo-cle') || '').trim();
+    config.liste = (el.getAttribute('data-klaviyo-liste') || '').trim();
 
     if (!el.getAttribute('data-gfc-pret')) {
       branche();
