@@ -1,0 +1,111 @@
+{
+  "sections": {
+    "presentation": {
+      "type": "gf-carnet-landing",
+      "blocks": {
+        "atout1": {
+          "type": "atout",
+          "settings": {
+            "titre": "Rien à installer",
+            "texte": "Pas de téléchargement, pas de mise à jour, pas de place prise sur votre téléphone. Vous ouvrez une page, et c'est tout."
+          }
+        },
+        "atout2": {
+          "type": "atout",
+          "settings": {
+            "titre": "Rien à créer",
+            "texte": "Aucun compte, aucun mot de passe à retenir. Vous commencez à remplir le carnet de votre chien dans les trois secondes."
+          }
+        },
+        "atout3": {
+          "type": "atout",
+          "settings": {
+            "titre": "Vos données restent chez vous",
+            "texte": "Elles sont enregistrées dans votre appareil, pas sur nos serveurs. Nous ne les voyons jamais, personne ne les revend."
+          }
+        },
+        "f1": {
+          "type": "fonction",
+          "settings": {
+            "icone": "🐾",
+            "titre": "Vos animaux",
+            "texte": "Une fiche par compagnon : race, âge, numéro de puce, coordonnées du vétérinaire. Chien, chat, lapin, cheval…"
+          }
+        },
+        "f2": {
+          "type": "fonction",
+          "settings": {
+            "icone": "💉",
+            "titre": "Santé",
+            "texte": "Vaccins, traitements, antiparasitaires, visites. Et la courbe de poids, qui révèle les dérives bien avant l'œil nu."
+          }
+        },
+        "f3": {
+          "type": "fonction",
+          "settings": {
+            "icone": "🔔",
+            "titre": "Rappels",
+            "texte": "Toutes les échéances réunies, avec ce qui est en retard en évidence. À verser d'un clic dans l'agenda de votre téléphone."
+          }
+        },
+        "f4": {
+          "type": "fonction",
+          "settings": {
+            "icone": "💶",
+            "titre": "Budget",
+            "texte": "Croquettes, vétérinaire, jouets, assurance : notez la dépense, les totaux par mois et par poste se calculent tout seuls."
+          }
+        },
+        "f5": {
+          "type": "fonction",
+          "settings": {
+            "icone": "📸",
+            "titre": "Souvenirs",
+            "texte": "Les photos et les documents qui comptent, rangés avec le reste plutôt que perdus dans la pellicule."
+          }
+        },
+        "f6": {
+          "type": "fonction",
+          "settings": {
+            "icone": "🖨️",
+            "titre": "Le carnet PDF pour le vétérinaire",
+            "texte": "Un document propre, prêt à imprimer ou à envoyer, avec tout l'historique. Plus jamais de carnet oublié à la maison."
+          }
+        },
+        "f7": {
+          "type": "fonction",
+          "settings": {
+            "icone": "🔗",
+            "titre": "Le partage sans compte",
+            "texte": "Un lien à envoyer au pet-sitter ou à la famille. Ils voient la fiche, sans rien installer ni créer."
+          }
+        },
+        "f8": {
+          "type": "fonction",
+          "settings": {
+            "icone": "💾",
+            "titre": "Une sauvegarde qui vous appartient",
+            "texte": "Un fichier que vous exportez et rangez où vous voulez. Vous changez de téléphone quand vous voulez, sans dépendre de personne."
+          }
+        }
+      },
+      "block_order": ["atout1", "atout2", "atout3", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8"],
+      "settings": {
+        "hero_heading": "Le carnet de santé de votre chien, toujours dans votre poche",
+        "hero_text": "Vaccins, poids, rappels du vétérinaire, budget, souvenirs. Tout au même endroit — sans rien installer et sans créer de compte.",
+        "cta_label": "Ouvrir Le Carnet",
+        "app_url": "/pages/mon-carnet",
+        "preuves": "Gratuit | Sans inscription | Sans publicité",
+        "atouts_heading": "Pourquoi ce n'est pas une application à télécharger",
+        "fonctions_heading": "Ce que vous pouvez suivre",
+        "fonctions_chapo": "Un animal ou toute la maisonnée : chacun a sa fiche.",
+        "privacy_heading": "Où vont vos données ? Nulle part.",
+        "privacy_text": "Tout est enregistré dans votre navigateur, sur votre appareil. Rien ne transite par un serveur, y compris les nôtres. C'est aussi pour cela qu'il n'y a aucun compte à créer : nous n'avons rien à stocker.",
+        "privacy_note": "Revers de la médaille : pensez à exporter votre sauvegarde de temps en temps. C'est votre copie de sécurité, et elle vous appartient.",
+        "final_heading": "Commencez par un animal, ça prend trois secondes",
+        "final_text": "Pas de formulaire, pas de mot de passe. Vous remplissez, c'est enregistré."
+      }
+    }
+  },
+  "order": ["presentation"]
+}

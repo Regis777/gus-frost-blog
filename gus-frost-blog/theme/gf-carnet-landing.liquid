@@ -1,0 +1,211 @@
+{%- comment -%}
+  Section « Le Carnet — présentation » : la page qui vend l'outil.
+  L'app elle-même vit sur une autre page (section gf-carnet, sans encart commercial).
+  Pré-requis : assets/gf-carnet-landing.css déposé dans le thème.
+{%- endcomment -%}
+
+{{ 'gf-carnet-landing.css' | asset_url | stylesheet_tag }}
+
+{%- assign url_app = section.settings.app_url | default: '/pages/mon-carnet' -%}
+
+<div class="gfl">
+
+  <header class="gfl-hero">
+    <h1>{{ section.settings.hero_heading | escape }}</h1>
+    {%- if section.settings.hero_text != blank -%}
+      <p class="gfl-hero-sous">{{ section.settings.hero_text | escape }}</p>
+    {%- endif -%}
+    <a class="gfl-btn" href="{{ url_app }}">{{ section.settings.cta_label | escape }}</a>
+    {%- if section.settings.preuves != blank -%}
+      <p class="gfl-preuves">
+        {%- assign items = section.settings.preuves | split: '|' -%}
+        {%- for i in items -%}<span>{{ i | strip | escape }}</span>{%- endfor -%}
+      </p>
+    {%- endif -%}
+  </header>
+
+  {%- assign atouts = section.blocks | where: 'type', 'atout' -%}
+  {%- if atouts.size > 0 -%}
+    <section class="gfl-compare">
+      <h2>{{ section.settings.atouts_heading | escape }}</h2>
+      <div class="gfl-compare-grille">
+        {%- for b in atouts -%}
+          <div class="gfl-compare-item" {{ b.shopify_attributes }}>
+            <h3>{{ b.settings.titre | escape }}</h3>
+            <p>{{ b.settings.texte | escape }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </section>
+  {%- endif -%}
+
+  {%- assign fonctions = section.blocks | where: 'type', 'fonction' -%}
+  {%- if fonctions.size > 0 -%}
+    <section class="gfl-sec">
+      <h2 class="gfl-sec-titre">{{ section.settings.fonctions_heading | escape }}</h2>
+      {%- if section.settings.fonctions_chapo != blank -%}
+        <p class="gfl-sec-chapo">{{ section.settings.fonctions_chapo | escape }}</p>
+      {%- endif -%}
+      <div class="gfl-grille">
+        {%- for b in fonctions -%}
+          <div class="gfl-carte" {{ b.shopify_attributes }}>
+            {%- if b.settings.icone != blank -%}
+              <span class="gfl-carte-ico" aria-hidden="true">{{ b.settings.icone | escape }}</span>
+            {%- endif -%}
+            <h3>{{ b.settings.titre | escape }}</h3>
+            <p>{{ b.settings.texte | escape }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </section>
+  {%- endif -%}
+
+  {%- if section.settings.privacy_heading != blank -%}
+    <section class="gfl-privacy">
+      <h2>{{ section.settings.privacy_heading | escape }}</h2>
+      {%- if section.settings.privacy_text != blank -%}
+        <p>{{ section.settings.privacy_text | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.privacy_note != blank -%}
+        <p class="gfl-privacy-note">{{ section.settings.privacy_note | escape }}</p>
+      {%- endif -%}
+    </section>
+  {%- endif -%}
+
+  <section class="gfl-final">
+    <h2>{{ section.settings.final_heading | escape }}</h2>
+    {%- if section.settings.final_text != blank -%}
+      <p>{{ section.settings.final_text | escape }}</p>
+    {%- endif -%}
+    <a class="gfl-btn" href="{{ url_app }}">{{ section.settings.cta_label | escape }}</a>
+  </section>
+
+</div>
+
+<script>
+  // Compatibilite : une fiche partagee pointant vers l'ancienne adresse de l'app
+  // arrive ici. On la renvoie vers l'app en conservant le lien de partage.
+  (function () {
+    var m = /[#&]fiche=/.exec(window.location.hash);
+    if (m) { window.location.replace({{ url_app | json }} + window.location.hash); }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Le Carnet — présentation",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Titre principal",
+      "default": "Le carnet de santé de votre chien, toujours dans votre poche"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "Accroche",
+      "default": "Vaccins, poids, rappels du vétérinaire, budget, souvenirs. Tout au même endroit — sans rien installer et sans créer de compte."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Libellé des boutons",
+      "default": "Ouvrir Le Carnet"
+    },
+    {
+      "type": "url",
+      "id": "app_url",
+      "label": "Lien vers l'app (page du carnet)"
+    },
+    {
+      "type": "text",
+      "id": "preuves",
+      "label": "Réassurances (séparées par |)",
+      "default": "Gratuit | Sans inscription | Sans publicité"
+    },
+    { "type": "header", "content": "Bloc « pourquoi pas une application »" },
+    {
+      "type": "text",
+      "id": "atouts_heading",
+      "label": "Titre du bloc",
+      "default": "Pourquoi ce n'est pas une application à télécharger"
+    },
+    { "type": "header", "content": "Bloc « ce que vous pouvez suivre »" },
+    {
+      "type": "text",
+      "id": "fonctions_heading",
+      "label": "Titre du bloc",
+      "default": "Ce que vous pouvez suivre"
+    },
+    {
+      "type": "textarea",
+      "id": "fonctions_chapo",
+      "label": "Chapô",
+      "default": "Un animal ou toute la maisonnée : chacun a sa fiche."
+    },
+    { "type": "header", "content": "Bloc confidentialité" },
+    {
+      "type": "text",
+      "id": "privacy_heading",
+      "label": "Titre",
+      "default": "Où vont vos données ? Nulle part."
+    },
+    {
+      "type": "textarea",
+      "id": "privacy_text",
+      "label": "Texte",
+      "default": "Tout est enregistré dans votre navigateur, sur votre appareil. Rien ne transite par un serveur, y compris les nôtres. C'est aussi pour cela qu'il n'y a aucun compte à créer : nous n'avons rien à stocker."
+    },
+    {
+      "type": "textarea",
+      "id": "privacy_note",
+      "label": "Note sous le texte",
+      "default": "Revers de la médaille : pensez à exporter votre sauvegarde de temps en temps. C'est votre copie de sécurité, et elle vous appartient."
+    },
+    { "type": "header", "content": "Rappel final" },
+    {
+      "type": "text",
+      "id": "final_heading",
+      "label": "Titre",
+      "default": "Commencez par un animal, ça prend trois secondes"
+    },
+    {
+      "type": "textarea",
+      "id": "final_text",
+      "label": "Texte",
+      "default": "Pas de formulaire, pas de mot de passe. Vous remplissez, c'est enregistré."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "atout",
+      "name": "Atout (bloc vert)",
+      "settings": [
+        { "type": "text", "id": "titre", "label": "Titre" },
+        { "type": "textarea", "id": "texte", "label": "Texte" }
+      ]
+    },
+    {
+      "type": "fonction",
+      "name": "Fonction (carte)",
+      "settings": [
+        { "type": "text", "id": "icone", "label": "Émoji" },
+        { "type": "text", "id": "titre", "label": "Titre" },
+        { "type": "textarea", "id": "texte", "label": "Texte" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Le Carnet — présentation",
+      "blocks": [
+        { "type": "atout" }, { "type": "atout" }, { "type": "atout" },
+        { "type": "fonction" }, { "type": "fonction" }, { "type": "fonction" },
+        { "type": "fonction" }, { "type": "fonction" }
+      ]
+    }
+  ]
+}
+{% endschema %}

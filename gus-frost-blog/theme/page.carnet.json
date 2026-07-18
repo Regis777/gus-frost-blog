@@ -4,13 +4,13 @@
       "type": "gf-carnet",
       "settings": {
         "heading": "Le Carnet",
-        "tagline": "Vaccins, rappels, poids, budget, souvenirs : tout le suivi de vos animaux au même endroit. Gratuit, sans compte, sans publicité.",
+        "tagline": "",
         "show_privacy": true,
         "privacy_label": "Vos données restent sur votre appareil",
-        "cta_heading": "Un compagnon plus serein au quotidien ?",
-        "cta_text": "Nos guides et nos accessoires pour l'anxiété, le calme et la mastication.",
-        "cta_label": "Découvrir la boutique",
-        "cta_url": "/collections/stress"
+        "cta_heading": "",
+        "cta_text": "",
+        "cta_label": "",
+        "cta_url": ""
       }
     }
   },

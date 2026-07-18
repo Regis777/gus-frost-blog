@@ -1,0 +1,115 @@
+/* gf-carnet-landing.css — page de présentation « Le Carnet »
+   Vend l'outil ; l'app elle-même vit sur /pages/mon-carnet (gf-carnet.css).
+   Identité : vert #314431, beige #EFE7DA, fond #faf8f3, bordure #e3ddcf.
+   En px : le thème Dawn met 1rem = 10px, on ne s'y fie pas. */
+
+.gfl {
+  --gfl-vert: #314431;
+  --gfl-vert-clair: #3d4f3d;
+  --gfl-beige: #efe7da;
+  --gfl-fond: #faf8f3;
+  --gfl-bord: #e3ddcf;
+  --gfl-texte: #2a2a2a;
+  --gfl-doux: #6b6b6b;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px 72px;
+  font-family: var(--font-body-family, Georgia, 'Times New Roman', serif);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--gfl-texte);
+}
+
+.gfl *, .gfl *::before, .gfl *::after { box-sizing: border-box; }
+.gfl h1, .gfl h2, .gfl h3 {
+  font-family: var(--font-heading-family, var(--font-body-family, inherit));
+  color: var(--gfl-vert); margin: 0; line-height: 1.22;
+}
+
+/* ---------- Hero ---------- */
+.gfl-hero { text-align: center; padding: 30px 0 44px; }
+.gfl-hero h1 { font-size: 42px; margin-bottom: 16px; }
+.gfl-hero-sous {
+  font-size: 20px; color: var(--gfl-vert-clair); max-width: 620px;
+  margin: 0 auto 28px; line-height: 1.55;
+}
+.gfl-preuves {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px;
+  margin-top: 20px; font-size: 14px; color: var(--gfl-doux);
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.gfl-preuves span::before { content: '✓ '; color: var(--gfl-vert); font-weight: 700; }
+
+/* ---------- Boutons ---------- */
+.gfl-btn {
+  display: inline-block; padding: 15px 34px; border-radius: 999px;
+  background: var(--gfl-vert); color: #fff !important; text-decoration: none;
+  font-size: 18px; font-weight: 700; line-height: 1.3;
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  transition: background .15s;
+}
+.gfl-btn:hover { background: var(--gfl-vert-clair); color: #fff !important; }
+.gfl-btn--clair {
+  background: var(--gfl-beige); color: var(--gfl-vert) !important;
+}
+.gfl-btn--clair:hover { background: #fff; color: var(--gfl-vert) !important; }
+
+/* ---------- Sections ---------- */
+.gfl-sec { margin-top: 56px; }
+.gfl-sec-titre { text-align: center; font-size: 29px; margin-bottom: 10px; }
+.gfl-sec-chapo {
+  text-align: center; font-size: 17px; color: var(--gfl-doux);
+  max-width: 620px; margin: 0 auto 30px;
+}
+
+/* ---------- Grille de cartes ---------- */
+.gfl-grille {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;
+}
+.gfl-carte {
+  background: var(--gfl-fond); border: 1px solid var(--gfl-bord);
+  border-radius: 14px; padding: 22px 24px;
+}
+.gfl-carte-ico { font-size: 30px; line-height: 1; display: block; margin-bottom: 10px; }
+.gfl-carte h3 { font-size: 19px; margin-bottom: 6px; }
+.gfl-carte p { margin: 0; font-size: 16px; color: var(--gfl-vert-clair); }
+
+/* ---------- Bloc « pourquoi pas une app » ---------- */
+.gfl-compare {
+  background: var(--gfl-vert); color: #fff; border-radius: 16px;
+  padding: 38px 34px; margin-top: 56px;
+}
+.gfl-compare h2 { color: #fff; text-align: center; font-size: 27px; margin-bottom: 26px; }
+.gfl-compare-grille {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px;
+}
+.gfl-compare-item h3 { color: var(--gfl-beige); font-size: 18px; margin-bottom: 6px; }
+.gfl-compare-item p { margin: 0; font-size: 16px; opacity: .92; }
+
+/* ---------- Confidentialité ---------- */
+.gfl-privacy {
+  background: var(--gfl-beige); border-left: 5px solid var(--gfl-vert);
+  border-radius: 0 14px 14px 0; padding: 26px 30px; margin-top: 56px;
+}
+.gfl-privacy h2 { font-size: 24px; margin-bottom: 10px; }
+.gfl-privacy p { margin: 0 0 10px; font-size: 16px; color: var(--gfl-vert-clair); }
+.gfl-privacy p:last-child { margin-bottom: 0; }
+.gfl-privacy-note { font-size: 14px !important; color: var(--gfl-doux) !important; }
+
+/* ---------- Rappel final ---------- */
+.gfl-final { text-align: center; margin-top: 60px; }
+.gfl-final h2 { font-size: 27px; margin-bottom: 12px; }
+.gfl-final p { font-size: 17px; color: var(--gfl-doux); margin: 0 0 24px; }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 640px) {
+  .gfl { padding: 0 14px 52px; }
+  .gfl-hero { padding: 18px 0 32px; }
+  .gfl-hero h1 { font-size: 31px; }
+  .gfl-hero-sous { font-size: 18px; }
+  .gfl-sec { margin-top: 42px; }
+  .gfl-sec-titre { font-size: 24px; }
+  .gfl-compare { padding: 28px 22px; margin-top: 42px; }
+  .gfl-privacy { padding: 22px 20px; margin-top: 42px; }
+  .gfl-btn { width: 100%; text-align: center; padding: 15px 20px; }
+}

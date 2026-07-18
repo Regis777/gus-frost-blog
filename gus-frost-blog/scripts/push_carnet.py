@@ -28,10 +28,15 @@ import wire_theme as wt                     # noqa: E402
 
 # (fichier local dans theme/, destination dans le theme)
 FICHIERS = [
-    ("gf-carnet.css",    "assets/gf-carnet.css"),
-    ("gf-carnet.js",     "assets/gf-carnet.js"),
-    ("gf-carnet.liquid", "sections/gf-carnet.liquid"),
-    ("page.carnet.json", "templates/page.carnet.json"),
+    # l'app elle-meme (/pages/mon-carnet)
+    ("gf-carnet.css",            "assets/gf-carnet.css"),
+    ("gf-carnet.js",             "assets/gf-carnet.js"),
+    ("gf-carnet.liquid",         "sections/gf-carnet.liquid"),
+    ("page.carnet.json",         "templates/page.carnet.json"),
+    # la page qui vend (/pages/le-carnet)
+    ("gf-carnet-landing.css",    "assets/gf-carnet-landing.css"),
+    ("gf-carnet-landing.liquid", "sections/gf-carnet-landing.liquid"),
+    ("page.carnet-landing.json", "templates/page.carnet-landing.json"),
 ]
 
 
