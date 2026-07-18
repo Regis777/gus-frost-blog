@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le Carnet — prévisualisation locale</title>
+<link rel="stylesheet" href="../theme/gf-carnet.css">
+<style>
+  /* Approximation du contexte Dawn pour la prévisualisation seulement. */
+  body { margin: 0; padding: 24px 0; background: #fff; font-family: Georgia, 'Times New Roman', serif; }
+</style>
+</head>
+<body>
+
+<div class="gfc-app" id="gfc-preview">
+
+  <header class="gfc-head">
+    <h1>Le Carnet</h1>
+    <p>Vaccins, rappels, poids, budget, souvenirs : tout le suivi de vos animaux au même endroit. Gratuit, sans compte, sans publicité.</p>
+    <p><span class="gfc-privacy">🔒 Vos données restent sur votre appareil</span></p>
+  </header>
+
+  <div class="gfc-petbar" data-gfc-petbar></div>
+
+  <nav class="gfc-tabs" data-gfc-tablist aria-label="Rubriques du carnet">
+    <button type="button" class="gfc-tab" data-gfc-tab="identite"  aria-selected="true">Identité</button>
+    <button type="button" class="gfc-tab" data-gfc-tab="sante"     aria-selected="false">Santé</button>
+    <button type="button" class="gfc-tab" data-gfc-tab="rappels"   aria-selected="false">Rappels</button>
+    <button type="button" class="gfc-tab" data-gfc-tab="budget"    aria-selected="false">Budget</button>
+    <button type="button" class="gfc-tab" data-gfc-tab="souvenirs" aria-selected="false">Souvenirs</button>
+  </nav>
+
+  <div data-gfc-panels aria-live="polite"></div>
+
+  <section class="gfc-tools" data-gfc-tools>
+    <h2>Sauvegarde &amp; partage</h2>
+    <p class="gfc-hint">
+      Le carnet vit dans ce navigateur, sur cet appareil. Vider les données de navigation
+      l’effacerait&nbsp;: exportez une sauvegarde de temps en temps, c’est votre filet.
+    </p>
+    <div class="gfc-tools-grid">
+      <button type="button" class="gfc-btn gfc-btn--sm gfc-btn--primary" data-act="print">🖨️ Carnet PDF</button>
+      <button type="button" class="gfc-btn gfc-btn--sm" data-act="ics">📅 Agenda (.ics)</button>
+      <button type="button" class="gfc-btn gfc-btn--sm" data-act="share">🔗 Partager la fiche</button>
+      <button type="button" class="gfc-btn gfc-btn--sm" data-act="export">⬇️ Exporter ma sauvegarde</button>
+      <button type="button" class="gfc-btn gfc-btn--sm" data-act="import">⬆️ Restaurer une sauvegarde</button>
+      <button type="button" class="gfc-btn gfc-btn--sm gfc-btn--danger" data-act="raz">Tout effacer</button>
+    </div>
+    <input type="file" accept="application/json,.json" data-gfc-import hidden>
+  </section>
+
+  <aside class="gfc-cta">
+    <h2>Un compagnon plus serein au quotidien ?</h2>
+    <p>Nos guides et nos accessoires pour l'anxiété, le calme et la mastication.</p>
+    <a class="gfc-btn" href="#">Découvrir la boutique</a>
+  </aside>
+
+  <div class="gfc-modal" data-gfc-modal hidden></div>
+  <div class="gfc-toast" data-gfc-toast hidden role="status"></div>
+</div>
+
+<script src="../theme/gf-carnet.js"></script>
+<script>
+  window.GFCarnet.init(document.getElementById('gfc-preview'));
+</script>
+</body>
+</html>

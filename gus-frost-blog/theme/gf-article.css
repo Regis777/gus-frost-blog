@@ -85,3 +85,36 @@
 .gf-article .gf-recette .gf-meta { font-size: 1.45rem; color: #5c6a5f; margin: -0.2rem 0 0.7rem; }
 .gf-article .gf-etapes { background: #fff; border: 1px solid #e4ddce; border-radius: 12px; padding: 1.1rem 1.4rem; margin: 1.5rem 0; }
 .gf-article .gf-etapes li { margin: 0.5rem 0; }
+
+/* ---------- Encart « Le Carnet » (snippet gf-carnet-promo, pied d'article) ---------- */
+/* Volontairement clair et bordé, pour ne pas se confondre avec le .gf-cta produit
+   (vert plein) qui vit à l'intérieur du texte. Ici on propose un outil, pas un achat. */
+.gf-carnet-promo {
+  /* box-sizing + 796px : largeur RENDUE de .gf-related, qui suit juste en dessous.
+     gf-article.css n'a pas de border-box global, et .gf-related est en content-box
+     (760 + paddings + bordures = 796). Sans ça, les deux blocs se décalent de 6 px. */
+  box-sizing: border-box; max-width: 796px;
+  display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap;
+  margin: 2.8rem auto 0; padding: 1.5rem 1.8rem;
+  background: #faf8f3; border: 1px solid #e3ddcf; border-left: 5px solid #314431;
+  border-radius: 10px;
+  font-family: var(--font-body-family, Georgia, 'Times New Roman', serif);
+}
+.gf-carnet-promo-ico { flex: none; font-size: 3.2rem; line-height: 1; }
+.gf-carnet-promo-txt { flex: 1; min-width: 220px; }
+/* Deux classes, sinon « .gf-carnet-promo p » ci-dessous l'emporterait : le titre est un <p>. */
+.gf-carnet-promo .gf-carnet-promo-titre {
+  margin: 0 0 0.35rem; font-size: 1.85rem; font-weight: 700; color: #314431; line-height: 1.3;
+  font-family: var(--font-heading-family, var(--font-body-family, inherit));
+}
+.gf-carnet-promo p { margin: 0; font-size: 1.6rem; line-height: 1.6; color: #3d4f3d; }
+.gf-carnet-promo-btn {
+  flex: none; display: inline-block; padding: 0.75rem 1.6rem; border-radius: 999px;
+  background: #314431; color: #fff !important; text-decoration: none;
+  font-size: 1.55rem; font-weight: 700; white-space: nowrap;
+}
+.gf-carnet-promo-btn:hover { background: #3d4f3d; color: #fff !important; }
+@media (max-width: 600px) {
+  .gf-carnet-promo { gap: 1rem; padding: 1.3rem 1.4rem; }
+  .gf-carnet-promo-btn { width: 100%; text-align: center; }
+}
