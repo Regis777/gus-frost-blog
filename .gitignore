@@ -4,3 +4,12 @@ node_modules/
 __pycache__/
 *.log
 .DS_Store
+
+# Images des clusters : non versionnees (22/07/2026).
+# Git ne sait pas differencier un binaire : une image est celle utilisee ou elle
+# est remplacee, l'historique n'apporte rien et coute ~50-60 Mo par cluster.
+# Les copies qui font autorite sont le CDN Shopify (versions servies) et le
+# Google Drive (sortie de generation). Ce qui est versionne, c'est le contenu
+# intellectuel : C<N>_images_map.csv (numero -> fichier -> slug -> role -> alt)
+# et les fichiers PROMPTS-IMAGES_*.md.
+gus-frost-blog/images/**/*.png
