@@ -10,7 +10,8 @@ rattrape l'existant qui a ete saisi en espaces ASCII.
 Deux perimetres INDEPENDANTS :
   --fields  title / meta_title / meta_description / excerpt du manifest
             -> pousse title, summary_html et les metafields SEO. Le corps n'est pas touche.
-  --bodies  corps des fragments du repo -> pousse body_html.
+  --bodies  corps EN LIGNE (relu sur Shopify, jamais le fragment repo qui, pour
+            C1/C2/C3, porte encore des src="REMPLACER_...") -> pousse body_html.
 
 Usage :
   python deploy/normalize_typo.py --fields --dry-run
@@ -36,6 +37,20 @@ def norm(s):
     s = re.sub(r"[  ]+([;:!?»])", NBSP + r"\1", s)
     s = re.sub(r"«[  ]+", "«" + NBSP, s)
     return s
+
+
+def retry(fn, essais=6):
+    """Shopify plafonne a 2 req/s : temporise, et repart en arriere sur un 429."""
+    for k in range(essais):
+        try:
+            r = fn()
+            time.sleep(0.55)
+            return r
+        except SystemExit as e:
+            if "429" not in str(e) or k == essais - 1:
+                raise
+            time.sleep(2 * (k + 1))
+    return None
 
 
 def compte(s):
@@ -91,10 +106,50 @@ def do_fields(args):
 
 
 def do_bodies(args):
+    """IMPORTANT : on normalise le corps **en ligne**, pas le fragment du repo.
+
+    Les clusters anciens (C1, C2, C3) n'ont jamais ete « bakes » : leur fragment
+    repo porte encore des src="REMPLACER_..." et n'a pas les URLs CDN. Pousser le
+    repo remplacerait les images par des placeholders. Le corps Shopify est donc la
+    seule source de verite ici ; on le relit, on le normalise, on le repousse.
+    Le fragment repo est normalise separement, pour rester lisible, sans etre pousse.
+    """
     rows = read_manifest()
     if args.cluster:
         rows = [r for r in rows if r["cluster_num"] == str(args.cluster)]
+    env = load_env()
+    sh = Shopify(env)
+    blog = sh.find_blog_id(env["BLOG_HANDLE"].strip())
+
     cibles = []
+    for r in rows:
+        art = retry(lambda: sh.find_article(blog, r["slug"]))
+        if not art:
+            print("  ⚠ %-40s ABSENT en ligne" % r["slug"]); continue
+        n = compte(art["body_html"])
+        if n:
+            cibles.append((r, art, n))
+    print("Corps a normaliser EN LIGNE : %d article(s), %d occurrence(s)"
+          % (len(cibles), sum(n for _r, _a, n in cibles)))
+    for r, art, n in cibles[:5]:
+        m = re.search(r".{0,45}[ ][;:!?»].{0,15}", art["body_html"])
+        print("   ex. %-40s %3d  %s" % (r["slug"], n,
+                                        m.group(0).replace("\n", " ") if m else ""))
+    if args.dry_run:
+        print("\nDRY-RUN : rien ecrit, rien pousse.")
+        return
+
+    pousses = 0
+    for r, art, _n in cibles:
+        body = norm(art["body_html"])
+        retry(lambda: sh._req("PUT", "/blogs/%s/articles/%s.json" % (blog, art["id"]),
+                              {"article": {"id": art["id"], "body_html": body}}))
+        pousses += 1
+        if pousses % 20 == 0:
+            print("  … %d poussés" % pousses)
+
+    # fragments repo : normalises pour rester coherents, jamais pousses
+    locaux = 0
     for r in rows:
         p = os.path.join(ROOT, r["file"].replace("/", os.sep))
         if not os.path.exists(p):
@@ -103,31 +158,10 @@ def do_bodies(args):
         i = s.find("<article")
         if i < 0 or not compte(s[i:]):
             continue
-        cibles.append((r, p, s, i))
-    print("Corps a normaliser : %d article(s), %d occurrence(s)"
-          % (len(cibles), sum(compte(s[i:]) for _r, _p, s, i in cibles)))
-    for r, _p, s, i in cibles[:5]:
-        m = re.search(r".{0,45}[ ][;:!?»].{0,15}", s[i:])
-        print("   ex. %-40s %s" % (r["slug"], m.group(0).replace("\n", " ") if m else ""))
-    if args.dry_run:
-        print("\nDRY-RUN : rien ecrit, rien pousse.")
-        return
-
-    env = load_env()
-    sh = Shopify(env)
-    blog = sh.find_blog_id(env["BLOG_HANDLE"].strip())
-    pousses = 0
-    for r, p, s, i in cibles:
-        body = norm(s[i:])
-        open(p, "w", encoding="utf-8").write(s[:i] + body)
-        art = sh.find_article(blog, r["slug"])
-        if not art:
-            print("  ⚠ %-40s ABSENT en ligne" % r["slug"]); continue
-        sh._req("PUT", "/blogs/%s/articles/%s.json" % (blog, art["id"]),
-                {"article": {"id": art["id"], "body_html": body}})
-        pousses += 1
-        time.sleep(0.35)
-    print("\n%d corps mis à jour." % pousses)
+        open(p, "w", encoding="utf-8").write(s[:i] + norm(s[i:]))
+        locaux += 1
+    print("\n%d corps en ligne mis à jour | %d fragment(s) repo normalisé(s)."
+          % (pousses, locaux))
 
 
 def main():
