@@ -1,0 +1,298 @@
+<style>
+  .gf-hub-intro{max-width:60ch;margin:0 auto 2rem;text-align:center;}
+  .gf-hub-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;}
+  @media (min-width:750px){.gf-hub-grid{grid-template-columns:1fr 1fr;gap:2rem;}}
+  .gf-hub-cluster{border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:1.2rem 1.4rem;background:rgb(var(--color-background));}
+  .gf-hub-pilier{font-size:1.25rem;margin:0 0 .6rem;line-height:1.3;}
+  .gf-hub-pilier a{text-decoration:none;}
+  .gf-hub-list{list-style:none;margin:0;padding:0;}
+  .gf-hub-list li{padding:.25rem 0;border-top:1px solid rgba(0,0,0,.06);}
+  .gf-hub-list li:first-child{border-top:0;}
+  .gf-hub-list a{text-decoration:none;}
+  .gf-hub-list a:hover,.gf-hub-pilier a:hover{text-decoration:underline;}
+  .gf-hub-search{display:flex;gap:.5rem;max-width:34rem;margin:0 auto 2rem;}
+  .gf-hub-search input[type=search]{flex:1;padding:.7rem 1rem;font-size:1rem;border:1px solid rgba(0,0,0,.2);border-radius:999px;background:rgb(var(--color-background));color:inherit;}
+  .gf-hub-search button{padding:.7rem 1.3rem;font-size:1rem;border:0;border-radius:999px;cursor:pointer;background:rgb(var(--color-foreground,26 26 26));color:rgb(var(--color-background,255 255 255));}
+  .gf-hub-search button:hover{opacity:.9;}
+</style>
+<p class="gf-hub-intro">Tous nos guides et conseils pour comprendre et accompagner votre chien, organisés par thème. Chaque thème s'ouvre sur un guide principal, complété par des articles détaillés.</p>
+<form action="/search" method="get" role="search" class="gf-hub-search">
+  <input type="hidden" name="type" value="article">
+  <input type="hidden" name="options[prefix]" value="last">
+  <input type="search" name="q" placeholder="Rechercher un conseil…" aria-label="Rechercher dans les articles du blog" required>
+  <button type="submit">Rechercher</button>
+</form>
+<div class="gf-hub-grid">
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/anxiete-separation-chien">Anxiété de séparation chez le chien : la comprendre et l'apaiser</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/anxiete-separation-chien-comprendre">Anxiété de séparation chez le chien : comprendre ce qui se passe vraiment</a></li>
+        <li><a href="/blogs/chiens/camera-radio-pheromones-chien">Caméra, radio, phéromones : ce qui aide vraiment un chien seul</a></li>
+        <li><a href="/blogs/chiens/chien-anxieux-absence-que-faire">Chien anxieux en votre absence : que faire pour l'apaiser ?</a></li>
+        <li><a href="/blogs/chiens/combien-temps-chien-seul">Combien de temps peut-on laisser un chien seul ?</a></li>
+        <li><a href="/blogs/chiens/erreurs-anxiete-separation-chien">Anxiété de séparation : les erreurs qui aggravent tout</a></li>
+        <li><a href="/blogs/chiens/espace-rassurant-chien-seul">Aménager un espace rassurant pour un chien qui reste seul</a></li>
+        <li><a href="/blogs/chiens/habituer-chien-rester-seul">Habituer progressivement son chien à rester seul : la méthode pas à pas</a></li>
+        <li><a href="/blogs/chiens/jouets-occupation-chien-seul">Jouets et occupations anti-ennui pour un chien qui reste seul</a></li>
+        <li><a href="/blogs/chiens/prevenir-anxiete-separation-chiot">Anxiété de séparation du chiot : la prévenir dès l'adoption</a></li>
+        <li><a href="/blogs/chiens/signes-anxiete-separation-chien">Les 10 signes d'un chien qui vit mal la solitude</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/chien-peur-bruit-phobie">Peurs et phobies chez le chien : comprendre et apaiser un chien craintif</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/chien-petards-14-juillet">Pétards et 14 juillet : protéger un chien qui a peur</a></li>
+        <li><a href="/blogs/chiens/chien-peur-feux-artifice">Chien qui a peur des feux d'artifice : comment l'aider</a></li>
+        <li><a href="/blogs/chiens/chien-peur-inconnus-autres-chiens">Chien qui a peur des inconnus ou des autres chiens : comment l'aider</a></li>
+        <li><a href="/blogs/chiens/chien-peur-orage">Chien terrifié par l'orage : comprendre et l'apaiser</a></li>
+        <li><a href="/blogs/chiens/chien-peureux-en-ville">Chien peureux en ville : l'aider à vivre la rue sereinement</a></li>
+        <li><a href="/blogs/chiens/crise-panique-sonore-chien">Crise de panique sonore chez le chien : que faire sur le moment</a></li>
+        <li><a href="/blogs/chiens/desensibiliser-chien-bruits">Désensibiliser un chien aux bruits qui l'effraient : la méthode pas à pas</a></li>
+        <li><a href="/blogs/chiens/erreurs-chien-qui-a-peur">Chien qui a peur : les erreurs à éviter (et quoi faire à la place)</a></li>
+        <li><a href="/blogs/chiens/gilet-anti-stress-couverture-ponderee-chien">Gilet anti-stress et couverture pondérée pour chien : est-ce que ça marche ?</a></li>
+        <li><a href="/blogs/chiens/pourquoi-chien-peur-bruits">Pourquoi mon chien a-t-il peur des bruits ?</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/chien-calme-serenite-quotidien">Chien calme et serein au quotidien : le guide pour l'apaiser jour après jour</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/apprendre-le-calme-chien">Apprendre le calme à son chien : le « va à ta place » et la détente sur commande</a></li>
+        <li><a href="/blogs/chiens/chien-excitation-retrouvailles-invites">Calmer l'excitation aux retrouvailles et à l'arrivée des invités</a></li>
+        <li><a href="/blogs/chiens/chien-hyperactif-trop-excite">Chien hyperactif ou trop excité : comment le calmer</a></li>
+        <li><a href="/blogs/chiens/environnement-apaisant-chien-maison">Créer un environnement apaisant à la maison pour son chien</a></li>
+        <li><a href="/blogs/chiens/erreurs-chien-agite">Les erreurs qui rendent un chien plus agité (et comment les corriger)</a></li>
+        <li><a href="/blogs/chiens/mastication-lechage-chien">Mastication et léchage : les alliés naturels du calme</a></li>
+        <li><a href="/blogs/chiens/promenade-depense-chien-equilibre">Promenade et dépense : trouver le bon équilibre pour un chien serein</a></li>
+        <li><a href="/blogs/chiens/routine-rythme-quotidien-chien">L'importance de la routine et du rythme quotidien pour un chien serein</a></li>
+        <li><a href="/blogs/chiens/sommeil-du-chien">Le sommeil du chien : combien, où, et pourquoi c'est crucial</a></li>
+        <li><a href="/blogs/chiens/stimulation-mentale-chien">Stimulation mentale du chien : occuper le cerveau pour un chien plus serein</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/langage-corporel-chien">Le langage corporel du chien : décoder le stress et les signaux d'apaisement</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/signaux-apaisement-chien">Les signaux d'apaisement du chien : la liste complète et comment y répondre</a></li>
+        <li><a href="/blogs/chiens/queue-chien-signification">Que veut dire la queue de mon chien ? Position, mouvement et vitesse</a></li>
+        <li><a href="/blogs/chiens/baillement-chien-stress">Le bâillement chez le chien : fatigue ou stress ?</a></li>
+        <li><a href="/blogs/chiens/chien-leche-truffe-babines">Pourquoi mon chien se lèche la truffe et les babines ?</a></li>
+        <li><a href="/blogs/chiens/oreilles-chien-emotions">Les oreilles du chien : ce qu'elles révèlent de son état émotionnel</a></li>
+        <li><a href="/blogs/chiens/oeil-de-baleine-chien">L'œil de baleine et les signaux du regard chez le chien</a></li>
+        <li><a href="/blogs/chiens/postures-stress-chien">Les postures de stress du chien : se figer, se tasser, se détourner</a></li>
+        <li><a href="/blogs/chiens/chien-s-ebroue-signal">Le « shake-off » : pourquoi votre chien s'ébroue pour décompresser</a></li>
+        <li><a href="/blogs/chiens/echelle-stress-chien-morsure">L'échelle du stress : reconnaître les signaux avant la morsure</a></li>
+        <li><a href="/blogs/chiens/haletement-tremblements-chien-stress">Halètement, tremblements et bave : les signaux physiques du stress</a></li>
+        <li><a href="/blogs/chiens/observer-chien-carnet-signaux">Observer son chien au quotidien : créer un carnet de signaux</a></li>
+        <li><a href="/blogs/chiens/idees-recues-langage-canin">10 idées reçues sur le langage canin qui mettent votre chien en difficulté</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/repas-du-chien">Le repas du chien : en faire un moment de calme et d'équilibre</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/chien-mange-trop-vite">Chien qui mange trop vite : pourquoi et comment le ralentir</a></li>
+        <li><a href="/blogs/chiens/gamelle-anti-glouton-chien">Gamelle anti-glouton : laquelle choisir pour votre chien ?</a></li>
+        <li><a href="/blogs/chiens/ralentir-repas-chien">Ralentir le repas de son chien : les méthodes qui marchent</a></li>
+        <li><a href="/blogs/chiens/nourrir-chien-sans-gamelle">Nourrir son chien sans gamelle : distribuer la ration autrement</a></li>
+        <li><a href="/blogs/chiens/recettes-tapis-lechage-chien">Recettes de tapis de léchage : idées saines à base de sa ration</a></li>
+        <li><a href="/blogs/chiens/chien-gourmand-toujours-faim">Chien gourmand toujours affamé : comment le gérer sereinement</a></li>
+        <li><a href="/blogs/chiens/chien-quemande-table">Chien qui quémande à table : comment lui apprendre à s'abstenir</a></li>
+        <li><a href="/blogs/chiens/repas-plusieurs-chiens">Gérer les repas dans un foyer à plusieurs chiens</a></li>
+        <li><a href="/blogs/chiens/combien-repas-chien-par-jour">Combien de repas par jour pour un chien ? Les repères par âge</a></li>
+        <li><a href="/blogs/chiens/chien-ne-mange-pas-gamelle">Chien difficile qui boude sa gamelle : comprendre et réagir</a></li>
+        <li><a href="/blogs/chiens/transition-alimentaire-chien">Changer l'alimentation de son chien sans troubles digestifs</a></li>
+        <li><a href="/blogs/chiens/choisir-gamelle-chien">Bien choisir la gamelle de son chien : matière, forme, hygiène</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/elever-un-chiot">Élever un chiot : le guide complet des premiers mois (0-6 mois)</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/chiot-guide-premiers-mois">Chiot : le guide complet des premiers mois</a></li>
+        <li><a href="/blogs/chiens/accueillir-un-chiot">Accueillir un chiot : réussir l'arrivée et les premières semaines</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/chiot-guide-premiers-mois">Chiot : le guide complet des premiers mois</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/preparer-arrivee-chiot-maison">Préparer l'arrivée de votre chiot à la maison</a></li>
+        <li><a href="/blogs/chiens/premiers-jours-chiot-adaptation">Les premiers jours de votre chiot à la maison</a></li>
+        <li><a href="/blogs/chiens/premieres-nuits-chiot-sommeil">Les premières nuits de votre chiot</a></li>
+        <li><a href="/blogs/chiens/apprendre-proprete-chiot-methode">Apprendre la propreté à votre chiot</a></li>
+        <li><a href="/blogs/chiens/temps-proprete-chiot-delais">Combien de temps pour rendre un chiot propre ?</a></li>
+        <li><a href="/blogs/chiens/chiot-accidents-proprete-solutions">Chiot qui fait ses besoins à l'intérieur</a></li>
+        <li><a href="/blogs/chiens/socialiser-chiot-fenetre-rencontres">Socialiser votre chiot : la période clé et les bonnes rencontres</a></li>
+        <li><a href="/blogs/chiens/dentition-chiot-etapes-solutions">La dentition de votre chiot</a></li>
+        <li><a href="/blogs/chiens/mordillements-chiot-canaliser">Les mordillements de votre chiot</a></li>
+        <li><a href="/blogs/chiens/besoin-mastication-chiot">Le besoin de mastication de votre chiot</a></li>
+        <li><a href="/blogs/chiens/gerer-energie-chiot-jeu-repos">Gérer l'énergie de votre chiot</a></li>
+        <li><a href="/blogs/chiens/manipulation-soins-chiot-habituation">Habituer votre chiot à la manipulation et aux soins</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/accueillir-un-chiot">Accueillir un chiot : réussir l'arrivée et les premières semaines</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/adopter-chiot-eleveur-refuge">Où adopter un chiot : éleveur, refuge, particulier et les signes d'un chiot bien né</a></li>
+        <li><a href="/blogs/chiens/budget-premiere-annee-chiot">Le budget d'un chiot la première année : à quoi s'attendre</a></li>
+        <li><a href="/blogs/chiens/choisir-nom-chiot">Choisir le nom de son chiot (et le lui apprendre facilement)</a></li>
+        <li><a href="/blogs/chiens/erreurs-accueil-chiot">Les erreurs à éviter à l'arrivée d'un chiot</a></li>
+        <li><a href="/blogs/chiens/premier-trajet-voiture-chiot">Le premier trajet en voiture du chiot : le ramener à la maison en douceur</a></li>
+        <li><a href="/blogs/chiens/premieres-nuits-chiot">Les premières nuits du chiot : l'aider à dormir et apaiser les pleurs</a></li>
+        <li><a href="/blogs/chiens/premiers-jours-chiot">Les premiers jours d'un chiot à la maison : poser le cadre sans le brusquer</a></li>
+        <li><a href="/blogs/chiens/preparer-arrivee-chiot">Préparer l'arrivée d'un chiot : la checklist du matériel indispensable</a></li>
+        <li><a href="/blogs/chiens/presenter-chiot-autre-chien-chat">Présenter un chiot à un chien ou un chat déjà présent</a></li>
+        <li><a href="/blogs/chiens/presenter-chiot-enfants">Présenter un chiot aux enfants : des rencontres sûres et positives</a></li>
+        <li><a href="/blogs/chiens/securiser-maison-chiot">Sécuriser sa maison pour un chiot : le guide anti-danger, pièce par pièce</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/soins-toilettage-chien">Soins et toilettage du chien : le guide complet pour des soins sans stress</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/soins-cooperatifs-chien">Les soins coopératifs : soigner son chien avec son consentement</a></li>
+        <li><a href="/blogs/chiens/habituer-chien-manipulation">Habituer son chien à être manipulé : pattes, oreilles, gueule</a></li>
+        <li><a href="/blogs/chiens/brosser-chien-poil">Brosser son chien : à quelle fréquence et avec quelle brosse</a></li>
+        <li><a href="/blogs/chiens/couper-griffes-chien">Couper les griffes de son chien sans stress</a></li>
+        <li><a href="/blogs/chiens/bain-chien">Donner le bain à son chien : quand, à quelle fréquence et comment</a></li>
+        <li><a href="/blogs/chiens/nettoyer-oreilles-chien">Nettoyer les oreilles de son chien en toute sécurité</a></li>
+        <li><a href="/blogs/chiens/hygiene-dentaire-chien">L'hygiène dentaire du chien : prévenir le tartre au quotidien</a></li>
+        <li><a href="/blogs/chiens/soin-coussinets-pattes-chien">Prendre soin des coussinets et des pattes de son chien</a></li>
+        <li><a href="/blogs/chiens/chien-visite-veterinaire">Préparer la visite chez le vétérinaire pour un chien serein</a></li>
+        <li><a href="/blogs/chiens/chien-voiture-trajet">Voyager en voiture avec son chien sereinement</a></li>
+        <li><a href="/blogs/chiens/habituer-chien-caisse-transport">Habituer son chien à la caisse de transport</a></li>
+        <li><a href="/blogs/chiens/erreurs-soins-toilettage-chien">Soins et toilettage : les erreurs qui stressent votre chien</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/education-positive-chien">Éduquer son chien en positif : le guide complet des apprentissages de base</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/apprendre-assis-chien">Apprendre l'assis à son chien, étape par étape</a></li>
+        <li><a href="/blogs/chiens/apprendre-coucher-chien">Apprendre le couché à son chien, sans forcer</a></li>
+        <li><a href="/blogs/chiens/apprendre-pas-bouger-chien">Le « pas bouger » : apprendre à son chien à rester en place</a></li>
+        <li><a href="/blogs/chiens/apprendre-rappel-chien">Apprendre le rappel à son chien : revenir à chaque fois</a></li>
+        <li><a href="/blogs/chiens/autocontrole-chien">L'autocontrôle : apprendre à son chien à attendre et à se retenir</a></li>
+        <li><a href="/blogs/chiens/eduquer-chien-adulte-adopte">Éduquer un chien adulte ou adopté : reprendre les bases sans pression</a></li>
+        <li><a href="/blogs/chiens/erreurs-education-chien">Les erreurs qui ralentissent l'éducation de votre chien</a></li>
+        <li><a href="/blogs/chiens/gerer-distractions-generalisation-chien">Gérer les distractions et généraliser : quand votre chien obéit partout</a></li>
+        <li><a href="/blogs/chiens/marche-en-laisse-sans-tirer-chien">La marche en laisse sans tirer : apprendre à votre chien à ne plus forcer</a></li>
+        <li><a href="/blogs/chiens/materiel-education-positive-chien">Le bon matériel pour éduquer son chien sans contrainte</a></li>
+        <li><a href="/blogs/chiens/recompenses-friandises-education-chien">Récompenses et friandises : bien les choisir et les doser pour éduquer</a></li>
+        <li><a href="/blogs/chiens/renforcement-positif-chien">Le renforcement positif : le principe qui fait tout apprendre à votre chien</a></li>
+        <li><a href="/blogs/chiens/seances-education-courtes-chien">Des séances courtes et régulières : la clé d'un chien qui apprend vite</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/reactivite-chien">Le chien réactif : comprendre, sécuriser et apaiser la réactivité</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/amenager-promenades-chien-reactif">Aménager ses promenades quand son chien est réactif</a></li>
+        <li><a href="/blogs/chiens/chien-frustration-laisse-congeneres">Le chien qui tire et jappe pour rejoindre ses congénères : la réactivité par frustration</a></li>
+        <li><a href="/blogs/chiens/chien-reactif-laisse">Le chien réactif en laisse : comprendre et gérer la traction émotionnelle</a></li>
+        <li><a href="/blogs/chiens/chien-reactif-quand-consulter">Réactivité du chien : quand et comment consulter un professionnel</a></li>
+        <li><a href="/blogs/chiens/chien-surexcite-vue-autre-chien">Le chien surexcité à la vue d'un autre chien : canaliser l'excitation</a></li>
+        <li><a href="/blogs/chiens/croiser-chien-personne-promenade">Croiser un chien ou une personne : les gestes qui sécurisent la rencontre</a></li>
+        <li><a href="/blogs/chiens/exercices-desensibilisation-chien-reactif">Désensibilisation et contre-conditionnement : les exercices de base pour un chien réactif</a></li>
+        <li><a href="/blogs/chiens/faire-redescendre-chien-reactif">Faire redescendre son chien après une réaction : récupérer et repartir</a></li>
+        <li><a href="/blogs/chiens/materiel-chien-reactif">Le bon matériel pour un chien réactif : harnais, longe et muselière d'acclimatation</a></li>
+        <li><a href="/blogs/chiens/reactivite-chien-comprendre">Comprendre la réactivité du chien : peur, frustration ou excitation ?</a></li>
+        <li><a href="/blogs/chiens/reactivite-peur-agression-difference">Réactivité, peur ou agression : reconnaître le point de bascule</a></li>
+        <li><a href="/blogs/chiens/seuil-de-reactivite-chien">Le seuil de réactivité : travailler à bonne distance pour ne pas déclencher</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/chien-changements-de-vie">Accompagner son chien dans les grands changements de vie</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/chien-bebe-cohabitation-securite">Chien et bébé : une cohabitation en toute sécurité</a></li>
+        <li><a href="/blogs/chiens/chien-changement-de-rythme">Nouveau travail, nouvelle organisation : adapter le rythme de son chien</a></li>
+        <li><a href="/blogs/chiens/chien-deuil-perte-compagnon">Quand un chien perd un compagnon : l'accompagner dans le deuil</a></li>
+        <li><a href="/blogs/chiens/chien-nouveau-logement-adaptation">Aider son chien à s'adapter à un nouveau logement</a></li>
+        <li><a href="/blogs/chiens/chien-stress-changement-signes">Reconnaître le stress d'un chien face au changement</a></li>
+        <li><a href="/blogs/chiens/cohabitation-premiers-jours-nouvel-animal">Deux animaux à la maison : réussir les premiers jours</a></li>
+        <li><a href="/blogs/chiens/demenagement-avec-chien">Déménager avec son chien : préparer et gérer le jour J</a></li>
+        <li><a href="/blogs/chiens/perdre-son-chien-accompagner-deuil">Perdre son chien : traverser le deuil de son compagnon</a></li>
+        <li><a href="/blogs/chiens/premiers-jours-chien-adopte">Les premiers jours d'un chien de refuge : la décompression</a></li>
+        <li><a href="/blogs/chiens/preparer-arrivee-chien-adopte">Préparer l'arrivée d'un chien adopté à la maison</a></li>
+        <li><a href="/blogs/chiens/preparer-chien-arrivee-bebe">Préparer son chien à l'arrivée d'un bébé</a></li>
+        <li><a href="/blogs/chiens/presenter-nouvel-animal-chien">Présenter un nouvel animal à son chien</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/chien-senior-vieillissement">Accompagner son chien senior : bien vivre le grand âge</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/accompagner-fin-de-vie-chien">Accompagner son chien en fin de vie, avec douceur</a></li>
+        <li><a href="/blogs/chiens/activite-promenade-chien-age">Adapter l'activité et les promenades d'un chien âgé</a></li>
+        <li><a href="/blogs/chiens/alimentation-appetit-chien-age">Alimentation et appétit du chien senior</a></li>
+        <li><a href="/blogs/chiens/amenager-maison-chien-senior">Aménager la maison pour un chien âgé</a></li>
+        <li><a href="/blogs/chiens/chien-senior-arthrose-mobilite">Aider un chien arthrosique au quotidien</a></li>
+        <li><a href="/blogs/chiens/chien-senior-perte-vue-audition">Chien qui perd la vue ou l'ouïe : adapter son quotidien</a></li>
+        <li><a href="/blogs/chiens/couchage-confort-chien-age">Bien choisir le couchage d'un chien senior</a></li>
+        <li><a href="/blogs/chiens/dysfonction-cognitive-chien-age">Les changements cognitifs du chien âgé</a></li>
+        <li><a href="/blogs/chiens/reconnaitre-signes-vieillissement-chien">Reconnaître les signes du vieillissement chez le chien</a></li>
+        <li><a href="/blogs/chiens/soins-adaptes-chien-senior">Les soins d'un chien senior : douceur et suivi</a></li>
+        <li><a href="/blogs/chiens/sommeil-chien-senior">Le sommeil du chien âgé : nuits agitées et repos réparateur</a></li>
+        <li><a href="/blogs/chiens/stimuler-chien-senior-mental">Garder un chien âgé actif mentalement</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/solutions-apaiser-chien">Apaiser son chien : la boîte à outils des solutions qui marchent</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/aides-anti-stress-inutiles">Aides anti-stress pour chien : ce qui ne sert (souvent) à rien</a></li>
+        <li><a href="/blogs/chiens/complements-calmants-chien">Compléments calmants pour chien : lesquels, quand, comment</a></li>
+        <li><a href="/blogs/chiens/massage-ttouch-chien">Massage et TTouch : apaiser son chien par le toucher</a></li>
+        <li><a href="/blogs/chiens/musique-apaisante-chien">La musique apaisante pour chien : ce qu'en dit l'expérience</a></li>
+        <li><a href="/blogs/chiens/pheromones-apaisantes-chien">Les phéromones apaisantes pour chien : mode d'emploi</a></li>
+        <li><a href="/blogs/chiens/routine-apaisement-chien">Construire une routine d'apaisement pour son chien</a></li>
+        <li><a href="/blogs/chiens/tapis-fouille-chien">Le tapis de fouille : occuper et apaiser par le flair</a></li>
+        <li><a href="/blogs/chiens/tapis-lechage-apaiser-chien">Le tapis de léchage pour apaiser son chien</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/chien-anxieux-comprendre-apaiser">Le chien anxieux : comprendre son mal-être et l'apaiser</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/amenager-vie-chien-anxieux">Aménager la vie d'un chien anxieux au quotidien</a></li>
+        <li><a href="/blogs/chiens/anxiete-chien-alimentation">Anxiété et alimentation du chien : quel lien ?</a></li>
+        <li><a href="/blogs/chiens/anxiete-chien-races-predispositions">Races de chiens et anxiété : des prédispositions ?</a></li>
+        <li><a href="/blogs/chiens/anxiete-situationnelle-vs-generalisee">Anxiété situationnelle ou généralisée : faire la différence</a></li>
+        <li><a href="/blogs/chiens/causes-anxiete-chien">D'où vient l'anxiété d'un chien : les causes</a></li>
+        <li><a href="/blogs/chiens/chien-anxieux-adopte">Le chien adopté anxieux : comprendre son passé</a></li>
+        <li><a href="/blogs/chiens/chien-anxieux-quand-consulter">Chien anxieux : quand consulter un professionnel</a></li>
+        <li><a href="/blogs/chiens/chien-hypersensible">Le chien hypersensible : quand tout est trop</a></li>
+        <li><a href="/blogs/chiens/chien-hypervigilant">Le chien hypervigilant : toujours en alerte</a></li>
+        <li><a href="/blogs/chiens/erreurs-chien-anxieux">Chien anxieux : les erreurs qui aggravent tout</a></li>
+        <li><a href="/blogs/chiens/signes-chien-anxieux">Reconnaître un chien anxieux : les signes à repérer</a></li>
+        <li><a href="/blogs/chiens/suivre-progres-chien-anxieux">Suivre les progrès d'un chien anxieux</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/chien-ressent-emotions-maitre">Votre chien ressent-il vos émotions ? La co-régulation expliquée</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/coherence-famille-chien-anxieux">La cohérence du foyer : quand chacun réagit autrement</a></li>
+        <li><a href="/blogs/chiens/etre-base-de-securite-chien">Être une base de sécurité pour son chien</a></li>
+        <li><a href="/blogs/chiens/fatigue-emotionnelle-maitre-chien-anxieux">Vivre avec un chien anxieux : la fatigue du maître</a></li>
+        <li><a href="/blogs/chiens/langage-corporel-humain-chien">Ce que votre corps dit à votre chien</a></li>
+        <li><a href="/blogs/chiens/maitre-anxieux-chien-anxieux">Je suis anxieux : est-ce que je rends mon chien anxieux ?</a></li>
+        <li><a href="/blogs/chiens/projeter-emotions-sur-chien">Projeter ses émotions sur son chien : le piège</a></li>
+        <li><a href="/blogs/chiens/renforcer-lien-confiance-chien">Renforcer le lien de confiance avec son chien</a></li>
+        <li><a href="/blogs/chiens/respiration-ancrage-calme-chien">Respiration et ancrage : devenir un point fixe pour son chien</a></li>
+        <li><a href="/blogs/chiens/rester-calme-face-chien-peur">Rester calme quand son chien a peur : l'attitude qui aide</a></li>
+        <li><a href="/blogs/chiens/stress-maitre-se-transmet-chien">Le stress du maître se transmet-il au chien ?</a></li>
+        <li><a href="/blogs/chiens/tension-laisse-chien">La tension qui remonte par la laisse</a></li>
+        <li><a href="/blogs/chiens/voix-ton-parler-a-son-chien">La voix, le ton, le débit : ce que votre chien entend</a></li>
+      </ul>
+    </section>
+    <section class="gf-hub-cluster">
+      <h2 class="gf-hub-pilier"><a href="/blogs/chiens/alimentation-chiot-guide-complet">Alimentation du chiot : le guide complet (0-12 mois)</a></h2>
+      <ul class="gf-hub-list">
+        <li><a href="/blogs/chiens/alimentation-chiot-grande-race">Nourrir un chiot de grande race : croissance maîtrisée</a></li>
+        <li><a href="/blogs/chiens/aliments-dangereux-chiot">Les aliments interdits et dangereux pour un chiot</a></li>
+        <li><a href="/blogs/chiens/chiot-glouton-toujours-faim">Chiot glouton, toujours affamé : que faire ?</a></li>
+        <li><a href="/blogs/chiens/chiot-mange-trop-vite">Chiot qui mange trop vite : risques et solutions</a></li>
+        <li><a href="/blogs/chiens/chiot-ne-mange-pas">Chiot qui ne mange pas : causes et quand s'inquiéter</a></li>
+        <li><a href="/blogs/chiens/choisir-gamelle-chiot">Bien choisir la gamelle de son chiot</a></li>
+        <li><a href="/blogs/chiens/combien-repas-chiot-par-jour">Combien de repas par jour pour un chiot ?</a></li>
+        <li><a href="/blogs/chiens/complements-alimentaires-chiot">Compléments alimentaires pour chiot : utiles ou pas ?</a></li>
+        <li><a href="/blogs/chiens/croquettes-patee-ration-chiot">Croquettes, pâtée ou ration ménagère pour un chiot ?</a></li>
+        <li><a href="/blogs/chiens/friandises-chiot">Friandises pour chiot : lesquelles et en quelle quantité</a></li>
+        <li><a href="/blogs/chiens/occuper-chiot-avec-nourriture">Occuper son chiot avec sa nourriture</a></li>
+        <li><a href="/blogs/chiens/quantite-nourriture-chiot">Quelle quantité de nourriture pour un chiot ?</a></li>
+        <li><a href="/blogs/chiens/ralentir-repas-chiot">Comment ralentir le repas d'un chiot</a></li>
+        <li><a href="/blogs/chiens/recettes-tapis-lechage-chiot">Recettes de tapis de léchage pour chiot</a></li>
+        <li><a href="/blogs/chiens/transition-alimentaire-chiot">Réussir la transition alimentaire d'un chiot</a></li>
+      </ul>
+    </section>
+</div>

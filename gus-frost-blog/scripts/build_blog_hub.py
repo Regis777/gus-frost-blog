@@ -10,14 +10,25 @@ Usage :
 La sortie est le body_html à poser dans la page Shopify (page.blog-hub non requis :
 rendu dans le template `page` par défaut). Régénérable après chaque nouveau cluster.
 """
-import argparse, csv, html, os
+import argparse, csv, html, os, re
 from collections import OrderedDict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+NBSP = " "
+
+
+def insecables(s):
+    """Typo FR : insecable avant ; : ! ? » et apres «. Les titres du manifest
+    sont saisis en espaces ASCII ; on normalise a l'affichage."""
+    s = re.sub(r"[  ]+([;:!?»])", NBSP + r"\1", s)
+    s = re.sub(r"«[  ]+", "«" + NBSP, s)
+    return s
+
+
 def esc(s):
-    return html.escape(s.strip(), quote=False)
+    return html.escape(insecables(s.strip()), quote=False)
 
 
 def main():
@@ -32,30 +43,63 @@ def main():
     drafts = {s.strip() for s in args.draft.split(",") if s.strip()}
 
     rows = list(csv.DictReader(open(os.path.join(ROOT, args.manifest), encoding="utf-8-sig")))
-    # regroupe par cluster_num (ordre croissant), pilier d'abord puis satellites (ordre manifest)
+    # Regroupe par (cluster_num, cluster_tag) : un meme cluster_num porte plusieurs
+    # sous-clusters (schema « par pilier »), qui doivent rester des themes distincts.
+    # Les satellites sont rattaches par parent_pilier_slug, pas par position.
     clusters = OrderedDict()
     for r in rows:
-        clusters.setdefault(int(r["cluster_num"]), []).append(r)
+        clusters.setdefault((int(r["cluster_num"]), r["cluster_tag"]), []).append(r)
 
-    sections, n_art, n_clu = [], 0, 0
-    for cn in sorted(clusters):
-        arts = clusters[cn]
-        pilier = next((a for a in arts if a["type"].upper() == "PILIER"), None)
-        if not pilier or pilier["slug"] in drafts:
-            continue  # pas de pilier publié -> on saute le thème entier
-        sats = [a for a in arts if a["type"].upper() != "PILIER" and a["slug"] not in drafts]
-        n_clu += 1
-        n_art += 1 + len(sats)
+    def live(r):
+        return r["slug"] not in drafts
+
+    # Un pilier sans satellite propre est un hub de super-silo : il chapeaute les
+    # piliers des autres sous-clusters partageant son cluster_num (ex. « Élever un
+    # chiot » -> Accueillir un chiot, puis Propreté, Socialisation… a mesure).
+    piliers_par_num = {}
+    for (cn, _tag), arts in clusters.items():
+        for a in arts:
+            if a["type"].upper() == "PILIER":
+                piliers_par_num.setdefault(cn, []).append(a)
+
+    def satellites_de(pilier, arts):
+        return [a for a in arts
+                if a["type"].upper() != "PILIER"
+                and a["parent_pilier_slug"].strip() == pilier["slug"]
+                and live(a)]
+
+    def rendu(pilier, enfants):
         lis = "\n".join(
             '        <li><a href="/blogs/%s/%s">%s</a></li>' % (BLOG, a["slug"], esc(a["title"]))
-            for a in sats
+            for a in enfants
         )
-        sections.append(
-            '    <section class="gf-hub-cluster">\n'
-            '      <h2 class="gf-hub-pilier"><a href="/blogs/%s/%s">%s</a></h2>\n'
-            '      <ul class="gf-hub-list">\n%s\n      </ul>\n'
-            '    </section>' % (BLOG, pilier["slug"], esc(pilier["title"]), lis)
-        )
+        return ('    <section class="gf-hub-cluster">\n'
+                '      <h2 class="gf-hub-pilier"><a href="/blogs/%s/%s">%s</a></h2>\n'
+                '      <ul class="gf-hub-list">\n%s\n      </ul>\n'
+                '    </section>' % (BLOG, pilier["slug"], esc(pilier["title"]), lis))
+
+    sections, vus = [], set()
+    for cn in sorted({k[0] for k in clusters}):
+        blocs_hub, blocs_pilier = [], []
+        for (kcn, _tag), arts in clusters.items():
+            if kcn != cn:
+                continue
+            for pilier in (a for a in arts if a["type"].upper() == "PILIER"):
+                if not live(pilier):
+                    continue  # pilier non publie -> on saute son theme
+                sats = satellites_de(pilier, arts)
+                if sats:
+                    blocs_pilier.append(rendu(pilier, sats))
+                    vus.update([pilier["slug"]] + [a["slug"] for a in sats])
+                else:
+                    autres = [p for p in piliers_par_num.get(cn, [])
+                              if p["slug"] != pilier["slug"] and live(p)]
+                    if not autres:
+                        continue  # hub encore vide -> rien a lister
+                    blocs_hub.append(rendu(pilier, autres))
+                    vus.add(pilier["slug"])
+        sections.extend(blocs_hub + blocs_pilier)  # le hub ouvre son cluster
+    n_clu, n_art = len(sections), len(vus)
 
     style = (
         '<style>\n'
