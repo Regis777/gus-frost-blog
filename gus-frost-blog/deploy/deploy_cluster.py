@@ -32,9 +32,25 @@ IMGPH = re.compile(r'<div class="gf-imgph">\s*Image\s*(\d+)\b[^<]*</div>', re.IG
 H1_HEAD = re.compile(r'(<article\b[^>]*>\s*)<h1\b[^>]*>.*?</h1>\s*', re.S)
 
 
-def discover(n):
-    art = sorted(glob.glob(os.path.join(ROOT, "articles", "cluster-%d-*" % n)))
-    img = sorted(glob.glob(os.path.join(ROOT, "images", "cluster-%d-*" % n)))
+def short_alt(a, lim=255):
+    # Shopify refuse (422 « image is invalid ») un alt d'image à la une > 255 caractères.
+    # L'alt complet reste dans le <img> du corps ; seule la vignette est raccourcie.
+    a = a.strip()
+    if len(a) <= lim:
+        return a
+    cut = a[:lim - 1]
+    sp = cut.rfind(" ")
+    if sp > lim * 0.6:
+        cut = cut[:sp]
+    return cut.rstrip(" ,;:").rstrip(".") + "."
+
+
+def discover(n, tag=None):
+    # tag = suffixe du dossier (ex. « chiot-accueil » -> articles/cluster-6-chiot-accueil).
+    # Indispensable dès qu'un numéro de cluster porte plusieurs sous-clusters.
+    pat = ("cluster-%d-%s" % (n, tag)) if tag else ("cluster-%d-*" % n)
+    art = sorted(glob.glob(os.path.join(ROOT, "articles", pat)))
+    img = sorted(glob.glob(os.path.join(ROOT, "images", pat)))
     if not art:
         sys.exit("Dossier articles/cluster-%d-* introuvable." % n)
     if not img:
@@ -54,8 +70,11 @@ def load_map(mp):
     return by_num, by_slug
 
 
-def cluster_rows(n):
+def cluster_rows(n, tag=None):
     rows = [r for r in read_manifest() if r["cluster_num"] == str(n)]
+    if tag:
+        pref = "articles/cluster-%d-%s/" % (n, tag)
+        rows = [r for r in rows if r["file"].replace(os.sep, "/").startswith(pref)]
     rows.sort(key=lambda r: (0 if r["type"].upper() == "PILIER" else 1, r["slug"]))
     return rows
 
@@ -90,16 +109,17 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--bake", action="store_true")
     ap.add_argument("--only")
+    ap.add_argument("--tag", help="suffixe du sous-cluster, ex. chiot-accueil")
     args = ap.parse_args()
     N = args.cluster
 
-    artdir, imgdir, mp = discover(N)
+    artdir, imgdir, mp = discover(N, args.tag)
     env = load_env()
     sh = Shopify(env)
     blog = sh.find_blog_id(env["BLOG_HANDLE"].strip())
     by_num, by_slug = load_map(mp)
     slug_set = {r["slug"] for r in read_manifest()}
-    rows = cluster_rows(N)
+    rows = cluster_rows(N, args.tag)
     if args.only:
         rows = [r for r in rows if r["slug"] == args.only]
 
@@ -167,7 +187,8 @@ def main():
             payload = make_payload(r, body, publish=False)
             payload["summary_html"] = r["excerpt"]
             if hero and hero["nouveau_fichier"] in cdn_map:
-                payload["image"] = {"src": cdn_map[hero["nouveau_fichier"]], "alt": hero["alt"]}
+                payload["image"] = {"src": cdn_map[hero["nouveau_fichier"]],
+                                    "alt": short_alt(hero["alt"])}
             res, a = sh.upsert_article(blog, payload)
             print("      -> %s OK id=%s" % (a, res.get("article", {}).get("id")))
             if args.bake:
