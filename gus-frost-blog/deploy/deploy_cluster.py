@@ -1,18 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Déploiement GÉNÉRIQUE d'un cluster dans le blog « Chiens » de Gus & Frost, EN BROUILLON.
+Déploiement GÉNÉRIQUE d'un cluster de Gus & Frost, EN BROUILLON.
 Remplace les deploy_cN_to_shopify.py : une seule logique, paramétrée par --cluster N.
 Auto-découverte :
   ARTDIR  = articles/cluster-N-*      IMG_DIR = images/cluster-N-*
   MAP     = <ARTDIR>/*images_map.csv  (colonnes : num, nouveau_fichier, article_slug, role, alt)
 Transforme chaque fragment : retire <style> d'aperçu et <h1> de tête, résout
-PLACEHOLDER_{slug} -> /blogs/chiens/{slug}, remplace <div class="gf-imgph">Image N…</div>
+PLACEHOLDER_{slug} -> /blogs/<blog>/{slug}, remplace <div class="gf-imgph">Image N…</div>
 par <img src alt>. summary_html = excerpt. Image à la une = image role=hero. published=false.
+
+--blog choisit le blog cible ET, avec lui, le manifest et la collection du CTA :
+  chiens (défaut) -> manifest.csv       + /collections/stress
+  chats           -> manifest_chat.csv  + /collections/chat
+Un même cluster_num existe des deux côtés (C10 chien « transitions » vs CH10 chat
+« cohabitation-chat ») : les manifests sont séparés et --tag lève l'ambiguïté du dossier.
 
 Usage :
   python deploy/deploy_cluster.py --cluster 7 --dry-run   # aucune écriture : diagnostic + récap
   python deploy/deploy_cluster.py --cluster 7 --bake      # upload images + crée les brouillons
+  python deploy/deploy_cluster.py --cluster 10 --tag cohabitation-chat --blog chats --dry-run
 """
 import argparse, csv, glob, os, re, sys, time
 
@@ -22,7 +29,8 @@ try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 except Exception:
     pass
-from publish import load_env, Shopify, read_manifest, make_payload          # noqa: E402
+from publish import (load_env, Shopify, read_manifest, make_payload,        # noqa: E402
+                     blog_conf)
 from upload_images import (staged_upload, existing_file_url, file_create,    # noqa: E402
                            wait_ready)
 from img_optim import build_img, png_dims                                    # noqa: E402
@@ -51,6 +59,12 @@ def discover(n, tag=None):
     pat = ("cluster-%d-%s" % (n, tag)) if tag else ("cluster-%d-*" % n)
     art = sorted(glob.glob(os.path.join(ROOT, "articles", pat)))
     img = sorted(glob.glob(os.path.join(ROOT, "images", pat)))
+    if len(art) > 1:
+        # Un même numéro porte plusieurs dossiers (sous-clusters chiot, ou C10 chien
+        # « transitions » vs CH10 chat « cohabitation-chat ») : sans --tag on en
+        # déploierait un au hasard (le 1er par ordre alphabétique).
+        sys.exit("Plusieurs dossiers pour le cluster %d : %s\n--tag est obligatoire."
+                 % (n, ", ".join(os.path.basename(a) for a in art)))
     if not art:
         sys.exit("Dossier articles/cluster-%d-* introuvable." % n)
     if not img:
@@ -70,8 +84,8 @@ def load_map(mp):
     return by_num, by_slug
 
 
-def cluster_rows(n, tag=None):
-    rows = [r for r in read_manifest() if r["cluster_num"] == str(n)]
+def cluster_rows(n, tag=None, manifest=None):
+    rows = [r for r in read_manifest(manifest) if r["cluster_num"] == str(n)]
     if tag:
         pref = "articles/cluster-%d-%s/" % (n, tag)
         rows = [r for r in rows if r["file"].replace(os.sep, "/").startswith(pref)]
@@ -79,11 +93,11 @@ def cluster_rows(n, tag=None):
     return rows
 
 
-def prepare(raw, slug, slug_set, by_num, cdn_map, dim_map):
+def prepare(raw, slug, slug_set, by_num, cdn_map, dim_map, blog):
     body = raw[raw.find("<article"):].rstrip()
     body = H1_HEAD.sub(r"\1", body, count=1)
     unknown = sorted({s for s in PH_LINK.findall(body) if s not in slug_set})
-    body = PH_LINK.sub(lambda m: "/blogs/chiens/" + m.group(1), body)
+    body = PH_LINK.sub(lambda m: "/blogs/%s/%s" % (blog, m.group(1)), body)
     nums, mismatch, missing = [], [], []
 
     def repl(m):
@@ -110,16 +124,20 @@ def main():
     ap.add_argument("--bake", action="store_true")
     ap.add_argument("--only")
     ap.add_argument("--tag", help="suffixe du sous-cluster, ex. chiot-accueil")
+    ap.add_argument("--blog", default=None,
+                    help="blog cible : chiens (défaut) ou chats. Choisit manifest + collection CTA.")
     args = ap.parse_args()
     N = args.cluster
 
     artdir, imgdir, mp = discover(N, args.tag)
     env = load_env()
+    conf = blog_conf(args.blog or env.get("BLOG_HANDLE"))
+    handle = conf["handle"]
     sh = Shopify(env)
-    blog = sh.find_blog_id(env["BLOG_HANDLE"].strip())
+    blog = sh.find_blog_id(handle)
     by_num, by_slug = load_map(mp)
-    slug_set = {r["slug"] for r in read_manifest()}
-    rows = cluster_rows(N, args.tag)
+    slug_set = {r["slug"] for r in read_manifest(conf["manifest_path"])}
+    rows = cluster_rows(N, args.tag, conf["manifest_path"])
     if args.only:
         rows = [r for r in rows if r["slug"] == args.only]
 
@@ -138,7 +156,8 @@ def main():
 
     mode = "DRY-RUN (aucune écriture)" if args.dry_run else "LIVE"
     print("=" * 74)
-    print("Cluster C%d -> blog «%s» | brouillon | %s" % (N, env["BLOG_HANDLE"], mode))
+    print("Cluster %d -> blog «%s» (%s) | brouillon | %s"
+          % (N, handle, conf["manifest"], mode))
     print("Dossier : %s | Images : %d (sur Files : %d | absentes : %d)"
           % (os.path.basename(artdir), len(all_files), len(cdn_map), len(local_missing)))
     if local_missing:
@@ -151,10 +170,11 @@ def main():
         slug = r["slug"]
         path = os.path.join(ROOT, r["file"].replace("/", os.sep))
         raw = open(path, encoding="utf-8").read()
-        body, unknown, nums, mismatch, missing = prepare(raw, slug, slug_set, by_num, cdn_map, dim_map)
+        body, unknown, nums, mismatch, missing = prepare(raw, slug, slug_set, by_num,
+                                                         cdn_map, dim_map, handle)
         hero = next((x for x in by_slug.get(slug, []) if x["role"] == "hero"), None)
         want = int(r["images_to_resolve"])
-        n_links = body.count("/blogs/%s/" % env["BLOG_HANDLE"])
+        n_links = body.count("/blogs/%s/" % handle)
         exists = sh.find_article(blog, slug)
         act = "MAJ" if exists else "CRÉATION"
 
@@ -165,7 +185,8 @@ def main():
         if "PLACEHOLDER_" in body: probs.append("PLACEHOLDER résiduel")
         if body.count('class="gf-faq"') != 1: probs.append("faq!=1")
         if body.count('class="gf-cta"') != 1: probs.append("cta!=1")
-        if body.count("/collections/stress") != 1: probs.append("collstress!=1")
+        if body.count("/collections/%s" % conf["collection"]) != 1:
+            probs.append("coll%s!=1" % conf["collection"])
         if "gf-imgph" in body: probs.append("gf-imgph résiduel")
         if len(nums) != want: probs.append("images %d!=%d(manifest)" % (len(nums), want))
         if unknown: probs.append("liens inconnus:%s" % unknown)

@@ -1,0 +1,55 @@
+{
+  "_comment": "Carte de resolution des PLACEHOLDER_ -> cible. Les slugs d'articles sont relatifs au blog (URL finale = /blogs/<BLOG_HANDLE>/<slug>). collection/produit utilisent les handles fournis dans .env. Source : reference/MAILLAGE_recap_placeholders.md + manifest.csv.",
+
+  "piliers": {
+    "PLACEHOLDER_pilier-anxiete-separation": "anxiete-separation-chien",
+    "PLACEHOLDER_pilier-peur-bruit-phobie": "chien-peur-bruit-phobie",
+    "PLACEHOLDER_pilier-calme-serenite": "chien-calme-serenite-quotidien"
+  },
+
+  "satellites": {
+    "PLACEHOLDER_satellite-01": "chien-anxieux-absence-que-faire",
+    "PLACEHOLDER_satellite-02": "anxiete-separation-chien-comprendre",
+    "PLACEHOLDER_satellite-03": "signes-anxiete-separation-chien",
+    "PLACEHOLDER_satellite-04": "habituer-chien-rester-seul",
+    "PLACEHOLDER_satellite-05": "espace-rassurant-chien-seul",
+    "PLACEHOLDER_satellite-06": "jouets-occupation-chien-seul",
+    "PLACEHOLDER_satellite-07": "camera-radio-pheromones-chien",
+    "PLACEHOLDER_satellite-08": "prevenir-anxiete-separation-chiot",
+    "PLACEHOLDER_satellite-09": "combien-temps-chien-seul",
+    "PLACEHOLDER_satellite-10": "erreurs-anxiete-separation-chien",
+
+    "PLACEHOLDER_c2-sat-01": "chien-peur-feux-artifice",
+    "PLACEHOLDER_c2-sat-02": "chien-peur-orage",
+    "PLACEHOLDER_c2-sat-03": "chien-petards-14-juillet",
+    "PLACEHOLDER_c2-sat-04": "pourquoi-chien-peur-bruits",
+    "PLACEHOLDER_c2-sat-05": "desensibiliser-chien-bruits",
+    "PLACEHOLDER_c2-sat-06": "gilet-anti-stress-couverture-ponderee-chien",
+    "PLACEHOLDER_c2-sat-07": "crise-panique-sonore-chien",
+    "PLACEHOLDER_c2-sat-08": "chien-peureux-en-ville",
+    "PLACEHOLDER_c2-sat-09": "chien-peur-inconnus-autres-chiens",
+    "PLACEHOLDER_c2-sat-10": "erreurs-chien-qui-a-peur",
+
+    "PLACEHOLDER_c3-sat-01": "chien-hyperactif-trop-excite",
+    "PLACEHOLDER_c3-sat-02": "apprendre-le-calme-chien",
+    "PLACEHOLDER_c3-sat-03": "routine-rythme-quotidien-chien",
+    "PLACEHOLDER_c3-sat-04": "stimulation-mentale-chien",
+    "PLACEHOLDER_c3-sat-05": "sommeil-du-chien",
+    "PLACEHOLDER_c3-sat-06": "chien-excitation-retrouvailles-invites",
+    "PLACEHOLDER_c3-sat-07": "mastication-lechage-chien",
+    "PLACEHOLDER_c3-sat-08": "promenade-depense-chien-equilibre",
+    "PLACEHOLDER_c3-sat-09": "environnement-apaisant-chien-maison",
+    "PLACEHOLDER_c3-sat-10": "erreurs-chien-agite"
+  },
+
+  "collections": {
+    "PLACEHOLDER_collection-anti-stress": "${COLLECTION_HANDLE}"
+  },
+
+  "produits": {
+    "_note": "Aucun PLACEHOLDER_produit-* n'est present dans les corps d'articles nettoyes. Map fournie au cas ou, alimentee par .env.",
+    "PLACEHOLDER_produit-gilet-anti-stress": "${PRODUCT_GILET_HANDLE}",
+    "PLACEHOLDER_produit-tapis-fouille": "${PRODUCT_TAPIS_FOUILLE_HANDLE}",
+    "PLACEHOLDER_produit-tapis-lechage": "${PRODUCT_TAPIS_LECHAGE_HANDLE}"
+  }
+}
