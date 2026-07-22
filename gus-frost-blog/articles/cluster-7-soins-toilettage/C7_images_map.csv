@@ -1,0 +1,28 @@
+num,fichier_origine,nouveau_fichier,article_slug,type,role,alt
+1,1.png,hero-soins-toilettage-chien.png,soins-toilettage-chien,PILIER,hero,Personne brossant calmement un chien détendu à la maison.
+2,2.png,soins-toilettage-chien-2.png,soins-toilettage-chien,PILIER,secondaire,Main écartant délicatement le poil pour inspecter la peau d'un chien.
+3,3.png,soins-toilettage-chien-3.png,soins-toilettage-chien,PILIER,secondaire,"Chien présentant spontanément sa patte à son maître, ambiance sereine."
+4,4.png,hero-soins-cooperatifs-chien.png,soins-cooperatifs-chien,SAT,hero,Chien détendu posant volontairement son menton dans la main de son maître assis.
+5,5.png,soins-cooperatifs-chien-2.png,soins-cooperatifs-chien,SAT,secondaire,Gros plan sur un chien qui se lèche la truffe et détourne légèrement la tête.
+6,6.png,hero-habituer-chien-manipulation.png,habituer-chien-manipulation,SAT,hero,Personne assise touchant délicatement la patte d'un chien détendu couché à côté d'elle.
+7,7.png,habituer-chien-manipulation-2.png,habituer-chien-manipulation,SAT,secondaire,Main soulevant doucement le pavillon de l'oreille d'un chien calme qui reste couché.
+8,8.png,hero-brosser-chien-poil.png,brosser-chien-poil,SAT,hero,"Personne brossant un chien détendu couché sur un tapis, à la maison."
+9,9.png,brosser-chien-poil-2.png,brosser-chien-poil,SAT,secondaire,Gros plan sur une main écartant le poil long d'un chien pour vérifier l'absence de nœud.
+10,10.png,hero-couper-griffes-chien.png,couper-griffes-chien,SAT,hero,"Gros plan sur une patte de chien tenue délicatement, griffes claires visibles."
+11,11.png,couper-griffes-chien-2.png,couper-griffes-chien,SAT,secondaire,Chien couché léchant un tapis pendant que son maître s'occupe calmement d'une patte.
+12,12.png,hero-bain-chien.png,bain-chien,SAT,hero,"Chien calme dans une baignoire sur un tapis antidérapant, savonné en douceur."
+13,13.png,bain-chien-2.png,bain-chien,SAT,secondaire,"Chien enveloppé dans une serviette, séché doucement après le bain."
+14,14.png,hero-nettoyer-oreilles-chien.png,nettoyer-oreilles-chien,SAT,hero,Personne soulevant délicatement l'oreille tombante d'un chien pour l'inspecter.
+15,15.png,nettoyer-oreilles-chien-2.png,nettoyer-oreilles-chien,SAT,secondaire,Chien détendu léchant un tapis pendant qu'on lui masse doucement la base de l'oreille.
+16,16.png,hero-hygiene-dentaire-chien.png,hygiene-dentaire-chien,SAT,hero,Personne soulevant délicatement la babine d'un chien calme pour regarder ses dents.
+17,17.png,hygiene-dentaire-chien-2.png,hygiene-dentaire-chien,SAT,secondaire,Doigtier en silicone enduit de dentifrice canin présenté à un chien attentif.
+18,18.png,hero-soin-coussinets-pattes-chien.png,soin-coussinets-pattes-chien,SAT,hero,Main tenant délicatement la patte d'un chien pour examiner ses coussinets après une promenade.
+19,19.png,soin-coussinets-pattes-chien-2.png,soin-coussinets-pattes-chien,SAT,secondaire,"Application d'un baume sur les coussinets d'un chien détendu, allongé au calme."
+20,20.png,hero-chien-visite-veterinaire.png,chien-visite-veterinaire,SAT,hero,Chien assis calmement dans une salle d'attente vétérinaire près de son maître.
+21,21.png,chien-visite-veterinaire-2.png,chien-visite-veterinaire,SAT,secondaire,Vétérinaire examinant doucement un chien détendu tenu contre son maître.
+22,22.png,hero-chien-voiture-trajet.png,chien-voiture-trajet,SAT,hero,Chien attaché avec un harnais de sécurité sur la banquette arrière d'une voiture.
+23,23.png,chien-voiture-trajet-2.png,chien-voiture-trajet,SAT,secondaire,Chien buvant à une gamelle lors d'une pause sur une aire calme pendant un trajet.
+24,24.png,hero-habituer-chien-caisse-transport.png,habituer-chien-caisse-transport,SAT,hero,Chien allongé détendu à l'intérieur d'une caisse de transport porte ouverte à la maison.
+25,25.png,habituer-chien-caisse-transport-2.png,habituer-chien-caisse-transport,SAT,secondaire,Caisse de transport bien calée dans le coffre d'une voiture avec un chien calme à l'intérieur.
+26,26.png,hero-erreurs-soins-toilettage-chien.png,erreurs-soins-toilettage-chien,SAT,hero,Personne interrompant calmement un soin pour laisser un chien tendu reprendre ses esprits.
+27,27.png,erreurs-soins-toilettage-chien-2.png,erreurs-soins-toilettage-chien,SAT,secondaire,"Séance de coupe de griffes fractionnée, une seule patte, chien récompensé au calme."

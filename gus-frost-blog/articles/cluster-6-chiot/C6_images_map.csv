@@ -1,0 +1,23 @@
+num,fichier_origine,nouveau_fichier,article_slug,type,role,alt
+1,1.png,hero-chiot-premiers-mois-salon.png,chiot-guide-premiers-mois,PILIER,hero,Jeune chiot qui explore calmement un salon lumineux et aménagé pour son arrivée.
+2,2.png,chiot-socialisation-rencontre-personne.png,chiot-guide-premiers-mois,PILIER,satellite,Chiot détendu qui approche de lui-même une personne accroupie à sa hauteur.
+3,3.png,chiot-tapis-de-fouille-stimulation.png,chiot-guide-premiers-mois,PILIER,satellite,Chiot concentré qui cherche des croquettes cachées dans un tapis de fouille.
+4,4.png,hero-chiot-proprete-recompense-jardin.png,apprendre-proprete-chiot-methode,SAT04,hero,Chiot félicité et récompensé dehors juste après avoir fait ses besoins.
+5,5.png,chiot-signal-envie-uriner.png,apprendre-proprete-chiot-methode,SAT04,satellite,"Chiot qui renifle le sol et tourne en rond, signe qu'il a besoin de sortir."
+6,6.png,hero-chiot-attend-porte-proprete.png,temps-proprete-chiot-delais,SAT05,hero,Jeune chiot assis près de la porte qui attend patiemment de sortir.
+7,7.png,hero-nettoyage-accident-chiot.png,chiot-accidents-proprete-solutions,SAT06,hero,Propriétaire qui nettoie calmement un accident pendant que le chiot reste détendu à côté.
+8,8.png,hero-espace-chiot-amenage.png,preparer-arrivee-chiot-maison,SAT01,hero,"Coin dédié au chiot avec couchage, gamelles et jouets, aménagé avant son arrivée."
+9,9.png,securiser-cables-arrivee-chiot.png,preparer-arrivee-chiot-maison,SAT01,satellite,Main qui sécurise un câble électrique le long d'une plinthe pour protéger un chiot.
+10,10.png,hero-chiot-premiers-jours-decouverte.png,premiers-jours-chiot-adaptation,SAT02,hero,Chiot qui explore calmement une pièce à son rythme les premiers jours.
+11,11.png,enfant-chiot-rencontre-douce.png,premiers-jours-chiot-adaptation,SAT02,satellite,Enfant assis calmement laissant un chiot venir vers lui de lui-même.
+12,12.png,hero-chiot-dort-pres-du-lit.png,premieres-nuits-chiot-sommeil,SAT03,hero,Chiot endormi paisiblement dans son couchage installé près du lit de son humain.
+13,13.png,hero-chiot-rencontre-chien-adulte.png,socialiser-chiot-fenetre-rencontres,SAT07,hero,Chiot qui rencontre calmement un chien adulte équilibré lors d'une rencontre supervisée.
+14,14.png,chiot-socialisation-surface-nouvelle.png,socialiser-chiot-fenetre-rencontres,SAT07,satellite,Chiot curieux qui explore une surface nouvelle sous les pattes pendant sa socialisation.
+15,15.png,hero-chiot-tapis-lechage-congele-dentition.png,dentition-chiot-etapes-solutions,SAT08,hero,Chiot qui lèche un tapis de léchage congelé pour soulager ses gencives pendant la dentition.
+16,16.png,chiot-jouet-a-macher-dentition.png,dentition-chiot-etapes-solutions,SAT08,satellite,Chiot qui mâche un jouet adapté plutôt qu'un pied de chaise pendant la dentition.
+17,17.png,hero-rediriger-mordillement-chiot.png,mordillements-chiot-canaliser,SAT09,hero,Main qui propose un jouet à mâcher pour rediriger un chiot qui allait mordiller.
+18,18.png,hero-chiot-mastication-support-adapte.png,besoin-mastication-chiot,SAT10,hero,Chiot allongé qui mastique paisiblement un support de mastication adapté.
+19,19.png,hero-chiot-repos-apres-jeu.png,gerer-energie-chiot-jeu-repos,SAT11,hero,Chiot profondément endormi dans son panier après une séance de jeu.
+20,20.png,chiot-jeu-corde-adapte.png,gerer-energie-chiot-jeu-repos,SAT11,satellite,Chiot qui joue à tirer sur un jouet tenu par une personne lors d'une séance courte.
+21,21.png,hero-chiot-manipulation-patte-soins.png,manipulation-soins-chiot-habituation,SAT12,hero,Personne qui manipule doucement la patte d'un chiot détendu avec une friandise.
+22,22.png,chiot-brossage-doux-soins.png,manipulation-soins-chiot-habituation,SAT12,satellite,"Chiot brossé doucement par une personne, détendu, lors d'un moment de toilettage."

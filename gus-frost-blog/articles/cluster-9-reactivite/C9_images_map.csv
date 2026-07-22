@@ -1,0 +1,28 @@
+num,fichier_origine,nouveau_fichier,article_slug,type,role,alt
+1,1.png,hero-reactivite-chien.png,reactivite-chien,PILIER,hero,"Chien tendu en laisse qui fixe un congénère au loin, maître calme à ses côtés."
+2,2.png,reactivite-chien-2.png,reactivite-chien,PILIER,secondaire,Maître qui fait un demi-tour calme avec son chien pour éviter un croisement rapproché.
+3,3.png,reactivite-chien-3.png,reactivite-chien,PILIER,secondaire,"Chien détendu qui renifle l'herbe tranquillement, oreilles souples, dans un lieu dégagé."
+4,4.png,hero-reactivite-chien-comprendre.png,reactivite-chien-comprendre,SAT01,hero,"Gros plan sur un chien attentif et un peu tendu, oreilles orientées vers un déclencheur hors champ."
+5,5.png,reactivite-chien-comprendre-2.png,reactivite-chien-comprendre,SAT01,secondaire,"Deux chiens qui s'observent calmement à bonne distance dans un parc, maîtres détendus."
+6,6.png,hero-seuil-de-reactivite-chien.png,seuil-de-reactivite-chien,SAT02,hero,"Maître et chien observant un congénère au loin, le chien calme et attentif, bonne distance visible."
+7,7.png,seuil-de-reactivite-chien-2.png,seuil-de-reactivite-chien,SAT02,secondaire,Chien qui accepte une friandise de son maître tout en gardant un œil calme sur un déclencheur éloigné.
+8,8.png,hero-chien-reactif-laisse.png,chien-reactif-laisse,SAT03,hero,"Chien tendu au bout d'une laisse détendue tenue calmement, maître posé qui garde son sang-froid."
+9,9.png,chien-reactif-laisse-2.png,chien-reactif-laisse,SAT03,secondaire,"Maître et chien qui s'éloignent sereinement d'un croisement, laisse détendue, chien de nouveau attentif à son maître."
+10,10.png,hero-croiser-chien-personne-promenade.png,croiser-chien-personne-promenade,SAT04,hero,Maître qui repère de loin un chien arrivant en face et anticipe un changement de trajectoire.
+11,11.png,croiser-chien-personne-promenade-2.png,croiser-chien-personne-promenade,SAT04,secondaire,"Deux binômes maître-chien qui se croisent à bonne distance sur un large chemin, en décrivant une légère courbe."
+12,12.png,hero-amenager-promenades-chien-reactif.png,amenager-promenades-chien-reactif,SAT05,hero,"Chien détendu qui renifle un sentier dégagé et peu fréquenté, tôt le matin, lumière douce."
+13,13.png,amenager-promenades-chien-reactif-2.png,amenager-promenades-chien-reactif,SAT05,secondaire,"Chien absorbé dans un reniflage prolongé au sol dans un pré ouvert, maître patient à côté."
+14,14.png,hero-materiel-chien-reactif.png,materiel-chien-reactif,SAT06,hero,"Chien portant un harnais confortable bien ajusté, attaché à une laisse tenue calmement."
+15,15.png,materiel-chien-reactif-2.png,materiel-chien-reactif,SAT06,secondaire,"Chien acceptant volontiers de glisser le museau dans une muselière panier tendue par son maître, friandise à la clé."
+16,16.png,hero-faire-redescendre-chien-reactif.png,faire-redescendre-chien-reactif,SAT07,hero,"Chien haletant et encore tendu juste après une réaction, maître qui l'éloigne calmement de la scène."
+17,17.png,faire-redescendre-chien-reactif-2.png,faire-redescendre-chien-reactif,SAT07,secondaire,"Chien qui s'ébroue et renifle paisiblement l'herbe, détendu, à l'écart de tout déclencheur."
+18,18.png,hero-chien-frustration-laisse-congeneres.png,chien-frustration-laisse-congeneres,SAT08,hero,"Chien qui saute et tire joyeusement vers un congénère au loin, corps entièrement tendu vers l'avant."
+19,19.png,chien-frustration-laisse-congeneres-2.png,chien-frustration-laisse-congeneres,SAT08,secondaire,"Chien assis calmement à côté de son maître qui le récompense, un autre chien visible et tranquille en arrière-plan."
+20,20.png,hero-chien-surexcite-vue-autre-chien.png,chien-surexcite-vue-autre-chien,SAT09,hero,"Jeune chien très excité qui couine et se cabre à la vue d'un congénère, maître qui garde son calme."
+21,21.png,chien-surexcite-vue-autre-chien-2.png,chien-surexcite-vue-autre-chien,SAT09,secondaire,"Chien qui détourne le regard d'un autre chien pour se tourner vers son maître, attentif et plus calme."
+22,22.png,hero-exercices-desensibilisation-chien-reactif.png,exercices-desensibilisation-chien-reactif,SAT10,hero,Maître qui récompense son chien au moment précis où celui-ci aperçoit calmement un congénère au loin.
+23,23.png,exercices-desensibilisation-chien-reactif-2.png,exercices-desensibilisation-chien-reactif,SAT10,secondaire,"Chien qui se détourne calmement d'un congénère sur invitation de son maître, laisse détendue."
+24,24.png,hero-reactivite-peur-agression-difference.png,reactivite-peur-agression-difference,SAT11,hero,"Chien qui affiche des signaux de tension nette, corps figé et regard fixe, maître attentif qui garde ses distances."
+25,25.png,reactivite-peur-agression-difference-2.png,reactivite-peur-agression-difference,SAT11,secondaire,"Maître qui met calmement de la distance avec son chien tendu, en gardant son sang-froid, sans confrontation."
+26,26.png,hero-chien-reactif-quand-consulter.png,chien-reactif-quand-consulter,SAT12,hero,"Maître attentif échangeant avec un éducateur canin dans un lieu calme, chien détendu à leurs côtés."
+27,27.png,chien-reactif-quand-consulter-2.png,chien-reactif-quand-consulter,SAT12,secondaire,"Chien serein en train de travailler un exercice avec son maître et un éducateur, ambiance positive et détendue."

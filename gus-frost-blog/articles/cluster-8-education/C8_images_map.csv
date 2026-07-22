@@ -1,0 +1,30 @@
+num,fichier_origine,nouveau_fichier,article_slug,type,role,alt
+1,1.png,hero-education-positive-chien.png,education-positive-chien,PILIER,hero,Maître et chien attentifs l'un à l'autre pendant une séance d'éducation en extérieur.
+2,2.png,education-positive-chien-2.png,education-positive-chien,PILIER,secondaire,"Chien assis face à son maître qui tient une friandise, séance calme en intérieur."
+3,3.png,education-positive-chien-3.png,education-positive-chien,PILIER,secondaire,"Chien détaché qui revient joyeusement vers son maître dans un parc, oreilles souples."
+4,4.png,hero-renforcement-positif-chien.png,renforcement-positif-chien,SAT01,hero,"Gros plan sur une main qui tend une friandise à un chien attentif, regard connecté."
+5,5.png,renforcement-positif-chien-2.png,renforcement-positif-chien,SAT01,secondaire,Chien suivant du regard une main qui remonte au-dessus de sa tête pour l'amener à s'asseoir.
+6,6.png,hero-recompenses-friandises-education-chien.png,recompenses-friandises-education-chien,SAT02,hero,Assortiment de friandises de tailles et de valeurs différentes posées près d'un sac à friandises.
+7,7.png,recompenses-friandises-education-chien-2.png,recompenses-friandises-education-chien,SAT02,secondaire,"Maître félicitant joyeusement son chien avec la voix et une caresse, sans friandise en main."
+8,8.png,hero-seances-education-courtes-chien.png,seances-education-courtes-chien,SAT03,hero,"Maître et chien concentrés lors d'une courte séance dans le salon, ambiance détendue."
+9,9.png,seances-education-courtes-chien-2.png,seances-education-courtes-chien,SAT03,secondaire,Chien assis qui attend calmement devant sa gamelle avant le repas.
+10,10.png,hero-apprendre-assis-chien.png,apprendre-assis-chien,SAT04,hero,"Chien assis face à son maître accroupi, tous deux détendus, friandise en cours de remise."
+11,11.png,apprendre-assis-chien-2.png,apprendre-assis-chien,SAT04,secondaire,"Chien assis dans la rue, attentif à son maître malgré les passants en arrière-plan."
+12,12.png,hero-apprendre-coucher-chien.png,apprendre-coucher-chien,SAT05,hero,"Chien couché détendu au sol, museau posé, regardant son maître avec confiance."
+13,13.png,apprendre-coucher-chien-2.png,apprendre-coucher-chien,SAT05,secondaire,Chien couché calmement en terrasse pendant que son maître est attablé.
+14,14.png,hero-apprendre-rappel-chien.png,apprendre-rappel-chien,SAT06,hero,"Chien courant joyeusement vers son maître accroupi et souriant, dans un pré."
+15,15.png,apprendre-rappel-chien-2.png,apprendre-rappel-chien,SAT06,secondaire,"Chien en longe explorant un pré, le maître tenant l'extrémité de la longe à distance."
+16,16.png,hero-marche-en-laisse-sans-tirer-chien.png,marche-en-laisse-sans-tirer-chien,SAT07,hero,"Chien marchant tranquillement à côté de son maître, laisse formant un joli U détendu."
+17,17.png,marche-en-laisse-sans-tirer-chien-2.png,marche-en-laisse-sans-tirer-chien,SAT07,secondaire,Maître immobile façon arbre pendant que son chien relâche la tension sur la laisse.
+18,18.png,hero-apprendre-pas-bouger-chien.png,apprendre-pas-bouger-chien,SAT08,hero,"Chien assis qui reste en place tandis que son maître recule de quelques pas, main levée."
+19,19.png,apprendre-pas-bouger-chien-2.png,apprendre-pas-bouger-chien,SAT08,secondaire,"Chien couché qui reste en place pendant qu'une balle roule devant lui, maître à proximité."
+20,20.png,hero-autocontrole-chien.png,autocontrole-chien,SAT09,hero,"Chien assis qui attend calmement devant sa gamelle posée au sol, sans se jeter dessus."
+21,21.png,autocontrole-chien-2.png,autocontrole-chien,SAT09,secondaire,"Chien assis calmement pour saluer un visiteur qui se penche vers lui, quatre pattes au sol."
+22,22.png,hero-gerer-distractions-generalisation-chien.png,gerer-distractions-generalisation-chien,SAT10,hero,"Chien concentré sur son maître dans un parc animé, d'autres promeneurs en arrière-plan flou."
+23,23.png,gerer-distractions-generalisation-chien-2.png,gerer-distractions-generalisation-chien,SAT10,secondaire,Maître travaillant le rappel de son chien à bonne distance d'un autre promeneur avec chien.
+24,24.png,hero-materiel-education-positive-chien.png,materiel-education-positive-chien,SAT11,hero,"Ensemble d'équipement d'éducation posé sur une table : harnais, laisse, longe, sac à friandises."
+25,25.png,materiel-education-positive-chien-2.png,materiel-education-positive-chien,SAT11,secondaire,Comparaison visuelle entre un harnais en Y confortable et des outils coercitifs barrés d'une croix.
+26,26.png,hero-eduquer-chien-adulte-adopte.png,eduquer-chien-adulte-adopte,SAT12,hero,"Chien adulte au regard doux, récemment adopté, observant tranquillement son nouveau foyer."
+27,27.png,eduquer-chien-adulte-adopte-2.png,eduquer-chien-adulte-adopte,SAT12,secondaire,Adoptant et chien adulte partageant un moment de complicité lors d'une première séance douce.
+28,28.png,hero-erreurs-education-chien.png,erreurs-education-chien,SAT13,hero,"Maître pensif observant son chien distrait, illustrant un moment d'apprentissage qui patine."
+29,29.png,erreurs-education-chien-2.png,erreurs-education-chien,SAT13,secondaire,"Chien attentif et joyeux en pleine réussite d'un exercice, maître souriant le félicitant."

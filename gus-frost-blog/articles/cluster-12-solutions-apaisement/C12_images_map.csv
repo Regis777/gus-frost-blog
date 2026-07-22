@@ -1,0 +1,20 @@
+num,fichier_origine,nouveau_fichier,article_slug,type,role,alt
+1,1.png,hero-solutions-apaiser-chien.png,solutions-apaiser-chien,PILIER,hero,"Chien détendu allongé sur le flanc dans un salon calme et lumineux, diffuseur discret en arrière-plan."
+2,2.png,solutions-apaiser-chien-2.png,solutions-apaiser-chien,PILIER,secondaire,"Chien concentré le museau plongé dans un tapis de fouille en tissu vert, à la recherche de croquettes."
+3,3.png,solutions-apaiser-chien-3.png,solutions-apaiser-chien,PILIER,secondaire,"Maître et chien partageant un moment calme sur un tapis, lumière douce de fin de journée."
+4,4.png,hero-pheromones-apaisantes-chien.png,pheromones-apaisantes-chien,SAT01,hero,"Diffuseur de phéromones branché dans un salon, chien couché paisiblement à proximité."
+5,5.png,pheromones-apaisantes-chien-2.png,pheromones-apaisantes-chien,SAT01,secondaire,Gros plan sur un chien portant un collier apaisant lors d'une promenade tranquille.
+6,6.png,hero-complements-calmants-chien.png,complements-calmants-chien,SAT02,hero,Main tendant une friandise calmante à un chien attentif dans une cuisine lumineuse.
+7,7.png,complements-calmants-chien-2.png,complements-calmants-chien,SAT02,secondaire,Chien détendu allongé aux pieds de son maître assis dans un salon paisible.
+8,8.png,hero-tapis-lechage-apaiser-chien.png,tapis-lechage-apaiser-chien,SAT03,hero,"Chien léchant appliqué un tapis de léchage vert fixé au carrelage, expression concentrée et détendue."
+9,9.png,tapis-lechage-apaiser-chien-2.png,tapis-lechage-apaiser-chien,SAT03,secondaire,"Gros plan sur un tapis de léchage garni de purée, ventouses visibles, prêt à être proposé."
+10,10.png,hero-tapis-fouille-chien.png,tapis-fouille-chien,SAT04,hero,"Chien fouillant activement un tapis de reniflage gris, museau enfoui entre les lanières de tissu."
+11,11.png,tapis-fouille-chien-2.png,tapis-fouille-chien,SAT04,secondaire,"Tapis de fouille roulé et rangé à côté d'un bol de croquettes, prêt pour la prochaine séance."
+12,12.png,hero-musique-apaisante-chien.png,musique-apaisante-chien,SAT05,hero,"Chien assoupi sur un canapé dans un salon calme, enceinte discrète diffusant une musique douce."
+13,13.png,musique-apaisante-chien-2.png,musique-apaisante-chien,SAT05,secondaire,Maître réglant le volume d'une enceinte pendant qu'un chien se repose tranquillement à ses pieds.
+14,14.png,hero-massage-ttouch-chien.png,massage-ttouch-chien,SAT06,hero,Mains d'un maître massant doucement les épaules d'un chien allongé et détendu sur un tapis.
+15,15.png,massage-ttouch-chien-2.png,massage-ttouch-chien,SAT06,secondaire,Gros plan sur un chien aux yeux mi-clos pendant un massage doux de la base des oreilles.
+16,16.png,hero-aides-anti-stress-inutiles.png,aides-anti-stress-inutiles,SAT07,hero,Étal encombré de produits anti-stress pour chien aux emballages colorés et promesses affichées.
+17,17.png,aides-anti-stress-inutiles-2.png,aides-anti-stress-inutiles,SAT07,secondaire,"Maître dubitatif lisant l'étiquette d'un produit anti-stress en rayon, chien assis à côté."
+18,18.png,hero-routine-apaisement-chien.png,routine-apaisement-chien,SAT08,hero,Chien attendant sagement près de sa gamelle à l'heure du repas dans une cuisine ordonnée.
+19,19.png,routine-apaisement-chien-2.png,routine-apaisement-chien,SAT08,secondaire,"Chien paisiblement endormi dans son panier le soir, ambiance tamisée et calme du foyer."

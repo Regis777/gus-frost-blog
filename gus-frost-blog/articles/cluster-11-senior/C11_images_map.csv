@@ -1,0 +1,28 @@
+num,fichier_origine,nouveau_fichier,article_slug,type,role,alt
+1,1.png,hero-chien-senior-vieillissement.png,chien-senior-vieillissement,PILIER,hero,"Chien âgé serein au museau grisonnant, couché sur un tapis moelleux près d'une fenêtre, maître main posée."
+2,2.png,chien-senior-vieillissement-2.png,chien-senior-vieillissement,PILIER,secondaire,Maître aide un vieux chien à monter une petite rampe vers le canapé.
+3,3.png,chien-senior-vieillissement-3.png,chien-senior-vieillissement,PILIER,secondaire,"Gros plan tendre d'un museau grisonnant, regard doux."
+4,4.png,hero-reconnaitre-signes-vieillissement-chien.png,reconnaitre-signes-vieillissement-chien,SAT01,hero,"Un vieux chien se lève lentement de son couchage, un léger effort visible dans sa posture."
+5,5.png,reconnaitre-signes-vieillissement-chien-2.png,reconnaitre-signes-vieillissement-chien,SAT01,secondaire,"Gros plan sur un museau et des sourcils grisonnants, les yeux légèrement troubles."
+6,6.png,hero-amenager-maison-chien-senior.png,amenager-maison-chien-senior,SAT02,hero,"Un salon avec tapis et chemins antidérapants au sol, un vieux chien y marche sereinement."
+7,7.png,amenager-maison-chien-senior-2.png,amenager-maison-chien-senior,SAT02,secondaire,"Une rampe douce vers le canapé ou le lit, le chien l'emprunte tranquillement."
+8,8.png,hero-chien-senior-arthrose-mobilite.png,chien-senior-arthrose-mobilite,SAT03,hero,"Un vieux chien en promenade lente sur l'herbe, démarche prudente."
+9,9.png,chien-senior-arthrose-mobilite-2.png,chien-senior-arthrose-mobilite,SAT03,secondaire,Un maître masse très doucement l'arrière-train d'un chien allongé et détendu.
+10,10.png,hero-couchage-confort-chien-age.png,couchage-confort-chien-age,SAT04,hero,Gros plan d'un chien profondément endormi sur un couchage orthopédique épais et moelleux.
+11,11.png,couchage-confort-chien-age-2.png,couchage-confort-chien-age,SAT04,secondaire,"Un couchage douillet placé dans un coin calme et chaud, près d'une fenêtre lumineuse."
+12,12.png,hero-sommeil-chien-senior.png,sommeil-chien-senior,SAT05,hero,"Un chien âgé qui dort paisiblement en journée, allongé sur le flanc dans un rai de lumière douce traversant la pièce."
+13,13.png,sommeil-chien-senior-2.png,sommeil-chien-senior,SAT05,secondaire,"Scène nocturne douce, une veilleuse tamisée diffuse une lueur chaleureuse tandis qu'un chien âgé se rendort paisiblement dans son panier."
+14,14.png,hero-dysfonction-cognitive-chien-age.png,dysfonction-cognitive-chien-age,SAT06,hero,"Un vieux chien un peu figé face à un coin de la pièce, l'air songeur, dans une désorientation douce."
+15,15.png,dysfonction-cognitive-chien-age-2.png,dysfonction-cognitive-chien-age,SAT06,secondaire,Un maître accroupi rassure calmement son vieux chien d'un geste doux.
+16,16.png,hero-stimuler-chien-senior-mental.png,stimuler-chien-senior-mental,SAT07,hero,"Un chien senior le nez plongé dans un tapis de fouille, concentré."
+17,17.png,stimuler-chien-senior-mental-2.png,stimuler-chien-senior-mental,SAT07,secondaire,"Un maître propose un petit jeu de flair, des friandises cachées sous des gobelets."
+18,18.png,hero-activite-promenade-chien-age.png,activite-promenade-chien-age,SAT08,hero,"Un chien senior qui renifle tranquillement l'herbe au parc, laisse détendue, courte promenade."
+19,19.png,activite-promenade-chien-age-2.png,activite-promenade-chien-age,SAT08,secondaire,"Un chien âgé qui se repose sur un chemin ombragé pendant la balade, maître patient à côté."
+20,20.png,hero-chien-senior-perte-vue-audition.png,chien-senior-perte-vue-audition,SAT09,hero,"Un maître tend la main pour que le chien la sente avant de le toucher, chien malvoyant confiant."
+21,21.png,chien-senior-perte-vue-audition-2.png,chien-senior-perte-vue-audition,SAT09,secondaire,"Un chien près d'un escalier sécurisé par une barrière, une veilleuse douce dans le couloir."
+22,22.png,hero-alimentation-appetit-chien-age.png,alimentation-appetit-chien-age,SAT10,hero,"Un chien mange à une gamelle surélevée, posture confortable, cou détendu."
+23,23.png,alimentation-appetit-chien-age-2.png,alimentation-appetit-chien-age,SAT10,secondaire,"Un maître prépare une ration humidifiée et appétente, le chien attentif à côté."
+24,24.png,hero-soins-adaptes-chien-senior.png,soins-adaptes-chien-senior,SAT11,hero,"Un maître coupe délicatement les griffes d'un vieux chien calme, geste de soin coopératif."
+25,25.png,soins-adaptes-chien-senior-2.png,soins-adaptes-chien-senior,SAT11,secondaire,"Brossage doux d'un chien âgé installé confortablement, moment de tendresse."
+26,26.png,hero-accompagner-fin-de-vie-chien.png,accompagner-fin-de-vie-chien,SAT12,hero,"Un chien âgé très paisible blotti contre son maître sur un couchage douillet, lumière chaude et douce."
+27,27.png,accompagner-fin-de-vie-chien-2.png,accompagner-fin-de-vie-chien,SAT12,secondaire,"Une main du maître posée tendrement sur le chien endormi, atmosphère sereine et digne."
