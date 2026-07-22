@@ -1,9 +1,18 @@
 .env
 .env.*
+!.env.example
+.shopify_token_cache.json
+build/
 node_modules/
 __pycache__/
 *.log
 .DS_Store
+
+# Atelier de production (brouillons, bibliographies, passages-relais, handoffs) :
+# il vit sur le Drive et n'entre pas dans le depot, qui reste le livrable
+# deployable. Decision du 22/07/2026.
+gus-frost-blog/Blogs cowork/
+gus-frost-blog/Projet Automatisation Images Chatgpt/
 
 # Images des clusters : non versionnees (22/07/2026).
 # Git ne sait pas differencier un binaire : une image est celle utilisee ou elle
@@ -13,3 +22,6 @@ __pycache__/
 # intellectuel : C<N>_images_map.csv (numero -> fichier -> slug -> role -> alt)
 # et les fichiers PROMPTS-IMAGES_*.md.
 gus-frost-blog/images/**/*.png
+gus-frost-blog/**/*.jpg
+gus-frost-blog/**/*.jpeg
+gus-frost-blog/**/*.zip
