@@ -1,0 +1,343 @@
+<!-- ================================================================
+     Gus & Frost — corps de la page Shopify « Programme Ambassadeurs ».
+     S'insère dans le thème (Copie de Dawn) via {{ page.content }} :
+       - le thème fournit en-tête, menu, footer ET le H1 = titre de la page.
+         => AUCUN <h1> ici (evite le H1 duplique). Le hero est en <h2>.
+       - tout le CSS est scope sous .gf-ambass pour ne pas heurter Dawn
+         (.card / .btn / .hero de Dawn ne sont pas touches).
+       - polices : variables du theme (--font-heading-family / --font-body-family)
+         => Montserrat titres / Lora corps, automatiquement.
+       - formulaire = contact natif Shopify (POST /contact) : les candidatures
+         arrivent sur l'e-mail de contact de la boutique. Aucune app requise.
+     ================================================================ -->
+<style>
+  .gf-ambass {
+    --gfa-surface: #FFFFFF;
+    --gfa-surface-2: #FBF7EE;
+    --gfa-text: #241E17;
+    --gfa-muted: #6F675A;
+    --gfa-line: #E6DECB;
+    --gfa-accent: #2E5C4E;
+    --gfa-accent-2: #3B7361;
+    --gfa-accent-ink: #F3F8F2;
+    --gfa-warm: #B87F33;
+    --gfa-radius: 16px;
+    --gfa-radius-sm: 10px;
+
+    --gfa-display: var(--font-heading-family, "Montserrat", ui-sans-serif, "Segoe UI", system-ui, sans-serif);
+    --gfa-body: var(--font-body-family, "Lora", Georgia, "Times New Roman", serif);
+
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 8px 0 24px;
+    font-family: var(--gfa-body);
+    color: var(--gfa-text);
+    font-size: 18px;
+    line-height: 1.65;
+  }
+
+  .gf-ambass * { box-sizing: border-box; }
+  .gf-ambass h2, .gf-ambass h3, .gf-ambass .gfa-eyebrow,
+  .gf-ambass .gfa-btn, .gf-ambass label, .gf-ambass .gfa-stat-num,
+  .gf-ambass .gfa-step-num, .gf-ambass summary, .gf-ambass .gfa-big,
+  .gf-ambass .gfa-code, .gf-ambass .gfa-badge {
+    font-family: var(--gfa-display);
+  }
+  .gf-ambass h2, .gf-ambass h3 { text-wrap: balance; letter-spacing: -0.01em; color: var(--gfa-text); margin: 0; }
+  .gf-ambass p { margin: 0; }
+  .gf-ambass a { color: var(--gfa-accent); }
+
+  .gf-ambass .gfa-eyebrow {
+    text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: 12.5px; font-weight: 600; color: var(--gfa-accent);
+  }
+
+  .gf-ambass .gfa-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 15px; font-weight: 600; letter-spacing: 0.01em;
+    padding: 14px 26px; border-radius: 999px;
+    text-decoration: none; cursor: pointer; border: 1.5px solid transparent;
+    transition: background .15s ease, border-color .15s ease, transform .15s ease;
+  }
+  .gf-ambass .gfa-btn-primary { background: var(--gfa-accent); color: var(--gfa-accent-ink); }
+  .gf-ambass .gfa-btn-primary:hover { background: var(--gfa-accent-2); transform: translateY(-1px); color: var(--gfa-accent-ink); }
+  .gf-ambass .gfa-btn-ghost { background: transparent; color: var(--gfa-text); border-color: var(--gfa-line); }
+  .gf-ambass .gfa-btn-ghost:hover { border-color: var(--gfa-accent); color: var(--gfa-accent); }
+
+  /* ---------- Hero ---------- */
+  .gf-ambass .gfa-hero {
+    position: relative; overflow: hidden;
+    border: 1px solid var(--gfa-line); border-radius: 24px;
+    background:
+      radial-gradient(60% 90% at 85% 6%, color-mix(in srgb, var(--gfa-accent) 14%, transparent), transparent 60%),
+      radial-gradient(55% 70% at 6% 96%, color-mix(in srgb, var(--gfa-warm) 12%, transparent), transparent 62%),
+      var(--gfa-surface-2);
+    padding: 46px 44px;
+    display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 44px; align-items: center;
+  }
+  @media (max-width: 900px) { .gf-ambass .gfa-hero { grid-template-columns: 1fr; gap: 32px; padding: 32px 24px; } }
+
+  .gf-ambass .gfa-hero h2 { font-size: clamp(30px, 4.4vw, 48px); line-height: 1.06; margin: 14px 0 18px; font-weight: 700; }
+  .gf-ambass .gfa-hero h2 em { font-style: normal; color: var(--gfa-accent); }
+  .gf-ambass .gfa-lead { font-size: 19px; color: var(--gfa-muted); max-width: 32ch; margin-bottom: 28px; }
+  .gf-ambass .gfa-hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .gf-ambass .gfa-stats { display: flex; gap: 30px; margin-top: 34px; flex-wrap: wrap; }
+  .gf-ambass .gfa-stat-num { font-size: 30px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+  .gf-ambass .gfa-stat-lbl { font-size: 12.5px; color: var(--gfa-muted); margin-top: 6px; font-family: var(--gfa-display); }
+
+  .gf-ambass .gfa-card-visual { background: var(--gfa-surface); border: 1px solid var(--gfa-line); border-radius: 18px; padding: 24px; box-shadow: 0 22px 50px -34px rgba(20,40,30,.45); }
+  .gf-ambass .gfa-badge { display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gfa-accent); background: color-mix(in srgb, var(--gfa-accent) 12%, transparent); padding: 6px 12px; border-radius: 999px; }
+  .gf-ambass .gfa-chip { margin: 16px 0 6px; border: 1.5px dashed var(--gfa-accent); border-radius: 12px; padding: 15px 17px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--gfa-surface-2); }
+  .gf-ambass .gfa-code { font-weight: 700; font-size: 22px; letter-spacing: .06em; }
+  .gf-ambass .gfa-chip-pct { font-family: var(--gfa-display); font-weight: 600; font-size: 12.5px; color: var(--gfa-warm); text-align: right; }
+  .gf-ambass .gfa-row { display: flex; justify-content: space-between; padding: 10px 2px; border-bottom: 1px solid var(--gfa-line); font-size: 14.5px; }
+  .gf-ambass .gfa-row:last-child { border-bottom: 0; }
+  .gf-ambass .gfa-row span:last-child { font-family: var(--gfa-display); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .gf-ambass .gfa-row .gfa-ok { color: var(--gfa-accent); }
+
+  /* ---------- Sections ---------- */
+  .gf-ambass .gfa-section { padding: 56px 4px; }
+  .gf-ambass .gfa-panel { background: var(--gfa-surface-2); border: 1px solid var(--gfa-line); border-radius: 24px; padding: 52px 40px; margin-top: 8px; }
+  @media (max-width: 640px) { .gf-ambass .gfa-panel { padding: 36px 22px; } }
+  .gf-ambass .gfa-head { max-width: 60ch; margin: 0 auto 40px; text-align: center; }
+  .gf-ambass .gfa-head h2 { font-size: clamp(26px, 3.4vw, 36px); margin: 12px 0 12px; font-weight: 700; }
+  .gf-ambass .gfa-head p { color: var(--gfa-muted); font-size: 18px; }
+
+  /* Avantages */
+  .gf-ambass .gfa-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 860px) { .gf-ambass .gfa-cards { grid-template-columns: 1fr; } }
+  .gf-ambass .gfa-card { background: var(--gfa-surface); border: 1px solid var(--gfa-line); border-radius: var(--gfa-radius); padding: 28px 26px; }
+  .gf-ambass .gfa-ic { width: 46px; height: 46px; border-radius: 12px; background: color-mix(in srgb, var(--gfa-accent) 12%, transparent); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .gf-ambass .gfa-card h3 { font-size: 19px; margin-bottom: 9px; font-weight: 700; }
+  .gf-ambass .gfa-card p { color: var(--gfa-muted); font-size: 15.5px; line-height: 1.6; }
+
+  /* Étapes */
+  .gf-ambass .gfa-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  @media (max-width: 860px) { .gf-ambass .gfa-steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .gf-ambass .gfa-steps { grid-template-columns: 1fr; } }
+  .gf-ambass .gfa-step-num { width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--gfa-accent); color: var(--gfa-accent); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 17px; margin-bottom: 14px; }
+  .gf-ambass .gfa-step h3 { font-size: 17.5px; margin-bottom: 7px; font-weight: 700; }
+  .gf-ambass .gfa-step p { color: var(--gfa-muted); font-size: 15px; line-height: 1.55; }
+
+  /* Commission */
+  .gf-ambass .gfa-reward { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 36px; align-items: center; }
+  @media (max-width: 820px) { .gf-ambass .gfa-reward { grid-template-columns: 1fr; gap: 26px; } }
+  .gf-ambass .gfa-reward h2 { font-size: clamp(24px, 3.2vw, 34px); margin: 10px 0 14px; font-weight: 700; }
+  .gf-ambass .gfa-reward p { color: var(--gfa-muted); margin-bottom: 8px; }
+  .gf-ambass .gfa-figures { display: grid; gap: 12px; }
+  .gf-ambass .gfa-figure { background: var(--gfa-surface); border: 1px solid var(--gfa-line); border-radius: var(--gfa-radius-sm); padding: 18px 20px; display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+  .gf-ambass .gfa-big { font-weight: 700; font-size: 36px; color: var(--gfa-accent); line-height: 1; font-variant-numeric: tabular-nums; }
+  .gf-ambass .gfa-figure .gfa-lbl { font-size: 14.5px; color: var(--gfa-muted); max-width: 22ch; text-align: right; }
+
+  /* Formulaire */
+  .gf-ambass .gfa-form { max-width: 720px; margin: 0 auto; }
+  .gf-ambass .gfa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .gf-ambass .gfa-grid { grid-template-columns: 1fr; } }
+  .gf-ambass .gfa-field { display: flex; flex-direction: column; gap: 7px; }
+  .gf-ambass .gfa-field.gfa-full { grid-column: 1 / -1; }
+  .gf-ambass label { font-size: 13px; font-weight: 600; letter-spacing: .02em; color: var(--gfa-text); }
+  .gf-ambass label .gfa-req { color: var(--gfa-warm); }
+  .gf-ambass input[type=text], .gf-ambass input[type=email], .gf-ambass textarea {
+    font-family: var(--gfa-body); font-size: 16px; color: var(--gfa-text);
+    background: var(--gfa-surface); border: 1.5px solid var(--gfa-line); border-radius: 10px;
+    padding: 13px 15px; width: 100%;
+  }
+  .gf-ambass textarea { resize: vertical; min-height: 108px; }
+  .gf-ambass input:focus, .gf-ambass textarea:focus { outline: 2px solid var(--gfa-accent); outline-offset: 1px; border-color: var(--gfa-accent); }
+  .gf-ambass .gfa-consent { display: flex; gap: 11px; align-items: flex-start; font-family: var(--gfa-body); font-size: 14px; color: var(--gfa-muted); }
+  .gf-ambass .gfa-consent input { width: 18px; height: 18px; margin-top: 3px; flex: 0 0 auto; accent-color: var(--gfa-accent); }
+  .gf-ambass .gfa-notice { border-radius: 12px; padding: 16px 18px; margin-bottom: 22px; font-size: 15.5px; border: 1px solid; }
+  .gf-ambass .gfa-notice-ok { display: none; background: color-mix(in srgb, var(--gfa-accent) 10%, var(--gfa-surface)); border-color: color-mix(in srgb, var(--gfa-accent) 45%, var(--gfa-line)); color: var(--gfa-accent); }
+
+  /* FAQ */
+  .gf-ambass .gfa-faq { max-width: 760px; margin: 0 auto; display: grid; gap: 12px; }
+  .gf-ambass details { background: var(--gfa-surface); border: 1px solid var(--gfa-line); border-radius: var(--gfa-radius-sm); padding: 2px 22px; }
+  .gf-ambass details[open] { border-color: color-mix(in srgb, var(--gfa-accent) 45%, var(--gfa-line)); }
+  .gf-ambass summary { font-weight: 600; font-size: 16.5px; padding: 18px 0; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .gf-ambass summary::-webkit-details-marker { display: none; }
+  .gf-ambass summary::after { content: "+"; font-size: 22px; color: var(--gfa-accent); font-weight: 400; }
+  .gf-ambass details[open] summary::after { content: "\2013"; }
+  .gf-ambass details p { margin: 0 0 20px; color: var(--gfa-muted); font-size: 15.5px; }
+
+  .gf-ambass .gfa-center { text-align: center; }
+  .gf-ambass .gfa-mt { margin-top: 22px; }
+</style>
+
+<div class="gf-ambass">
+
+  <!-- ---------- HERO ---------- -->
+  <div class="gfa-hero">
+    <div>
+      <span class="gfa-eyebrow">Devenez partenaire</span>
+      <h2>Partagez ce que vous aimez, <em>récompensez‑vous</em>.</h2>
+      <p class="gfa-lead">Vous parlez déjà de vos animaux à votre communauté&nbsp;? Faites‑le avec Gus&nbsp;&amp;&nbsp;Frost et touchez une commission sur chaque commande.</p>
+      <div class="gfa-hero-cta">
+        <a href="#gfa-candidature" class="gfa-btn gfa-btn-primary">Rejoindre le programme →</a>
+        <a href="#gfa-etapes" class="gfa-btn gfa-btn-ghost">Comment ça marche</a>
+      </div>
+      <div class="gfa-stats">
+        <div><div class="gfa-stat-num">10&nbsp;%</div><div class="gfa-stat-lbl">de commission</div></div>
+        <div><div class="gfa-stat-num">−15&nbsp;%</div><div class="gfa-stat-lbl">pour votre communauté</div></div>
+        <div><div class="gfa-stat-num">0&nbsp;€</div><div class="gfa-stat-lbl">d'inscription</div></div>
+      </div>
+    </div>
+    <div class="gfa-card-visual">
+      <span class="gfa-badge">◆ Votre espace ambassadeur</span>
+      <div class="gfa-chip">
+        <span class="gfa-code">SOPHIE15</span>
+        <span class="gfa-chip-pct">−15&nbsp;% pour vos abonnés</span>
+      </div>
+      <div class="gfa-row"><span>Commandes du mois</span><span>12</span></div>
+      <div class="gfa-row"><span>Chiffre généré</span><span>486&nbsp;€</span></div>
+      <div class="gfa-row"><span>Votre commission</span><span class="gfa-ok">48,60&nbsp;€</span></div>
+      <div class="gfa-row"><span>Prochain versement</span><span>1ᵉʳ&nbsp;août</span></div>
+    </div>
+  </div>
+
+  <!-- ---------- AVANTAGES ---------- -->
+  <div class="gfa-section" id="gfa-avantages">
+    <div class="gfa-head">
+      <span class="gfa-eyebrow">Pourquoi nous rejoindre</span>
+      <h2>Un partenariat simple, pensé pour les passionnés</h2>
+      <p>Pas de quota, pas d'engagement. Juste des produits que vous aimez et une vraie récompense quand vous les partagez.</p>
+    </div>
+    <div class="gfa-cards">
+      <div class="gfa-card">
+        <div class="gfa-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2E5C4E" stroke-width="1.8"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-linecap="round"/></svg></div>
+        <h3>Une commission à chaque vente</h3>
+        <p>Vous touchez 10&nbsp;% sur chaque commande passée avec votre code personnel. Suivi transparent, versé chaque mois.</p>
+      </div>
+      <div class="gfa-card">
+        <div class="gfa-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2E5C4E" stroke-width="1.8"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7S12 3 9 3s-3 4 3 4zM12 7s0-4 3-4 3 4-3 4z" stroke-linejoin="round"/></svg></div>
+        <h3>Vos produits préférés offerts</h3>
+        <p>Recevez nos nouveautés à tester avant tout le monde et profitez d'une remise permanente sur vos propres commandes.</p>
+      </div>
+      <div class="gfa-card">
+        <div class="gfa-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2E5C4E" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Un accompagnement humain</h3>
+        <p>Visuels prêts à l'emploi, conseils, et une équipe joignable. On construit une communauté, pas un tunnel de vente.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- ÉTAPES ---------- -->
+  <div class="gfa-section" id="gfa-etapes">
+    <div class="gfa-panel">
+      <div class="gfa-head">
+        <span class="gfa-eyebrow">En 4 étapes</span>
+        <h2>De la candidature à votre première commission</h2>
+      </div>
+      <div class="gfa-steps">
+        <div class="gfa-step"><div class="gfa-step-num">1</div><h3>Vous candidatez</h3><p>Remplissez le formulaire en bas de page. Une minute, aucun frais.</p></div>
+        <div class="gfa-step"><div class="gfa-step-num">2</div><h3>Vous recevez votre code</h3><p>On vous attribue un code Gus&nbsp;&amp;&nbsp;Frost unique, à votre nom.</p></div>
+        <div class="gfa-step"><div class="gfa-step-num">3</div><h3>Vous partagez</h3><p>Sur votre blog, Instagram, Pinterest… Vos abonnés profitent de −15&nbsp;%.</p></div>
+        <div class="gfa-step"><div class="gfa-step-num">4</div><h3>Vous êtes payé·e</h3><p>Chaque mois, un récap de vos ventes et le versement de votre commission.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- COMMISSION ---------- -->
+  <div class="gfa-section" id="gfa-commission">
+    <div class="gfa-panel">
+      <div class="gfa-reward">
+        <div>
+          <span class="gfa-eyebrow">La récompense</span>
+          <h2>Tout le monde y gagne</h2>
+          <p>Votre communauté bénéficie d'une vraie remise, et vous touchez une commission sur chaque commande. Plus vous partagez, plus vous gagnez — sans plafond.</p>
+          <p class="gfa-mt"><a href="#gfa-candidature" class="gfa-btn gfa-btn-primary">Obtenir mon code →</a></p>
+        </div>
+        <div class="gfa-figures">
+          <div class="gfa-figure"><span class="gfa-big">10&nbsp;%</span><span class="gfa-lbl">de commission pour vous, sur chaque vente</span></div>
+          <div class="gfa-figure"><span class="gfa-big">−15&nbsp;%</span><span class="gfa-lbl">de remise offerte à votre communauté</span></div>
+          <div class="gfa-figure"><span class="gfa-big">30&nbsp;j</span><span class="gfa-lbl">de suivi&nbsp;: chaque commande vous est bien attribuée</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- CANDIDATURE (formulaire de contact natif Shopify) ---------- -->
+  <div class="gfa-section" id="gfa-candidature">
+    <div class="gfa-panel">
+      <div class="gfa-head">
+        <span class="gfa-eyebrow">Candidature</span>
+        <h2>Rejoignez les ambassadeurs Gus&nbsp;&amp;&nbsp;Frost</h2>
+        <p>Parlez‑nous de vous et de vos animaux. On revient vers vous sous 48&nbsp;h.</p>
+      </div>
+
+      <div class="gfa-form">
+        <div class="gfa-notice gfa-notice-ok" id="gfa-merci">
+          Merci&nbsp;! Votre candidature est bien reçue. On revient vers vous très vite.
+        </div>
+
+        <form method="post" action="/contact#gfa-candidature" accept-charset="UTF-8" class="gfa-formel">
+          <input type="hidden" name="form_type" value="contact">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="contact[Objet]" value="Candidature ambassadeur Gus &amp; Frost">
+          <div class="gfa-grid">
+            <div class="gfa-field gfa-full">
+              <label for="gfa-nom">Prénom et nom <span class="gfa-req">*</span></label>
+              <input type="text" id="gfa-nom" name="contact[name]" placeholder="Sophie Durand" required>
+            </div>
+            <div class="gfa-field gfa-full">
+              <label for="gfa-email">E‑mail <span class="gfa-req">*</span></label>
+              <input type="email" id="gfa-email" name="contact[email]" placeholder="sophie@exemple.fr" required>
+            </div>
+            <div class="gfa-field gfa-full">
+              <label for="gfa-reseaux">Où partagez‑vous&nbsp;? <span class="gfa-req">*</span></label>
+              <input type="text" id="gfa-reseaux" name="contact[Réseaux / audience]" placeholder="Lien Instagram, blog, chaîne Pinterest…" required>
+            </div>
+            <div class="gfa-field gfa-full">
+              <label for="gfa-message">Parlez‑nous de vous et de vos compagnons</label>
+              <textarea id="gfa-message" name="contact[body]" placeholder="Vos animaux, votre audience, pourquoi Gus &amp; Frost vous parle…"></textarea>
+            </div>
+            <div class="gfa-field gfa-full">
+              <label class="gfa-consent">
+                <input type="checkbox" required>
+                <span>J'accepte d'être recontacté·e au sujet du programme et j'ai lu la politique de confidentialité de Gus&nbsp;&amp;&nbsp;Frost.</span>
+              </label>
+            </div>
+          </div>
+          <div class="gfa-mt">
+            <button type="submit" class="gfa-btn gfa-btn-primary" style="width:100%; justify-content:center; font-size:16px; padding:16px;">Envoyer ma candidature</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- FAQ ---------- -->
+  <div class="gfa-section" id="gfa-faq">
+    <div class="gfa-head">
+      <span class="gfa-eyebrow">Questions fréquentes</span>
+      <h2>Ce que vous voulez sûrement savoir</h2>
+    </div>
+    <div class="gfa-faq">
+      <details open><summary>Combien ça coûte&nbsp;?</summary><p>Rien. L'inscription et la participation au programme sont entièrement gratuites. Vous ne payez jamais rien&nbsp;: vous êtes rémunéré·e.</p></details>
+      <details><summary>Comment suis‑je payé·e&nbsp;?</summary><p>Chaque mois, nous calculons les commandes passées avec votre code et nous vous versons votre commission par virement ou avoir, selon votre préférence.</p></details>
+      <details><summary>Faut‑il avoir beaucoup d'abonnés&nbsp;?</summary><p>Non. Nous privilégions les personnes réellement attachées au bien‑être animal. Une communauté engagée compte bien plus qu'un gros compte.</p></details>
+      <details><summary>Comment savez‑vous qu'une vente vient de moi&nbsp;?</summary><p>Grâce à votre code personnel unique. Dès qu'un client l'utilise au moment de payer, la commande vous est automatiquement attribuée.</p></details>
+      <details><summary>Puis‑je arrêter quand je veux&nbsp;?</summary><p>Bien sûr. Aucun engagement de durée&nbsp;: vous restez libre de mettre en pause ou de quitter le programme à tout moment.</p></details>
+    </div>
+    <div class="gfa-center gfa-mt">
+      <a href="#gfa-candidature" class="gfa-btn gfa-btn-primary">Je deviens ambassadeur →</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  /* Message de remerciement apres envoi du formulaire de contact Shopify.
+     Shopify redirige vers ...?contact_posted=true apres un envoi reussi. */
+  (function () {
+    try {
+      if (window.location.search.indexOf("contact_posted=true") !== -1) {
+        var ok = document.getElementById("gfa-merci");
+        if (ok) {
+          ok.style.display = "block";
+          ok.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+    } catch (e) { /* no-op */ }
+  })();
+</script>
