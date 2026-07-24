@@ -25,3 +25,7 @@ gus-frost-blog/images/**/*.png
 gus-frost-blog/**/*.jpg
 gus-frost-blog/**/*.jpeg
 gus-frost-blog/**/*.zip
+
+# Rapports de commissions generes par affiliation/calcul_commissions.py :
+# sortie reproductible a partir des commandes Shopify, pas un livrable versionne.
+gus-frost-blog/affiliation/rapports/

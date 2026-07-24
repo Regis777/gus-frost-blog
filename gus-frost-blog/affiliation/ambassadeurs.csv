@@ -1,0 +1,2 @@
+code,prenom,nom,email,taux,remise_client,statut,date_inscription,reseaux,notes
+SOPHIE15,Sophie,Durand,sophie@exemple.fr,0.10,15,exemple,2026-07-24,instagram.com/sophie,Ligne d'exemple — passe statut a 'actif' pour l'activer (ou supprime cette ligne)
