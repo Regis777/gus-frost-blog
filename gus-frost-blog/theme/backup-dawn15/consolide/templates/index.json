@@ -1,0 +1,375 @@
+{
+  "sections": {
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Des produits utiles et de qualité pour le bien-être de votre chien et de votre chat",
+            "heading_size": "h2"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Découvrir la boutique",
+            "button_link_1": "shopify:\/\/collections\/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "button"
+      ],
+      "settings": {
+        "image": "shopify:\/\/shop_images\/Banniere_GusFrost.png",
+        "image_overlay_opacity": 40,
+        "image_height": "medium",
+        "image_behavior": "ambient",
+        "desktop_content_position": "bottom-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-1",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "featured_product_LpUW38": {
+      "type": "featured-product",
+      "blocks": {
+        "text_PxtYj4": {
+          "type": "text",
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_gB8q6M": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_CUzbAi": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_a4rVec": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector_FEMYNC": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons_qyXfbG": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_eCyqnj": {
+          "type": "share",
+          "settings": {
+            "share_label": "Partager"
+          }
+        }
+      },
+      "block_order": [
+        "text_PxtYj4",
+        "title_gB8q6M",
+        "price_CUzbAi",
+        "variant_picker_a4rVec",
+        "quantity_selector_FEMYNC",
+        "buy_buttons_qyXfbG",
+        "share_eCyqnj"
+      ],
+      "name": "t:sections.featured-product.presets.name",
+      "settings": {
+        "product": "tapis-de-lechage-chien-chat",
+        "color_scheme": "scheme-3",
+        "secondary_background": false,
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn_Ap9ixY": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_cb9RW8": {
+          "type": "column",
+          "name": "Colonne",
+          "settings": {
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_AE76pj": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_nmRMxY": {
+          "type": "column",
+          "settings": {
+            "title": "",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_CJnqAy": {
+          "type": "column",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/service-client.png",
+            "title": "<strong>Service client<\/strong>",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_cb9RW8",
+        "column_AE76pj",
+        "column_nmRMxY",
+        "column_CJnqAy"
+      ],
+      "custom_css": [
+        ".multicolumn-card__info p {line-height: 1.2;}"
+      ],
+      "name": "Assurance",
+      "settings": {
+        "title": "<strong>Chez nous on montre patte blanche :<\/strong>",
+        "heading_size": "h1",
+        "image_width": "half",
+        "image_ratio": "square",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 4,
+        "column_alignment": "center",
+        "background_style": "none",
+        "color_scheme": "scheme-5",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 8,
+        "padding_bottom": 0
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "all",
+        "products_to_show": 4,
+        "title": "<strong>Nos produits les plus utiles<\/strong>",
+        "heading_size": "h1",
+        "description": "<p>Des solutions éprouvées, choisies pour leur efficacité et leur qualité.<\/p>",
+        "show_description": true,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "link",
+        "color_scheme": "scheme-3",
+        "image_ratio": "adapt",
+        "image_shape": "arch",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 48,
+        "padding_bottom": 36
+      }
+    },
+    "image_with_text_Pq6LWQ": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_U9ry9L": {
+          "type": "heading",
+          "settings": {
+            "heading": "Pourquoi Gus et Frost ?",
+            "heading_size": "h2"
+          }
+        },
+        "text_Gcf67A": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Nous avons créé Gus et Frost avec une idée simple : proposer moins de produits, mais de meilleurs produits.<\/p><p>Chaque article est sélectionné avec soin, en privilégiant la qualité, l’utilité réelle et la satisfaction client sur le long terme.<\/p>",
+            "text_style": "body"
+          }
+        },
+        "button_nBNayp": {
+          "type": "button",
+          "settings": {
+            "button_label": "Texte du bouton",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_U9ry9L",
+        "text_Gcf67A",
+        "button_nBNayp"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify:\/\/shop_images\/PourquoiGetF.svg",
+        "height": "adapt",
+        "desktop_image_width": "small",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-2",
+        "color_scheme": "scheme-2",
+        "padding_top": 4,
+        "padding_bottom": 4
+      }
+    },
+    "featured_blog_Phh7Mz": {
+      "type": "featured-blog",
+      "name": "t:sections.featured-blog.presets.name",
+      "settings": {
+        "blog": "chats",
+        "post_limit": 4,
+        "heading": "Articles de blog",
+        "heading_size": "h1",
+        "columns_desktop": 4,
+        "show_view_all": true,
+        "show_image": true,
+        "show_date": true,
+        "show_author": false,
+        "color_scheme": "scheme-2",
+        "padding_top": 12,
+        "padding_bottom": 0
+      }
+    },
+    "collapsible_content_xnVd4r": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_TbrFhU": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Vos produits conviennent-ils à tous les chiens et chats ?",
+            "icon": "question_mark",
+            "row_content": "<p>Oui. Nos produits sont sélectionnés pour couvrir la majorité des morphologies et tempéraments. Chaque fiche produit précise les tailles, usages et recommandations.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_XN4aVA": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Livrez-vous en France et en Europe ?",
+            "icon": "question_mark",
+            "row_content": "<p>Oui. Nous livrons en France et dans la plupart des pays européens avec un suivi de commande à chaque étape.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_LBmtAb": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Combien de temps faut-il pour recevoir ma commande ?",
+            "icon": "question_mark",
+            "row_content": "<p>En moyenne, la livraison prend entre <strong>5 et 10 jours ouvrés<\/strong>, selon le produit et votre lieu de résidence.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_TymYrP": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Puis-je retourner un article s’il ne convient pas ?",
+            "icon": "question_mark",
+            "row_content": "<p>Bien sûr. Vous disposez de <strong>14 jours<\/strong> après réception pour nous contacter. Notre service client vous accompagne simplement.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_F8kh49": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Pourquoi faire confiance à Gus & Frost ?",
+            "icon": "question_mark",
+            "row_content": "<p>Nous sélectionnons uniquement des produits utiles, testés et validés pour le bien-être de votre animal. Pas de gadgets, pas de compromis sur la qualité.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_TbrFhU",
+        "collapsible_row_XN4aVA",
+        "collapsible_row_LBmtAb",
+        "collapsible_row_TymYrP",
+        "collapsible_row_F8kh49"
+      ],
+      "name": "Foire aux Questions",
+      "settings": {
+        "caption": "",
+        "heading": "Foire aux Questions",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "row",
+        "container_color_scheme": "scheme-2",
+        "color_scheme": "scheme-2",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image_banner_e7qatm": {
+      "type": "image-banner",
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    }
+  },
+  "order": [
+    "image_banner",
+    "featured_product_LpUW38",
+    "multicolumn_Ap9ixY",
+    "featured_collection",
+    "image_with_text_Pq6LWQ",
+    "featured_blog_Phh7Mz",
+    "collapsible_content_xnVd4r",
+    "image_banner_e7qatm"
+  ]
+}

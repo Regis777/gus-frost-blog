@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "parrainage": {
+      "type": "gf-parrainage",
+      "settings": {}
+    }
+  },
+  "order": [
+    "parrainage"
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "sections": {
+    "rituel_du_calme": {
+      "type": "rituel-du-calme",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "icon": "cart",
+            "heading": "1. Vous commandez",
+            "text": "Paiement sécurisé en quelques secondes. Aucun colis, aucune attente."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "icon": "mail",
+            "heading": "2. Reçu par email",
+            "text": "Votre guide PDF arrive dans la minute, prêt à lire ou à imprimer."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "icon": "play",
+            "heading": "3. Vous démarrez",
+            "text": "Vous lancez le rituel ce soir même, en suivant le plan jour par jour."
+          }
+        },
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "icon": "book",
+            "heading": "Le guide complet · 31 pages",
+            "text": "Une méthode claire, à lire et à relire au fil de la vie de votre chien."
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "icon": "calendar",
+            "heading": "Le protocole 14 jours",
+            "text": "Jour par jour, pour ancrer l'habitude sans y passer vos journées."
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "icon": "bowl",
+            "heading": "30 recettes",
+            "text": "Classées par besoin : avant un départ, après la balade, l'été, l'estomac sensible."
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "icon": "printer",
+            "heading": "8 fiches à imprimer",
+            "text": "Checklist, tracker, planning hebdo, liste de courses — à aimanter sur le frigo."
+          }
+        },
+        "feature_5": {
+          "type": "feature",
+          "settings": {
+            "icon": "eye",
+            "heading": "La méthode d'observation",
+            "text": "Apprenez à lire les signaux de votre chien pour choisir le bon moment."
+          }
+        },
+        "feature_6": {
+          "type": "feature",
+          "settings": {
+            "icon": "infinity",
+            "heading": "Accès à vie",
+            "text": "Votre guide reste à vous, avec les mises à jour incluses."
+          }
+        },
+        "gallery_image_1": {
+          "type": "gallery_image",
+          "settings": {
+            "caption": "Couverture",
+            "image": "shopify:\/\/shop_images\/rdc-apercu-1-couverture.png"
+          }
+        },
+        "gallery_image_2": {
+          "type": "gallery_image",
+          "settings": {
+            "caption": "La méthode",
+            "image": "shopify:\/\/shop_images\/rdc-apercu-2-methode.png"
+          }
+        },
+        "gallery_image_3": {
+          "type": "gallery_image",
+          "settings": {
+            "caption": "Une recette",
+            "image": "shopify:\/\/shop_images\/rdc-apercu-3-recette.png"
+          }
+        },
+        "gallery_image_4": {
+          "type": "gallery_image",
+          "settings": {
+            "caption": "Protocole 14 j",
+            "image": "shopify:\/\/shop_images\/rdc-apercu-4-protocole-14j.png"
+          }
+        },
+        "gallery_image_5": {
+          "type": "gallery_image",
+          "settings": {
+            "caption": "Le tracker",
+            "image": "shopify:\/\/shop_images\/rdc-apercu-5-tracker.png"
+          }
+        },
+        "gallery_image_6": {
+          "type": "gallery_image",
+          "settings": {
+            "caption": "Recettes par besoin",
+            "image": "shopify:\/\/shop_images\/rdc-apercu-6-recettes-par-besoin.png"
+          }
+        },
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "En deux semaines, Nala a arrêté de gratter la porte quand je pars. Le plan jour par jour change tout.",
+            "name": "Camille",
+            "detail": "et Nala, croisée border",
+            "initials": "CN"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "Les recettes classées par besoin, c'est le détail génial. Je ne me demande plus jamais quoi mettre dessus.",
+            "name": "Thomas",
+            "detail": "et Gribouille, beagle",
+            "initials": "TG"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "Enfin quelque chose de concret pour les soirs d'orage. Mon chien se pose maintenant au lieu de tourner.",
+            "name": "Sophie",
+            "detail": "et Pablo, berger",
+            "initials": "SP"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Comment je reçois le guide ?",
+            "answer": "Par email, juste après le paiement. Un lien de téléchargement PDF, immédiat et sans frais de port."
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "C'est « juste » un PDF ?",
+            "answer": "31 pages : une méthode complète, un protocole 14 jours, 30 recettes et 8 fiches à imprimer."
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Ça règle l'anxiété de séparation ?",
+            "answer": "Pas à lui seul. C'est un outil de soutien ; une vraie anxiété se travaille avec un vétérinaire comportementaliste."
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Chiot ou chien âgé ?",
+            "answer": "Oui. Recettes et séances adaptées aux chiots, aux seniors et aux estomacs sensibles."
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Et si ça ne me convient pas ?",
+            "answer": "Vous êtes couvert 14 jours. Un simple email et vous êtes remboursé."
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "Je peux le lire sur mobile ?",
+            "answer": "Oui, sur téléphone, tablette ou ordinateur — et les fiches s'impriment chez vous."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4",
+        "feature_5",
+        "feature_6",
+        "gallery_image_1",
+        "gallery_image_2",
+        "gallery_image_3",
+        "gallery_image_4",
+        "gallery_image_5",
+        "gallery_image_6",
+        "review_1",
+        "review_2",
+        "review_3",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "rituel_du_calme"
+  ]
+}

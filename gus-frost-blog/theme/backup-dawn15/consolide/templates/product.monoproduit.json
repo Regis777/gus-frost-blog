@@ -1,0 +1,240 @@
+{
+  "sections": {
+    "main": {
+      "type": "monoproduit",
+      "blocks": {
+        "perk_1": {
+          "type": "perk",
+          "settings": {
+            "emoji": "🧠",
+            "heading": "Apaise vraiment",
+            "text": "Le léchage libère des endorphines et fait redescendre la pression."
+          }
+        },
+        "perk_2": {
+          "type": "perk",
+          "settings": {
+            "emoji": "🍽️",
+            "heading": "Ralentit les repas",
+            "text": "Fini l'assiette avalée en 30 secondes."
+          }
+        },
+        "perk_3": {
+          "type": "perk",
+          "settings": {
+            "emoji": "🛁",
+            "heading": "Bain & griffes sans bataille",
+            "text": "Il lèche, vous faites, tout le monde est tranquille."
+          }
+        },
+        "perk_4": {
+          "type": "perk",
+          "settings": {
+            "emoji": "📘",
+            "heading": "La méthode incluse",
+            "text": "2 guides pour réussir dès le premier jour."
+          }
+        },
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "🎆",
+            "heading": "Les soirs qui font peur deviennent gérables",
+            "text": "Un tapis congelé posé au premier pétard, et votre chien a quelque chose à faire de ses angoisses. Vous n'êtes plus spectateur de sa panique."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "🚪",
+            "heading": "Vos absences ne sont plus un déchirement",
+            "text": "Un tapis garni au moment où vous enfilez votre manteau, et votre départ s'associe à un plaisir. Les pleurs derrière la porte s'espacent."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "🍽️",
+            "heading": "Le glouton apprend à manger",
+            "text": "Les 4 textures ralentissent l'ingestion, réduisent ballonnements et vomissements, et calment la compétition entre animaux à l'heure du repas."
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "emoji": "✂️",
+            "heading": "Le toilettage redevient un moment de coopération",
+            "text": "Bain, griffes, brossage, contrôle des tiques : pendant qu'il lèche, votre chien vous laisse faire. Sans contention, sans lutte."
+          }
+        },
+        "offer_row_1": {
+          "type": "offer_row",
+          "settings": {
+            "label": "2 tapis de léchage 20×20 cm (4 textures, silicone alimentaire)",
+            "value": ""
+          }
+        },
+        "offer_row_2": {
+          "type": "offer_row",
+          "settings": {
+            "label": "1 cuillère pour étaler la garniture",
+            "value": ""
+          }
+        },
+        "offer_row_3": {
+          "type": "offer_row",
+          "settings": {
+            "label": "1 grattoir pour nettoyer les reliefs",
+            "value": ""
+          }
+        },
+        "offer_row_4": {
+          "type": "offer_row",
+          "settings": {
+            "label": "📘 Guide « Le Rituel du Calme » (protocole 14 j, 30 recettes, tracker)",
+            "value": "19 € OFFERT"
+          }
+        },
+        "offer_row_5": {
+          "type": "offer_row",
+          "settings": {
+            "label": "📗 Guide « Comprendre & apaiser le stress de votre chien »",
+            "value": "29 € OFFERT"
+          }
+        },
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "[Remplacez par un vrai avis vérifié — thème : anxiété feux d'artifice.]",
+            "initials": "GF",
+            "name": "Prénom",
+            "detail": "maître de [race]"
+          }
+        },
+        "compare_row_1": {
+          "type": "compare_row",
+          "settings": {
+            "criterion": "Le produit",
+            "cheap": "Un bout de silicone",
+            "ours": "2 tapis + cuillère + grattoir"
+          }
+        },
+        "compare_row_2": {
+          "type": "compare_row",
+          "settings": {
+            "criterion": "La méthode",
+            "cheap": "Débrouillez-vous",
+            "ours": "Protocole 14 j + 30 recettes"
+          }
+        },
+        "compare_row_3": {
+          "type": "compare_row",
+          "settings": {
+            "criterion": "L'anxiété",
+            "cheap": "Non traitée",
+            "ours": "Un guide dédié"
+          }
+        },
+        "compare_row_4": {
+          "type": "compare_row",
+          "settings": {
+            "criterion": "Le résultat",
+            "cheap": "Finit souvent au placard",
+            "ours": "Un rituel qui apaise vraiment"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Ce tapis convient-il à mon animal ?",
+            "answer": "Le format 20 × 20 cm est parfait pour les chats, les chiots et les chiens de petite à moyenne taille. Pour un très grand gabarit, il fera l'affaire mais restera modeste : c'est un outil d'apaisement et de repas lent, pas une gamelle géante."
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Pourquoi deux tapis ?",
+            "answer": "Pour n'être jamais pris au dépourvu : un au congélateur, un à l'usage. Et pour les foyers à deux animaux, chacun le sien évite les disputes."
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Les ventouses tiennent-elles vraiment ?",
+            "answer": "Oui, sur une surface lisse et non poreuse : carrelage, verre, baignoire, sol stratifié. Sur pierre brute ou bois texturé, l'adhérence sera faible. Pour un chiot léger, calez le tapis près d'un meuble."
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Mon animal risque-t-il de le détruire ?",
+            "answer": "Le tapis est fait pour être léché, pas mâché. Surveillez les premières utilisations et retirez-le une fois la garniture terminée."
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Quels aliments mettre dessus ?",
+            "answer": "Pâtée, yaourt nature, purée de banane ou de potiron, fromage frais, beurre de cacahuète sans xylitol. Le Guide 1 vous donne 30 recettes saines et peu caloriques."
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "Comment je reçois les guides ?",
+            "answer": "Par e-mail, en PDF, juste après la commande. Vous y accédez immédiatement, avant même de recevoir vos tapis."
+          }
+        },
+        "faq_7": {
+          "type": "faq",
+          "settings": {
+            "question": "Comment le nettoyer ?",
+            "answer": "Rinçage à l'eau chaude juste après usage, ou lave-vaisselle. Le grattoir fourni déloge la garniture des rainures fines."
+          }
+        },
+        "faq_8": {
+          "type": "faq",
+          "settings": {
+            "question": "Livraison ?",
+            "answer": "[À confirmer selon votre choix logistique — délai réel à afficher honnêtement.]"
+          }
+        }
+      },
+      "block_order": [
+        "perk_1",
+        "perk_2",
+        "perk_3",
+        "perk_4",
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4",
+        "offer_row_1",
+        "offer_row_2",
+        "offer_row_3",
+        "offer_row_4",
+        "offer_row_5",
+        "review_1",
+        "compare_row_1",
+        "compare_row_2",
+        "compare_row_3",
+        "compare_row_4",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8"
+      ],
+      "settings": {
+        "variant_id": "48119176134877"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

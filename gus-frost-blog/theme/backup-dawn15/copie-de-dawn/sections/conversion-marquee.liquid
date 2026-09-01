@@ -1,0 +1,80 @@
+{%- comment -%}
+  Section réutilisable : bandeau défilant d'arguments (marquee). Aucune app.
+  CSS scopé #cmq-{{ section.id }}. Blocs = "item".
+{%- endcomment -%}
+
+{%- assign st = section.settings -%}
+
+<div id="cmq-{{ section.id }}" class="cmq" style="--cmq-speed:{{ st.speed }}s">
+  <div class="cmq__track">
+    {%- for pass in (1..2) -%}
+      <ul class="cmq__group" {% if pass == 2 %}aria-hidden="true"{% endif %}>
+        {%- for block in section.blocks -%}
+          <li class="cmq__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank -%}
+              <span class="cmq__icon">{{ block.settings.icon }}</span>
+            {%- endif -%}
+            <span class="cmq__text">{{ block.settings.text }}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  #cmq-{{ section.id }}.cmq{
+    background:{{ st.bg }};color:{{ st.text }};overflow:hidden;
+    padding:{{ st.padding }}px 0;position:relative;
+  }
+  #cmq-{{ section.id }} .cmq__track{display:flex;width:max-content;
+    animation:cmq-scroll var(--cmq-speed) linear infinite}
+  #cmq-{{ section.id }}:hover .cmq__track{animation-play-state:paused}
+  #cmq-{{ section.id }} .cmq__group{display:flex;align-items:center;gap:2.5rem;
+    margin:0;padding:0 1.25rem;list-style:none}
+  #cmq-{{ section.id }} .cmq__item{display:flex;align-items:center;gap:.5rem;
+    white-space:nowrap;font-weight:600;font-size:{{ st.font_size }}rem}
+  #cmq-{{ section.id }} .cmq__icon{font-size:1.1em;line-height:1;color:{{ st.icon_color }}}
+  @keyframes cmq-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){
+    #cmq-{{ section.id }} .cmq__track{animation:none;justify-content:center;flex-wrap:wrap;width:auto}
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Bandeau défilant",
+  "tag": "section",
+  "class": "section-cmq",
+  "settings": [
+    { "type": "range", "id": "speed", "min": 10, "max": 60, "step": 2, "unit": "s", "label": "Durée du défilement", "default": 28 },
+    { "type": "range", "id": "font_size", "min": 0.7, "max": 1.4, "step": 0.1, "unit": "rem", "label": "Taille du texte", "default": 0.9 },
+    { "type": "range", "id": "padding", "min": 4, "max": 30, "step": 2, "unit": "px", "label": "Hauteur (padding)", "default": 12 },
+    { "type": "header", "content": "Couleurs" },
+    { "type": "color", "id": "bg", "label": "Fond", "default": "#1a1a1a" },
+    { "type": "color", "id": "text", "label": "Texte", "default": "#ffffff" },
+    { "type": "color", "id": "icon_color", "label": "Icône", "default": "#f5a623" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Argument",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texte", "default": "Livraison suivie" },
+        { "type": "text", "id": "icon", "label": "Icône (emoji ou caractère)", "default": "✓" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bandeau défilant",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Livraison suivie 48-72 h", "icon": "🚚" } },
+        { "type": "item", "settings": { "text": "Satisfait ou remboursé 14 jours", "icon": "↩" } },
+        { "type": "item", "settings": { "text": "Paiement 100 % sécurisé", "icon": "🔒" } },
+        { "type": "item", "settings": { "text": "Conçu pour nos compagnons à 4 pattes", "icon": "🐾" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

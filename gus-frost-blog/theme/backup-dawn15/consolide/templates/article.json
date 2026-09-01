@@ -1,0 +1,52 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "blocks": {
+        "featured_image": {
+          "type": "featured_image",
+          "settings": {
+            "image_height": "adapt"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "blog_show_date": false,
+            "blog_show_author": false
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        },
+        "content": {
+          "type": "content",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "featured_image",
+        "title",
+        "share",
+        "content"
+      ],
+      "custom_css": [
+        "\/* Appliquer le nuancier 2 aux pages d'articles de blog *\/.article-template {background-color: #efe7da; \/* Fond beige clair *\/ color: #000000; \/* Texte noir *\/}",
+        ".article-template .article__content {background-color: #efe7da; color: #000000;}",
+        " \/* Titres en noir pour les articles de blog *\/.article-template h1,.article-template h2,.article-template h3 {color: #000000 !important;}"
+      ],
+      "settings": {}
+    },
+    "gf_blog_search": {
+      "type": "gf-blog-search",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "gf_blog_search"
+  ]
+}

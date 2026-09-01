@@ -1,0 +1,145 @@
+{%- comment -%}
+  Section réutilisable : réassurance + statistiques (garantie, badges, chiffres clés).
+  Aucune app. CSS scopé #ctr-{{ section.id }}.
+  Blocs : "stat" (chiffre + libellé) et "feature" (icône SVG + titre + texte).
+{%- endcomment -%}
+
+{%- assign st = section.settings -%}
+
+<div id="ctr-{{ section.id }}" class="ctr color-{{ st.color_scheme }} isolate">
+  <div class="ctr__wrap page-width">
+    {%- if st.heading != blank -%}
+      <h2 class="ctr__heading">{{ st.heading }}</h2>
+    {%- endif -%}
+
+    {%- assign stats = section.blocks | where: "type", "stat" -%}
+    {%- if stats.size > 0 -%}
+      <div class="ctr__stats">
+        {%- for block in stats -%}
+          <div class="ctr__stat" {{ block.shopify_attributes }}>
+            <span class="ctr__stat-num">{{ block.settings.number }}</span>
+            <span class="ctr__stat-label">{{ block.settings.label }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- assign feats = section.blocks | where: "type", "feature" -%}
+    {%- if feats.size > 0 -%}
+      <div class="ctr__features">
+        {%- for block in feats -%}
+          <div class="ctr__feature" {{ block.shopify_attributes }}>
+            <span class="ctr__ficon">
+              {%- case block.settings.icon -%}
+                {%- when 'shield' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+                {%- when 'truck' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h11v9H3z"/><path d="M14 9h4l3 3v3h-7z"/><circle cx="7.5" cy="17.5" r="1.6"/><circle cx="17.5" cy="17.5" r="1.6"/></svg>
+                {%- when 'return' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+                {%- when 'lock' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                {%- when 'heart' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.5-9-9a4.5 4.5 0 0 1 9-1 4.5 4.5 0 0 1 9 1c-2 4.5-9 9-9 9z"/></svg>
+                {%- when 'paw' -%}<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="10" r="2"/><circle cx="10.5" cy="6.5" r="2"/><circle cx="15.5" cy="6.5" r="2"/><circle cx="19" cy="10" r="2"/><path d="M12 12c-3 0-5 2.2-5 4.6C7 18.6 8.6 20 12 20s5-1.4 5-3.4C17 14.2 15 12 12 12z"/></svg>
+                {%- else -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+              {%- endcase -%}
+            </span>
+            <div class="ctr__ftxt">
+              <span class="ctr__ftitle">{{ block.settings.title }}</span>
+              {%- if block.settings.text != blank -%}<span class="ctr__fsub">{{ block.settings.text }}</span>{%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if st.show_payment_icons -%}
+      <div class="ctr__pay">
+        {%- if st.payment_note != blank -%}<span class="ctr__pay-note">{{ st.payment_note }}</span>{%- endif -%}
+        <div class="ctr__pay-icons">
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag: class: 'ctr__pay-icon' }}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  #ctr-{{ section.id }}.ctr{padding:{{ st.padding_top }}px 0 {{ st.padding_bottom }}px}
+  #ctr-{{ section.id }} .ctr__heading{text-align:center;margin:0 0 1.6rem}
+  #ctr-{{ section.id }} .ctr__stats{display:flex;flex-wrap:wrap;justify-content:center;
+    gap:1rem 2.5rem;margin:0 auto 2rem;text-align:center}
+  #ctr-{{ section.id }} .ctr__stat{display:flex;flex-direction:column;min-width:120px}
+  #ctr-{{ section.id }} .ctr__stat-num{font-size:2rem;font-weight:800;line-height:1;color:{{ st.accent }}}
+  #ctr-{{ section.id }} .ctr__stat-label{font-size:.9rem;opacity:.75;margin-top:.3rem}
+  #ctr-{{ section.id }} .ctr__features{display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem}
+  #ctr-{{ section.id }} .ctr__feature{display:flex;gap:.8rem;align-items:flex-start;
+    padding:1rem 1.1rem;border:1px solid rgba(0,0,0,.08);border-radius:12px;background:rgba(0,0,0,.015)}
+  #ctr-{{ section.id }} .ctr__ficon{flex:0 0 auto;color:{{ st.accent }}}
+  #ctr-{{ section.id }} .ctr__ficon svg{width:28px;height:28px;display:block}
+  #ctr-{{ section.id }} .ctr__ftxt{display:flex;flex-direction:column;gap:.15rem}
+  #ctr-{{ section.id }} .ctr__ftitle{font-weight:700}
+  #ctr-{{ section.id }} .ctr__fsub{font-size:.88rem;opacity:.78;line-height:1.35}
+  #ctr-{{ section.id }} .ctr__pay{display:flex;flex-direction:column;align-items:center;gap:.5rem;margin-top:2rem}
+  #ctr-{{ section.id }} .ctr__pay-note{font-size:.85rem;opacity:.7}
+  #ctr-{{ section.id }} .ctr__pay-icons{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center}
+  #ctr-{{ section.id }} .ctr__pay-icon{width:38px;height:24px}
+  @media (max-width:749px){
+    #ctr-{{ section.id }} .ctr__stat-num{font-size:1.6rem}
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Réassurance & stats",
+  "tag": "section",
+  "class": "section-ctr",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Pourquoi nous faire confiance" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Jeu de couleurs", "default": "scheme-1" },
+    { "type": "color", "id": "accent", "label": "Couleur d'accent", "default": "#f5a623" },
+    { "type": "checkbox", "id": "show_payment_icons", "label": "Afficher les moyens de paiement", "default": true },
+    { "type": "text", "id": "payment_note", "label": "Note paiement", "default": "Paiement sécurisé" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Marge haut", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Marge bas", "default": 40 }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Statistique",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Chiffre", "default": "10 000+" },
+        { "type": "text", "id": "label", "label": "Libellé", "default": "clients conquis" }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "Réassurance",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icône", "default": "shield",
+          "options": [
+            { "value": "shield", "label": "Bouclier" },
+            { "value": "truck", "label": "Camion" },
+            { "value": "return", "label": "Retour" },
+            { "value": "lock", "label": "Cadenas" },
+            { "value": "heart", "label": "Cœur" },
+            { "value": "paw", "label": "Patte" }
+          ] },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Satisfait ou remboursé" },
+        { "type": "text", "id": "text", "label": "Texte", "default": "14 jours pour changer d'avis." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Réassurance & stats",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "4,8/5", "label": "note moyenne" } },
+        { "type": "stat", "settings": { "number": "10 000+", "label": "clients conquis" } },
+        { "type": "feature", "settings": { "icon": "return", "title": "Satisfait ou remboursé", "text": "14 jours pour changer d'avis." } },
+        { "type": "feature", "settings": { "icon": "truck", "title": "Livraison suivie", "text": "Expédiée sous 48 h, suivi inclus." } },
+        { "type": "feature", "settings": { "icon": "lock", "title": "Paiement sécurisé", "text": "Vos données sont protégées." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

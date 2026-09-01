@@ -1,0 +1,166 @@
+{
+  "sections": {
+    "tapis": {
+      "type": "tapis-lechage",
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "heading": "Les soirs qui font peur deviennent gérables",
+            "text": "Un tapis garni et congelé au premier pétard : votre animal a quelque chose à faire de ses angoisses, vous n'êtes plus spectateur de sa panique."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "heading": "Vos absences ne sont plus un déchirement",
+            "text": "Un tapis au moment où vous enfilez votre manteau, et votre départ s'associe à un plaisir plutôt qu'à une séparation."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "heading": "Le glouton apprend à manger",
+            "text": "Les 4 textures ralentissent l'ingestion, réduisent ballonnements et vomissements, et calment la compétition à l'heure du repas."
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "heading": "Le toilettage redevient coopératif",
+            "text": "Bain, coupe de griffes, brossage : pendant qu'il lèche, votre animal vous laisse faire, sans contention ni lutte."
+          }
+        },
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "icon": "spoon",
+            "heading": "1. Garnissez",
+            "text": "Étalez pâtée, yaourt nature ou purée de banane dans les reliefs, avec la spatule (incluse dès 2 tapis)."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "icon": "suction",
+            "heading": "2. Fixez",
+            "text": "Plaquez les ventouses sur une surface lisse : carrelage, verre, baignoire. Le tapis ne glisse plus."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "icon": "paw",
+            "heading": "3. Laissez lécher",
+            "text": "10 à 20 minutes de léchage : endorphines, attention détournée, animal apaisé. Congelez pour prolonger."
+          }
+        },
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "Mon chien se pose enfin les soirs d'orage au lieu de tourner en rond. Le guide offert aide vraiment à démarrer.",
+            "name": "Camille",
+            "detail": "et Nala, croisée border",
+            "initials": "CN"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "Fini le repas avalé en 30 secondes et les vomissements. Les ventouses tiennent nickel sur le carrelage.",
+            "name": "Thomas",
+            "detail": "et Gribouille, beagle",
+            "initials": "TG"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "Le bain n'est plus un combat : il lèche, je le douche. Simple et efficace.",
+            "name": "Sophie",
+            "detail": "et Pablo, berger",
+            "initials": "SP"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Ce tapis convient-il à mon animal ?",
+            "answer": "Le format 20 × 20 cm est parfait pour les chats, les chiots et les chiens de petite à moyenne taille. Pour un très grand gabarit, il reste un outil d'apaisement, pas une gamelle géante."
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Les ventouses tiennent-elles vraiment ?",
+            "answer": "Oui, sur une surface lisse et non poreuse : carrelage, verre, baignoire, sol stratifié. Sur pierre brute ou bois texturé, l'adhérence sera faible."
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Quels aliments puis-je mettre dessus ?",
+            "answer": "Pâtée, yaourt nature, purée de banane ou de potiron, fromage frais, beurre de cacahuète sans xylitol. Le Guide offert donne 30 recettes saines."
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Peut-on le mettre au congélateur ?",
+            "answer": "Oui, et c'est conseillé : un tapis garni puis congelé occupe votre animal deux à trois fois plus longtemps."
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Comment je reçois le guide ?",
+            "answer": "Automatiquement par email, en PDF, juste après la commande — avant même de recevoir vos tapis."
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "Comment nettoyer le tapis ?",
+            "answer": "Rinçage à l'eau chaude juste après usage, ou passage au lave-vaisselle. Ne le laissez jamais sécher garni."
+          }
+        }
+      },
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4",
+        "step_1",
+        "step_2",
+        "step_3",
+        "review_1",
+        "review_2",
+        "review_3",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6"
+      ],
+      "settings": {}
+    },
+    "avis_produit": {
+      "type": "avis-produit",
+      "settings": {
+        "heading": "Ce qu'en disent nos clients",
+        "show_verified_badge": true,
+        "color_scheme": "background-1",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "tapis",
+    "avis_produit"
+  ]
+}

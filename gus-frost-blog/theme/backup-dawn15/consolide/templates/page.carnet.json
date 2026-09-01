@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "carnet": {
+      "type": "gf-carnet",
+      "settings": {
+        "heading": "Le Carnet",
+        "tagline": "",
+        "show_privacy": true,
+        "privacy_label": "Vos données restent sur votre appareil",
+        "cta_heading": "",
+        "cta_text": "",
+        "cta_label": "",
+        "cta_url": "",
+        "klaviyo_cle": "VyiAUH",
+        "klaviyo_liste": "W9XEBU"
+      }
+    }
+  },
+  "order": [
+    "carnet"
+  ]
+}

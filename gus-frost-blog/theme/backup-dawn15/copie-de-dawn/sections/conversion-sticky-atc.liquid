@@ -1,0 +1,132 @@
+{%- comment -%}
+  Section réutilisable : barre "Ajouter au panier" collante (sticky).
+  Product-aware : lit l'objet {{ product }}. Aucune app. CSS scopé #csa-{{ section.id }}.
+  À utiliser sur un template PRODUIT.
+{%- endcomment -%}
+
+{%- assign p = product -%}
+{%- assign v = p.selected_or_first_available_variant -%}
+{%- assign st = section.settings -%}
+
+<div id="csa-{{ section.id }}" class="csa" data-csa data-appear="{{ st.appear_after }}" aria-hidden="true">
+  <div class="csa__inner page-width">
+    {%- if p.featured_media -%}
+      <img class="csa__img" src="{{ p.featured_media | image_url: width: 120 }}"
+           width="56" height="56" alt="{{ p.title | escape }}" loading="lazy">
+    {%- endif -%}
+
+    <div class="csa__info">
+      <span class="csa__title">{{ p.title }}</span>
+      {%- if st.rating_text != blank -%}
+        <span class="csa__rating">
+          <span class="csa__stars" aria-hidden="true">★★★★★</span>
+          <em>{{ st.rating_text }}</em>
+        </span>
+      {%- elsif st.shipping_text != blank -%}
+        <span class="csa__ship">{{ st.shipping_text }}</span>
+      {%- endif -%}
+    </div>
+
+    <div class="csa__buy">
+      {%- if v.compare_at_price > v.price -%}
+        <span class="csa__compare">{{ v.compare_at_price | money }}</span>
+      {%- endif -%}
+      <span class="csa__price">{{ v.price | money }}</span>
+
+      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="csa__form">
+        <input type="hidden" name="id" value="{{ v.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="csa__btn"{% unless p.available %} disabled aria-disabled="true"{% endunless %}>
+          {%- if p.available -%}{{ st.button_label }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  #csa-{{ section.id }}.csa{
+    position:fixed;left:0;right:0;bottom:0;z-index:60;
+    background:{{ st.bg }};color:{{ st.text }};
+    box-shadow:0 -2px 16px rgba(0,0,0,.12);
+    transform:translateY(110%);transition:transform .28s ease;
+    padding:.55rem 0;
+  }
+  #csa-{{ section.id }}.csa.is-visible{transform:translateY(0)}
+  #csa-{{ section.id }} .csa__inner{
+    display:flex;align-items:center;gap:1rem;
+  }
+  #csa-{{ section.id }} .csa__img{border-radius:8px;object-fit:cover;flex:0 0 auto}
+  #csa-{{ section.id }} .csa__info{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:.15rem}
+  #csa-{{ section.id }} .csa__title{font-weight:600;line-height:1.15;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #csa-{{ section.id }} .csa__rating{display:flex;align-items:center;gap:.35rem;font-size:.8rem;opacity:.9}
+  #csa-{{ section.id }} .csa__stars{color:{{ st.star_color }};letter-spacing:1px}
+  #csa-{{ section.id }} .csa__ship{font-size:.8rem;opacity:.85}
+  #csa-{{ section.id }} .csa__buy{display:flex;align-items:center;gap:.6rem;flex:0 0 auto}
+  #csa-{{ section.id }} .csa__compare{opacity:.6;text-decoration:line-through;font-size:.9rem}
+  #csa-{{ section.id }} .csa__price{font-weight:700;font-size:1.05rem}
+  #csa-{{ section.id }} .csa__btn{
+    background:{{ st.btn_bg }};color:{{ st.btn_text }};border:0;border-radius:{{ st.btn_radius }}px;
+    padding:.7rem 1.4rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:filter .15s}
+  #csa-{{ section.id }} .csa__btn:hover{filter:brightness(1.07)}
+  #csa-{{ section.id }} .csa__btn[disabled]{opacity:.55;cursor:not-allowed}
+  @media (max-width:749px){
+    #csa-{{ section.id }} .csa__img{width:44px;height:44px}
+    #csa-{{ section.id }} .csa__compare,
+    #csa-{{ section.id }} .csa__rating,
+    #csa-{{ section.id }} .csa__ship{display:none}
+    #csa-{{ section.id }} .csa__btn{padding:.7rem 1rem}
+    #csa-{{ section.id }} .csa__title{font-size:.9rem}
+  }
+</style>
+
+<script>
+  (function(){
+    var el = document.getElementById('csa-{{ section.id }}');
+    if(!el) return;
+    var after = parseInt(el.getAttribute('data-appear'),10) || 600;
+    // Cible : le formulaire d'achat principal de la fiche (Dawn) pour masquer le sticky quand il est visible.
+    var mainForm = document.querySelector('product-form, .product-form__buttons, .product__info-container');
+    var ticking = false;
+    function update(){
+      ticking = false;
+      var show = window.pageYOffset > after;
+      if(mainForm){
+        var r = mainForm.getBoundingClientRect();
+        if(r.bottom > 0 && r.top < window.innerHeight){ show = false; } // ATC principal à l'écran → on cache
+      }
+      el.classList.toggle('is-visible', show);
+      el.setAttribute('aria-hidden', show ? 'false' : 'true');
+    }
+    function onScroll(){ // throttle : 1 lecture de layout max par frame
+      if(!ticking){ ticking = true; requestAnimationFrame(update); }
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll, {passive:true});
+    update();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Sticky panier",
+  "tag": "section",
+  "class": "section-csa",
+  "settings": [
+    { "type": "text", "id": "button_label", "label": "Texte du bouton", "default": "Ajouter au panier" },
+    { "type": "text", "id": "rating_text", "label": "Note (ex: 4,8/5 · 320 avis)", "info": "Laisser vide pour masquer. N'affichez que de vrais avis." },
+    { "type": "text", "id": "shipping_text", "label": "Texte livraison (si pas de note)", "default": "Livraison suivie" },
+    { "type": "range", "id": "appear_after", "min": 200, "max": 1500, "step": 50, "unit": "px", "label": "Apparaît après (défilement)", "default": 600 },
+    { "type": "header", "content": "Couleurs" },
+    { "type": "color", "id": "bg", "label": "Fond", "default": "#ffffff" },
+    { "type": "color", "id": "text", "label": "Texte", "default": "#1a1a1a" },
+    { "type": "color", "id": "star_color", "label": "Étoiles", "default": "#f5a623" },
+    { "type": "color", "id": "btn_bg", "label": "Fond bouton", "default": "#1a1a1a" },
+    { "type": "color", "id": "btn_text", "label": "Texte bouton", "default": "#ffffff" },
+    { "type": "range", "id": "btn_radius", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Arrondi bouton", "default": 8 }
+  ],
+  "presets": [ { "name": "Sticky panier" } ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

@@ -1,0 +1,343 @@
+{
+  "sections": {
+    "sticky": {
+      "type": "conversion-sticky-atc",
+      "settings": {
+        "button_label": "Ajouter au panier",
+        "rating_text": "",
+        "shipping_text": "Livraison suivie",
+        "appear_after": 600
+      }
+    },
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button"
+          }
+        },
+        "quantity": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "variant_picker",
+        "quantity",
+        "buy_buttons",
+        "description",
+        "share"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "gallery_layout": "stacked",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain"
+      }
+    },
+    "marquee": {
+      "type": "conversion-marquee",
+      "blocks": {
+        "b1": {
+          "type": "item",
+          "settings": {
+            "text": "Livraison suivie 48-72 h",
+            "icon": "🚚"
+          }
+        },
+        "b2": {
+          "type": "item",
+          "settings": {
+            "text": "Satisfait ou remboursé 14 jours",
+            "icon": "↩"
+          }
+        },
+        "b3": {
+          "type": "item",
+          "settings": {
+            "text": "Paiement 100 % sécurisé",
+            "icon": "🔒"
+          }
+        },
+        "b4": {
+          "type": "item",
+          "settings": {
+            "text": "Pensé pour nos compagnons à 4 pattes",
+            "icon": "🐾"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {}
+    },
+    "problem": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Le problème que ça règle"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Décrivez ici la frustration de votre client, puis la promesse de votre produit.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text"
+      ],
+      "settings": {
+        "height": "medium",
+        "layout": "text_first",
+        "desktop_content_position": "middle"
+      }
+    },
+    "how": {
+      "type": "multicolumn",
+      "blocks": {
+        "c1": {
+          "type": "column",
+          "settings": {
+            "title": "1. Étape une",
+            "text": "<p>Expliquez la première étape.<\/p>"
+          }
+        },
+        "c2": {
+          "type": "column",
+          "settings": {
+            "title": "2. Étape deux",
+            "text": "<p>Expliquez la deuxième étape.<\/p>"
+          }
+        },
+        "c3": {
+          "type": "column",
+          "settings": {
+            "title": "3. Étape trois",
+            "text": "<p>Expliquez la troisième étape.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "title": "Comment ça marche",
+        "columns_desktop": 3,
+        "column_alignment": "center"
+      }
+    },
+    "benefits": {
+      "type": "multicolumn",
+      "blocks": {
+        "c1": {
+          "type": "column",
+          "settings": {
+            "title": "Bénéfice 1",
+            "text": "<p>Le gain concret pour le client.<\/p>"
+          }
+        },
+        "c2": {
+          "type": "column",
+          "settings": {
+            "title": "Bénéfice 2",
+            "text": "<p>Le gain concret pour le client.<\/p>"
+          }
+        },
+        "c3": {
+          "type": "column",
+          "settings": {
+            "title": "Bénéfice 3",
+            "text": "<p>Le gain concret pour le client.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "title": "Ce que ça change",
+        "columns_desktop": 3,
+        "column_alignment": "center"
+      }
+    },
+    "trust": {
+      "type": "conversion-trust",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "4,8\/5",
+            "label": "note moyenne"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "10 000+",
+            "label": "clients conquis"
+          }
+        },
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "icon": "return",
+            "title": "Satisfait ou remboursé",
+            "text": "14 jours pour changer d'avis."
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "icon": "truck",
+            "title": "Livraison suivie",
+            "text": "Expédiée sous 48 h, suivi inclus."
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "icon": "lock",
+            "title": "Paiement sécurisé",
+            "text": "Vos données sont protégées."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "f1",
+        "f2",
+        "f3"
+      ],
+      "settings": {
+        "heading": "Pourquoi nous faire confiance",
+        "show_payment_icons": true
+      }
+    },
+    "reviews": {
+      "type": "conversion-reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Remplacez par un vrai avis client.",
+            "name": "Client vérifié",
+            "verified": true
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Remplacez par un vrai avis client.",
+            "name": "Client vérifié",
+            "verified": true
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Remplacez par un vrai avis client.",
+            "name": "Client vérifié",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "heading": "Ils en parlent mieux que nous",
+        "summary": ""
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "q1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Question fréquente 1",
+            "row_content": "<p>Réponse.<\/p>"
+          }
+        },
+        "q2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Question fréquente 2",
+            "row_content": "<p>Réponse.<\/p>"
+          }
+        },
+        "q3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Question fréquente 3",
+            "row_content": "<p>Réponse.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "settings": {
+        "heading": "Questions fréquentes",
+        "layout": "row"
+      }
+    }
+  },
+  "order": [
+    "sticky",
+    "main",
+    "marquee",
+    "problem",
+    "how",
+    "benefits",
+    "trust",
+    "reviews",
+    "faq"
+  ]
+}
