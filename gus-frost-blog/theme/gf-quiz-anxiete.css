@@ -1,0 +1,188 @@
+/* gf-quiz-anxiete.css — Diagnostic scoré « anxiété de séparation »
+   Identité : vert #314431, beige #EFE7DA, fond #faf8f3, bordure #e3ddcf.
+   Bandes : vert (sérénité), orange (vigilance), rouge (prudence — jamais alarmiste).
+   Dawn met 1rem = 10px : on raisonne en px. */
+
+.gfq {
+  --gfq-vert: #314431;
+  --gfq-vert-clair: #3d4f3d;
+  --gfq-beige: #efe7da;
+  --gfq-fond: #faf8f3;
+  --gfq-bord: #e3ddcf;
+  --gfq-texte: #2a2a2a;
+  --gfq-doux: #6b6b6b;
+  --gfq-orange: #b9721c;
+  --gfq-rouge: #a5443b;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 8px 16px 64px;
+  font-family: var(--font-body-family, Georgia, 'Times New Roman', serif);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--gfq-texte);
+}
+.gfq *, .gfq *::before, .gfq *::after { box-sizing: border-box; }
+.gfq h1, .gfq h2, .gfq h3 {
+  font-family: var(--font-heading-family, var(--font-body-family, inherit));
+  color: var(--gfq-vert); margin: 0; line-height: 1.22;
+}
+.gfq button, .gfq input, .gfq label { font-family: inherit; }
+
+/* ---------- Accueil ---------- */
+.gfq-intro { text-align: center; padding: 20px 0 6px; }
+.gfq-intro h1 { font-size: 34px; margin-bottom: 14px; }
+.gfq-intro-sous {
+  font-size: 19px; color: var(--gfq-vert-clair);
+  max-width: 560px; margin: 0 auto 22px; line-height: 1.55;
+}
+.gfq-meta {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px;
+  margin: 0 0 26px; font-size: 14px; color: var(--gfq-doux);
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.gfq-meta span::before { content: '• '; color: var(--gfq-vert); }
+.gfq-meta span:first-child::before { content: none; }
+
+.gfq-intro-texte {
+  text-align: left; max-width: 620px; margin: 0 auto 24px;
+  font-size: 16px; color: var(--gfq-vert-clair); line-height: 1.62;
+}
+.gfq-intro-texte p { margin: 0 0 12px; }
+.gfq-intro-texte p:last-child { margin-bottom: 0; }
+.gfq-intro-rassure {
+  margin: 14px 0 0; font-size: 14px; color: var(--gfq-doux);
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.gfq-rappel {
+  margin: 18px auto 0; max-width: 500px; font-size: 14px; color: var(--gfq-doux);
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.gfq-rappel a { color: var(--gfq-vert); text-decoration: underline; cursor: pointer; }
+
+/* ---------- Boutons ---------- */
+.gfq-btn {
+  display: inline-block; padding: 15px 34px; border: 0; border-radius: 999px;
+  background: var(--gfq-vert); color: #fff !important; text-decoration: none;
+  font-size: 18px; font-weight: 700; line-height: 1.3; cursor: pointer;
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  transition: background .15s, transform .05s;
+}
+.gfq-btn:hover { background: var(--gfq-vert-clair); }
+.gfq-btn:active { transform: translateY(1px); }
+.gfq-btn:disabled { opacity: .7; cursor: default; }
+.gfq-btn--cta { margin-top: 6px; }
+.gfq-lien {
+  display: inline-block; background: none; border: 0; cursor: pointer;
+  color: var(--gfq-doux); font-size: 15px; padding: 8px 4px; text-decoration: underline;
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.gfq-lien:hover { color: var(--gfq-vert); }
+
+/* ---------- Barre de progression ---------- */
+.gfq-progress { margin: 6px 0 28px; }
+.gfq-compteur {
+  font-size: 13px; color: var(--gfq-doux); letter-spacing: .02em; margin: 0 0 8px;
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; text-transform: uppercase;
+}
+.gfq-jauge-piste { height: 6px; background: var(--gfq-bord); border-radius: 999px; overflow: hidden; }
+.gfq-jauge { height: 100%; width: 0; background: var(--gfq-vert); border-radius: 999px; transition: width .3s ease; }
+
+/* ---------- Question ---------- */
+.gfq-q { animation: gfq-fade .25s ease; }
+@keyframes gfq-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.gfq-q-enonce { font-size: 24px; margin-bottom: 20px; line-height: 1.3; }
+.gfq-reponses { display: flex; flex-direction: column; gap: 10px; }
+.gfq-rep {
+  text-align: left; background: var(--gfq-fond); border: 2px solid var(--gfq-bord);
+  border-radius: 12px; padding: 16px 18px; font-size: 17px; color: var(--gfq-texte);
+  cursor: pointer; transition: border-color .12s, background .12s;
+}
+.gfq-rep:hover { border-color: var(--gfq-vert-clair); background: #fff; }
+.gfq-rep.is-actif { border-color: var(--gfq-vert); background: var(--gfq-beige); }
+.gfq-rep span { display: block; }
+.gfq-nav { margin-top: 18px; }
+
+/* ---------- Mur e-mail ---------- */
+.gfq-mur { text-align: center; max-width: 520px; margin: 0 auto; animation: gfq-fade .25s ease; }
+.gfq-mur-titre { font-size: 27px; margin-bottom: 12px; }
+.gfq-mur-texte { font-size: 17px; color: var(--gfq-vert-clair); margin: 0 auto 22px; max-width: 460px; }
+.gfq-form { display: flex; flex-direction: column; gap: 14px; max-width: 400px; margin: 0 auto; }
+.gfq-input {
+  width: 100%; padding: 15px 16px; border: 2px solid var(--gfq-bord);
+  border-radius: 12px; font-size: 17px; background: #fff; color: var(--gfq-texte);
+}
+.gfq-input:focus { outline: none; border-color: var(--gfq-vert); }
+.gfq-consent {
+  display: flex; gap: 10px; align-items: flex-start; text-align: left;
+  font-size: 13px; color: var(--gfq-doux); line-height: 1.5;
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.gfq-check { margin-top: 3px; width: 17px; height: 17px; flex: 0 0 auto; accent-color: var(--gfq-vert); }
+.gfq-erreur {
+  color: var(--gfq-rouge); font-size: 14px; margin: 2px 0 0;
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.gfq-mur-note {
+  font-size: 13px; color: var(--gfq-doux); margin: 18px auto 0; max-width: 420px;
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+/* ---------- Résultat ---------- */
+.gfq-res {
+  text-align: center; border: 1px solid var(--gfq-bord); border-top: 6px solid var(--gfq-vert);
+  border-radius: 16px; background: var(--gfq-fond); padding: 34px 30px;
+  animation: gfq-fade .3s ease;
+}
+.gfq-res--vert { border-top-color: var(--gfq-vert); }
+.gfq-res--orange { border-top-color: var(--gfq-orange); }
+.gfq-res--rouge { border-top-color: var(--gfq-rouge); }
+.gfq-badge {
+  display: inline-block; padding: 5px 14px; border-radius: 999px;
+  font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: #fff; margin-bottom: 14px;
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.gfq-res--vert .gfq-badge { background: var(--gfq-vert); }
+.gfq-res--orange .gfq-badge { background: var(--gfq-orange); }
+.gfq-res--rouge .gfq-badge { background: var(--gfq-rouge); }
+.gfq-res-titre { font-size: 27px; margin-bottom: 6px; }
+.gfq-res-score {
+  font-size: 14px; color: var(--gfq-doux); margin: 0 0 18px;
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.gfq-res-texte { font-size: 17px; color: var(--gfq-vert-clair); text-align: left; margin: 0 auto 22px; max-width: 520px; }
+.gfq-res-texte p { margin: 0 0 12px; }
+.gfq-res-texte p:last-child { margin-bottom: 0; }
+.gfq-res-texte strong { color: var(--gfq-vert); }
+
+/* ---------- Code promo ---------- */
+.gfq-promo {
+  display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center;
+  background: #fff; border: 1px dashed var(--gfq-vert); border-radius: 12px;
+  padding: 12px 18px; margin: 0 0 22px;
+}
+.gfq-promo-lbl {
+  font-size: 13px; color: var(--gfq-doux); text-transform: uppercase; letter-spacing: .04em;
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.gfq-promo-code {
+  background: var(--gfq-beige); border: 0; border-radius: 8px; padding: 8px 14px;
+  font-size: 18px; font-weight: 700; letter-spacing: .08em; color: var(--gfq-vert); cursor: pointer;
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.gfq-promo-code:hover { background: var(--gfq-bord); }
+.gfq-promo-code.is-copie { color: #fff; background: var(--gfq-vert); }
+
+.gfq-refaire { display: block; margin: 18px auto 0; }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .gfq { padding: 6px 14px 48px; }
+  .gfq-intro h1 { font-size: 27px; }
+  .gfq-intro-sous { font-size: 17px; }
+  .gfq-q-enonce { font-size: 21px; }
+  .gfq-rep { font-size: 16px; padding: 14px 16px; }
+  .gfq-res { padding: 26px 20px; }
+  .gfq-res-titre { font-size: 23px; }
+  .gfq-btn { width: 100%; }
+}

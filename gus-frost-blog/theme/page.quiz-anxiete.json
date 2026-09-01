@@ -1,0 +1,189 @@
+{
+  "sections": {
+    "quiz": {
+      "type": "gf-quiz-anxiete",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "enonce": "Quand vous préparez vos affaires (clés, manteau, chaussures), votre chien…",
+            "r1": "reste tranquille, ou lève simplement la tête",
+            "p1": 0,
+            "r2": "vous suit, s'agite un peu, semble en attente",
+            "p2": 1,
+            "r3": "halète, tourne en rond, se colle à la porte",
+            "p3": 2,
+            "alerte": 0
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "enonce": "Dans les dix premières minutes après votre départ, il…",
+            "r1": "se couche, s'occupe ou dort",
+            "p1": 0,
+            "r2": "couine ou aboie quelques minutes, puis se calme",
+            "p2": 1,
+            "r3": "aboie ou hurle longtemps, gratte, panique",
+            "p3": 2,
+            "alerte": 0
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "enonce": "À votre retour, vous retrouvez…",
+            "r1": "rien d'anormal",
+            "p1": 0,
+            "r2": "quelques bêtises occasionnelles, des objets déplacés",
+            "p2": 1,
+            "r3": "des destructions, souvent près des portes ou des fenêtres",
+            "p3": 2,
+            "alerte": 0
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "enonce": "Concernant la propreté en votre absence…",
+            "r1": "il est parfaitement propre",
+            "p1": 0,
+            "r2": "il lui arrive rarement d'avoir un accident",
+            "p2": 1,
+            "r3": "il urine ou défèque régulièrement, alors qu'il est propre en votre présence",
+            "p3": 2,
+            "alerte": 0
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "enonce": "La friandise ou l'occupation que vous lui laissez…",
+            "r1": "il la mange ou la lèche dès votre départ",
+            "p1": 0,
+            "r2": "il finit par y toucher, plus tard dans la journée",
+            "p2": 1,
+            "r3": "il n'y touche pas tant que vous n'êtes pas rentré",
+            "p3": 2,
+            "alerte": 0
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "enonce": "Quand vous êtes à la maison, il…",
+            "r1": "vaque à ses occupations et dort seul sans problème",
+            "p1": 0,
+            "r2": "vous suit souvent d'une pièce à l'autre",
+            "p2": 1,
+            "r3": "vous suit partout, même aux toilettes, et s'agite si une porte vous sépare",
+            "p3": 2,
+            "alerte": 0
+          }
+        },
+        "q7": {
+          "type": "question",
+          "settings": {
+            "enonce": "Au moment des retrouvailles, il…",
+            "r1": "vient vous voir tranquillement",
+            "p1": 0,
+            "r2": "est content et excité pendant quelques instants",
+            "p2": 1,
+            "r3": "est en surexcitation intense, halète, urine parfois d'émotion",
+            "p3": 2,
+            "alerte": 0
+          }
+        },
+        "q8": {
+          "type": "question",
+          "settings": {
+            "enonce": "Vos voisins vous ont-ils signalé des aboiements ou des hurlements ?",
+            "r1": "jamais",
+            "p1": 0,
+            "r2": "une fois, exceptionnellement",
+            "p2": 1,
+            "r3": "régulièrement",
+            "p3": 2,
+            "alerte": 0
+          }
+        },
+        "q9": {
+          "type": "question",
+          "settings": {
+            "enonce": "Au moment de votre départ, présente-t-il des signes physiques (halètement, tremblements, bave) ?",
+            "r1": "aucun",
+            "p1": 0,
+            "r2": "des signes légers",
+            "p2": 1,
+            "r3": "des signes marqués",
+            "p3": 2,
+            "alerte": 0
+          }
+        },
+        "q10": {
+          "type": "question",
+          "settings": {
+            "enonce": "Entre une absence de 10 minutes et une absence de plusieurs heures…",
+            "r1": "il réagit calmement dans les deux cas",
+            "p1": 0,
+            "r2": "il gère bien les courtes, moins bien les longues",
+            "p2": 1,
+            "r3": "même une absence de 5 minutes déclenche la même détresse",
+            "p3": 2,
+            "alerte": 3
+          }
+        },
+        "q11": {
+          "type": "question",
+          "settings": {
+            "enonce": "Depuis quand la situation dure-t-elle ?",
+            "r1": "il n'y a pas vraiment de problème",
+            "p1": 0,
+            "r2": "c'est récent, après un changement (déménagement, rythme, adoption)",
+            "p2": 1,
+            "r3": "c'est installé depuis longtemps, ou cela s'aggrave",
+            "p3": 2,
+            "alerte": 0
+          }
+        },
+        "q12": {
+          "type": "question",
+          "settings": {
+            "enonce": "A-t-il déjà tenté de fuir ou s'est-il blessé en votre absence ?",
+            "r1": "jamais",
+            "p1": 0,
+            "r2": "il gratte un peu la porte",
+            "p2": 1,
+            "r3": "il s'est déjà blessé, ou a endommagé une porte ou une fenêtre",
+            "p3": 2,
+            "alerte": 3
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "q11",
+        "q12"
+      ],
+      "settings": {
+        "klaviyo_cle": "VyiAUH",
+        "klaviyo_liste": "XsbyXa",
+        "vert_cta_url": "/collections/stress",
+        "orange_cta_url": "/collections/stress",
+        "rouge_cta_url": "/collections/stress"
+      }
+    }
+  },
+  "order": [
+    "quiz"
+  ]
+}

@@ -93,3 +93,43 @@ tout comme l'encart boutique du bas de page — pensez à y renseigner le lien d
   **Agenda (.ics)** : les échéances partent dans le calendrier natif, qui, lui, sonne.
 - **Le partage** encode la fiche santé dans l'URL elle-même (rien n'est hébergé). Au-delà
   d'environ 6 000 caractères, l'app refuse et renvoie vers le PDF.
+
+---
+
+# Quiz diagnostic anxiété — l'aimant à e-mails
+
+Équivalent maison d'un ScoreApp / Involve.me : un questionnaire qui note l'anxiété du chien,
+affiche un résultat par palier (vert / orange / rouge) et capture l'e-mail dans Klaviyo en
+échange du plan personnalisé. Sans app, sans abonnement.
+
+## 1. Déposer les fichiers dans le thème
+
+| Fichier local                  | Destination dans le thème            |
+|--------------------------------|--------------------------------------|
+| `theme/gf-quiz-anxiete.css`    | `assets/gf-quiz-anxiete.css`         |
+| `theme/gf-quiz-anxiete.js`     | `assets/gf-quiz-anxiete.js`          |
+| `theme/gf-quiz-anxiete.liquid` | `sections/gf-quiz-anxiete.liquid`    |
+| `theme/page.quiz-anxiete.json` | `templates/page.quiz-anxiete.json`   |
+
+Mêmes règles que pour le Carnet : le template référence la section par
+`"type": "gf-quiz-anxiete"`, et le Liquid charge ses assets par `asset_url`. La section est
+autonome — aucun patch de `layout/theme.liquid` n'est nécessaire.
+
+## 2. Créer la page
+
+Boutique en ligne → Pages → **Ajouter une page**
+- Titre : `Quiz anxiété` (handle `/pages/quiz-anxiete`)
+- Modèle de thème : **page.quiz-anxiete**
+- Laisser le contenu vide : tout vient de la section.
+
+## 3. Points de vigilance
+
+- **Les clés Klaviyo sont dans le template**, pas dans le code : `klaviyo_cle` (clé publique
+  du compte) et `klaviyo_liste` (id de la liste) sont des réglages de section, modifiables
+  dans l'éditeur de thème. Le JSON versionné ici porte les valeurs de production.
+- **Le code promo de fin de quiz** est un code Shopify ordinaire : il doit exister côté
+  Réductions, sinon le message promet une remise qui ne s'applique pas.
+- **Les 12 blocs sont l'ossature du diagnostic** (questions + paliers de résultat). En
+  ajouter ou en retirer change la notation : relire le barème dans `gf-quiz-anxiete.js`
+  avant de toucher aux blocs.
+- **Une seule section quiz par page.**

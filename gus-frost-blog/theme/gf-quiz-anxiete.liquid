@@ -1,0 +1,530 @@
+{%- comment -%}
+  Section « Quiz diagnostic — anxiété de séparation »
+  --------------------------------------------------------------------------
+  Diagnostic scoré maison, sans app ni abonnement. Équivalent (et un cran mieux)
+  des outils type ScoreApp / Involve.me / RevenueHunt.
+
+  Contenu = le « Kit de montage » Gus et Frost (12 questions, barème 0/1/2,
+  3 profils, mur e-mail). Repris au mot près, éditable ici.
+
+  Pré-requis dans le thème :
+    - assets/gf-quiz-anxiete.css
+    - assets/gf-quiz-anxiete.js
+
+  Réglages : questions = blocs « Question » ; 3 bandes vert/orange/rouge ;
+  mur e-mail + branchement Klaviyo (clé PUBLIQUE + id de liste).
+
+  Signal d'alerte : mettre le champ « alerte » d'une question sur le n° de la
+  réponse qui doit forcer la zone rouge. Ici Q10 (« même 5 minutes… ») et Q12
+  (« il s'est déjà blessé… ») = réponse 3 → bascule rouge, quel que soit le score.
+
+  Klaviyo : mêmes endpoints CLIENT que « Le Carnet ». Clé vide = le quiz montre
+  le résultat sans capturer l'e-mail. Propriétés poussées : quiz_profil,
+  quiz_score, signal_alerte, source_lead, prenom.
+{%- endcomment -%}
+
+{{ 'gf-quiz-anxiete.css' | asset_url | stylesheet_tag }}
+
+{%- assign qblocks = section.blocks | where: 'type', 'question' -%}
+
+<div class="gfq" data-gfq {{ section.shopify_attributes }}>
+
+  {%- comment -%} ---------- Écran d'accueil ---------- {%- endcomment -%}
+  <div data-gfq-intro>
+    <div class="gfq-intro">
+      <h1>{{ section.settings.hero_heading | escape }}</h1>
+      {%- if section.settings.hero_text != blank -%}
+        <p class="gfq-intro-sous">{{ section.settings.hero_text | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.hero_intro != blank -%}
+        <div class="gfq-intro-texte">{{ section.settings.hero_intro }}</div>
+      {%- endif -%}
+      {%- if section.settings.meta != blank -%}
+        <p class="gfq-meta">
+          {%- assign items = section.settings.meta | split: '|' -%}
+          {%- for i in items -%}<span>{{ i | strip | escape }}</span>{%- endfor -%}
+        </p>
+      {%- endif -%}
+      <button type="button" class="gfq-btn" data-gfq-start>{{ section.settings.start_label | escape }}</button>
+      {%- if section.settings.hero_reassurance != blank -%}
+        <p class="gfq-intro-rassure">{{ section.settings.hero_reassurance | escape }}</p>
+      {%- endif -%}
+      <p class="gfq-rappel" data-gfq-rappel hidden>
+        Vous avez déjà fait ce test. <a href="#" data-gfq-revoir>Revoir mon résultat</a>.
+      </p>
+    </div>
+  </div>
+
+  {%- comment -%} ---------- Progression + scène (remplie par le JS) ---------- {%- endcomment -%}
+  <div class="gfq-progress" data-gfq-progress hidden>
+    <p class="gfq-compteur" data-gfq-compteur></p>
+    <div class="gfq-jauge-piste"><div class="gfq-jauge" data-gfq-jauge></div></div>
+  </div>
+  <div data-gfq-scene></div>
+
+  {%- comment -%} ---------- Configuration passée au moteur JS ---------- {%- endcomment -%}
+  <script type="application/json" data-gfq-config>
+  {
+    "cle": {{ section.settings.klaviyo_cle | default: '' | json }},
+    "liste": {{ section.settings.klaviyo_liste | default: '' | json }},
+    "source": {{ section.settings.source | default: 'quiz_anxiete_separation' | json }},
+    "metric": {{ section.settings.metric | default: 'Quiz anxiété terminé' | json }},
+    "seuil_vert": {{ section.settings.seuil_vert | default: 6 }},
+    "seuil_orange": {{ section.settings.seuil_orange | default: 14 }},
+    "alertes_pour_rouge": {{ section.settings.alertes_pour_rouge | default: 1 }},
+    "questions": [
+      {%- for b in qblocks -%}
+        {
+          "enonce": {{ b.settings.enonce | json }},
+          "alerte": {{ b.settings.alerte | default: 0 }},
+          "reponses": [
+            {%- assign n = 0 -%}
+            {%- for i in (1..4) -%}
+              {%- assign tkey = 'r' | append: i -%}
+              {%- assign pkey = 'p' | append: i -%}
+              {%- assign t = b.settings[tkey] -%}
+              {%- if t != blank -%}
+                {%- if n > 0 -%},{%- endif -%}
+                { "t": {{ t | json }}, "p": {{ b.settings[pkey] | default: 0 }} }
+                {%- assign n = n | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+          ]
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ],
+    "mur": {
+      "titre": {{ section.settings.mur_titre | json }},
+      "texte": {{ section.settings.mur_texte | json }},
+      "prenom_placeholder": {{ section.settings.mur_prenom | json }},
+      "placeholder": {{ section.settings.mur_placeholder | json }},
+      "consent": {{ section.settings.mur_consent | json }},
+      "bouton": {{ section.settings.mur_bouton | json }},
+      "note": {{ section.settings.mur_note | json }}
+    },
+    "bands": {
+      "vert": {
+        "badge": {{ section.settings.vert_badge | json }},
+        "titre": {{ section.settings.vert_titre | json }},
+        "html": {{ section.settings.vert_html | json }},
+        "promo": {{ section.settings.vert_promo | json }},
+        "promo_label": {{ section.settings.vert_promo_label | json }},
+        "cta_label": {{ section.settings.vert_cta_label | json }},
+        "cta_url": {{ section.settings.vert_cta_url | json }}
+      },
+      "orange": {
+        "badge": {{ section.settings.orange_badge | json }},
+        "titre": {{ section.settings.orange_titre | json }},
+        "html": {{ section.settings.orange_html | json }},
+        "promo": {{ section.settings.orange_promo | json }},
+        "promo_label": {{ section.settings.orange_promo_label | json }},
+        "cta_label": {{ section.settings.orange_cta_label | json }},
+        "cta_url": {{ section.settings.orange_cta_url | json }}
+      },
+      "rouge": {
+        "badge": {{ section.settings.rouge_badge | json }},
+        "titre": {{ section.settings.rouge_titre | json }},
+        "html": {{ section.settings.rouge_html | json }},
+        "promo": {{ section.settings.rouge_promo | json }},
+        "promo_label": {{ section.settings.rouge_promo_label | json }},
+        "cta_label": {{ section.settings.rouge_cta_label | json }},
+        "cta_url": {{ section.settings.rouge_cta_url | json }}
+      }
+    }
+  }
+  </script>
+
+</div>
+
+<script src="{{ 'gf-quiz-anxiete.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Quiz — anxiété séparation",
+  "tag": "section",
+  "class": "gf-quiz-anxiete-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Écran d'accueil"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Titre",
+      "default": "Mon chien a-t-il une anxiété de séparation ?"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "Sous-titre",
+      "default": "Le test d'auto-évaluation pour savoir où en est vraiment votre chien. 12 questions, 2 minutes."
+    },
+    {
+      "type": "richtext",
+      "id": "hero_intro",
+      "label": "Texte d'introduction",
+      "default": "<p>Des dégâts, des aboiements signalés par le voisin, une flaque à votre retour. Devant ces signes, on pense souvent « il se venge » ou « il s'ennuie ». Or tous les chiens qui font des bêtises ne sont pas anxieux, et un chien réellement en détresse ne se travaille pas comme un chien qui s'ennuie.</p><p>Avant de chercher une solution, il faut savoir à quoi vous avez affaire. Ces 12 questions sont là pour ça. Répondez en pensant à ce qui se passe d'habitude, pas à un jour exceptionnel.</p><p>Ce test ne pose aucun diagnostic : il vous aide à y voir clair, et à savoir s'il faut consulter.</p>"
+    },
+    {
+      "type": "text",
+      "id": "meta",
+      "label": "Réassurances en pastilles (séparées par |, facultatif)"
+    },
+    {
+      "type": "text",
+      "id": "start_label",
+      "label": "Bouton de démarrage",
+      "default": "Commencer le test →"
+    },
+    {
+      "type": "text",
+      "id": "hero_reassurance",
+      "label": "Réassurance sous le bouton",
+      "default": "Gratuit. Votre résultat détaillé + un mini-guide offert à la fin."
+    },
+    {
+      "type": "header",
+      "content": "Seuils de score"
+    },
+    {
+      "type": "paragraph",
+      "content": "Score max = 24 pour le test par défaut. Vert : score ≤ seuil vert. Orange : jusqu'au seuil orange. Rouge : au-delà."
+    },
+    {
+      "type": "number",
+      "id": "seuil_vert",
+      "label": "Seuil haut de la zone verte",
+      "default": 6
+    },
+    {
+      "type": "number",
+      "id": "seuil_orange",
+      "label": "Seuil haut de la zone orange",
+      "default": 14
+    },
+    {
+      "type": "number",
+      "id": "alertes_pour_rouge",
+      "label": "Nombre de signaux d'alerte qui forcent la zone rouge",
+      "default": 1,
+      "info": "Un « signal d'alerte » (Q10 « même 5 minutes… » ou Q12 « il s'est déjà blessé… ») bascule directement en zone rouge, quel que soit le score."
+    },
+    {
+      "type": "header",
+      "content": "Zone VERTE — plutôt de l'ennui"
+    },
+    {
+      "type": "text",
+      "id": "vert_badge",
+      "label": "Badge",
+      "default": "Zone verte"
+    },
+    {
+      "type": "text",
+      "id": "vert_titre",
+      "label": "Titre du résultat",
+      "default": "Bonne nouvelle : votre chien vit plutôt bien vos absences"
+    },
+    {
+      "type": "richtext",
+      "id": "vert_html",
+      "label": "Texte du profil",
+      "default": "<p>Votre chien traverse vos absences plutôt sereinement. S'il fait malgré tout quelques bêtises, la piste la plus probable est <strong>l'ennui, pas la détresse</strong>. Et un chien qui s'ennuie, ça se règle bien : de l'occupation, de la mastication, du reniflage, et un rythme prévisible.</p><p>Le réflexe qui change tout dès demain : <strong>occuper sa tête plutôt que fatiguer ses pattes</strong>. Dix minutes de reniflage fatiguent un chien plus sûrement qu'une longue marche.</p><p>On vous envoie par e-mail votre résultat complet et un mini-guide d'occupation pour transformer les journées à la maison.</p>"
+    },
+    {
+      "type": "text",
+      "id": "vert_promo_label",
+      "label": "Libellé du code promo",
+      "default": "Votre code"
+    },
+    {
+      "type": "text",
+      "id": "vert_promo",
+      "label": "Code promo (laisser vide = le code arrive par e-mail)"
+    },
+    {
+      "type": "text",
+      "id": "vert_cta_label",
+      "label": "Bouton",
+      "default": "Voir les solutions d'occupation →"
+    },
+    {
+      "type": "url",
+      "id": "vert_cta_url",
+      "label": "Lien du bouton"
+    },
+    {
+      "type": "header",
+      "content": "Zone ORANGE — inconfort réel"
+    },
+    {
+      "type": "text",
+      "id": "orange_badge",
+      "label": "Badge",
+      "default": "Zone orange"
+    },
+    {
+      "type": "text",
+      "id": "orange_titre",
+      "label": "Titre du résultat",
+      "default": "Un inconfort réel, et le meilleur moment pour agir"
+    },
+    {
+      "type": "richtext",
+      "id": "orange_html",
+      "label": "Texte du profil",
+      "default": "<p>Votre chien montre des signes d'inconfort quand vous partez. Ce n'est pas encore une détresse sévère, et c'est justement <strong>le moment où le travail donne les meilleurs résultats</strong>. Autrement dit : vous vous y prenez au bon moment.</p><p>Trois leviers vont l'aider en priorité : un <strong>départ neutre</strong> (pas de longs adieux), une <strong>occupation apaisante</strong> posée deux à trois minutes avant de sortir pour absorber le pic de stress, et des <strong>faux départs</strong> menés par petites étapes.</p><p>On vous envoie votre résultat complet par e-mail, avec la méthode détaillée et le premier geste à installer dès demain matin.</p>"
+    },
+    {
+      "type": "text",
+      "id": "orange_promo_label",
+      "label": "Libellé du code promo",
+      "default": "Votre code"
+    },
+    {
+      "type": "text",
+      "id": "orange_promo",
+      "label": "Code promo (laisser vide = le code arrive par e-mail)"
+    },
+    {
+      "type": "text",
+      "id": "orange_cta_label",
+      "label": "Bouton",
+      "default": "Découvrir Le Rituel du Calme →"
+    },
+    {
+      "type": "url",
+      "id": "orange_cta_url",
+      "label": "Lien du bouton"
+    },
+    {
+      "type": "header",
+      "content": "Zone ROUGE — détresse marquée"
+    },
+    {
+      "type": "text",
+      "id": "rouge_badge",
+      "label": "Badge",
+      "default": "Zone rouge"
+    },
+    {
+      "type": "text",
+      "id": "rouge_titre",
+      "label": "Titre du résultat",
+      "default": "Des signaux marqués : vous n'avez pas à porter ça seul(e)"
+    },
+    {
+      "type": "richtext",
+      "id": "rouge_html",
+      "label": "Texte du profil",
+      "default": "<p>Les signaux sont nombreux et intenses : il s'agit probablement d'une <strong>anxiété de séparation installée</strong>. Ce n'est ni de votre faute, ni une fatalité, mais ce n'est pas une situation à gérer seul(e).</p><p>La bonne démarche : <strong>parlez-en à votre vétérinaire</strong>, qui écartera une cause médicale et pourra vous orienter vers un comportementaliste. C'est le vrai point de départ. En parallèle, les gestes de fond restent utiles pour apaiser le quotidien : un départ neutre, un environnement rassurant, une occupation calme.</p><p>Point essentiel : <strong>aucun apaisant, complément ou médicament ne doit être donné sans avis vétérinaire</strong>. Ce quiz est un outil d'orientation, il ne pose aucun diagnostic et ne remplace pas un avis vétérinaire individualisé.</p><p>On vous envoie votre résultat complet par e-mail, avec les premiers gestes à mettre en place en attendant votre rendez-vous.</p>"
+    },
+    {
+      "type": "text",
+      "id": "rouge_promo_label",
+      "label": "Libellé du code promo",
+      "default": "Votre code"
+    },
+    {
+      "type": "text",
+      "id": "rouge_promo",
+      "label": "Code promo (laisser vide = le code arrive par e-mail)"
+    },
+    {
+      "type": "text",
+      "id": "rouge_cta_label",
+      "label": "Bouton",
+      "default": "Voir nos accessoires apaisants →"
+    },
+    {
+      "type": "url",
+      "id": "rouge_cta_url",
+      "label": "Lien du bouton"
+    },
+    {
+      "type": "header",
+      "content": "Mur e-mail (avant le résultat)"
+    },
+    {
+      "type": "text",
+      "id": "mur_titre",
+      "label": "Titre",
+      "default": "Votre résultat est prêt."
+    },
+    {
+      "type": "textarea",
+      "id": "mur_texte",
+      "label": "Sous-titre",
+      "default": "Où souhaitez-vous recevoir votre résultat détaillé et le mini-guide offert qui l'accompagne ?"
+    },
+    {
+      "type": "text",
+      "id": "mur_prenom",
+      "label": "Champ prénom (exemple)",
+      "default": "Prénom (facultatif)"
+    },
+    {
+      "type": "text",
+      "id": "mur_placeholder",
+      "label": "Champ e-mail (exemple)",
+      "default": "Adresse e-mail"
+    },
+    {
+      "type": "textarea",
+      "id": "mur_consent",
+      "label": "Ligne de consentement (case à cocher)",
+      "default": "Je souhaite recevoir mon résultat et les conseils Gus et Frost par e-mail. Désabonnement en un clic, à tout moment."
+    },
+    {
+      "type": "text",
+      "id": "mur_bouton",
+      "label": "Bouton",
+      "default": "Voir mon résultat →"
+    },
+    {
+      "type": "textarea",
+      "id": "mur_note",
+      "label": "Micro-réassurance (sous le bouton)",
+      "default": "Gratuit. Pas de spam. Votre e-mail reste chez nous."
+    },
+    {
+      "type": "header",
+      "content": "Branchement Klaviyo"
+    },
+    {
+      "type": "paragraph",
+      "content": "Clé vide = le quiz montre le résultat sans capturer l'e-mail. Clé PUBLIQUE (Site ID) dans Klaviyo → Settings → API keys ; id de liste dans l'URL de la liste. Propriétés poussées : quiz_profil (vert/orange/rouge), quiz_score, signal_alerte (oui/non), source_lead, prenom. L'évènement ci-dessous déclenche le flow « Bienvenue Quiz »."
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_cle",
+      "label": "Clé publique Klaviyo (Site ID)"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_liste",
+      "label": "ID de la liste Klaviyo"
+    },
+    {
+      "type": "text",
+      "id": "metric",
+      "label": "Nom de l'évènement",
+      "default": "Quiz anxiété terminé"
+    },
+    {
+      "type": "text",
+      "id": "source",
+      "label": "Étiquette source (source_lead)",
+      "default": "quiz_anxiete_separation"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "enonce",
+          "label": "Énoncé de la question"
+        },
+        {
+          "type": "text",
+          "id": "r1",
+          "label": "Réponse 1"
+        },
+        {
+          "type": "number",
+          "id": "p1",
+          "label": "Points réponse 1",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "r2",
+          "label": "Réponse 2"
+        },
+        {
+          "type": "number",
+          "id": "p2",
+          "label": "Points réponse 2",
+          "default": 1
+        },
+        {
+          "type": "text",
+          "id": "r3",
+          "label": "Réponse 3"
+        },
+        {
+          "type": "number",
+          "id": "p3",
+          "label": "Points réponse 3",
+          "default": 2
+        },
+        {
+          "type": "text",
+          "id": "r4",
+          "label": "Réponse 4 (facultative)"
+        },
+        {
+          "type": "number",
+          "id": "p4",
+          "label": "Points réponse 4",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "alerte",
+          "label": "Signal d'alerte : n° de la réponse (0 = aucun)",
+          "default": 0,
+          "info": "Si l'utilisateur choisit cette réponse, le résultat bascule en zone rouge."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quiz — anxiété séparation",
+      "blocks": [
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
