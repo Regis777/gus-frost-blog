@@ -159,13 +159,24 @@ Deux autres pièges rencontrés et gérés, à retenir : (1) les images fournies
 
 ---
 
-## 7. Super-silo Chaton CH19 — CH19-1 déployé (01/09/2026)
+## 7. Super-silo Chaton CH19 — les 6 sous-clusters déployés (01/09/2026)
 
-L'absorption de CH9 a commencé. **CH19-1 « Accueil et premiers jours » est en ligne** : 13 articles sur le blog `chats`, tag `cluster-chaton-accueil-chat`, 27 images.
-- **5 slugs repris de CH9** (`accueillir-chaton`, `preparer-arrivee-chaton`, `securiser-maison-chaton`, `premiers-jours-chaton`, `erreurs-accueil-chaton`) : mis à jour en place, slugs conservés, **statut publié préservé**, aucune 301 (boutique sous mot de passe, non indexée). **CH9 tombe de 13 à 8 articles** ; le tag `cluster-chaton-chat` disparaîtra quand les 8 derniers seront redistribués vers CH19-2 à CH19-6.
-- **8 articles neufs en brouillon**, en attente de relecture de Régis. Leur back-fill entrant (≥ 5 liens depuis CH1, CH2, CH4, CH10, CH11) est **volontairement différé jusqu'à leur publication** : les clusters sources sont publiés, on ne pointe pas vers des brouillons.
+**74 articles en ligne sur le blog `chats`**, 154 images. `manifest_chat.csv` : 158 → 218 lignes.
 
-`manifest_chat.csv` passe de 158 à 166 lignes (8 append + 5 lignes réécrites en place). Sauvegarde : `manifest_chat.csv.bak_avant_CH19-1`.
+| Brique | Tag | Articles | Brouillons | Reprises publiées |
+|---|---|:---:|:---:|:---:|
+| CH19-1 Accueil | `cluster-chaton-accueil-chat` | 13 | 8 | 5 (CH9) |
+| CH19-2 Propreté | `cluster-chaton-proprete-chat` | 9 | 8 | 1 (CH6) |
+| CH19-3 Socialisation | `cluster-chaton-socialisation-chat` | 13 | 11 | 2 (CH9) |
+| CH19-4 Jeu | `cluster-chaton-jeu-chat` | 13 | 10 | 3 (CH9) |
+| CH19-5 Alimentation | `cluster-chaton-alimentation-chat` | 13 | 12 | 1 (CH9) |
+| CH19-6 Santé | `cluster-chaton-sante-chat` | 13 | 11 | 2 (CH9) |
 
-**L'état détaillé de l'extension CH13→CH19 fait foi dans `Blogs cowork/ETAT_avancement_blog-chat.md` §7** (inventaire réel du Drive, pièges de la chaîne d'ingestion sous-cluster, correctif `faq_schema.py`).
+**CH9 est dissous** : le tag `cluster-chaton-chat` ne porte plus aucune ligne, ses 13 slugs sont redistribués. **CH6 tombe à 12 articles** (`litiere-chaton-apprentissage` parti dans CH19-2). Slugs conservés partout, **0 redirection 301** (boutique sous mot de passe, non indexée). Les 14 reprises gardent leur statut publié — `deploy_cluster.py` le préserve nativement (`publish=was_published`).
+
+Audit final : **218 fragments, 0 lien mort, 0 orphelin**. Reste le hub `elever-un-chaton` (non écrit), dont le renvoi depuis `sante-chaton` est neutralisé en prose et journalisé.
+
+**Back-fill entrant des 6 briques volontairement différé** jusqu'à la publication des 60 brouillons : les clusters sources sont publiés et pointeraient sinon vers des pages invisibles.
+
+Détail complet, défauts corrigés et politique de dé-duplication des prénoms : `Blogs cowork/ETAT_avancement_blog-chat.md` §7 et §8.
 
