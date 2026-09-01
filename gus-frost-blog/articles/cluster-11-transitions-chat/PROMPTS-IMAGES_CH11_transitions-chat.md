@@ -126,3 +126,12 @@ Photographie lifestyle premium, intérieur domestique français réaliste et cha
 
 **Image 27.** plan large d'un chat serein réinstallé sur un rebord de fenêtre ensoleillé dans un intérieur redevenu stable, image d'une transition réussie, ambiance apaisée
    _Légende article :_ Une transition réussie ne se voit pas à la vitesse, mais à ce retour au calme : un chat qui reprend sa place, à son rythme, dans un intérieur redevenu le sien.
+
+
+### SAT13 — `deuil-perte-chat-cote-maitre`
+
+**Image 28.** plan large pudique et lumineux d'un coussin vide baigné de lumière douce près d'une fenêtre, une main d'adulte posée à côté dans un geste apaisé, intérieur chaleureux et calme, ambiance de recueillement paisible
+   _Légende article :_ Ce sont les petits repères du quotidien qui manquent d'abord, un coussin, une place au soleil. Laisser la peine venir par vagues, sans la brusquer, fait partie du chemin.
+
+**Image 29.** plan moyen chaleureux d'un adulte et d'un enfant assis ensemble regardant un petit cadre photo posé sur une étagère, geste tendre et recueilli, lumière douce de fin d'après-midi, ambiance de souvenir partagé
+   _Légende article :_ Un geste de mémoire, aussi simple qu'un cadre ou quelques mots partagés, aide petits et grands à dire au revoir. Le deuil se traverse souvent mieux à plusieurs.

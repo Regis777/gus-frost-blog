@@ -126,3 +126,13 @@ Photographie lifestyle premium, intérieur domestique français réaliste et cha
 
 **Image 27.** plan large d'un maître assis dans un salon lumineux et chaleureux, observant avec tendresse son vieux chat au pelage grisonnant lové non loin de lui, regard attentif et serein, scène de bonne pratique et de vigilance paisible
    _Légende article :_ La bonne attitude n'est pas l'inquiétude, mais la vigilance sereine : observer son vieux chat avec attention pour ne rien banaliser.
+
+
+### SAT13 — `toilettage-brossage-chat-adulte`
+> EXCEPTION au style du cluster : cet article vise le chat ADULTE, pas le senior. Le chat doit être en pleine forme, pelage sain et brillant, sans grisonnement.
+
+**Image 28.** plan rapproché doux d'une main brossant délicatement le dos d'un chat à poil court détendu sur un plaid clair, yeux mi-clos de contentement, poils captés par la brosse, lumière naturelle chaleureuse
+   _Légende article :_ Un brossage régulier retire les poils morts avant que le chat ne les avale. Bref et calme, il devient vite un moment de complicité plutôt qu'une contrainte.
+
+**Image 29.** plan moyen d'un chat à poil long calme sur les genoux d'une personne qui démêle délicatement une mèche avec un peigne, geste patient et maîtrisé, ambiance domestique paisible et lumineuse
+   _Légende article :_ Un nœud se défait mèche par mèche, tenu à la base pour ne pas tirer la peau. On ne coupe jamais aux ciseaux : la peau, soulevée à l'intérieur, se blesse trop facilement.
