@@ -34,8 +34,9 @@ le 01/09/2026 :
 
 - `consolide/` — 15 fichiers du thème `163845112029` (les 2 fichiers cœur patchés,
   les 6 templates custom, les templates blog, les settings) ;
-- `copie-de-dawn/` — les 5 fichiers du modèle « conversion », qui n'existent que dans
-  `Copie de Dawn` (theme id `162807808221`).
+- `copie-de-dawn/` — les 5 fichiers du modèle « conversion ». **Reportés dans le consolidé
+  le 01/09/2026** (md5 vérifiés après relecture) : ce dossier reste la source versionnée
+  du modèle, le consolidé en est désormais porteur.
 
 ⚠️ `templates/product.monoproduit.json` n'avait **aucune** copie locale avant cette
 sauvegarde : Shopify était l'unique source de vérité pour les 26 blocs de la landing.
@@ -135,8 +136,12 @@ Compter ~30 min. Ne jamais publier une `Updated copy` telle quelle.
    Dawn 15 (voir la sauvegarde, qui fait foi).
 6. **Arbitrer les comptes clients** (§5) : vérifier `Settings > Customer accounts` avant de
    publier, la bascule est le vrai point de non-retour.
-7. **Reporter les 5 fichiers `conversion-*`** depuis `theme/backup-dawn15/copie-de-dawn/`
-   si le modèle produit « conversion » doit survivre — il n'est pas dans le consolidé.
+7. **Vérifier le modèle « conversion »** : les 5 fichiers (`templates/product.conversion.json`
+   + `sections/conversion-{marquee,reviews,sticky-atc,trust}.liquid`) sont dans le consolidé
+   depuis le 01/09/2026 ; la source versionnée reste `theme/backup-dawn15/copie-de-dawn/`.
+   Ils sont autonomes (aucun `render`, aucun `asset_url`) et ne s'appuient que sur des
+   sections Dawn standard : `main-product`, `image-with-text`, `multicolumn`,
+   `collapsible-content`.
 8. **Contrôler en preview** avant publication : un article (typo + articles liés + encart
    Carnet), `/pages/quiz-anxiete`, `/pages/mon-carnet`, la fiche tapis de léchage et la
    landing monoproduit.
@@ -155,3 +160,13 @@ Identifiants utiles :
 | Dawn | `158654333149` | en ligne |
 | Gus & Frost — consolidé (à publier) | `163845112029` | brouillon, **thème à publier** |
 | Copie de Dawn | `162807808221` | bac à sable (périmé : ni Carnet, ni parrainage, ni recherche blog) |
+
+Depuis le report du modèle « conversion » (01/09/2026), le consolidé est un **sur-ensemble
+strict** de `Copie de Dawn` : plus aucun fichier n'existe seulement dans le bac à sable.
+
+Une seule divergence subsiste, **volontairement non reportée** : le
+`templates/product.json` de `Copie de Dawn` porte une section `rituel-du-calme` (23 blocs)
+greffée sur le modèle produit *par défaut*. Elle ferait apparaître le bloc guide PDF sur
+**toutes** les fiches produit sans modèle dédié. C'est un reste d'essai : la version
+aboutie (24 blocs) vit dans `templates/product.produit-digital.json`, qui est son bon
+emplacement.
