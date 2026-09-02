@@ -170,3 +170,28 @@ greffée sur le modèle produit *par défaut*. Elle ferait apparaître le bloc g
 **toutes** les fiches produit sans modèle dédié. C'est un reste d'essai : la version
 aboutie (24 blocs) vit dans `templates/product.produit-digital.json`, qui est son bon
 emplacement.
+
+## Degreffage prepare (02/09/2026) — reduit la casse a la prochaine mise a jour
+
+Les points §1 et §2 ci-dessus n'existent que parce qu'on avait greffe du code
+dans deux fichiers de Dawn. Deux sections a nous les remplacent :
+
+| Section | Position dans `templates/article.json` | Remplace |
+|---|---|---|
+| `gf-article-css` | en tete | l'injection de `gf-article.css` dans `layout/theme.liquid` |
+| `gf-article-extras` | juste apres `main` | les deux `render` dans `sections/main-article.liquid` |
+
+Bascule : `python scripts/degreffe_article.py --theme-id <id> --apply`
+Retour arriere : le meme avec `--revert` (teste, le theme repasse byte-identique).
+
+Verifie sur une copie du theme publie : geometrie identique au pixel et zero
+difference sur 7 elements x 14 proprietes calculees.
+
+**Une fois applique, la procedure de rattrapage perd ses etapes 2 et 3** : plus
+aucun fichier de Dawn n'est modifie sur les pages article, donc une mise a jour
+ne peut plus casser ni la typo, ni le maillage, ni l'encart Carnet. Restent les
+modeles JSON (§3 monoproduit et §4 sections parasites), qui relevent du
+comportement de fusion de Shopify et non de nos greffes.
+
+**Non applique au theme publie a ce jour.**
+
