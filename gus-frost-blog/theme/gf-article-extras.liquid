@@ -13,18 +13,46 @@
   modele, le bloc `content` est le dernier de l'article (block_order met `share`
   avant lui), donc la position rendue est exactement celle d'avant.
 
-  LE WRAPPER page-width reprend la gouttiere laterale que fournissait
-  .article-template__content. Les deux snippets se centrent seuls (max-width
-  dans gf-article.css) mais n'ont pas de marge interne propre : sans ce wrapper,
-  ils toucheraient les bords sur mobile.
+  LES DEUX WRAPPERS reproduisent EXACTEMENT la chaine de parents que les snippets
+  avaient dans main-article.liquid. Ce n'est pas de la decoration : sortis de
+  cette chaine, les encarts changent d'apparence.
+    .article-template            -> porte le custom_css du modele d'article
+                                    (fond creme, texte noir, et h2 forces en
+                                    noir via !important)
+    .article-template__content   -> la largeur (max-width 726px)
+    .page-width page-width--narrow -> la gouttiere laterale, sinon les encarts
+                                    touchent les bords sur mobile
+    .rte                         -> entre autres `.rte img { max-width: 100% }`,
+                                    qui tient les vignettes des articles lies
+  Mesure du 02/09/2026 : sans ces classes, le texte des encarts passait du noir
+  au vert a 75 %, les h2 du noir au vert, et les vignettes gagnaient un arrondi.
+  LE BLOC style RECOPIE le custom_css du modele d'article. Il le faut : Shopify
+  scope le custom_css d'une section a cette section (les selecteurs sont
+  prefixes par son #shopify-section-...), donc porter la classe .article-template
+  ici ne suffit pas a en heriter. Sans cette recopie, mesure du 02/09/2026 : le
+  texte des encarts passait du noir au vert a 75 % et les h2 du noir au vert.
+
+  COUPLAGE A CONNAITRE : si le custom_css du modele d'article change (editeur de
+  theme, section « main »), ces trois declarations doivent suivre.
 {%- endcomment -%}
-<div class="page-width page-width--narrow">
-  {%- if section.settings.afficher_carnet -%}
-    {%- render 'gf-carnet-promo' -%}
-  {%- endif -%}
-  {%- if section.settings.afficher_articles_lies -%}
-    {%- render 'related-articles' -%}
-  {%- endif -%}
+{%- style -%}
+  #shopify-section-{{ section.id }} .article-template {
+    background-color: #efe7da;
+    color: #000000;
+  }
+  #shopify-section-{{ section.id }} .article-template h2 {
+    color: #000000 !important;
+  }
+{%- endstyle -%}
+<div class="article-template">
+  <div class="article-template__content page-width page-width--narrow rte">
+    {%- if section.settings.afficher_carnet -%}
+      {%- render 'gf-carnet-promo' -%}
+    {%- endif -%}
+    {%- if section.settings.afficher_articles_lies -%}
+      {%- render 'related-articles' -%}
+    {%- endif -%}
+  </div>
 </div>
 
 {% schema %}
