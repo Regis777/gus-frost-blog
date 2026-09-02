@@ -80,11 +80,28 @@ def carte(blog, art, img):
             % (blog, art["handle"], vignette, esc(art["title"])))
 
 
+def promo_carnet():
+    """L'encart « Le Carnet », lu depuis sa source versionnee.
+
+    Le snippet est du HTML statique : on le cuit tel quel, apres avoir retire
+    son commentaire Liquid. Une seule source de verite — modifier
+    theme/gf-carnet-promo.liquid puis relancer ce script suffit a le propager.
+    """
+    src = io.open(os.path.join(ROOT, "theme", "gf-carnet-promo.liquid"),
+                  encoding="utf-8").read()
+    src = re.sub(r"\{%-?\s*comment\s*-?%\}.*?\{%-?\s*endcomment\s*-?%\}", "", src, flags=re.S)
+    if "{%" in src or "{{" in src:
+        sys.exit("REFUS : gf-carnet-promo.liquid n'est plus statique, il ne peut plus etre cuit.")
+    return src.strip()
+
+
 def bloc(blog, courant, pilier, freres, images):
+    """Encart Carnet puis articles lies — l'ordre d'origine, avant le degreffage."""
+    carnet = promo_carnet()
     if not freres:
-        return None                       # rien a montrer : pas de cadre vide
+        return "\n".join([DEBUT, carnet, FIN])   # l'encart seul, pas de cadre vide
     est_pilier = pilier is not None and pilier["handle"] == courant["handle"]
-    parts = [DEBUT, '<aside class="gf-related">']
+    parts = [DEBUT, carnet, '<aside class="gf-related">']
     if est_pilier:
         parts.append("<h2>Le dossier complet</h2>")
     else:
@@ -151,9 +168,8 @@ def main():
                       and x["slug"] != r["slug"] and x["slug"] in par_slug]
             pilier = par_slug.get(pilier_row["slug"]) if pilier_row else None
             bl = bloc(args.blog, art, pilier, freres, images)
-            if bl is None:
+            if not freres:
                 stats["sans_freres"] += 1
-                continue
             stats["liens"] += len(freres)
 
             # 1) le fichier source, pour que le prochain deploiement le garde
