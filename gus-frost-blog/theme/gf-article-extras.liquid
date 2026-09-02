@@ -1,6 +1,13 @@
 {%- comment -%}
   gf-article-extras — Gus & Frost
-  Pied d'article : encart « Le Carnet » puis les articles liés.
+  Pied d'article : encart « Le Carnet ».
+
+  LES ARTICLES LIES NE SONT PLUS RENDUS ICI. Le snippet related-articles.liquid
+  bouclait sur `blog.articles`, que Liquid plafonne a 50 articles : 73 % du blog
+  chien et 100 % du blog chat affichaient un cadre vide. Le maillage est
+  desormais cuit dans le corps de chaque article par scripts/bake_maillage.py,
+  entre les marqueurs <!-- gf-maillage:debut --> et <!-- gf-maillage:fin -->.
+  A relancer apres chaque cluster.
 
   POURQUOI CETTE SECTION EXISTE
   Les deux rendus etaient greffes dans sections/main-article.liquid, un fichier
@@ -49,9 +56,6 @@
     {%- if section.settings.afficher_carnet -%}
       {%- render 'gf-carnet-promo' -%}
     {%- endif -%}
-    {%- if section.settings.afficher_articles_lies -%}
-      {%- render 'related-articles' -%}
-    {%- endif -%}
   </div>
 </div>
 
@@ -64,12 +68,6 @@
       "type": "checkbox",
       "id": "afficher_carnet",
       "label": "Afficher l'encart « Le Carnet »",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "afficher_articles_lies",
-      "label": "Afficher les articles liés",
       "default": true
     }
   ]
