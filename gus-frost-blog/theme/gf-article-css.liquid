@@ -1,0 +1,29 @@
+{%- comment -%}
+  gf-article-css — Gus & Frost
+  Charge assets/gf-article.css sur les pages article.
+
+  POURQUOI CETTE SECTION EXISTE
+  La feuille etait injectee dans layout/theme.liquid, un fichier de Dawn. Or une
+  mise a jour du theme reecrit les fichiers de Dawn : la greffe sautait, et la
+  typo des articles (Montserrat/Lora, corps calibre) revenait au reglage par
+  defaut sur tout le blog. Ici, plus aucun fichier de Dawn n'est modifie.
+
+  PLACEE EN TETE de templates/article.json, et pas ailleurs : une feuille de
+  style rencontree dans le corps bloque le rendu de ce qui la suit. En tete, la
+  typo est donc appliquee avant que le texte de l'article s'affiche — pas de
+  flash de contenu non style. La section ne rend rien de visible.
+{%- endcomment -%}
+{{ 'gf-article.css' | asset_url | stylesheet_tag }}
+
+{% schema %}
+{
+  "name": "Style des articles",
+  "enabled_on": { "templates": ["article"] },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Charge la feuille de style des articles (typographie, encarts, articles liés). Ne rend rien de visible : à laisser en première position, sans quoi le texte s'affiche brièvement sans sa mise en forme."
+    }
+  ]
+}
+{% endschema %}

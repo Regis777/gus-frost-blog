@@ -1,0 +1,49 @@
+{%- comment -%}
+  gf-article-extras — Gus & Frost
+  Pied d'article : encart « Le Carnet » puis les articles liés.
+
+  POURQUOI CETTE SECTION EXISTE
+  Les deux rendus etaient greffes dans sections/main-article.liquid, un fichier
+  de Dawn, juste apres {{ article.content }}. Une mise a jour du theme reecrit ce
+  fichier : les deux `render` sautaient, et les 471 articles perdaient d'un coup
+  leur maillage interne et l'encart Carnet. Ici, plus aucun fichier de Dawn n'est
+  modifie.
+
+  PLACEE JUSTE APRES la section « main » dans templates/article.json : dans ce
+  modele, le bloc `content` est le dernier de l'article (block_order met `share`
+  avant lui), donc la position rendue est exactement celle d'avant.
+
+  LE WRAPPER page-width reprend la gouttiere laterale que fournissait
+  .article-template__content. Les deux snippets se centrent seuls (max-width
+  dans gf-article.css) mais n'ont pas de marge interne propre : sans ce wrapper,
+  ils toucheraient les bords sur mobile.
+{%- endcomment -%}
+<div class="page-width page-width--narrow">
+  {%- if section.settings.afficher_carnet -%}
+    {%- render 'gf-carnet-promo' -%}
+  {%- endif -%}
+  {%- if section.settings.afficher_articles_lies -%}
+    {%- render 'related-articles' -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Pied d'article",
+  "enabled_on": { "templates": ["article"] },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "afficher_carnet",
+      "label": "Afficher l'encart « Le Carnet »",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "afficher_articles_lies",
+      "label": "Afficher les articles liés",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
