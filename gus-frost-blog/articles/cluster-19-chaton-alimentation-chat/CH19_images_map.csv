@@ -1,28 +1,28 @@
-num,fichier_origine,nouveau_fichier,article_slug,type,role,alt
-1,1.png,hero-alimentation-chaton.png,alimentation-chaton,PILIER,hero,"Portrait chaleureux en légère plongée d'un chaton assis près d'une petite gamelle basse remplie d'aliment croissance, lumière naturelle douce, ambiance intérieure premium."
-2,2.png,alimentation-chaton-2.png,alimentation-chaton,PILIER,secondaire,"Plan moyen d'un chaton buvant à une coupelle d'eau fraîche placée à l'écart de sa gamelle, langue tirée, lumière douce du matin."
-3,3.png,alimentation-chaton-3.png,alimentation-chaton,PILIER,secondaire,"Scène d'ensemble apaisée d'un chaton en bonne santé, pelage brillant, jouant près de sa gamelle et de son point d'eau dans un intérieur lumineux aux tons crème et vert forêt."
-4,4.png,hero-quel-aliment-chaton-choisir.png,quel-aliment-chaton-choisir,SAT01,hero,"Gros plan des mains d'une personne tenant deux paquets d'aliment pour chaton devant un rayon, regard concentré sur les étiquettes, lumière neutre de magasin."
-5,5.png,quel-aliment-chaton-choisir-2.png,quel-aliment-chaton-choisir,SAT01,secondaire,"Plan rapproché d'une gamelle basse remplie d'un aliment croissance pour chaton, à côté un petit chaton attentif qui s'approche, ambiance domestique douce aux tons crème."
-6,6.png,hero-croquettes-ou-patee-chaton.png,croquettes-ou-patee-chaton,SAT02,hero,"Plan rapproché d'un chaton mangeant une pâtée croissance dans une petite assiette plate, museau légèrement taché, lumière chaude et douce."
-7,7.png,croquettes-ou-patee-chaton-2.png,croquettes-ou-patee-chaton,SAT02,secondaire,"Vue de dessus de deux petites gamelles côte à côte, l'une avec des croquettes croissance, l'autre avec de la pâtée, un chaton hésitant entre les deux, tons crème et vert forêt."
-8,8.png,hero-combien-nourrir-chaton-quantite.png,combien-nourrir-chaton-quantite,SAT03,hero,"Plan rapproché d'une main versant une petite portion de croquettes croissance dans une gamelle basse, un chaton attentif à côté, lumière douce de cuisine."
-9,9.png,combien-nourrir-chaton-quantite-2.png,combien-nourrir-chaton-quantite,SAT03,secondaire,"Une personne caresse le flanc d'un chaton pour évaluer son état corporel, geste doux, chaton détendu, ambiance intérieure calme aux tons crème et sauge."
-10,10.png,hero-frequence-repas-chaton.png,frequence-repas-chaton,SAT04,hero,"Vue d'ensemble d'un chaton mangeant une petite portion dans une gamelle basse, une horloge floue en arrière-plan suggérant un repas parmi plusieurs, lumière douce."
-11,11.png,frequence-repas-chaton-2.png,frequence-repas-chaton,SAT04,secondaire,"Un chaton attend près d'une petite gamelle tandis qu'une main verse une portion, ambiance de routine du soir, intérieur chaleureux aux tons crème et vert forêt."
-12,12.png,hero-transition-alimentaire-chaton.png,transition-alimentaire-chaton,SAT05,hero,"Deux petits tas de croquettes de couleurs légèrement différentes mélangés dans une gamelle basse, un chaton qui approche le museau, lumière douce."
-13,13.png,transition-alimentaire-chaton-2.png,transition-alimentaire-chaton,SAT05,secondaire,"Un chaton en pleine forme mange dans sa gamelle, selles et appétit évoqués par une ambiance sereine, intérieur lumineux aux tons crème et sauge."
-14,14.png,hero-sevrage-chaton.png,sevrage-chaton,SAT06,hero,"Portée de chatons de quelques semaines regroupés autour d’une assiette basse de pâtée, l’un d’eux goûtant, la mère à proximité, lumière chaude."
-15,15.png,sevrage-chaton-2.png,sevrage-chaton,SAT06,secondaire,"Gros plan d’un chaton d’environ cinq semaines mangeant maladroitement une pâtée dans une assiette basse, museau taché, expression concentrée."
-16,16.png,hero-biberonnage-chaton-orphelin.png,biberonnage-chaton-orphelin,SAT07,hero,"Très jeune chaton emmailloté dans une serviette douce, tenu au creux de mains protectrices, ambiance chaude et feutrée, lumière tamisée."
-17,17.png,biberonnage-chaton-orphelin-2.png,biberonnage-chaton-orphelin,SAT07,secondaire,"Mains d'un soignant tendant un chaton emmitouflé vers l'accueil d'une clinique vétérinaire, ambiance rassurante, mise au point sur le chaton."
-18,18.png,hero-lait-vache-danger-chaton.png,lait-vache-danger-chaton,SAT08,hero,"Une soucoupe de lait posée au sol avec un panneau de sens interdit stylisé en surimpression discrète, un chaton qui s'en détourne, lumière neutre."
-19,19.png,lait-vache-danger-chaton-2.png,lait-vache-danger-chaton,SAT08,secondaire,"Un chaton boit à un bol d'eau fraîche et claire posé à l'écart de sa gamelle, lumière douce, message d'hydratation simple et sain."
-20,20.png,hero-chaton-ne-mange-pas.png,chaton-ne-mange-pas,SAT09,hero,"Chaton replié sur lui-même près d'une gamelle pleine et intacte, regard éteint, lumière un peu grise, atmosphère qui suggère l'inquiétude."
-21,21.png,chaton-ne-mange-pas-2.png,chaton-ne-mange-pas,SAT09,secondaire,"Un vétérinaire ausculte doucement un chaton sur une table d'examen, mains attentives, ambiance de clinique rassurante, mise au point sur le chaton."
-22,22.png,hero-eau-hydratation-chaton.png,eau-hydratation-chaton,SAT10,hero,"Un chaton lape dans un bol d'eau large et peu profond posé sur un sol clair, gouttelettes visibles, lumière douce et fraîche."
-23,23.png,eau-hydratation-chaton-2.png,eau-hydratation-chaton,SAT10,secondaire,"Deux petits bols d'eau claire disposés dans des coins différents d'un intérieur, à l'écart d'une gamelle de nourriture, ambiance calme aux tons crème et sauge."
-24,24.png,hero-croissance-poids-chaton.png,croissance-poids-chaton,SAT11,hero,"Un chaton posé délicatement sur une petite balance domestique, une main rassurante à côté, ambiance calme, mise au point sur le chaton attentif."
-25,25.png,croissance-poids-chaton-2.png,croissance-poids-chaton,SAT11,secondaire,"Une main caresse le flanc d'un chaton pour évaluer sa silhouette, chaton détendu au tonus visible, intérieur lumineux aux tons crème et vert forêt."
-26,26.png,hero-erreurs-alimentation-chaton.png,erreurs-alimentation-chaton,SAT12,hero,"Un chaton lève les yeux vers une table de repas humaine, une main s'apprête à lui tendre un morceau, panneau d'avertissement discret en surimpression, lumière chaude."
-27,27.png,erreurs-alimentation-chaton-2.png,erreurs-alimentation-chaton,SAT12,secondaire,"Un chaton en pleine santé assis près d'une gamelle d'aliment croissance et d'un bol d'eau, silhouette harmonieuse, intérieur lumineux aux tons crème et vert forêt."
+num,fichier_origine,nouveau_fichier,article_slug,type,role,alt
+1,1.png,hero-alimentation-chaton.png,alimentation-chaton,PILIER,hero,Portrait chaleureux en légère plongée d'un chaton assis près d'une petite gamelle basse remplie d'aliment croissance.
+2,2.png,alimentation-chaton-2.png,alimentation-chaton,PILIER,secondaire,"Un chaton buvant à une coupelle d'eau fraîche placée à l'écart de sa gamelle, langue tirée."
+3,3.png,alimentation-chaton-3.png,alimentation-chaton,PILIER,secondaire,"Un chaton en bonne santé au pelage brillant, jouant près de sa gamelle et de son point d'eau."
+4,4.png,hero-quel-aliment-chaton-choisir.png,quel-aliment-chaton-choisir,SAT01,hero,Les mains d'une personne tenant deux paquets d'aliment pour chaton devant un rayon.
+5,5.png,quel-aliment-chaton-choisir-2.png,quel-aliment-chaton-choisir,SAT01,secondaire,"Une gamelle basse remplie d'un aliment croissance pour chaton, à côté un petit chaton attentif qui s'approche."
+6,6.png,hero-croquettes-ou-patee-chaton.png,croquettes-ou-patee-chaton,SAT02,hero,"Un chaton mangeant une pâtée croissance dans une petite assiette plate, museau légèrement taché."
+7,7.png,croquettes-ou-patee-chaton-2.png,croquettes-ou-patee-chaton,SAT02,secondaire,"Vue de dessus de deux petites gamelles côte à côte, l'une avec des croquettes croissance."
+8,8.png,hero-combien-nourrir-chaton-quantite.png,combien-nourrir-chaton-quantite,SAT03,hero,Une main versant une petite portion de croquettes croissance dans une gamelle basse.
+9,9.png,combien-nourrir-chaton-quantite-2.png,combien-nourrir-chaton-quantite,SAT03,secondaire,"Une personne caresse le flanc d'un chaton pour évaluer son état corporel, geste doux, chaton détendu."
+10,10.png,hero-frequence-repas-chaton.png,frequence-repas-chaton,SAT04,hero,Un chaton mangeant une petite portion dans une gamelle basse.
+11,11.png,frequence-repas-chaton-2.png,frequence-repas-chaton,SAT04,secondaire,Un chaton attend près d'une petite gamelle tandis qu'une main verse une portion.
+12,12.png,hero-transition-alimentaire-chaton.png,transition-alimentaire-chaton,SAT05,hero,Deux petits tas de croquettes de couleurs légèrement différentes mélangés dans une gamelle basse.
+13,13.png,transition-alimentaire-chaton-2.png,transition-alimentaire-chaton,SAT05,secondaire,Un chaton en pleine forme qui mange de bon appétit dans sa gamelle.
+14,14.png,hero-sevrage-chaton.png,sevrage-chaton,SAT06,hero,"Portée de chatons de quelques semaines regroupés autour d’une assiette basse de pâtée, l’un d’eux goûtant."
+15,15.png,sevrage-chaton-2.png,sevrage-chaton,SAT06,secondaire,"Un chaton d'environ cinq semaines mangeant maladroitement une pâtée dans une assiette basse, museau taché, expression concentrée."
+16,16.png,hero-biberonnage-chaton-orphelin.png,biberonnage-chaton-orphelin,SAT07,hero,"Très jeune chaton emmailloté dans une serviette douce, tenu au creux de mains protectrices."
+17,17.png,biberonnage-chaton-orphelin-2.png,biberonnage-chaton-orphelin,SAT07,secondaire,Mains d'un soignant tendant un chaton emmitouflé vers l'accueil d'une clinique vétérinaire.
+18,18.png,hero-lait-vache-danger-chaton.png,lait-vache-danger-chaton,SAT08,hero,Une soucoupe de lait posée au sol avec un panneau de sens interdit stylisé en surimpression discrète.
+19,19.png,lait-vache-danger-chaton-2.png,lait-vache-danger-chaton,SAT08,secondaire,Un chaton boit à un bol d'eau fraîche et claire posé à l'écart de sa gamelle.
+20,20.png,hero-chaton-ne-mange-pas.png,chaton-ne-mange-pas,SAT09,hero,"Chaton replié sur lui-même près d'une gamelle pleine et intacte, regard éteint."
+21,21.png,chaton-ne-mange-pas-2.png,chaton-ne-mange-pas,SAT09,secondaire,"Un vétérinaire ausculte doucement un chaton sur une table d'examen, mains attentives."
+22,22.png,hero-eau-hydratation-chaton.png,eau-hydratation-chaton,SAT10,hero,Un chaton lape dans un bol d'eau large et peu profond posé sur un sol clair.
+23,23.png,eau-hydratation-chaton-2.png,eau-hydratation-chaton,SAT10,secondaire,Deux petits bols d'eau claire disposés dans des coins différents d'un intérieur.
+24,24.png,hero-croissance-poids-chaton.png,croissance-poids-chaton,SAT11,hero,"Un chaton posé délicatement sur une petite balance domestique, une main rassurante à côté."
+25,25.png,croissance-poids-chaton-2.png,croissance-poids-chaton,SAT11,secondaire,"Une main caresse le flanc d'un chaton pour évaluer sa silhouette, chaton détendu au tonus visible."
+26,26.png,hero-erreurs-alimentation-chaton.png,erreurs-alimentation-chaton,SAT12,hero,Un chaton lève les yeux vers une table de repas humaine.
+27,27.png,erreurs-alimentation-chaton-2.png,erreurs-alimentation-chaton,SAT12,secondaire,"Un chaton en pleine santé assis près d'une gamelle d'aliment croissance et d'un bol d'eau, silhouette harmonieuse."

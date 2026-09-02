@@ -32,6 +32,7 @@ import argparse, csv, glob, io, os, re, shutil, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from publish import blog_conf, ensure_manifest                            # noqa: E402
+from check_cluster import ALT_PROMPT                                      # noqa: E402
 
 HDR = ["cluster_num", "cluster_tag", "type", "slug", "parent_pilier_slug", "title",
        "meta_title", "meta_description", "excerpt", "tags", "file", "prompts_file",
@@ -119,6 +120,14 @@ def main():
             role = "hero" if i == 0 else "secondaire"
             new = ("hero-%s.png" % slug) if i == 0 else ("%s-%d.png" % (slug, i + 1))
             alt = (desc[:1].upper() + desc[1:]).rstrip(".") + "."
+            # Le marqueur « Image N » doit porter une LÉGENDE courte, pas le prompt de
+            # génération : recopié tel quel, le cadrage et la lumière partent en ligne
+            # (défaut mesuré sur 628 alt le 02/09/2026). check_cluster.py le refuse.
+            _cue = ALT_PROMPT.search(alt)
+            if _cue or len(alt.split()) > 20:
+                print("  ! alt suspect (%s) %s : %s"
+                      % ("prompt : " + _cue.group(0) if _cue else "%d mots" % len(alt.split()),
+                         slug, alt[:70]))
             typ = frags[slug][1]
             maprows.append({"num": int(num), "fichier_origine": "%s.png" % num,
                             "nouveau_fichier": new, "article_slug": slug,

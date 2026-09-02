@@ -11,7 +11,9 @@ Vérifie, par article :
              collection du blog (chiens -> /collections/stress, chats -> /collections/chat),
              et AUCUN lien /products/ dans le CTA.
   ORDRE      FAQ avant CTA ; le CTA est le dernier bloc avant </article>.
-  IMAGES     chaque <img> a un alt non vide ; au moins une image hero-.
+  IMAGES     chaque <img> a un alt non vide, court (<= 20 mots / 160 car.) et exempt de
+             vocabulaire de prompt (plan large, gros plan, lumière douce, ambiance…) ;
+             au moins une image hero-.
   MAILLAGE   liens internes en /blogs/<blog>/<slug> pointant vers un slug du manifest ;
              signale les PLACEHOLDER_ restants (toléré avant la passe de maillage).
   TYPO FR    espace insécable (U+00A0/U+202F) avant ; : ! ? » et après « (signale les
@@ -41,6 +43,24 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 from publish import blog_conf                                        # noqa: E402
 
 DOUBLE_PUNCT = ";:!?»"
+
+# --- Garde-fou alt -----------------------------------------------------------
+# Un alt ne doit jamais être le prompt de génération de l'image. ingest_cluster.py
+# recopie tel quel le marqueur « Image N » du fragment source : si le rédacteur y
+# colle le prompt, le cadrage et la lumière partent en ligne (défaut mesuré le
+# 02/09/2026 sur 628 alt de 345 articles). Bloquant, pas seulement signalé.
+ALT_MAX_WORDS = 20
+ALT_MAX_CHARS = 160
+ALT_PROMPT = re.compile(
+    r"\b(?:plan\s+(?:large|moyen|rapproché|serré|américain|fixe|d'ensemble|de\s+détail|imposé)"
+    r"|gros\s+plan|au\s+premier\s+plan|arrière-plan\s+(?:légèrement\s+)?flou"
+    r"|contre-jour|contre-plongée|en\s+plongée"
+    r"|profondeur\s+de\s+champ|bokeh|focale|hors\s+champ|cadrage"
+    r"|lumière\s+(?:naturelle|douce|chaude|rasante|dorée|tamisée|feutrée|bleutée|matinale)"
+    r"|ambiance\s+\w+|atmosphère\s+\w+"
+    r"|scène\s+(?:de\s+vie|prise\s+sur\s+le\s+vif|montrée)"
+    r"|photo\s+réaliste|photographie\s+\w+|aucun\s+texte|sans\s+watermark)\b",
+    re.IGNORECASE)
 
 
 def manifest_slugs(p):
@@ -106,6 +126,18 @@ def check_file(path, slugs, blog, faq_expected, pre_maillage, collection="stress
         alt = re.search(r'\balt="([^"]*)"', tag)
         if not alt or not alt.group(1).strip():
             E.append("image sans alt: %s" % tag[:70])
+            continue
+        a = alt.group(1).strip()
+        cue = ALT_PROMPT.search(a)
+        if cue:
+            E.append("alt = consigne de génération d'image (« %s ») : %s"
+                     % (cue.group(0), a[:80]))
+        elif len(a.split()) > ALT_MAX_WORDS:
+            E.append("alt trop long (%d mots, max %d) : %s"
+                     % (len(a.split()), ALT_MAX_WORDS, a[:80]))
+        elif len(a) > ALT_MAX_CHARS:
+            E.append("alt trop long (%d caractères, max %d) : %s"
+                     % (len(a), ALT_MAX_CHARS, a[:80]))
     if not any('src="hero-' in t or "/hero-" in t for t in imgs):
         W.append("aucune image hero- détectée")
 

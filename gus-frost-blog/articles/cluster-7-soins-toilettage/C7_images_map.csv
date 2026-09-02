@@ -1,14 +1,14 @@
 num,fichier_origine,nouveau_fichier,article_slug,type,role,alt
 1,1.png,hero-soins-toilettage-chien.png,soins-toilettage-chien,PILIER,hero,Personne brossant calmement un chien détendu à la maison.
 2,2.png,soins-toilettage-chien-2.png,soins-toilettage-chien,PILIER,secondaire,Main écartant délicatement le poil pour inspecter la peau d'un chien.
-3,3.png,soins-toilettage-chien-3.png,soins-toilettage-chien,PILIER,secondaire,"Chien présentant spontanément sa patte à son maître, ambiance sereine."
+3,3.png,soins-toilettage-chien-3.png,soins-toilettage-chien,PILIER,secondaire,Chien présentant spontanément sa patte à son maître.
 4,4.png,hero-soins-cooperatifs-chien.png,soins-cooperatifs-chien,SAT,hero,Chien détendu posant volontairement son menton dans la main de son maître assis.
-5,5.png,soins-cooperatifs-chien-2.png,soins-cooperatifs-chien,SAT,secondaire,Gros plan sur un chien qui se lèche la truffe et détourne légèrement la tête.
+5,5.png,soins-cooperatifs-chien-2.png,soins-cooperatifs-chien,SAT,secondaire,Un chien qui se lèche la truffe et détourne légèrement la tête.
 6,6.png,hero-habituer-chien-manipulation.png,habituer-chien-manipulation,SAT,hero,Personne assise touchant délicatement la patte d'un chien détendu couché à côté d'elle.
 7,7.png,habituer-chien-manipulation-2.png,habituer-chien-manipulation,SAT,secondaire,Main soulevant doucement le pavillon de l'oreille d'un chien calme qui reste couché.
 8,8.png,hero-brosser-chien-poil.png,brosser-chien-poil,SAT,hero,"Personne brossant un chien détendu couché sur un tapis, à la maison."
-9,9.png,brosser-chien-poil-2.png,brosser-chien-poil,SAT,secondaire,Gros plan sur une main écartant le poil long d'un chien pour vérifier l'absence de nœud.
-10,10.png,hero-couper-griffes-chien.png,couper-griffes-chien,SAT,hero,"Gros plan sur une patte de chien tenue délicatement, griffes claires visibles."
+9,9.png,brosser-chien-poil-2.png,brosser-chien-poil,SAT,secondaire,Une main écartant le poil long d'un chien pour vérifier l'absence de nœud.
+10,10.png,hero-couper-griffes-chien.png,couper-griffes-chien,SAT,hero,"Une patte de chien tenue délicatement, griffes claires visibles."
 11,11.png,couper-griffes-chien-2.png,couper-griffes-chien,SAT,secondaire,Chien couché léchant un tapis pendant que son maître s'occupe calmement d'une patte.
 12,12.png,hero-bain-chien.png,bain-chien,SAT,hero,"Chien calme dans une baignoire sur un tapis antidérapant, savonné en douceur."
 13,13.png,bain-chien-2.png,bain-chien,SAT,secondaire,"Chien enveloppé dans une serviette, séché doucement après le bain."
