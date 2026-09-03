@@ -9,9 +9,11 @@ saute. Deux greffes existaient :
   1. layout/theme.liquid       -> chargement conditionnel de gf-article.css
   2. sections/main-article.liquid -> render de gf-carnet-promo et related-articles
 
-Elles sont remplacees par deux sections a nous, posees dans templates/article.json :
-  gf-article-css     (en tete : charge la feuille avant le rendu du texte)
-  gf-article-extras  (juste apres l'article : encart Carnet + articles lies)
+La premiere est remplacee par une section a nous, gf-article-css, posee en tete
+de templates/article.json. Les deux renders, eux, ne sont pas remplaces : depuis
+le 02/09/2026 l'encart Carnet et les articles lies sont cuits dans le corps des
+articles par bake_maillage.py. Les remettre afficherait chaque bloc deux fois —
+c'est pourquoi --revert ne les restaure pas.
 
 Apres ca, plus aucun fichier de Dawn n'est modifie sur les pages article.
 
@@ -44,17 +46,22 @@ GREFFE_CSS = (
 )
 SANS_GREFFE_CSS = "  </head>"
 
-GREFFE_RENDERS = (
-    "\n{%- render 'gf-carnet-promo' -%}"
-    "\n{%- render 'related-articles' -%}"
-)
+# Traites separement : « Copie de Dawn » ne porte que le second, le snippet
+# gf-carnet-promo n'y ayant jamais ete depose.
+GREFFE_RENDERS = [
+    "\n{%- render 'gf-carnet-promo' -%}",
+    "\n{%- render 'related-articles' -%}",
+]
 
 SECTIONS = [
     ("gf-article-css.liquid", "sections/gf-article-css.liquid", "gf_article_css",
      "gf-article-css"),
-    ("gf-article-extras.liquid", "sections/gf-article-extras.liquid", "gf_article_extras",
-     "gf-article-extras"),
 ]
+
+# Section d'un etat anterieur : l'encart Carnet et les articles lies sont
+# desormais cuits dans le corps (bake_maillage.py), elle n'a plus rien a rendre.
+SECTIONS_OBSOLETES = ["gf_article_extras"]
+FICHIERS_OBSOLETES = ["sections/gf-article-extras.liquid"]
 
 
 def get(sh, tid, key):
@@ -109,22 +116,19 @@ def main():
             print("  = layout/theme.liquid          aucune greffe (deja propre)")
 
     # ---- sections/main-article.liquid ---------------------------------------
+    # Les renders ne sont JAMAIS remis, meme en --revert : l'encart Carnet et les
+    # articles lies vivent maintenant dans le corps des articles. Les remettre
+    # afficherait chaque bloc deux fois.
     art = get(sh, tid, "sections/main-article.liquid")
-    if args.revert:
-        if GREFFE_RENDERS in art:
-            print("  = sections/main-article.liquid greffe deja presente")
-        else:
-            ancre = "          {{ article.content }}"
-            if ancre not in art:
-                sys.exit("REFUS : ancre {{ article.content }} introuvable.")
-            ecrire["sections/main-article.liquid"] = art.replace(ancre, ancre + GREFFE_RENDERS, 1)
-            print("  ~ sections/main-article.liquid renders remis")
+    presents = [g for g in GREFFE_RENDERS if g in art]
+    if presents:
+        neuf = art
+        for g in presents:
+            neuf = neuf.replace(g, "", 1)
+        ecrire["sections/main-article.liquid"] = neuf
+        print("  ~ sections/main-article.liquid %d render(s) retire(s)" % len(presents))
     else:
-        if GREFFE_RENDERS in art:
-            ecrire["sections/main-article.liquid"] = art.replace(GREFFE_RENDERS, "", 1)
-            print("  ~ sections/main-article.liquid 2 renders retires")
-        else:
-            print("  = sections/main-article.liquid aucune greffe (deja propre)")
+        print("  = sections/main-article.liquid aucune greffe (deja propre)")
 
     # ---- les deux sections --------------------------------------------------
     if not args.revert:
@@ -142,22 +146,22 @@ def main():
     sections = dict(tpl.get("sections", {}))
     avant = list(ordre)
 
+    # La section obsolete part dans les deux sens.
+    for sid in SECTIONS_OBSOLETES:
+        sections.pop(sid, None)
+        if sid in ordre:
+            ordre.remove(sid)
+
     if args.revert:
         for _l, _k, sid, _t in SECTIONS:
             sections.pop(sid, None)
             if sid in ordre:
                 ordre.remove(sid)
     else:
-        css_id, extras_id = SECTIONS[0][2], SECTIONS[1][2]
+        css_id = SECTIONS[0][2]
         sections.setdefault(css_id, {"type": SECTIONS[0][3], "settings": {}})
-        sections.setdefault(extras_id, {"type": SECTIONS[1][3],
-                                        "settings": {"afficher_carnet": True,
-                                                     "afficher_articles_lies": True}})
         if css_id not in ordre:
             ordre.insert(0, css_id)            # en tete : la feuille avant le texte
-        if extras_id not in ordre:
-            i = ordre.index("main") if "main" in ordre else len(ordre) - 1
-            ordre.insert(i + 1, extras_id)     # juste apres l'article
 
     if ordre != avant or sections != tpl.get("sections", {}):
         tpl["sections"], tpl["order"] = sections, ordre
@@ -188,6 +192,13 @@ def main():
         print("  ecrit %-32s relecture %s%s"
               % (cle, "OK" if ok else ">>> ECART <<<",
                  " (apres %d relecture(s))" % (essai + 1) if ok and essai else ""))
+
+    # le fichier de section devenu inutile, s'il traine encore
+    for cle in FICHIERS_OBSOLETES:
+        if get(sh, tid, cle) is not None:
+            sh._req("DELETE", "/themes/%s/assets.json?asset[key]=%s"
+                    % (tid, urllib.parse.quote(cle)))
+            print("  - %-32s supprimee (sans objet)" % cle)
 
     # controle final : plus aucune greffe dans les fichiers de Dawn
     if not args.revert:
