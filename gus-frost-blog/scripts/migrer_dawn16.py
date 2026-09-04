@@ -17,6 +17,10 @@ reste du Dawn 16 pur.
 
 Il ne publie rien. Il affiche un bilan a controler en apercu.
 
+Le theme publie sert de source, et nos modeles sont DECOUVERTS a l'execution :
+rien a tenir a jour ici quand une fiche produit nait. Ce que le script ne
+reconnait pas est affiche, pour qu'un oubli se voie.
+
 Usage :
   python scripts/migrer_dawn16.py --copie <id> --dry-run
   python scripts/migrer_dawn16.py --copie <id> --apply
@@ -36,21 +40,19 @@ except Exception:
     pass
 from publish import load_env, Shopify  # noqa: E402
 
-PUBLIE = 163845112029
+# Le theme publie est trouve a l'execution : le coder en dur le rendait faux
+# des la premiere migration reussie.
 
-# Nos modeles : Dawn 16 n'a rien a y apporter, et c'est eux que la fusion abime.
-MODELES = [
+# Nos modeles sont DECOUVERTS, pas listes a la main : un modele cree plus tard
+# serait sinon oublie ici, et la fusion l'abimerait sans que personne le voie.
+# Regle : un modele est a nous des qu'il pose une de nos sections. S'y ajoutent
+# ceux qui n'utilisent que des sections Dawn mais portent nos choix de mise en
+# page. Ce qui n'est couvert par aucune des deux regles est AFFICHE en fin de
+# passage, pour qu'un oubli soit visible au lieu d'etre silencieux.
+MODELES_TOUJOURS = [
     "templates/article.json",
     "templates/blog.json",
     "templates/index.json",
-    "templates/page.quiz-anxiete.json",
-    "templates/page.carnet.json",
-    "templates/page.carnet-landing.json",
-    "templates/page.parrainage.json",
-    "templates/product.monoproduit.json",
-    "templates/product.tapis-lechage.json",
-    "templates/product.produit-digital.json",
-    "templates/product.conversion.json",
 ]
 
 # Nos fichiers maison. La fusion les laisse intacts, mais on les recopie : c'est
@@ -102,6 +104,39 @@ def put(sh, tid, cle, val):
     sh._req("PUT", "/themes/%s/assets.json" % tid, {"asset": {"key": cle, "value": val}})
 
 
+def nos_types_de_sections():
+    """Les types de section que nous fournissons, deduits de MAISON."""
+    return {os.path.basename(c)[:-len(".liquid")]
+            for c in MAISON if c.startswith("sections/")}
+
+
+def decouvrir_modeles(sh, tid):
+    """Rend (a_recopier, non_couverts). Un modele est a nous s'il pose une de
+    nos sections ; article/blog/index le sont par nature."""
+    nos_types = nos_types_de_sections()
+    tous = sorted(a["key"] for a in sh._req("GET", "/themes/%s/assets.json" % tid)["assets"]
+                  if a["key"].startswith("templates/") and a["key"].endswith(".json"))
+    time.sleep(0.55)
+    a_recopier, non_couverts = [], []
+    for cle in tous:
+        if cle in MODELES_TOUJOURS:
+            a_recopier.append(cle)
+            continue
+        v = get(sh, tid, cle)
+        try:
+            d = json.loads(v) if v else {}
+        except ValueError:
+            non_couverts.append((cle, "illisible"))
+            continue
+        types = {s.get("type") for s in d.get("sections", {}).values()}
+        a_nous = sorted(types & nos_types)
+        if a_nous:
+            a_recopier.append(cle)
+        else:
+            non_couverts.append((cle, ", ".join(sorted(t for t in types if t))[:58]))
+    return a_recopier, non_couverts
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--copie", required=True, help="id de la « Updated copy »")
@@ -112,6 +147,12 @@ def main():
 
     sh = Shopify(load_env())
     themes = {str(t["id"]): t for t in sh._req("GET", "/themes.json")["themes"]}
+    publies = [t for t in themes.values() if t["role"] == "main"]
+    if len(publies) != 1:
+        sys.exit("REFUS : %d theme(s) publie(s), impossible de choisir la source." % len(publies))
+    PUBLIE = publies[0]["id"]
+    if str(PUBLIE) == args.copie:
+        sys.exit("REFUS : la copie ne peut pas etre le theme publie.")
     if args.copie not in themes:
         sys.exit("Theme %s introuvable." % args.copie)
     cible = themes[args.copie]
@@ -119,6 +160,18 @@ def main():
         sys.exit("REFUS : %s n'est pas un brouillon (role=%s)." % (cible["name"], cible["role"]))
     print("Source  : %s (%s, publie)" % (themes[str(PUBLIE)]["name"], PUBLIE))
     print("Cible   : %s (%s, brouillon)\n" % (cible["name"], args.copie))
+
+    MODELES, non_couverts = decouvrir_modeles(sh, PUBLIE)
+    print("%d modele(s) reconnu(s) comme les notres :" % len(MODELES))
+    for m in MODELES:
+        print("   . %s" % m.replace("templates/", ""))
+    if non_couverts:
+        # Affiche des le dry-run : c'est ici qu'un modele oublie doit sauter aux yeux.
+        print("\n%d modele(s) laisse(s) a Dawn 16, aucune de nos sections dedans." % len(non_couverts))
+        print("A relire : si l'un d'eux est en realite a nous, il faut le proteger.")
+        for cle, types in non_couverts:
+            print("   . %-30s sections : %s" % (cle.replace("templates/", ""), types or "(aucune)"))
+    print()
 
     ecrire, absents = {}, []
     for cle in MODELES + MAISON + GROUPES:
@@ -181,7 +234,7 @@ def main():
         print("   %-40s %-4s ordre : %s"
               % (cle.replace("templates/", ""), "ok" if ident else "!!",
                  " > ".join(d.get("order", []))[:70]))
-    print("\nApercu a controler : article, quiz, carnet, parrainage, les 3 fiches produit,")
+    print("\nApercu a controler : un article, les pages custom, chaque fiche produit,")
     print("puis publication seulement si tout est vert.")
 
 
