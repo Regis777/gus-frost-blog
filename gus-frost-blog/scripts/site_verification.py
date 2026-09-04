@@ -73,16 +73,25 @@ def cmd_list(sh, theme):
     body = read_file(sh, theme["gid"], THEME_FILE)
     if body is None:
         sys.exit("%s introuvable sur le theme %s." % (THEME_FILE, theme["name"]))
-    found = re.findall(r'<meta[^>]*\bname=["\']([^"\']+)["\'][^>]*\bcontent=["\']([^"\']*)["\']',
-                       body, re.IGNORECASE)
+    # name= et content= sont lus separement : rien n'impose leur ordre dans la
+    # balise, et un motif qui exigeait name avant content ratait les autres.
     known = {v[0]: k for k, v in PROVIDERS.items()}
-    rows = [(n, c) for n, c in found if n in known]
+    rows = []
+    for tag in re.findall(r"<meta[^>]*>", body, re.IGNORECASE):
+        n = re.search(r'\bname=["\']([^"\']+)["\']', tag, re.IGNORECASE)
+        c = re.search(r'\bcontent=["\']([^"\']*)["\']', tag, re.IGNORECASE)
+        if n and n.group(1) in known:
+            rows.append((n.group(1), c.group(1) if c else ""))
     if not rows:
         print("Aucune balise de validation posee dans %s." % THEME_FILE)
-        return
     for name, content in rows:
         print("  %-28s %-34s (%s)"
               % (name, content, PROVIDERS[known[name]][1]))
+    # Les applications Shopify (canal Google, app Pinterest...) injectent leurs
+    # propres balises hors du theme : elles n'apparaissent pas ici. Seul --check,
+    # qui interroge le site en direct, les voit.
+    print("  (les balises injectees par une app Shopify ne sont pas listees ici"
+          " — utiliser --check)")
 
 
 def cmd_add(sh, theme, key, code, dry_run):
