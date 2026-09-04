@@ -51,6 +51,21 @@
   font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
 }
 
+/* ---------- Bandeau d'alerte (sauvegarde, stockage bloque) ---------- */
+.gfc-alert {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
+  margin: 0 0 18px; padding: 13px 16px;
+  background: #fbf3e2; border: 1px solid var(--gfc-ambre);
+  border-left-width: 4px; border-radius: 10px;
+}
+.gfc-alert[hidden] { display: none; }
+.gfc-alert-txt {
+  flex: 1 1 280px; margin: 0;
+  font-size: 14px; line-height: 1.5; color: var(--gfc-texte);
+}
+.gfc-alert-actions { display: flex; flex: none; gap: 8px; }
+.gfc-alert--bloque { background: #f9ece9; border-color: var(--gfc-rouge); }
+
 /* ---------- Barre des animaux ---------- */
 .gfc-petbar {
   display: flex; align-items: center; gap: 10px;

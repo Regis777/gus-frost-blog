@@ -1,6 +1,8 @@
 {%- comment -%}
   Section « Le Carnet » — carnet de santé / rappels / budget / souvenirs.
-  Web app 100 % côté navigateur : aucune donnée n'est envoyée à Shopify ni ailleurs.
+  Web app côté navigateur : aucune donnée n'est envoyée à Shopify. Seule exception,
+  déclenchée par le client et sous consentement : les rappels e-mail transmettent
+  à Klaviyo l'adresse, le nom des animaux et les échéances à venir.
   Pré-requis : assets/gf-carnet.css et assets/gf-carnet.js déposés dans le thème.
   Une seule section « Le Carnet » par page (l'app est un singleton).
 {%- endcomment -%}
@@ -22,6 +24,8 @@
       <p><span class="gfc-privacy">🔒 {{ section.settings.privacy_label | escape }}</span></p>
     {%- endif -%}
   </header>
+
+  <div class="gfc-alert" data-gfc-backup role="status" hidden></div>
 
   <div class="gfc-petbar" data-gfc-petbar></div>
 

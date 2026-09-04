@@ -1,6 +1,9 @@
 /* gf-carnet.js — « Le Carnet » de Gus & Frost
-   Carnet de santé, rappels, budget et souvenirs — 100 % dans le navigateur.
-   Aucune donnée n'est envoyée : JSON dans localStorage, photos dans IndexedDB.
+   Carnet de santé, rappels, budget et souvenirs — tout vit dans le navigateur :
+   JSON dans localStorage, photos dans IndexedDB. Rien n'est envoyé, à une
+   exception près et sur consentement explicite : les rappels e-mail poussent
+   sur Klaviyo l'adresse, le nom des animaux et les échéances à venir
+   (cf. proprietesKlaviyo). Toute promesse affichée doit rester alignée dessus.
    Le seul point d'entrée est window.GFCarnet.init(racine). */
 (function () {
   'use strict';
@@ -97,7 +100,11 @@
     'visites', 'rappels', 'depenses', 'souvenirs'];
 
   function etatVide() {
-    var e = { v: 1, rappelMail: { actif: false, email: '', maj: '' } };
+    var e = {
+      v: 1,
+      rappelMail: { actif: false, email: '', maj: '' },
+      sauvegarde: { le: '', modifs: 0 }
+    };
     LISTES.forEach(function (k) { e[k] = []; });
     return e;
   }
@@ -113,6 +120,9 @@
       if (!d.rappelMail || typeof d.rappelMail !== 'object') {
         d.rappelMail = { actif: false, email: '', maj: '' };
       }
+      if (!d.sauvegarde || typeof d.sauvegarde !== 'object') {
+        d.sauvegarde = { le: '', modifs: 0 };
+      }
       return d;
     } catch (e) {
       console.warn('[carnet] données illisibles, on repart à vide', e);
@@ -120,7 +130,9 @@
     }
   }
 
-  function sauve() {
+  /* Écriture brute, sans compter la modification. Sert après un export, où le
+     compteur repart à zéro et où l'incrémenter serait un contresens. */
+  function ecrit() {
     try {
       localStorage.setItem(CLE, JSON.stringify(etat));
       return true;
@@ -128,6 +140,34 @@
       toast('Sauvegarde impossible&nbsp;: la mémoire du navigateur est pleine. Exportez puis allégez vos souvenirs.', 6000);
       return false;
     }
+  }
+
+  function sauve() {
+    if (etat && etat.sauvegarde) etat.sauvegarde.modifs++;
+    return ecrit();
+  }
+
+  /* Navigation privée, cookies bloqués, stockage désactivé : localStorage peut
+     exister et refuser toute écriture. On le teste une fois, au démarrage,
+     pour le dire au client plutôt que de lui laisser croire que c'est gardé. */
+  function stockageDispo() {
+    try {
+      localStorage.setItem(CLE + '-test', '1');
+      localStorage.removeItem(CLE + '-test');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /* Demande au navigateur de ne pas évincer nos données sous pression de
+     stockage. Silencieux : les navigateurs décident seuls, sans invite. */
+  function demandePersistance() {
+    try {
+      if (navigator.storage && navigator.storage.persist) {
+        navigator.storage.persist()['catch'](function () {});
+      }
+    } catch (e) { /* API absente : on continue sans */ }
   }
 
   function ouvreIdb() {
@@ -267,10 +307,76 @@
 
   function $(sel) { return racine.querySelector(sel); }
 
+  var stockageOk = true;     // faux en navigation privée ou cookies bloqués
+  var alerteMasquee = false; // « Plus tard » : on se tait jusqu'au rechargement
+  var rappelForce = false;   // une échéance vient d'être saisie : on insiste jusqu'à l'export
+
+  function joursDepuisExport() {
+    var d = parseIso(etat.sauvegarde && etat.sauvegarde.le);
+    return d ? joursEntre(d, aujourdhui()) : null;
+  }
+
+  /* Un filet ne sert que si l'on pense à s'en servir. On rappelle donc la
+     sauvegarde au-delà de 30 jours, ou après cinq modifications quand elle
+     n'a jamais été faite — jamais avant, pour ne pas harceler. */
+  function sauvegardeARappeler() {
+    if (!etat.animaux.length) return false;
+    var m = (etat.sauvegarde && etat.sauvegarde.modifs) || 0;
+    if (!m) return false;
+    if (rappelForce) return true;
+    var j = joursDepuisExport();
+    return j === null ? m >= 5 : j >= 30;
+  }
+
+  function pluriel(n) { return n > 1 ? 's' : ''; }
+
+  /* Un seul bandeau, deux messages. Le stockage indisponible passe devant :
+     c'est un problème présent, pas un risque futur. */
+  function renduSauvegarde() {
+    var el = $('[data-gfc-backup]');
+    if (!el) return;
+
+    if (!stockageOk) {
+      el.className = 'gfc-alert gfc-alert--bloque';
+      el.innerHTML = '<p class="gfc-alert-txt"><strong>Ce navigateur bloque l’enregistrement.</strong> ' +
+        'Navigation privée ou cookies désactivés&nbsp;: ce que vous saisissez ici disparaîtra ' +
+        'à la fermeture de l’onglet. Exportez votre carnet avant de partir, ou rouvrez-le ' +
+        'dans une fenêtre normale.</p>' +
+        '<div class="gfc-alert-actions">' +
+          '<button type="button" class="gfc-btn gfc-btn--sm gfc-btn--primary" data-act="export">Exporter maintenant</button>' +
+        '</div>';
+      el.hidden = false;
+      return;
+    }
+
+    if (modeLecture || alerteMasquee || !sauvegardeARappeler()) {
+      el.hidden = true;
+      el.innerHTML = '';
+      return;
+    }
+
+    var j = joursDepuisExport();
+    var m = etat.sauvegarde.modifs;
+    el.className = 'gfc-alert';
+    el.innerHTML = '<p class="gfc-alert-txt">' +
+      (j === null
+        ? 'Ce carnet n’a jamais été sauvegardé&nbsp;: ' + m + '&nbsp;modification' + pluriel(m) +
+          ' enregistrée' + pluriel(m) + ' sur ce seul appareil.'
+        : 'Dernière sauvegarde il y a ' + j + '&nbsp;jours, et ' + m + '&nbsp;modification' +
+          pluriel(m) + ' depuis.') +
+      ' Vider les données de navigation effacerait tout.</p>' +
+      '<div class="gfc-alert-actions">' +
+        '<button type="button" class="gfc-btn gfc-btn--sm gfc-btn--primary" data-act="export">Sauvegarder</button>' +
+        '<button type="button" class="gfc-btn gfc-btn--sm" data-act="backup-later">Plus tard</button>' +
+      '</div>';
+    el.hidden = false;
+  }
+
   function rendu() {
     if (modeLecture) return;
     renduPetbar();
     renduOnglets();
+    renduSauvegarde();
     var hote = $('[data-gfc-panels]');
     var a = animalCourant();
     animalActif = a ? a.id : null;
@@ -278,7 +384,8 @@
     if (!etat.animaux.length) {
       hote.innerHTML = '<div class="gfc-empty">' +
         '<p><strong>Commencez par ajouter un animal.</strong></p>' +
-        '<p>Tout reste sur cet appareil&nbsp;: rien n’est envoyé, aucun compte à créer.</p>' +
+        '<p>Tout reste sur cet appareil, et il n’y a aucun compte à créer. Rien n’est envoyé, ' +
+        'sauf si vous activez vous-même les rappels par e-mail.</p>' +
         '<p style="margin-top:14px"><button type="button" class="gfc-btn gfc-btn--primary" data-act="pet-new">+&nbsp;Ajouter mon animal</button></p>' +
         '</div>';
       return;
@@ -873,11 +980,25 @@
       fermeModal();
       rendu();
       planifieSync();
-      toast('Enregistré.');
+      proposeSauvegarde(type);
     })['catch'](function (e) {
       console.warn('[carnet] enregistrement incomplet', e);
       toast('L’enregistrement a échoué. Réessayez.', 5000);
     }).then(function () { enregistrementEnCours = false; });
+  }
+
+  /* Une échéance vient d'être saisie : c'est l'instant où elle a le plus de
+     valeur aux yeux du client, donc celui où il accepte d'exporter. L'offre va
+     dans le bandeau, qui reste à l'écran — un bouton dans un message fugace
+     disparaît avant d'être vu. On se tait si l'export date de moins d'une semaine. */
+  function proposeSauvegarde(type) {
+    if (type !== 'vaccins' && type !== 'rappels') return toast('Enregistré.');
+    var j = joursDepuisExport();
+    if (j !== null && j < 7) return toast('Enregistré.');
+    rappelForce = true;
+    alerteMasquee = false;
+    renduSauvegarde();
+    toast('Échéance enregistrée — sur cet appareil seulement.', 5000);
   }
 
   function supprime(type, id) {
@@ -932,9 +1053,14 @@
   function exporte() {
     var paquet = JSON.parse(JSON.stringify(etat));
     paquet.photos = photos;
+    paquet.schema = 1;   // versionner le format : une future migration au lieu d'une réécriture
     paquet.exportLe = new Date().toISOString();
     telecharge('carnet-gus-et-frost-' + isoJour(aujourdhui()) + '.json',
       JSON.stringify(paquet), 'application/json');
+    etat.sauvegarde = { le: isoJour(aujourdhui()), modifs: 0 };
+    rappelForce = false;
+    ecrit();
+    renduSauvegarde();
     toast('Sauvegarde téléchargée. Rangez-la ailleurs que sur le téléphone.', 5000);
   }
 
@@ -957,11 +1083,17 @@
       etat.rappelMail = (d.rappelMail && typeof d.rappelMail === 'object')
         ? d.rappelMail
         : { actif: false, email: '', maj: '' };
+      // Le carnet correspond désormais à un fichier que le client détient :
+      // la date de référence est celle de ce fichier, pas celle du jour.
+      etat.sauvegarde = {
+        le: String(d.exportLe || '').slice(0, 10) || isoJour(aujourdhui()),
+        modifs: 0
+      };
       animalActif = etat.animaux.length ? etat.animaux[0].id : null;
 
       Promise.all(Object.keys(lot).map(function (id) { return photoEcrit(id, lot[id]); }))
         .then(function () {
-          sauve();
+          ecrit();          // restauration : pas une modification de plus
           rendu();
           toast('Sauvegarde restaurée.');
         });
@@ -1343,8 +1475,9 @@
         '</div>' +
         '<label class="gfc-consent">' +
           '<input type="checkbox" name="consent">' +
-          '<span>J’accepte que mon adresse et mes <strong>dates d’échéance</strong> ' +
-            '(vaccins, traitements, rappels) soient transmises pour recevoir ces e-mails. ' +
+          '<span>J’accepte que mon adresse e-mail, <strong>le nom de mes animaux</strong> et ' +
+            '<strong>mes échéances à venir</strong> (libellé, date, vaccin concerné) soient ' +
+            'transmis à notre outil d’envoi pour recevoir ces rappels. ' +
             'Le reste du carnet — poids, budget, souvenirs, photos — ne quitte pas cet appareil.</span>' +
         '</label>' +
         '<div class="gfc-field-err" data-gfc-err hidden></div>' +
@@ -1476,6 +1609,7 @@
         case 'mail-on': ouvreFormMail(); break;
         case 'mail-off': desactiveMail(); break;
         case 'export': exporte(); break;
+        case 'backup-later': alerteMasquee = true; renduSauvegarde(); break;
         case 'import': $('[data-gfc-import]').click(); break;
         case 'ics': exporteIcs(); break;
         case 'print': imprime(); break;
@@ -1566,6 +1700,7 @@
         affiche('[data-gfc-petbar]', false);
         affiche('[data-gfc-tablist]', false);
         affiche('[data-gfc-tools]', false);
+        affiche('[data-gfc-backup]', false);
         $('[data-gfc-panels]').innerHTML = vueFichePartagee(p);
         return;
       } catch (e) {
@@ -1583,6 +1718,8 @@
 
   function init(el) {
     racine = el;
+    stockageOk = stockageDispo();
+    demandePersistance();
     etat = charge();
     animalActif = etat.animaux.length ? etat.animaux[0].id : null;
 
