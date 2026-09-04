@@ -1,0 +1,212 @@
+{%- comment -%}
+  Section « Renoncement au droit de rétractation » — page panier.
+
+  Se déclenche uniquement si le panier contient au moins un produit portant le tag
+  configuré (par défaut « renoncement ») : prestations de conseil et contenus
+  numériques, qui relèvent de l'article L.221-28 du Code de la consommation.
+
+  Tant que la case n'est pas cochée, les boutons de paiement sont bloqués.
+  Une fois cochée, l'accord est écrit dans un attribut de commande, visible sur
+  la commande dans l'admin — c'est la preuve exigée par l'article L.221-25.
+
+  Le forfait Basic ne permet pas d'ajouter un champ au checkout lui-même :
+  la case vit donc sur la page panier, avant la validation de la commande.
+
+  Pose : Boutique en ligne › Thèmes › Personnaliser › page Panier ›
+  Ajouter une section › « Renoncement à la rétractation ».
+{%- endcomment -%}
+
+{%- assign tag_cible = section.settings.tag | default: 'renoncement' -%}
+{%- assign concerne = false -%}
+{%- for item in cart.items -%}
+  {%- if item.product.tags contains tag_cible -%}
+    {%- assign concerne = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if concerne -%}
+<div class="gfr" id="gfr-{{ section.id }}">
+  <div class="gfr-boite">
+    {%- if section.settings.titre != blank -%}
+      <p class="gfr-titre">{{ section.settings.titre | escape }}</p>
+    {%- endif -%}
+
+    <label class="gfr-label">
+      <input type="checkbox" data-gfr-case>
+      <span>{{ section.settings.texte }}</span>
+    </label>
+
+    <p class="gfr-err" data-gfr-err hidden>{{ section.settings.erreur | escape }}</p>
+
+    {%- if section.settings.rappel != blank -%}
+      <p class="gfr-rappel">{{ section.settings.rappel }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  #gfr-{{ section.id }} { max-width: 62rem; margin: 0 auto 1.6rem; padding: 0 1.5rem; }
+  #gfr-{{ section.id }} .gfr-boite {
+    border: 0.1rem solid rgba(var(--color-foreground), 0.25);
+    border-left: 0.4rem solid rgb(var(--color-foreground));
+    border-radius: 0.6rem;
+    padding: 1.4rem 1.6rem;
+    background: rgba(var(--color-foreground), 0.03);
+  }
+  #gfr-{{ section.id }} .gfr-titre {
+    margin: 0 0 0.8rem; font-weight: 600; font-size: 1.5rem; line-height: 1.4;
+  }
+  #gfr-{{ section.id }} .gfr-label {
+    display: flex; align-items: flex-start; gap: 1rem; cursor: pointer;
+    font-size: 1.4rem; line-height: 1.55; margin: 0;
+  }
+  #gfr-{{ section.id }} .gfr-label input {
+    flex: none; width: 1.8rem; height: 1.8rem; margin: 0.2rem 0 0; cursor: pointer;
+  }
+  #gfr-{{ section.id }} .gfr-label p,
+  #gfr-{{ section.id }} .gfr-rappel p { margin: 0; }
+  #gfr-{{ section.id }} .gfr-err {
+    margin: 1rem 0 0; font-size: 1.4rem; font-weight: 600; color: rgb(var(--color-error, 200 40 40));
+  }
+  #gfr-{{ section.id }} .gfr-rappel {
+    margin: 1rem 0 0; font-size: 1.3rem; line-height: 1.5;
+    color: rgba(var(--color-foreground), 0.72);
+  }
+  .gfr-bloque { opacity: 0.45; cursor: not-allowed; }
+</style>
+
+<script>
+  (function () {
+    var racine = document.getElementById('gfr-{{ section.id }}');
+    if (!racine) return;
+    var caseACocher = racine.querySelector('[data-gfr-case]');
+    var erreur = racine.querySelector('[data-gfr-err]');
+    if (!caseACocher) return;
+
+    var SEL_PAIEMENT = '[name="checkout"], #checkout, .cart__checkout-button';
+    var SEL_DYNAMIQUE = '.cart__dynamic-checkout-buttons, .additional-checkout-buttons';
+
+    function boutons() {
+      return Array.prototype.slice.call(document.querySelectorAll(SEL_PAIEMENT));
+    }
+
+    /* Les boutons de paiement express (Shop Pay, PayPal…) sont pilotés par Shopify :
+       les désactiver ne suffit pas, on les masque tant que l'accord manque. */
+    function dynamiques() {
+      return Array.prototype.slice.call(document.querySelectorAll(SEL_DYNAMIQUE));
+    }
+
+    var NOM = {{ section.settings.attribut | default: 'Renoncement au droit de rétractation' | json }};
+    var enCours = null;
+
+    function applique() {
+      var ok = caseACocher.checked;
+      boutons().forEach(function (b) {
+        b.disabled = !ok;
+        b.setAttribute('aria-disabled', String(!ok));
+        b.classList.toggle('gfr-bloque', !ok);
+      });
+      dynamiques().forEach(function (d) { d.hidden = !ok; });
+      if (ok && erreur) erreur.hidden = true;
+    }
+
+    /* La preuve est écrite dès la coche, et non au clic sur « Payer » : les
+       boutons de paiement express partent au checkout sans passer par nous,
+       l'attribut doit donc déjà être posé sur le panier à ce moment-là. */
+    function enregistre(valeur) {
+      var attributs = {};
+      attributs[NOM] = valeur;
+      var fini = function () { enCours = null; };
+      enCours = fetch('{{ routes.cart_update_url }}.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ attributes: attributs })
+      }).then(fini)['catch'](fini);
+    }
+
+    caseACocher.addEventListener('change', function () {
+      applique();
+      enregistre(caseACocher.checked ? 'Accepté le ' + new Date().toLocaleString('fr-FR') : '');
+    });
+    applique();
+
+    document.addEventListener('click', function (ev) {
+      var cible = ev.target;
+      if (!cible || !cible.closest) return;
+      var bouton = cible.closest(SEL_PAIEMENT);
+      if (!bouton) return;
+
+      if (!caseACocher.checked) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        if (erreur) erreur.hidden = false;
+        caseACocher.focus();
+        racine.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        return;
+      }
+
+      /* Coché à l'instant : on laisse l'écriture se terminer avant de partir,
+         sinon la commande arrive sans la preuve. */
+      if (enCours) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        enCours.then(function () { bouton.click(); });
+      }
+    }, true);
+  })();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Renoncement à la rétractation",
+  "tag": "section",
+  "enabled_on": { "templates": ["cart"] },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "S'affiche uniquement si le panier contient un produit portant le tag ci-dessous. Tant que la case n'est pas cochée, le paiement est bloqué."
+    },
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Tag des produits concernés",
+      "default": "renoncement",
+      "info": "À poser sur les prestations de conseil et les guides numériques. Les produits physiques ne doivent PAS le porter : leur demander de renoncer à la rétractation serait abusif."
+    },
+    {
+      "type": "text",
+      "id": "titre",
+      "label": "Titre de l'encadré",
+      "default": "Une confirmation avant de payer"
+    },
+    {
+      "type": "richtext",
+      "id": "texte",
+      "label": "Texte de la case",
+      "default": "<p>Je demande expressément que l'exécution de ma commande commence avant l'expiration du délai de rétractation de 14 jours, et je reconnais qu'une fois la prestation pleinement exécutée ou le contenu numérique fourni, je perdrai mon droit de rétractation (article L.221-28 du Code de la consommation).</p>"
+    },
+    {
+      "type": "text",
+      "id": "erreur",
+      "label": "Message si la case n'est pas cochée",
+      "default": "Merci de cocher cette case pour continuer vers le paiement."
+    },
+    {
+      "type": "richtext",
+      "id": "rappel",
+      "label": "Rappel sous la case",
+      "default": "<p>Cette confirmation ne concerne que les prestations et contenus numériques de votre panier. Les produits physiques restent couverts par le délai de rétractation de 14 jours.</p>"
+    },
+    {
+      "type": "text",
+      "id": "attribut",
+      "label": "Nom de l'attribut de commande",
+      "default": "Renoncement au droit de rétractation",
+      "info": "C'est sous ce libellé que l'accord apparaîtra sur la commande, dans l'admin. Ne pas le changer une fois des commandes passées."
+    }
+  ],
+  "presets": [{ "name": "Renoncement à la rétractation" }]
+}
+{% endschema %}
