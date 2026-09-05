@@ -381,3 +381,34 @@ Devient `Découvrir nos produits` → `shopify://collections/all`.
 Après publication : l'actuel publié `165258068189` bascule en brouillon. Il y aura de
 nouveau deux brouillons avec `165203673309` — supprimer le plus ancien.
 
+## 8. Bannière d'accueil : le cartouche ne couvrait que le desktop
+
+**Erreur de la section 7.** Dans Dawn, la bannière a **deux** réglages de conteneur, et
+`show_text_box` ne concerne que l'ordinateur :
+
+| Réglage | Portée | Effet |
+|---|---|---|
+| `show_text_box` | **desktop uniquement** | conteneur sur l'image ; à `false` ajoute `banner--desktop-transparent` |
+| `show_text_below` | **mobile uniquement** | ajoute `banner--mobile-bottom` : le texte passe SOUS l'image |
+
+`show_text_below` était à `false` (le défaut de Dawn est `true`). Résultat en ligne après la
+publication de la section 7 : desktop corrigé, mais **sur mobile** le `banner__box` restait
+en `rgba(0,0,0,0)` et le titre s'affichait en noir 30 px directement sur la photo, avec un
+bouton en `rgb(18,18,18)` sur fond transparent — quasi invisible. Le trafic venant surtout
+de Pinterest, c'était la version qui comptait le plus.
+
+Corrigé sur le brouillon **`165265047773`** (« Gus & Frost — Dawn 16 (bannière mobile) »),
+duplicata du publié, un seul réglage changé : `show_text_below` `false` → `true`.
+**Régis publie.**
+
+Vérifié en aperçu, **aux deux tailles** :
+
+- **375 px** — classe `banner--mobile-bottom` présente, cartouche opaque `rgb(239,231,218)`,
+  titre Fraunces 30 px noir **sous** la photo (vérifié par comparaison des rectangles), bouton
+  « Découvrir la boutique » visible et bordé.
+- **1280 px** — inchangé : cartouche sur l'image, titre 40 px, bouton « Découvrir nos
+  produits » toujours en place.
+
+> **Règle** : ne jamais annoncer une correction de bannière sans l'avoir vue aux deux
+> tailles. Les libellés Shopify disent « sur ordinateur » / « sur mobile » — les lire.
+
