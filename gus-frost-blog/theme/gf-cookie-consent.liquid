@@ -1,0 +1,401 @@
+{% comment %}
+  ============================================================================
+  Gus & Frost — Bandeau cookies maison (style Axeptio)
+  ----------------------------------------------------------------------------
+  Conforme RGPD / CNIL / CCPA. Branché sur l'API Customer Privacy de Shopify.
+  Ajouté au groupe footer (rendu sur toutes les pages, éditable dans l'éditeur).
+  En-tête : logo (bandeau) + photo si fournis, sinon illustration chien+chat.
+  ============================================================================
+{% endcomment %}
+
+<style>
+  #gf-cc {
+    --gf-accent: {{ section.settings.accent_color }};
+    --gf-accent-deep: {{ section.settings.accent_color | color_darken: 12 }};
+    --gf-lime: {{ section.settings.spark_color }};
+    --gf-card: {{ section.settings.card_color }};
+    --gf-ink: {{ section.settings.text_color }};
+    --gf-ink-soft: {{ section.settings.text_color | color_modify: 'alpha', 0.68 }};
+    --gf-line: {{ section.settings.text_color | color_modify: 'alpha', 0.15 }};
+    --gf-sage-soft: {{ section.settings.text_color | color_modify: 'alpha', 0.08 }};
+    --gf-radius: {{ section.settings.corner_radius }}px;
+    --gf-shadow: 24px 34px 70px -28px rgba(49,68,49,.4);
+  }
+  #gf-cc, #gf-cc * { box-sizing: border-box; }
+  #gf-cc h2, #gf-cc h3 { color: var(--gf-ink); }
+  #gf-cc .gf-banner {
+    position: fixed; {{ section.settings.position }}: 24px; bottom: 24px;
+    width: 380px; max-width: calc(100vw - 32px);
+    background: var(--gf-card); color: var(--gf-ink);
+    border: 1px solid var(--gf-line); border-radius: var(--gf-radius);
+    box-shadow: var(--gf-shadow); z-index: 9998; overflow: hidden;
+    font-family: var(--font-body-family); font-size: 1.4rem; line-height: 1.5;
+    animation: gf-pop .5s cubic-bezier(.2,.9,.25,1.15) both;
+  }
+  @keyframes gf-pop { from { opacity: 0; transform: translateY(24px) scale(.94); } to { opacity: 1; transform: none; } }
+  #gf-cc[hidden], #gf-cc .gf-banner[hidden], #gf-cc .gf-overlay[hidden], #gf-cc .gf-fab[hidden] { display: none !important; }
+  #gf-cc .gf-top { display: flex; align-items: center; gap: 11px; padding: 16px 18px 0; }
+  #gf-cc .gf-avatar {
+    width: 42px; height: 42px; border-radius: 50%; flex: none; display: grid; place-items: center; font-size: 22px; overflow: hidden;
+    background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--gf-accent) 45%, #fff), var(--gf-accent) 75%, var(--gf-accent-deep));
+  }
+  #gf-cc .gf-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #gf-cc .gf-logobar { background: var(--gf-ink); height: 84px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  #gf-cc .gf-logobar img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  #gf-cc .gf-photo { width: 100%; height: 150px; object-fit: cover; display: block; }
+  #gf-cc .gf-illus { line-height: 0; }
+  #gf-cc .gf-illus svg { display: block; width: 100%; height: auto; }
+  #gf-cc .gf-who { font-family: var(--font-heading-family); }
+  #gf-cc .gf-who b { display: block; font-size: 1.4rem; color: var(--gf-ink); }
+  #gf-cc .gf-who small { color: var(--gf-ink-soft); font-size: 1.2rem; }
+  #gf-cc .gf-dots { margin-left: auto; display: flex; gap: 5px; }
+  #gf-cc .gf-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--gf-line); }
+  #gf-cc .gf-dots i:first-child { background: var(--gf-lime); width: 16px; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(49,68,49,.35); }
+  #gf-cc .gf-body { padding: 12px 18px 4px; }
+  #gf-cc .gf-body h2 { font-family: var(--font-heading-family); margin: 0 0 8px; font-size: 2rem; line-height: 1.15; }
+  #gf-cc .gf-body p { margin: 0; font-size: 1.4rem; color: var(--gf-ink-soft); }
+  #gf-cc .gf-body a { color: var(--gf-accent-deep); font-weight: 600; text-underline-offset: 2px; }
+  #gf-cc .gf-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px 18px; }
+  #gf-cc .gf-actions .gf-wide { grid-column: 1 / -1; }
+  #gf-cc .gf-btn {
+    font-family: var(--font-heading-family); font-weight: 700; font-size: 1.4rem; cursor: pointer;
+    border-radius: 13px; padding: 12px 14px; border: 1.5px solid transparent;
+    transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  #gf-cc .gf-btn:active { transform: translateY(1px) scale(.99); }
+  #gf-cc .gf-btn:focus-visible { outline: 3px solid var(--gf-accent); outline-offset: 2px; }
+  #gf-cc .gf-primary { background: var(--gf-accent); color: #fff; box-shadow: 0 12px 22px -12px var(--gf-accent); }
+  #gf-cc .gf-primary:hover { background: var(--gf-accent-deep); }
+  #gf-cc .gf-ghost { background: transparent; color: var(--gf-ink); border-color: var(--gf-line); }
+  #gf-cc .gf-ghost:hover { border-color: var(--gf-ink-soft); }
+  #gf-cc .gf-text { background: transparent; color: var(--gf-ink-soft); border: none; text-decoration: underline; text-underline-offset: 3px; padding: 6px; }
+  #gf-cc .gf-text:hover { color: var(--gf-ink); }
+  #gf-cc .gf-fab {
+    position: fixed; {{ section.settings.position }}: 24px; bottom: 24px; z-index: 9997;
+    width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--gf-line);
+    background: var(--gf-card); box-shadow: var(--gf-shadow); cursor: pointer; font-size: 25px;
+    display: grid; place-items: center; transition: transform .15s ease;
+  }
+  #gf-cc .gf-fab:hover { transform: scale(1.07) rotate(-6deg); }
+  #gf-cc .gf-fab:focus-visible { outline: 3px solid var(--gf-accent); outline-offset: 3px; }
+  #gf-cc .gf-fab--discret {
+    width: 38px; height: 38px; font-size: 17px; opacity: .35;
+    box-shadow: 0 8px 18px -12px rgba(49,68,49,.55);
+  }
+  #gf-cc .gf-fab--discret:hover, #gf-cc .gf-fab--discret:focus-visible { opacity: 1; }
+  .gf-cc-footerlink {
+    display: inline-block; margin: 0 0 0 1.2rem; font-size: 1.3rem;
+    color: inherit; opacity: .8; text-decoration: underline; text-underline-offset: 3px;
+  }
+  .gf-cc-footerlink:hover { opacity: 1; }
+  #gf-cc .gf-overlay {
+    position: fixed; inset: 0; z-index: 9999; background: rgba(20,14,8,.5);
+    display: grid; place-items: center; padding: 20px; animation: gf-fade .25s ease both;
+  }
+  @keyframes gf-fade { from { opacity: 0; } to { opacity: 1; } }
+  #gf-cc .gf-modal {
+    width: 560px; max-width: 100%; max-height: 90vh; overflow: auto; background: var(--gf-card);
+    color: var(--gf-ink); border-radius: 24px; border: 1px solid var(--gf-line); box-shadow: var(--gf-shadow);
+    font-family: var(--font-body-family); animation: gf-pop .4s cubic-bezier(.2,.9,.25,1.1) both;
+  }
+  #gf-cc .gf-mhead { padding: 24px 26px 6px; }
+  #gf-cc .gf-mhead .gf-eyebrow { font-family: var(--font-heading-family); text-transform: uppercase; letter-spacing: 2px; font-size: 1.1rem; font-weight: 700; color: var(--gf-accent-deep); }
+  #gf-cc .gf-mhead h2 { font-family: var(--font-heading-family); margin: 8px 0 6px; font-size: 2.4rem; }
+  #gf-cc .gf-mhead p { margin: 0; color: var(--gf-ink-soft); font-size: 1.4rem; line-height: 1.55; }
+  #gf-cc .gf-cats { padding: 12px 26px 4px; display: flex; flex-direction: column; gap: 10px; }
+  #gf-cc .gf-cat { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 12px; border: 1px solid var(--gf-line); border-radius: 16px; padding: 15px 16px; }
+  #gf-cc .gf-cat h3 { font-family: var(--font-heading-family); margin: 0 0 4px; font-size: 1.5rem; display: flex; align-items: center; gap: 8px; }
+  #gf-cc .gf-cat p { margin: 0; font-size: 1.3rem; line-height: 1.5; color: var(--gf-ink-soft); }
+  #gf-cc .gf-pill { font-family: var(--font-heading-family); font-size: 1rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: var(--gf-sage-soft); color: var(--gf-ink-soft); }
+  #gf-cc .gf-switch { position: relative; width: 50px; height: 29px; flex: none; margin-top: 2px; }
+  #gf-cc .gf-switch input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  #gf-cc .gf-track { position: absolute; inset: 0; border-radius: 999px; background: var(--gf-ink-soft); opacity: .45; transition: background .2s ease, opacity .2s ease; }
+  #gf-cc .gf-track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 23px; height: 23px; border-radius: 50%; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,.3); transition: transform .22s cubic-bezier(.3,.9,.3,1.3); }
+  #gf-cc .gf-switch input:checked + .gf-track { background: var(--gf-accent); opacity: 1; }
+  #gf-cc .gf-switch input:checked + .gf-track::after { transform: translateX(21px); }
+  #gf-cc .gf-switch input:disabled + .gf-track { opacity: .5; cursor: not-allowed; }
+  #gf-cc .gf-switch input:focus-visible + .gf-track { outline: 3px solid var(--gf-accent); outline-offset: 2px; }
+  #gf-cc .gf-mfoot { padding: 16px 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+  #gf-cc .gf-mfoot .gf-btn { flex: 1 1 150px; }
+  #gf-cc .gf-legal { padding: 0 26px 22px; font-size: 1.2rem; color: var(--gf-ink-soft); line-height: 1.5; }
+  #gf-cc .gf-toast {
+    position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(30px);
+    background: var(--gf-ink); color: var(--gf-card); font-family: var(--font-heading-family); font-weight: 600; font-size: 1.4rem;
+    padding: 13px 20px; border-radius: 14px; box-shadow: var(--gf-shadow); z-index: 10000; opacity: 0; pointer-events: none;
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  #gf-cc .gf-toast.gf-show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    #gf-cc *, #gf-cc *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  }
+</style>
+
+<div id="gf-cc" hidden>
+  <div class="gf-banner" role="dialog" aria-live="polite" aria-label="Préférences cookies" data-gf-banner hidden>
+    <div class="gf-media">
+      {%- if section.settings.logo != blank -%}
+        <div class="gf-logobar"><img src="{{ section.settings.logo | image_url: width: 760 }}" srcset="{{ section.settings.logo | image_url: width: 380 }} 1x, {{ section.settings.logo | image_url: width: 760 }} 2x" alt="{{ shop.name | escape }}" loading="lazy"></div>
+      {%- endif -%}
+      {%- if section.settings.photo != blank -%}
+        <img class="gf-photo" src="{{ section.settings.photo | image_url: width: 760 }}" srcset="{{ section.settings.photo | image_url: width: 380 }} 1x, {{ section.settings.photo | image_url: width: 760 }} 2x" alt="" loading="lazy">
+      {%- else -%}
+        <div class="gf-illus"><svg viewBox='0 0 380 140' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Un chien et un chat, mascottes Gus & Frost'><defs><linearGradient id='gfSky' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#3c5442'/><stop offset='1' stop-color='#2a3a2a'/></linearGradient></defs><rect width='380' height='140' fill='url(#gfSky)'/><circle cx='190' cy='152' r='120' fill='#46603f' opacity='.55'/><g fill='#a8ff6a'><circle cx='46' cy='26' r='3' opacity='.7'/><circle cx='335' cy='24' r='4' opacity='.7'/><circle cx='356' cy='58' r='2.5' opacity='.55'/><circle cx='24' cy='66' r='2.5' opacity='.55'/><circle cx='300' cy='18' r='2' opacity='.5'/><circle cx='66' cy='104' r='2' opacity='.4'/></g><g><ellipse cx='112' cy='74' rx='13' ry='26' fill='#cdbb95' transform='rotate(-16 112 74)'/><ellipse cx='176' cy='74' rx='13' ry='26' fill='#cdbb95' transform='rotate(16 176 74)'/><circle cx='144' cy='84' r='35' fill='#efe7da'/><ellipse cx='144' cy='99' rx='19' ry='14' fill='#f7f1e6'/><path d='M118 112 q26 15 52 0' stroke='#a8ff6a' stroke-width='5' fill='none' stroke-linecap='round'/><circle cx='144' cy='120' r='4' fill='#c16b47'/><circle cx='131' cy='80' r='4.6' fill='#2b2b2b'/><circle cx='157' cy='80' r='4.6' fill='#2b2b2b'/><circle cx='132.6' cy='78.4' r='1.5' fill='#fff'/><circle cx='158.6' cy='78.4' r='1.5' fill='#fff'/><ellipse cx='144' cy='94' rx='6' ry='4.6' fill='#2b2b2b'/><path d='M144 98.5 q0 6 -7 7 M144 98.5 q0 6 7 7' stroke='#8a7f6a' stroke-width='2' fill='none' stroke-linecap='round'/></g><g><path d='M232 62 L236 40 L252 58 Z' fill='#8fa079'/><path d='M286 62 L282 40 L266 58 Z' fill='#8fa079'/><path d='M237 57 L239 47 L247 57 Z' fill='#a8ff6a'/><path d='M281 57 L279 47 L271 57 Z' fill='#a8ff6a'/><circle cx='259' cy='86' r='31' fill='#9dae8b'/><path d='M259 58 q-5 8 0 15 M247 62 q-4 6 0 11 M271 62 q4 6 0 11' stroke='#7c8a63' stroke-width='2.4' fill='none' stroke-linecap='round'/><ellipse cx='249' cy='86' rx='3.4' ry='6' fill='#2b2b2b'/><ellipse cx='269' cy='86' rx='3.4' ry='6' fill='#2b2b2b'/><path d='M259 96 l-4 -3 h8 z' fill='#c16b47'/><path d='M259 97 q0 4 -5 5 M259 97 q0 4 5 5' stroke='#41503a' stroke-width='1.6' fill='none' stroke-linecap='round'/><g stroke='#eef0e3' stroke-width='1.4' stroke-linecap='round' opacity='.85'><path d='M250 92 L232 89'/><path d='M250 95 L233 97'/><path d='M268 92 L286 89'/><path d='M268 95 L285 97'/></g></g></svg></div>
+      {%- endif -%}
+    </div>
+    <div class="gf-body">
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.message }}
+        {%- if section.settings.policy_page != blank %}
+          <a href="{{ section.settings.policy_page }}">{{ section.settings.policy_label }}</a>
+        {%- endif %}
+      </p>
+    </div>
+    <div class="gf-actions">
+      <button class="gf-btn gf-ghost" data-gf="refuse-all">{{ section.settings.btn_refuse }}</button>
+      <button class="gf-btn gf-primary" data-gf="accept-all">{{ section.settings.btn_accept }}</button>
+      <button class="gf-btn gf-text gf-wide" data-gf="open-prefs">{{ section.settings.btn_customize }}</button>
+    </div>
+  </div>
+  <button class="gf-fab{% if section.settings.reopen_mode == 'discret' %} gf-fab--discret{% endif %}" data-gf="reopen" aria-label="{{ section.settings.btn_customize }}" hidden>🐾</button>
+  <div class="gf-overlay" data-gf-overlay hidden>
+    <div class="gf-modal" role="dialog" aria-modal="true" aria-label="{{ section.settings.modal_title }}">
+      <div class="gf-mhead">
+        <div class="gf-eyebrow">{{ section.settings.modal_eyebrow }}</div>
+        <h2>{{ section.settings.modal_title }}</h2>
+        <p>{{ section.settings.modal_intro }}</p>
+      </div>
+      <div class="gf-cats">
+        <div class="gf-cat">
+          <div><h3>{{ section.settings.cat_necessary_title }} <span class="gf-pill">{{ section.settings.always_on_label }}</span></h3><p>{{ section.settings.cat_necessary_desc }}</p></div>
+          <label class="gf-switch"><input type="checkbox" checked disabled><span class="gf-track"></span></label>
+        </div>
+        <div class="gf-cat">
+          <div><h3>{{ section.settings.cat_analytics_title }}</h3><p>{{ section.settings.cat_analytics_desc }}</p></div>
+          <label class="gf-switch"><input type="checkbox" data-gf-cat="analytics"><span class="gf-track"></span></label>
+        </div>
+        <div class="gf-cat">
+          <div><h3>{{ section.settings.cat_preferences_title }}</h3><p>{{ section.settings.cat_preferences_desc }}</p></div>
+          <label class="gf-switch"><input type="checkbox" data-gf-cat="preferences"><span class="gf-track"></span></label>
+        </div>
+        <div class="gf-cat">
+          <div><h3>{{ section.settings.cat_marketing_title }}</h3><p>{{ section.settings.cat_marketing_desc }}</p></div>
+          <label class="gf-switch"><input type="checkbox" data-gf-cat="marketing"><span class="gf-track"></span></label>
+        </div>
+        <div class="gf-cat">
+          <div><h3>{{ section.settings.cat_sale_title }} <span class="gf-pill">CCPA</span></h3><p>{{ section.settings.cat_sale_desc }}</p></div>
+          <label class="gf-switch"><input type="checkbox" data-gf-cat="sale"><span class="gf-track"></span></label>
+        </div>
+      </div>
+      <div class="gf-mfoot">
+        <button class="gf-btn gf-ghost" data-gf="refuse-all">{{ section.settings.btn_refuse }}</button>
+        <button class="gf-btn gf-ghost" data-gf="save">{{ section.settings.btn_save }}</button>
+        <button class="gf-btn gf-primary" data-gf="accept-all">{{ section.settings.btn_accept }}</button>
+      </div>
+      <p class="gf-legal">{{ section.settings.legal_note }}</p>
+    </div>
+  </div>
+  <div class="gf-toast" data-gf-toast>🐾 <span data-gf-toast-msg></span></div>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('gf-cc');
+  if (!root) return;
+  var banner  = root.querySelector('[data-gf-banner]');
+  var overlay = root.querySelector('[data-gf-overlay]');
+  var fab     = root.querySelector('[data-gf="reopen"]');
+  var toast   = root.querySelector('[data-gf-toast]');
+  var toastMsg= root.querySelector('[data-gf-toast-msg]');
+  var boxes   = root.querySelectorAll('[data-gf-cat]');
+  var MSG = {
+    accept:  {{ section.settings.toast_accept | json }},
+    refuse:  {{ section.settings.toast_refuse | json }},
+    saved:   {{ section.settings.toast_saved  | json }}
+  };
+  var MODE = {{ section.settings.reopen_mode | json }};
+  var LINK = {{ section.settings.footer_link_label | json }};
+  function mountFooterLink() {
+    if (!LINK || document.querySelector('[data-gf-footer-link]')) return;
+    var ul = document.querySelector('.footer .policies');
+    var host = ul || document.querySelector('.footer__content-bottom-wrapper')
+                  || document.querySelector('.footer__copyright')
+                  || document.querySelector('.footer');
+    if (!host) {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', mountFooterLink, { once: true });
+      }
+      return;
+    }
+    var a = document.createElement('a');
+    a.href = '#gf-cookies';
+    a.textContent = LINK;
+    a.setAttribute('data-gf-footer-link', '');
+    if (ul) {
+      // Dawn : les liens de politiques du pied de page (<li><small><a>).
+      var li = document.createElement('li');
+      var sm = document.createElement('small');
+      sm.className = 'copyright__content';
+      sm.appendChild(a);
+      li.appendChild(sm);
+      host.appendChild(li);
+    } else {
+      a.className = 'gf-cc-footerlink';
+      host.appendChild(a);
+    }
+  }
+  function showReopen() {
+    mountFooterLink();
+    fab.hidden = (MODE !== 'discret' && MODE !== 'full');
+  }
+  function showToast(m) {
+    toastMsg.textContent = m;
+    toast.classList.add('gf-show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function () { toast.classList.remove('gf-show'); }, 2600);
+  }
+  function collect() {
+    var c = { analytics: false, preferences: false, marketing: false, sale: false };
+    boxes.forEach(function (b) { c[b.getAttribute('data-gf-cat')] = b.checked; });
+    return c;
+  }
+  function persist(c) {
+    try {
+      if (window.Shopify && Shopify.customerPrivacy && Shopify.customerPrivacy.setTrackingConsent) {
+        Shopify.customerPrivacy.setTrackingConsent({
+          analytics:    !!c.analytics,
+          marketing:    !!c.marketing,
+          preferences:  !!c.preferences,
+          sale_of_data: !!c.sale
+        }, function () {});
+      }
+    } catch (e) {}
+  }
+  function reflect(c) {
+    boxes.forEach(function (b) { b.checked = !!c[b.getAttribute('data-gf-cat')]; });
+  }
+  function done(c, msg) {
+    persist(c);
+    try { localStorage.setItem('gf_cc_choice', JSON.stringify(c)); } catch (e) {}
+    banner.hidden = true; overlay.hidden = true; showReopen();
+    showToast(msg);
+  }
+  root.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-gf]');
+    if (!t) {
+      if (e.target === overlay) overlay.hidden = true;
+      return;
+    }
+    var action = t.getAttribute('data-gf');
+    if (action === 'accept-all') {
+      var all = { analytics: true, preferences: true, marketing: true, sale: true };
+      reflect(all); done(all, MSG.accept);
+    } else if (action === 'refuse-all') {
+      var none = { analytics: false, preferences: false, marketing: false, sale: false };
+      reflect(none); done(none, MSG.refuse);
+    } else if (action === 'save') {
+      done(collect(), MSG.saved);
+    } else if (action === 'open-prefs') {
+      overlay.hidden = false;
+    } else if (action === 'reopen') {
+      banner.hidden = false; fab.hidden = true;
+      banner.style.animation = 'none'; void banner.offsetWidth; banner.style.animation = '';
+    }
+  });
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    var a = t && t.closest && t.closest('[data-gf-footer-link], a[href$="#gf-cookies"]');
+    if (!a) return;
+    e.preventDefault();
+    root.hidden = false;
+    overlay.hidden = false;
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !overlay.hidden) overlay.hidden = true;
+  });
+  function boot() {
+    root.hidden = false;
+    var cp = window.Shopify && Shopify.customerPrivacy;
+    var current = null;
+    var stored = null;
+    try { stored = localStorage.getItem('gf_cc_choice'); } catch (e) {}
+    try {
+      if (cp && typeof cp.currentVisitorConsent === 'function') current = cp.currentVisitorConsent();
+    } catch (e) {}
+    if (current && (current.analytics || current.marketing || current.preferences || current.sale_of_data)) {
+      reflect({
+        analytics:   current.analytics === 'yes',
+        preferences: current.preferences === 'yes',
+        marketing:   current.marketing === 'yes',
+        sale:        current.sale_of_data === 'yes'
+      });
+    } else if (stored) {
+      try { reflect(JSON.parse(stored)); } catch (e) {}
+    }
+    var hasChosen = !!stored || !!(current && current.analytics);
+    if (hasChosen) { banner.hidden = true; showReopen(); }
+    else { banner.hidden = false; fab.hidden = true; }
+  }
+  if (window.Shopify && Shopify.loadFeatures) {
+    Shopify.loadFeatures([{ name: 'consent-tracking-api', version: '0.1' }], function () { boot(); });
+  } else {
+    boot();
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Bandeau cookies G&F",
+  "settings": [
+    { "type": "header", "content": "Apparence" },
+    { "type": "image_picker", "id": "logo", "label": "Logo rectangulaire (optionnel — bandeau d'en-tête)" },
+    { "type": "image_picker", "id": "photo", "label": "Photo d'ambiance (optionnel — remplace l'illustration)" },
+    { "type": "paragraph", "content": "Sans logo ni photo, une illustration chien + chat s'affiche par défaut." },
+    { "type": "color", "id": "accent_color", "label": "Accent (boutons)", "default": "#c16b47" },
+    { "type": "color", "id": "spark_color", "label": "Étincelle (points, halo)", "default": "#a8ff6a" },
+    { "type": "color", "id": "card_color", "label": "Fond des cartes", "default": "#f7f1e6" },
+    { "type": "color", "id": "text_color", "label": "Texte", "default": "#314431" },
+    { "type": "select", "id": "position", "label": "Position", "options": [ { "value": "left", "label": "Bas gauche" }, { "value": "right", "label": "Bas droite" } ], "default": "left" },
+    { "type": "range", "id": "corner_radius", "label": "Arrondi des angles", "min": 0, "max": 30, "step": 2, "unit": "px", "default": 22 },
+    { "type": "header", "content": "Rappel des préférences" },
+    { "type": "select", "id": "reopen_mode", "label": "Une fois le choix fait", "options": [
+      { "value": "none", "label": "Lien discret dans le pied de page (recommandé)" },
+      { "value": "discret", "label": "Petite pastille effacée + lien" },
+      { "value": "full", "label": "Pastille 🐾 visible + lien" } ],
+      "default": "none",
+      "info": "Le lien du pied de page est toujours posé : il garantit que le visiteur peut revenir sur son choix (obligation CNIL)." },
+    { "type": "text", "id": "footer_link_label", "label": "Texte du lien (pied de page)", "default": "Gérer mes cookies" },
+    { "type": "header", "content": "Bandeau" },
+    { "type": "text", "id": "subtitle", "label": "Sous-titre", "default": "vous parle des cookies" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "On peut vous glisser un cookie ?" },
+    { "type": "textarea", "id": "message", "label": "Message", "default": "Les nôtres ne se mangent pas : ils nous aident à mesurer l'audience et à vous proposer des conseils utiles. Vous choisissez lesquels acceptent de rester." },
+    { "type": "url", "id": "policy_page", "label": "Lien politique de confidentialité" },
+    { "type": "text", "id": "policy_label", "label": "Texte du lien", "default": "Notre politique" },
+    { "type": "header", "content": "Boutons" },
+    { "type": "text", "id": "btn_accept", "label": "Tout accepter", "default": "Tout accepter" },
+    { "type": "text", "id": "btn_refuse", "label": "Tout refuser", "default": "Tout refuser" },
+    { "type": "text", "id": "btn_customize", "label": "Personnaliser", "default": "Personnaliser mes choix" },
+    { "type": "text", "id": "btn_save", "label": "Enregistrer", "default": "Enregistrer mes choix" },
+    { "type": "header", "content": "Modale de préférences" },
+    { "type": "text", "id": "modal_eyebrow", "label": "Sur-titre", "default": "Mes préférences" },
+    { "type": "text", "id": "modal_title", "label": "Titre", "default": "Vous êtes aux commandes 🐕" },
+    { "type": "textarea", "id": "modal_intro", "label": "Introduction", "default": "Activez uniquement ce que vous acceptez. Vous pourrez revenir sur ce choix à tout moment depuis le lien « Gérer mes cookies » en bas de page." },
+    { "type": "text", "id": "always_on_label", "label": "Badge toujours actif", "default": "Toujours actif" },
+    { "type": "text", "id": "cat_necessary_title", "label": "Nécessaires — titre", "default": "Strictement nécessaires" },
+    { "type": "textarea", "id": "cat_necessary_desc", "label": "Nécessaires — description", "default": "Panier, connexion, sécurité. Le site ne fonctionne pas sans eux." },
+    { "type": "text", "id": "cat_analytics_title", "label": "Audience — titre", "default": "Mesure d'audience" },
+    { "type": "textarea", "id": "cat_analytics_desc", "label": "Audience — description", "default": "Nous comptons les visites (anonymisées) pour améliorer le blog." },
+    { "type": "text", "id": "cat_preferences_title", "label": "Personnalisation — titre", "default": "Personnalisation" },
+    { "type": "textarea", "id": "cat_preferences_desc", "label": "Personnalisation — description", "default": "Retenir vos préférences : langue, articles déjà lus, tapis favori." },
+    { "type": "text", "id": "cat_marketing_title", "label": "Marketing — titre", "default": "Marketing & réseaux" },
+    { "type": "textarea", "id": "cat_marketing_desc", "label": "Marketing — description", "default": "Publicités et contenus Pinterest/Facebook adaptés à vos centres d'intérêt." },
+    { "type": "text", "id": "cat_sale_title", "label": "CCPA — titre", "default": "Ne pas vendre / partager mes infos" },
+    { "type": "textarea", "id": "cat_sale_desc", "label": "CCPA — description", "default": "Résidents de Californie : refuser tout partage de données à des fins publicitaires." },
+    { "type": "textarea", "id": "legal_note", "label": "Mention légale", "default": "Conforme RGPD / CNIL : refuser est aussi simple qu'accepter, aucune case n'est pré-cochée, et votre choix est conservé 6 mois." },
+    { "type": "header", "content": "Confirmations (toasts)" },
+    { "type": "text", "id": "toast_accept", "label": "Après tout accepter", "default": "Merci ! Tous les cookies sont acceptés" },
+    { "type": "text", "id": "toast_refuse", "label": "Après tout refuser", "default": "C'est noté, aucun cookie non essentiel" },
+    { "type": "text", "id": "toast_saved", "label": "Après enregistrement", "default": "Vos préférences sont enregistrées" }
+  ]
+}
+{% endschema %}
