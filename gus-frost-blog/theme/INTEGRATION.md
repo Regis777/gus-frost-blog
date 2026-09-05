@@ -228,6 +228,29 @@ il n'est plus lu pour l'affichage, seulement pour des `@font-face` inertes.
 > Note : Shopify génère automatiquement un `assets/gf-fonts.css` compilé à côté du
 > `gf-fonts.css.liquid` déposé. C'est normal, et c'est ce fichier que sert le CDN.
 
+## 6. Publié le 05/09/2026 — et un correctif en attente
+
+Publié par Régis. Contrôles menés en ligne, anonymement puis dans un navigateur propre :
+accueil, article, quiz et fiche produit en HTTP 200, aucune erreur Liquid, les 6 `.woff2`
+servis en `font/woff2` et **byte-identiques** aux fichiers de référence, et l'URL du
+`<link rel=preload>` strictement identique à celle du `@font-face` (un seul téléchargement).
+Sur un article : Fraunces en titres, Figtree à 17 px en corps, italique réelle en légende.
+**4 fichiers, 81 Ko** — contre 87 Ko et 4 fichiers pour Montserrat + Lora, sans plus aucun
+appel à un hébergeur de polices tiers.
+
+> **Piège de mesure** : un onglet qui a visité un aperçu de thème garde les entrées
+> `performance` des polices de CE thème. Une mesure faite juste après fait croire que le
+> live charge encore Montserrat et Lora. Toujours mesurer dans un onglet neuf.
+
+**Correctif présent dans ce dépôt mais PAS encore en ligne** : l'ordre des `@font-face`.
+Les plages `latin` et `latin-ext` se chevauchent sur U+0152-0153 (`œ`/`Œ`) et, quand deux
+faces correspondent, le navigateur retient **la dernière déclarée**. La version publiée
+déclare `latin` en premier : un seul « œ » (cœur, sœur, œil) fait donc télécharger les
+10 Ko de `latin-ext` sur presque toutes les pages françaises. `gf-fonts.css.liquid` est
+corrigé ici (latin-ext d'abord, comme le fait Google), **à redéployer** — le connecteur MCP
+ne pouvant plus écrire sur le thème devenu MAIN, ça attend le prochain accès au `.env` ou
+un nouveau cycle duplication/publication. Gain attendu : 10 Ko par page.
+
 ---
 
 # « Le Club » — comptes clients et espace membre
