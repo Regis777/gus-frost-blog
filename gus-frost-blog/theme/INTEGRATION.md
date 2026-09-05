@@ -133,3 +133,76 @@ Boutique en ligne → Pages → **Ajouter une page**
   ajouter ou en retirer change la notation : relire le barème dans `gf-quiz-anxiete.js`
   avant de toucher aux blocs.
 - **Une seule section quiz par page.**
+
+---
+
+# Typographie — Fraunces (titres) + Figtree (corps)
+
+Remplace Montserrat 600 / Lora 400 **sans passer par le sélecteur de polices** du thème :
+les deux familles ne sont pas dans la bibliothèque Shopify, elles sont auto-hébergées.
+Déposé le 05/09/2026 sur le thème d'essai « Gus & Frost — essai typo (Fraunces + Figtree) »
+(id `165258068189`, non publié). Le thème « Copie de Dawn » n'existe plus depuis la
+migration Dawn 16 : ce thème d'essai est un duplicata frais du live.
+
+## 1. Les 7 fichiers déposés dans `assets/`
+
+| Asset | Source (licence SIL OFL) |
+|---|---|
+| `gf-fonts.css.liquid` | `theme/gf-fonts.css.liquid` de ce dépôt |
+| `gf-fraunces-latin.woff2` (32 Ko) | Google Fonts, instance **figée** `opsz 36, wght 600, SOFT 40, WONK 0` |
+| `gf-fraunces-latin-ext.woff2` (30 Ko) | idem, sous-ensemble latin-ext |
+| `gf-figtree-latin.woff2` (20 Ko) | Google Fonts, **variable** `wght 400..700` |
+| `gf-figtree-latin-ext.woff2` (10 Ko) | idem, latin-ext |
+| `gf-figtree-italic-latin.woff2` (20 Ko) | idem, italique |
+| `gf-figtree-italic-latin-ext.woff2` (10 Ko) | idem, italique latin-ext |
+
+Pour re-télécharger les `.woff2` (curl avec un User-Agent de navigateur récent, sinon
+Google sert du TTF), les URL `fonts.gstatic.com` se relisent dans ces deux feuilles :
+
+```
+https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@36,600,40,0&display=swap
+https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400..700;1,400..700&display=swap
+```
+
+> **Pourquoi une instance figée pour Fraunces ?** En variable 4 axes le fichier pèse
+> 121 Ko ; figé, 32 Ko. L'axe optique est cuit à 36, bon compromis pour des titres de
+> 19 à 34 px — donc `font-variation-settings` est inutile (et sans effet) dans le CSS.
+
+## 2. Les deux patchs de `layout/theme.liquid`
+
+Le fichier de la boutique est le Dawn v16.0.0 d'origine + la balise `yandex-verification`.
+Deux modifications, toutes deux repérables par le marqueur `GF TYPO` :
+
+1. **Les deux blocs de préchargement de police de Dawn** (`settings.type_body_font | font_url`
+   et `type_header_font | font_url`) sont **remplacés** par le préchargement de
+   `gf-fraunces-latin.woff2` et `gf-figtree-latin.woff2`. Sans ça, Dawn continuerait à
+   télécharger Montserrat et Lora, que plus aucune règle n'utilise.
+2. **Juste avant `</head>`** : `{{ 'gf-fonts.css' | asset_url | stylesheet_tag }}`.
+   La position est essentielle — le `:root` de `gf-fonts.css` doit passer **après** celui
+   du bloc de styles en ligne de Dawn, sinon les variables du thème gagnent.
+
+Retour arrière : restaurer les deux blocs de préchargement d'origine (dépôt `Shopify/dawn`,
+tag `v16.0.0`, `layout/theme.liquid`) et retirer la ligne `stylesheet_tag`.
+
+## 3. Ce que le CSS bascule
+
+`gf-fonts.css.liquid` redéfinit `--font-heading-family` / `--font-body-family` (et les
+poids) : **tout le thème suit**, y compris `gf-article.css` qui consomme déjà
+`var(--font-body-family)`. Il neutralise aussi les deux piles système codées en dur dans
+`gf-article.css` (en-têtes de tableau, étiquette de l'encadré conseil).
+
+Les `@font-face` Montserrat/Lora émis par le thème restent présents mais aucune règle ne
+les appelle : les fichiers ne sont plus téléchargés.
+
+## 4. Vérifié en aperçu le 05/09/2026
+
+Sur `/blogs/chiens/ration-menagere-barf-chiot` : titres en Fraunces, corps en Figtree,
+italique réelle sur les légendes de figure. **Deux fichiers de police téléchargés,
+52 Ko au total** (Fraunces latin 32 Ko + Figtree latin 20 Ko), aucun appel à
+`fonts.shopifycdn.com` ni à `fonts.gstatic.com`, aucun doublon de téléchargement.
+
+## 5. Reste à faire pour passer en live
+
+Rejouer sur le thème publié les 7 dépôts d'assets **et** les 2 patchs de `theme.liquid`.
+Le réglage `type_header_font` / `type_body_font` du thème peut rester sur Montserrat/Lora :
+il n'est plus lu pour l'affichage, seulement pour des `@font-face` inertes.
