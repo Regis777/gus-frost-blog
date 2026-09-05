@@ -1,0 +1,117 @@
+{
+  "sections": {
+    "espace": {
+      "type": "gf-espace-membre",
+      "blocks": {
+        "g1": {
+          "type": "guide",
+          "settings": {
+            "badge": "Le guide de fond",
+            "titre": "Le Foyer Apaisé",
+            "texte": "Comprendre ce qui met votre chien sous tension à la maison, et remonter la pente pièce par pièce, semaine après semaine.",
+            "fichier_url": "",
+            "bouton": "Ouvrir le guide",
+            "meta": "PDF · à lire ou à imprimer",
+            "tag_requis": ""
+          }
+        },
+        "g2": {
+          "type": "guide",
+          "settings": {
+            "badge": "",
+            "titre": "Le Rituel du Calme",
+            "texte": "Le protocole du tapis de léchage, séance après séance : durée, fréquence, textures — et les erreurs qui annulent tout le bénéfice.",
+            "fichier_url": "",
+            "bouton": "Ouvrir le guide",
+            "meta": "PDF · à lire ou à imprimer",
+            "tag_requis": ""
+          }
+        },
+        "g3": {
+          "type": "guide",
+          "settings": {
+            "badge": "",
+            "titre": "La Chasse au Calme",
+            "texte": "Le tapis de fouille comme outil d'apaisement : monter la difficulté sans frustrer, et faire du repas un moment qui fatigue vraiment.",
+            "fichier_url": "",
+            "bouton": "Ouvrir le guide",
+            "meta": "PDF · à lire ou à imprimer",
+            "tag_requis": ""
+          }
+        },
+        "ap1": {
+          "type": "avant_premiere",
+          "settings": {
+            "date": "Septembre 2026",
+            "badge": "Nouveau",
+            "titre": "Vous faites partie des premiers membres",
+            "texte": "Tout ce que nous préparons, guides comme produits, passera d'abord par cette page. Vous verrez les nouveautés ici avant qu'elles n'existent ailleurs.",
+            "lien_url": "",
+            "lien_label": "Voir en avant-première"
+          }
+        },
+        "r1": {
+          "type": "raccourci",
+          "settings": {
+            "titre": "Le Carnet",
+            "texte": "Le carnet de santé de votre animal, dans votre navigateur.",
+            "url": "/pages/mon-carnet"
+          }
+        },
+        "r2": {
+          "type": "raccourci",
+          "settings": {
+            "titre": "Le test d'anxiété",
+            "texte": "Douze questions pour savoir où en est vraiment votre chien.",
+            "url": "/pages/quiz-anxiete"
+          }
+        },
+        "r3": {
+          "type": "raccourci",
+          "settings": {
+            "titre": "Tous nos conseils",
+            "texte": "Le sommaire complet du blog, sujet par sujet.",
+            "url": "/pages/conseils-chiens"
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "g2",
+        "g3",
+        "ap1",
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "tag_requis": "",
+        "verrou_icone": "🔒",
+        "verrou_titre": "Cet espace est réservé aux membres du Club",
+        "verrou_texte": "<p>Les guides du Club et les nouveautés en avant-première vous attendent derrière cette porte. Connectez-vous pour l'ouvrir.</p>",
+        "verrou_bouton_connexion": "Me connecter",
+        "verrou_bouton_club": "Découvrir le Club",
+        "club_url": "/pages/club",
+        "verrou_note": "L'adhésion est gratuite et prend deux minutes.",
+        "attente_titre": "Votre accès n'est pas encore ouvert",
+        "attente_texte": "<p>Votre compte existe bien, mais il n'est pas encore rattaché au Club. Écrivez-nous et nous réglons cela dans la journée.</p>",
+        "attente_bouton": "Rejoindre le Club",
+        "bienvenue_titre": "Bonjour [prenom]",
+        "bienvenue_titre_anonyme": "Bienvenue dans votre espace",
+        "bienvenue_texte": "Voici ce que le Club vous réserve. Cette page évolue : revenez-y, elle s'enrichit à chaque nouveau guide.",
+        "guides_heading": "Vos guides réservés",
+        "guides_chapo": "À lire en ligne ou à emporter en PDF. Ils sont à vous.",
+        "guide_bientot": "Bientôt disponible",
+        "annonces_heading": "En avant-première",
+        "annonces_chapo": "Ce que nous préparons, et que vous voyez avant tout le monde.",
+        "raccourcis_heading": "Vos outils",
+        "pied_compte": "Mon compte et mes commandes",
+        "pied_deconnexion": "Me déconnecter",
+        "pied_note": "Une question ? Écrivez-nous, nous répondons nous-mêmes."
+      }
+    }
+  },
+  "order": [
+    "espace"
+  ]
+}

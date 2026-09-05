@@ -1,0 +1,90 @@
+{
+  "sections": {
+    "club": {
+      "type": "gf-club",
+      "blocks": {
+        "a1": {
+          "type": "avantage",
+          "settings": {
+            "icone": "📘",
+            "titre": "Les guides réservés",
+            "texte": "Nos guides complets, en PDF, que nous ne publions pas sur le blog. Un sujet traité à fond, avec le protocole jour après jour."
+          }
+        },
+        "a2": {
+          "type": "avantage",
+          "settings": {
+            "icone": "🔑",
+            "titre": "L'accès anticipé",
+            "texte": "Nouveaux guides, nouveaux produits, nouvelles offres : vous les voyez avant tout le monde, et vous en profitez en premier."
+          }
+        },
+        "e1": {
+          "type": "etape",
+          "settings": {
+            "titre": "Vous laissez votre adresse",
+            "texte": "Votre prénom, votre e-mail, et celui de votre compagnon si le cœur vous en dit. Rien d'autre."
+          }
+        },
+        "e2": {
+          "type": "etape",
+          "settings": {
+            "titre": "Vous créez votre accès",
+            "texte": "Un compte, en trente secondes. C'est lui qui déverrouille l'espace membre — et lui seul."
+          }
+        },
+        "e3": {
+          "type": "etape",
+          "settings": {
+            "titre": "Vous entrez quand vous voulez",
+            "texte": "Vos guides et les avant-premières vous attendent à toute heure, autant de fois que vous le souhaitez."
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "settings": {
+        "hero_heading": "Le Club Gus et Frost",
+        "hero_text": "Nos guides réservés et nos nouveautés en avant-première. C'est gratuit, et ça le restera.",
+        "preuves": "Gratuit | Sans engagement | Désinscription en un clic",
+        "cta_label": "Rejoindre le Club",
+        "hero_reassurance": "Deux minutes, une adresse e-mail, aucun engagement.",
+        "hero_intro": "<p>Nous écrivons beaucoup : des centaines d'articles, et des guides complets qui nous demandent des semaines de travail. Ces guides-là, nous ne les publions pas en libre accès — ils sont réservés aux membres du Club.</p><p>Le Club n'est pas un programme à points, ni une carte de fidélité déguisée. C'est simplement l'endroit où nous réservons ce que nous faisons de mieux à celles et ceux qui nous suivent vraiment.</p>",
+        "membre_titre": "Bonjour [prenom], vous êtes déjà membre du Club.",
+        "membre_bouton": "Ouvrir mon espace",
+        "espace_url": "/pages/espace-membre",
+        "avantages_heading": "Ce que le Club vous ouvre",
+        "avantages_chapo": "Deux avantages, concrets, disponibles dès votre inscription.",
+        "etapes_heading": "Comment ça marche",
+        "form_heading": "Rejoindre le Club",
+        "form_chapo": "Laissez-nous votre adresse : nous vous ouvrons l'accès dans la foulée.",
+        "label_prenom": "Votre prénom",
+        "label_email": "Votre adresse e-mail",
+        "afficher_animal": true,
+        "label_animal": "Le prénom de votre chien ou de votre chat",
+        "consent_texte": "J'accepte de recevoir les guides et les nouveautés du Club par e-mail. Je peux me désinscrire à tout moment, en un clic, depuis n'importe quel message.",
+        "politique_url": "/policies/privacy-policy",
+        "politique_label": "Politique de confidentialité",
+        "form_bouton": "Je rejoins le Club",
+        "form_note": "Votre adresse sert à vous envoyer les guides du Club et nos nouveautés, rien d'autre. Elle n'est ni vendue ni transmise à des tiers à des fins publicitaires.",
+        "succes_titre": "Bienvenue au Club !",
+        "succes_texte": "Dernière étape : créez votre accès. C'est lui qui déverrouille l'espace membre et ses guides — comptez trente secondes.",
+        "succes_bouton": "Créer mon accès",
+        "succes_note": "Un e-mail de confirmation part de son côté : pensez à cliquer sur le lien qu'il contient, sinon nous n'aurons pas le droit de vous écrire.",
+        "compte_url": "",
+        "klaviyo_cle": "VyiAUH",
+        "klaviyo_liste": "WRcwhe",
+        "source": "club",
+        "metric": "Adhésion Club"
+      }
+    }
+  },
+  "order": [
+    "club"
+  ]
+}

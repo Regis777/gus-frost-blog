@@ -1,0 +1,473 @@
+{%- comment -%}
+  Section "Le Club Gus et Frost" - page publique d'adhesion
+  --------------------------------------------------------------------------
+  Programme de fidelite maison, gratuit, sans application : on n'installe ni
+  Smile.io ni equivalent. L'adhesion, c'est simplement un compte client
+  Shopify, plus l'inscription a la liste Klaviyo du Club.
+
+  Deux avantages promis : les guides reserves et l'acces anticipe. Ils sont
+  servis par la page /pages/espace-membre (section gf-espace-membre), qui ne
+  s'ouvre qu'aux visiteurs connectes.
+
+  Pre-requis dans le theme :
+    - assets/gf-club.css
+    - assets/gf-club.js
+
+  Le formulaire ne cree PAS le compte : il inscrit le profil dans Klaviyo,
+  puis renvoie vers la creation de compte Shopify (mot de passe en comptes
+  classiques, code par e-mail en nouveaux comptes clients). C'est le seul
+  montage possible sans application, et il a l'avantage de recuperer l'e-mail
+  meme quand la personne abandonne a l'etape du compte.
+
+  Klaviyo : endpoints CLIENT, cle PUBLIQUE uniquement. Cle ou liste vide =
+  aucun appel reseau, le formulaire envoie directement vers le compte.
+
+  Les textes destines aux visiteurs portent des espaces insecables (U+00A0)
+  avant : ; ! ? et apres les guillemets ouvrants. Ne pas les remplacer par des
+  espaces ordinaires en editant le fichier.
+{%- endcomment -%}
+
+{{ 'gf-club.css' | asset_url | stylesheet_tag }}
+
+{%- assign compte_url = section.settings.compte_url | default: routes.account_register_url -%}
+{%- assign espace_url = section.settings.espace_url | default: '/pages/espace-membre' -%}
+{%- assign avantages = section.blocks | where: 'type', 'avantage' -%}
+{%- assign etapes = section.blocks | where: 'type', 'etape' -%}
+
+<div class="gfc" data-gfc {{ section.shopify_attributes }}>
+
+  {%- comment -%} ---------- Deja connecte : on ne redemande rien ---------- {%- endcomment -%}
+  {%- if customer -%}
+    <div class="gfc-bandeau">
+      <p>
+        {%- if customer.first_name != blank -%}
+          {{ section.settings.membre_titre | replace: '[prenom]', customer.first_name | escape }}
+        {%- else -%}
+          {{ section.settings.membre_titre | replace: '[prenom]', '' | strip | escape }}
+        {%- endif -%}
+      </p>
+      <a class="gfc-btn" href="{{ espace_url }}">{{ section.settings.membre_bouton | escape }}</a>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ---------- En-tete ---------- {%- endcomment -%}
+  <div class="gfc-hero">
+    <h1>{{ section.settings.hero_heading | escape }}</h1>
+    {%- if section.settings.hero_text != blank -%}
+      <p class="gfc-hero-sous">{{ section.settings.hero_text | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.preuves != blank -%}
+      <p class="gfc-preuves">
+        {%- assign items = section.settings.preuves | split: '|' -%}
+        {%- for i in items -%}<span>{{ i | strip | escape }}</span>{%- endfor -%}
+      </p>
+    {%- endif -%}
+    {%- unless customer -%}
+      <a class="gfc-btn" href="#gfc-adhesion">{{ section.settings.cta_label | escape }}</a>
+      {%- if section.settings.hero_reassurance != blank -%}
+        <p class="gfc-rassure">{{ section.settings.hero_reassurance | escape }}</p>
+      {%- endif -%}
+      <p class="gfc-rassure" data-gfc-rappel hidden>
+        Vous vous êtes déjà inscrit ? <a href="{{ routes.account_login_url }}">Connectez-vous</a> pour ouvrir votre espace.
+      </p>
+    {%- endunless -%}
+    {%- if section.settings.hero_intro != blank -%}
+      <div class="gfc-hero-texte">{{ section.settings.hero_intro }}</div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} ---------- Les avantages ---------- {%- endcomment -%}
+  {%- if avantages.size > 0 -%}
+    <div class="gfc-rubrique">
+      <h2>{{ section.settings.avantages_heading | escape }}</h2>
+      {%- if section.settings.avantages_chapo != blank -%}
+        <p class="gfc-chapo">{{ section.settings.avantages_chapo | escape }}</p>
+      {%- endif -%}
+      <div class="gfc-avantages">
+        {%- for b in avantages -%}
+          <div class="gfc-avantage" {{ b.shopify_attributes }}>
+            {%- if b.settings.icone != blank -%}
+              <span class="gfc-avantage-icone" aria-hidden="true">{{ b.settings.icone }}</span>
+            {%- endif -%}
+            <h3>{{ b.settings.titre | escape }}</h3>
+            <p>{{ b.settings.texte | escape }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ---------- Comment ca marche ---------- {%- endcomment -%}
+  {%- if etapes.size > 0 -%}
+    <div class="gfc-rubrique">
+      <h2>{{ section.settings.etapes_heading | escape }}</h2>
+      <ol class="gfc-etapes">
+        {%- for b in etapes -%}
+          <li class="gfc-etape" {{ b.shopify_attributes }}>
+            <h3>{{ b.settings.titre | escape }}</h3>
+            <p>{{ b.settings.texte | escape }}</p>
+          </li>
+        {%- endfor -%}
+      </ol>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ---------- Formulaire d'adhesion ---------- {%- endcomment -%}
+  {%- unless customer -%}
+    <div class="gfc-form-carte" id="gfc-adhesion">
+
+      <div data-gfc-panneau-form>
+        <h2>{{ section.settings.form_heading | escape }}</h2>
+        {%- if section.settings.form_chapo != blank -%}
+          <p class="gfc-chapo">{{ section.settings.form_chapo | escape }}</p>
+        {%- endif -%}
+
+        <form class="gfc-form" data-gfc-form novalidate>
+          <div class="gfc-champs">
+            <label class="gfc-champ">
+              <span>{{ section.settings.label_prenom | escape }}</span>
+              <input type="text" name="prenom" autocomplete="given-name">
+            </label>
+            <label class="gfc-champ">
+              <span>{{ section.settings.label_email | escape }}</span>
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+            {%- if section.settings.afficher_animal -%}
+              <label class="gfc-champ">
+                <span>{{ section.settings.label_animal | escape }}</span>
+                <input type="text" name="animal">
+              </label>
+            {%- endif -%}
+          </div>
+
+          <label class="gfc-consent">
+            <input type="checkbox" name="consent" required>
+            <span>
+              {{ section.settings.consent_texte | escape }}
+              {%- if section.settings.politique_url != blank -%}
+                <a href="{{ section.settings.politique_url }}" target="_blank" rel="noopener">{{ section.settings.politique_label | escape }}</a>.
+              {%- endif -%}
+            </span>
+          </label>
+
+          <p class="gfc-erreur" data-gfc-erreur hidden></p>
+
+          <div class="gfc-form-actions">
+            <button type="submit" class="gfc-btn" data-gfc-envoyer>{{ section.settings.form_bouton | escape }}</button>
+          </div>
+
+          {%- if section.settings.form_note != blank -%}
+            <p class="gfc-note">{{ section.settings.form_note | escape }}</p>
+          {%- endif -%}
+        </form>
+      </div>
+
+      <div class="gfc-succes" data-gfc-panneau-succes hidden>
+        <h2>{{ section.settings.succes_titre | escape }}</h2>
+        <p>{{ section.settings.succes_texte | escape }}</p>
+        <a class="gfc-btn" href="{{ compte_url }}" data-gfc-compte>{{ section.settings.succes_bouton | escape }}</a>
+        {%- if section.settings.succes_note != blank -%}
+          <p class="gfc-note">{{ section.settings.succes_note | escape }}</p>
+        {%- endif -%}
+      </div>
+
+    </div>
+  {%- endunless -%}
+
+  {%- comment -%} ---------- Configuration passee au moteur JS ---------- {%- endcomment -%}
+  <script type="application/json" data-gfc-config>
+  {
+    "cle": {{ section.settings.klaviyo_cle | default: '' | json }},
+    "liste": {{ section.settings.klaviyo_liste | default: '' | json }},
+    "source": {{ section.settings.source | default: 'club' | json }},
+    "metric": {{ section.settings.metric | default: 'Adhésion Club' | json }},
+    "compte_url": {{ compte_url | json }}
+  }
+  </script>
+</div>
+
+<script src="{{ 'gf-club.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Le Club — adhésion",
+  "tag": "section",
+  "class": "gf-club-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "En-tête"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Titre",
+      "default": "Le Club Gus et Frost"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "Sous-titre",
+      "default": "Nos guides réservés et nos nouveautés en avant-première. C'est gratuit, et ça le restera."
+    },
+    {
+      "type": "text",
+      "id": "preuves",
+      "label": "Arguments courts (séparés par |)",
+      "default": "Gratuit | Sans engagement | Désinscription en un clic"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Bouton principal",
+      "default": "Rejoindre le Club"
+    },
+    {
+      "type": "text",
+      "id": "hero_reassurance",
+      "label": "Réassurance sous le bouton",
+      "default": "Deux minutes, une adresse e-mail, aucun engagement."
+    },
+    {
+      "type": "richtext",
+      "id": "hero_intro",
+      "label": "Texte d'introduction",
+      "default": "<p>Nous écrivons beaucoup : des centaines d'articles, et des guides complets que nous mettons des semaines à préparer. Ces guides-là, nous ne les publions pas en libre accès — ils sont réservés aux membres du Club.</p><p>Le Club n'est pas un programme à points, ni une carte de fidélité déguisée. C'est simplement l'endroit où nous réservons ce que nous faisons de mieux à celles et ceux qui nous suivent vraiment.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Visiteur déjà connecté"
+    },
+    {
+      "type": "text",
+      "id": "membre_titre",
+      "label": "Message d'accueil ([prenom] est remplacé)",
+      "default": "Bonjour [prenom], vous êtes déjà membre du Club."
+    },
+    {
+      "type": "text",
+      "id": "membre_bouton",
+      "label": "Bouton",
+      "default": "Ouvrir mon espace"
+    },
+    {
+      "type": "text",
+      "id": "espace_url",
+      "label": "Adresse de l'espace membre",
+      "default": "/pages/espace-membre"
+    },
+    {
+      "type": "header",
+      "content": "Avantages"
+    },
+    {
+      "type": "text",
+      "id": "avantages_heading",
+      "label": "Titre de la rubrique",
+      "default": "Ce que le Club vous ouvre"
+    },
+    {
+      "type": "text",
+      "id": "avantages_chapo",
+      "label": "Chapô",
+      "default": "Deux avantages, concrets, disponibles dès votre inscription."
+    },
+    {
+      "type": "header",
+      "content": "Comment ça marche"
+    },
+    {
+      "type": "text",
+      "id": "etapes_heading",
+      "label": "Titre de la rubrique",
+      "default": "Comment ça marche"
+    },
+    {
+      "type": "header",
+      "content": "Formulaire d'adhésion"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Titre",
+      "default": "Rejoindre le Club"
+    },
+    {
+      "type": "textarea",
+      "id": "form_chapo",
+      "label": "Chapô",
+      "default": "Laissez-nous votre adresse : nous vous ouvrons l'accès dans la foulée."
+    },
+    {
+      "type": "text",
+      "id": "label_prenom",
+      "label": "Libellé du champ prénom",
+      "default": "Votre prénom"
+    },
+    {
+      "type": "text",
+      "id": "label_email",
+      "label": "Libellé du champ e-mail",
+      "default": "Votre adresse e-mail"
+    },
+    {
+      "type": "checkbox",
+      "id": "afficher_animal",
+      "label": "Demander le prénom de l'animal",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label_animal",
+      "label": "Libellé du champ animal",
+      "default": "Le prénom de votre chien ou de votre chat"
+    },
+    {
+      "type": "textarea",
+      "id": "consent_texte",
+      "label": "Texte de consentement",
+      "default": "J'accepte de recevoir les guides et les nouveautés du Club par e-mail. Je peux me désinscrire à tout moment, en un clic, depuis n'importe quel message."
+    },
+    {
+      "type": "url",
+      "id": "politique_url",
+      "label": "Lien vers la politique de confidentialité"
+    },
+    {
+      "type": "text",
+      "id": "politique_label",
+      "label": "Libellé du lien",
+      "default": "Politique de confidentialité"
+    },
+    {
+      "type": "text",
+      "id": "form_bouton",
+      "label": "Bouton d'envoi",
+      "default": "Je rejoins le Club"
+    },
+    {
+      "type": "textarea",
+      "id": "form_note",
+      "label": "Note sous le formulaire",
+      "default": "Votre adresse sert à vous envoyer les guides du Club et nos nouveautés, rien d'autre. Elle n'est ni vendue ni transmise à des tiers à des fins publicitaires."
+    },
+    {
+      "type": "header",
+      "content": "Écran de confirmation"
+    },
+    {
+      "type": "text",
+      "id": "succes_titre",
+      "label": "Titre",
+      "default": "Bienvenue au Club !"
+    },
+    {
+      "type": "textarea",
+      "id": "succes_texte",
+      "label": "Texte",
+      "default": "Dernière étape : créez votre accès. C'est lui qui déverrouille l'espace membre et ses guides — comptez trente secondes."
+    },
+    {
+      "type": "text",
+      "id": "succes_bouton",
+      "label": "Bouton",
+      "default": "Créer mon accès"
+    },
+    {
+      "type": "textarea",
+      "id": "succes_note",
+      "label": "Note",
+      "default": "Un e-mail de confirmation part de son côté : pensez à cliquer sur le lien qu'il contient, sinon nous n'aurons pas le droit de vous écrire."
+    },
+    {
+      "type": "text",
+      "id": "compte_url",
+      "label": "Adresse de création de compte",
+      "info": "Laisser vide pour utiliser la page de compte du thème."
+    },
+    {
+      "type": "header",
+      "content": "Klaviyo"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_cle",
+      "label": "Clé publique du compte",
+      "info": "Vide = aucun envoi : le formulaire renvoie directement vers la création de compte."
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_liste",
+      "label": "Identifiant de la liste"
+    },
+    {
+      "type": "text",
+      "id": "source",
+      "label": "Propriété source_lead",
+      "default": "club"
+    },
+    {
+      "type": "text",
+      "id": "metric",
+      "label": "Nom de l'évènement",
+      "default": "Adhésion Club"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "avantage",
+      "name": "Avantage",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icone",
+          "label": "Émoji",
+          "default": "📘"
+        },
+        {
+          "type": "text",
+          "id": "titre",
+          "label": "Titre",
+          "default": "Les guides réservés"
+        },
+        {
+          "type": "textarea",
+          "id": "texte",
+          "label": "Texte",
+          "default": "Nos guides complets, en PDF, que l'on ne trouve nulle part ailleurs sur le site."
+        }
+      ]
+    },
+    {
+      "type": "etape",
+      "name": "Étape",
+      "settings": [
+        {
+          "type": "text",
+          "id": "titre",
+          "label": "Titre",
+          "default": "Vous laissez votre adresse"
+        },
+        {
+          "type": "textarea",
+          "id": "texte",
+          "label": "Texte",
+          "default": "Prénom, e-mail, et le nom de votre compagnon si vous voulez."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Le Club — adhésion",
+      "blocks": [
+        { "type": "avantage" },
+        { "type": "avantage" },
+        { "type": "etape" },
+        { "type": "etape" },
+        { "type": "etape" }
+      ]
+    }
+  ]
+}
+{% endschema %}

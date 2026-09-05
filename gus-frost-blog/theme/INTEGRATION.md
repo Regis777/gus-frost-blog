@@ -206,3 +206,92 @@ italique réelle sur les légendes de figure. **Deux fichiers de police téléch
 Rejouer sur le thème publié les 7 dépôts d'assets **et** les 2 patchs de `theme.liquid`.
 Le réglage `type_header_font` / `type_body_font` du thème peut rester sur Montserrat/Lora :
 il n'est plus lu pour l'affichage, seulement pour des `@font-face` inertes.
+
+---
+
+# « Le Club » — comptes clients et espace membre
+
+Programme de fidélité maison, **gratuit**, sans application. Deux avantages
+promis : les **guides réservés** et l'**accès anticipé**. Deux pages :
+
+- `/pages/club` — la page publique qui présente le Club et recueille l'adhésion ;
+- `/pages/espace-membre` — la page réservée, invisible tant qu'on n'est pas connecté.
+
+## Le principe
+
+**Être membre = avoir un compte client.** Rien d'autre. Le verrou de l'espace
+membre s'appuie sur l'objet Liquid `customer`, disponible sur toute la boutique
+que le magasin soit en comptes clients **classiques** ou en **nouveaux comptes
+clients** : les deux pages fonctionnent dans les deux cas, sans retouche.
+
+Le formulaire d'adhésion ne crée pas le compte (impossible sans application) :
+il inscrit le profil dans Klaviyo, puis renvoie vers la création de compte
+Shopify. On récupère donc l'e-mail même quand la personne abandonne à l'étape
+du compte — c'est le principal intérêt du montage en deux temps.
+
+## 1. Déposer les fichiers dans le thème
+
+| Fichier local                     | Destination dans le thème              |
+|-----------------------------------|----------------------------------------|
+| `theme/gf-club.css`               | `assets/gf-club.css`                   |
+| `theme/gf-club.js`                | `assets/gf-club.js`                    |
+| `theme/gf-club.liquid`            | `sections/gf-club.liquid`              |
+| `theme/gf-espace-membre.liquid`   | `sections/gf-espace-membre.liquid`     |
+| `theme/page.club.json`            | `templates/page.club.json`             |
+| `theme/page.espace-membre.json`   | `templates/page.espace-membre.json`    |
+
+```
+python scripts/push_club.py --list
+python scripts/push_club.py --theme-id <id> --dry-run
+python scripts/push_club.py --theme-id <id> --allow-live
+```
+
+Une seule feuille de style pour les deux pages (`gf-club.css`) : les deux
+sections la chargent par `asset_url`. Aucun patch de `layout/theme.liquid`.
+
+## 2. Créer les deux pages
+
+Boutique en ligne → Pages → **Ajouter une page**, contenu laissé vide dans les
+deux cas (tout vient de la section) :
+
+| Titre           | Handle           | Modèle de thème  |
+|-----------------|------------------|------------------|
+| `Le Club`       | `club`           | `club`           |
+| `Espace membre` | `espace-membre`  | `espace-membre`  |
+
+Les deux modèles se référencent l'un l'autre par leurs réglages `espace_url` et
+`club_url` : si un handle change, corriger les deux.
+
+## 3. Klaviyo
+
+La liste **« Le Club Gus et Frost »** existe déjà (id `WRcwhe`, double opt-in),
+et le modèle de page porte la clé publique du compte (`VyiAUH`). Les propriétés
+poussées sur le profil : `club_membre`, `club_date`, `source_lead`, `prenom`,
+`prenom_animal`.
+
+Le double opt-in impose une confirmation par e-mail avant tout envoi. Ce n'est
+pas gênant : les guides ne sont pas livrés par e-mail, ils vivent dans l'espace
+membre. L'e-mail sert à annoncer les nouveautés.
+
+Reste à faire côté Klaviyo : le flow de bienvenue déclenché par l'inscription à
+la liste.
+
+## 4. Points de vigilance
+
+- **Le verrou masque, il ne chiffre pas.** Le PDF d'un guide reste servi par le
+  CDN Shopify : qui possède l'adresse exacte peut l'ouvrir sans être membre.
+  C'est acceptable pour un club gratuit ; une vraie protection demanderait une
+  application. Ne pas mettre derrière ce verrou un contenu vendu.
+- **Le réglage « Tag requis » est vide par défaut**, et c'est voulu : tout client
+  connecté entre. Le remplir (par exemple `club`) transforme la page en espace
+  réservé à une partie des clients — mais il faut alors poser le tag sur chaque
+  client, à la main, par Shopify Flow ou par Make.
+- **Ne jamais activer « compte obligatoire au checkout »** : cela imposerait la
+  création de compte pour acheter, et ferait chuter la conversion.
+- **Insécables** : les textes des deux sections et des deux modèles en portent
+  (U+00A0). `python scripts/check_insecables.py theme/gf-club.liquid
+  theme/gf-espace-membre.liquid theme/page.club.json theme/page.espace-membre.json`
+  doit rester à zéro violation. Attention : ne jamais lancer un correcteur
+  automatique sur le corps d'un `.liquid` — une insécable glissée dans un `!=`
+  casse la page.
+- **Une seule section « Le Club » par page** (le JS est un singleton par racine).

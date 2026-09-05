@@ -1,0 +1,268 @@
+/* gf-club.css — « Le Club Gus et Frost »
+   Feuille commune aux deux sections : gf-club (page publique, /pages/club)
+   et gf-espace-membre (page réservée, /pages/espace-membre).
+
+   Identité reprise du quiz : vert #314431, beige #EFE7DA, fond #faf8f3,
+   bordure #e3ddcf. Dawn met 1rem = 10px : on raisonne en px. */
+
+.gfc {
+  --gfc-vert: #314431;
+  --gfc-vert-clair: #3d4f3d;
+  --gfc-beige: #efe7da;
+  --gfc-fond: #faf8f3;
+  --gfc-bord: #e3ddcf;
+  --gfc-texte: #2a2a2a;
+  --gfc-doux: #6b6b6b;
+  --gfc-or: #b9721c;
+  --gfc-rouge: #a5443b;
+  --gfc-sans: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 8px 16px 64px;
+  font-family: var(--font-body-family, Georgia, 'Times New Roman', serif);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--gfc-texte);
+}
+.gfc *, .gfc *::before, .gfc *::after { box-sizing: border-box; }
+.gfc h1, .gfc h2, .gfc h3 {
+  font-family: var(--font-heading-family, var(--font-body-family, inherit));
+  color: var(--gfc-vert); margin: 0; line-height: 1.22;
+}
+.gfc button, .gfc input, .gfc label, .gfc select { font-family: inherit; }
+.gfc p { margin: 0 0 14px; }
+.gfc p:last-child { margin-bottom: 0; }
+
+/* ---------- Boutons et liens ---------- */
+.gfc-btn {
+  display: inline-block; padding: 15px 34px; border: 0; border-radius: 999px;
+  background: var(--gfc-vert); color: #fff !important; text-decoration: none;
+  font-size: 18px; font-weight: 700; line-height: 1.3; cursor: pointer;
+  font-family: var(--gfc-sans);
+  transition: background .15s, transform .05s;
+}
+.gfc-btn:hover { background: var(--gfc-vert-clair); }
+.gfc-btn:active { transform: translateY(1px); }
+.gfc-btn:disabled { opacity: .7; cursor: default; }
+.gfc-btn--fantome {
+  background: transparent; color: var(--gfc-vert) !important;
+  box-shadow: inset 0 0 0 2px var(--gfc-vert);
+}
+.gfc-btn--fantome:hover { background: var(--gfc-beige); }
+.gfc-btn--petit { padding: 11px 24px; font-size: 16px; }
+.gfc-lien {
+  display: inline-block; background: none; border: 0; cursor: pointer;
+  color: var(--gfc-doux); font-size: 15px; padding: 6px 2px; text-decoration: underline;
+  font-family: var(--gfc-sans);
+}
+.gfc-lien:hover { color: var(--gfc-vert); }
+
+/* ---------- En-tête de page ---------- */
+.gfc-hero { text-align: center; padding: 20px 0 6px; }
+.gfc-hero h1 { font-size: 34px; margin-bottom: 14px; }
+.gfc-hero-sous {
+  font-size: 19px; color: var(--gfc-vert-clair);
+  max-width: 600px; margin: 0 auto 22px; line-height: 1.55;
+}
+.gfc-hero-texte {
+  text-align: left; max-width: 640px; margin: 0 auto 24px;
+  font-size: 16px; color: var(--gfc-vert-clair); line-height: 1.62;
+}
+.gfc-preuves {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px;
+  margin: 0 0 26px; font-size: 14px; color: var(--gfc-doux);
+  font-family: var(--gfc-sans);
+}
+.gfc-preuves span::before { content: '• '; color: var(--gfc-vert); }
+.gfc-preuves span:first-child::before { content: none; }
+.gfc-rassure {
+  margin: 14px 0 0; font-size: 14px; color: var(--gfc-doux);
+  font-family: var(--gfc-sans);
+}
+
+/* ---------- Titres de rubrique ---------- */
+.gfc-rubrique { margin: 48px 0 0; }
+.gfc-rubrique > h2 { font-size: 26px; margin-bottom: 6px; }
+.gfc-rubrique > .gfc-chapo {
+  color: var(--gfc-doux); font-size: 16px; margin: 0 0 22px;
+}
+
+/* ---------- Avantages ---------- */
+.gfc-avantages {
+  display: grid; gap: 18px; margin: 0;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.gfc-avantage {
+  background: var(--gfc-fond); border: 1px solid var(--gfc-bord);
+  border-radius: 14px; padding: 20px 22px;
+}
+.gfc-avantage-icone { font-size: 26px; line-height: 1; display: block; margin-bottom: 10px; }
+.gfc-avantage h3 { font-size: 19px; margin-bottom: 8px; }
+.gfc-avantage p { font-size: 15.5px; color: var(--gfc-vert-clair); margin: 0; }
+
+/* ---------- Étapes ---------- */
+.gfc-etapes { list-style: none; margin: 0; padding: 0; counter-reset: gfc; }
+.gfc-etape {
+  counter-increment: gfc; position: relative;
+  padding: 0 0 20px 52px; margin: 0;
+}
+.gfc-etape::before {
+  content: counter(gfc); position: absolute; left: 0; top: 0;
+  width: 34px; height: 34px; border-radius: 999px;
+  background: var(--gfc-vert); color: #fff;
+  font-family: var(--gfc-sans); font-weight: 700; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+}
+.gfc-etape h3 { font-size: 18px; margin-bottom: 4px; padding-top: 4px; }
+.gfc-etape p { font-size: 15.5px; color: var(--gfc-vert-clair); margin: 0; }
+
+/* ---------- Formulaire d'adhésion ---------- */
+.gfc-form-carte {
+  background: var(--gfc-beige); border-radius: 16px;
+  padding: 30px 28px; margin: 44px 0 0;
+}
+.gfc-form-carte h2 { font-size: 24px; margin-bottom: 8px; }
+.gfc-form-carte .gfc-chapo { color: var(--gfc-vert-clair); font-size: 16px; margin: 0 0 20px; }
+.gfc-form { margin: 0; }
+.gfc-champs { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.gfc-champ { display: block; }
+.gfc-champ > span {
+  display: block; font-family: var(--gfc-sans); font-size: 13.5px;
+  color: var(--gfc-vert); font-weight: 600; margin-bottom: 5px;
+}
+.gfc-champ input {
+  width: 100%; padding: 13px 14px; font-size: 16px;
+  border: 1px solid var(--gfc-bord); border-radius: 10px;
+  background: #fff; color: var(--gfc-texte);
+}
+.gfc-champ input:focus { outline: 2px solid var(--gfc-vert); outline-offset: 1px; }
+.gfc-consent {
+  display: flex; gap: 10px; align-items: flex-start; margin: 18px 0 0;
+  font-family: var(--gfc-sans); font-size: 13.5px; line-height: 1.5; color: var(--gfc-vert-clair);
+}
+.gfc-consent input { margin-top: 3px; flex: 0 0 auto; width: 17px; height: 17px; }
+.gfc-consent a { color: var(--gfc-vert); }
+.gfc-form-actions { margin: 20px 0 0; }
+.gfc-note {
+  margin: 14px 0 0; font-family: var(--gfc-sans); font-size: 13px;
+  color: var(--gfc-doux); line-height: 1.5;
+}
+.gfc-erreur {
+  margin: 14px 0 0; padding: 12px 14px; border-radius: 10px;
+  background: #f7e7e5; color: var(--gfc-rouge);
+  font-family: var(--gfc-sans); font-size: 14px;
+}
+.gfc-erreur[hidden] { display: none; }
+
+/* ---------- Écran de confirmation ---------- */
+.gfc-succes { text-align: center; padding: 6px 0; }
+.gfc-succes h2 { font-size: 24px; margin-bottom: 10px; }
+.gfc-succes p { color: var(--gfc-vert-clair); max-width: 520px; margin: 0 auto 14px; }
+.gfc-succes .gfc-btn { margin-top: 10px; }
+
+/* ---------- Bandeau « vous êtes déjà membre » ---------- */
+.gfc-bandeau {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px;
+  background: var(--gfc-vert); color: #fff; border-radius: 14px;
+  padding: 18px 22px; margin: 0 0 30px;
+}
+.gfc-bandeau p { margin: 0; flex: 1 1 260px; font-size: 16px; }
+.gfc-bandeau .gfc-btn {
+  background: #fff; color: var(--gfc-vert) !important; font-size: 16px; padding: 11px 24px;
+}
+.gfc-bandeau .gfc-btn:hover { background: var(--gfc-beige); }
+
+/* ---------- Espace membre : écran verrouillé ---------- */
+.gfc-verrou {
+  text-align: center; background: var(--gfc-fond);
+  border: 1px solid var(--gfc-bord); border-radius: 16px;
+  padding: 44px 28px; margin: 20px 0 0;
+}
+.gfc-verrou-icone { font-size: 38px; line-height: 1; display: block; margin-bottom: 14px; }
+.gfc-verrou h1 { font-size: 28px; margin-bottom: 12px; }
+.gfc-verrou p { color: var(--gfc-vert-clair); max-width: 520px; margin: 0 auto 14px; }
+.gfc-verrou-actions {
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 22px;
+}
+
+/* ---------- Espace membre : accueil ---------- */
+.gfc-bienvenue { padding: 20px 0 0; border-bottom: 1px solid var(--gfc-bord); padding-bottom: 22px; }
+.gfc-bienvenue h1 { font-size: 32px; margin-bottom: 10px; }
+.gfc-bienvenue p { color: var(--gfc-vert-clair); font-size: 17px; margin: 0; }
+
+/* ---------- Guides réservés ---------- */
+.gfc-guides { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.gfc-guide {
+  display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--gfc-bord); border-radius: 14px; overflow: hidden;
+}
+.gfc-guide-media { background: var(--gfc-beige); }
+.gfc-guide-media img { display: block; width: 100%; height: auto; }
+.gfc-guide-corps { padding: 20px 22px; display: flex; flex-direction: column; flex: 1; }
+.gfc-guide h3 { font-size: 20px; margin-bottom: 8px; }
+.gfc-guide p { font-size: 15.5px; color: var(--gfc-vert-clair); }
+.gfc-guide-actions { margin-top: auto; padding-top: 14px; }
+.gfc-guide-meta {
+  font-family: var(--gfc-sans); font-size: 12.5px; color: var(--gfc-doux);
+  margin: 10px 0 0; display: block;
+}
+.gfc-badge {
+  display: inline-block; font-family: var(--gfc-sans); font-size: 11.5px;
+  font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  background: var(--gfc-or); color: #fff; border-radius: 999px;
+  padding: 4px 10px; margin-bottom: 10px;
+}
+.gfc-badge--vert { background: var(--gfc-vert); }
+.gfc-guide-bientot {
+  font-family: var(--gfc-sans); font-size: 14px; color: var(--gfc-doux);
+  border: 1px dashed var(--gfc-bord); border-radius: 999px;
+  padding: 11px 22px; display: inline-block;
+}
+
+/* ---------- Accès anticipé ---------- */
+.gfc-annonces { list-style: none; margin: 0; padding: 0; }
+.gfc-annonce {
+  border-left: 3px solid var(--gfc-vert); padding: 4px 0 4px 20px; margin: 0 0 26px;
+}
+.gfc-annonce:last-child { margin-bottom: 0; }
+.gfc-annonce-date {
+  font-family: var(--gfc-sans); font-size: 12.5px; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--gfc-doux); display: block; margin-bottom: 5px;
+}
+.gfc-annonce h3 { font-size: 20px; margin-bottom: 8px; }
+.gfc-annonce p { font-size: 15.5px; color: var(--gfc-vert-clair); }
+
+/* ---------- Raccourcis ---------- */
+.gfc-raccourcis { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.gfc-raccourci {
+  display: block; text-decoration: none; color: inherit;
+  background: var(--gfc-fond); border: 1px solid var(--gfc-bord);
+  border-radius: 12px; padding: 16px 18px;
+  transition: border-color .15s, background .15s;
+}
+.gfc-raccourci:hover { border-color: var(--gfc-vert); background: #fff; }
+.gfc-raccourci strong {
+  display: block; font-family: var(--font-heading-family, inherit);
+  color: var(--gfc-vert); font-size: 17px; margin-bottom: 4px;
+}
+.gfc-raccourci span { font-family: var(--gfc-sans); font-size: 14px; color: var(--gfc-doux); }
+
+/* ---------- Pied de l'espace membre ---------- */
+.gfc-pied {
+  margin: 52px 0 0; padding-top: 22px; border-top: 1px solid var(--gfc-bord);
+  display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center;
+  font-family: var(--gfc-sans); font-size: 14px; color: var(--gfc-doux);
+}
+.gfc-pied a { color: var(--gfc-vert); }
+
+/* ---------- Petits écrans ---------- */
+@media (max-width: 600px) {
+  .gfc { padding-bottom: 48px; }
+  .gfc-hero h1 { font-size: 28px; }
+  .gfc-hero-sous { font-size: 17px; }
+  .gfc-bienvenue h1 { font-size: 26px; }
+  .gfc-rubrique > h2 { font-size: 23px; }
+  .gfc-form-carte { padding: 24px 20px; border-radius: 14px; }
+  .gfc-btn { width: 100%; text-align: center; }
+  .gfc-bandeau .gfc-btn { width: auto; }
+}

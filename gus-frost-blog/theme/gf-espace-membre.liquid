@@ -1,0 +1,500 @@
+{%- comment -%}
+  Section "Espace membre" - la page reservee du Club
+  --------------------------------------------------------------------------
+  Sert les deux avantages promis sur /pages/club : les guides reserves et
+  l'acces anticipe. Rien n'est visible tant que le visiteur n'est pas connecte.
+
+  Le verrou repose sur l'objet `customer`, disponible en Liquid sur toute la
+  boutique, que le magasin soit en comptes clients CLASSIQUES ou en NOUVEAUX
+  comptes clients. La page fonctionne donc dans les deux cas, sans retouche.
+
+  Par defaut, etre membre = avoir un compte (le Club est gratuit). Le reglage
+  "Tag requis" permet plus tard de reserver la page a une partie des clients
+  seulement (adherents payants, ambassadeurs, niveaux) sans toucher au code.
+
+  Pre-requis dans le theme :
+    - assets/gf-club.css   (feuille commune avec la section "Le Club")
+
+  LIMITE A CONNAITRE : le fichier PDF d'un guide reste servi par le CDN
+  Shopify. Le verrou masque le lien aux non-membres, il ne chiffre pas le
+  fichier : qui possede l'adresse exacte peut l'ouvrir. C'est suffisant pour
+  un club gratuit ; une vraie protection demanderait une application.
+
+  Les textes destines aux visiteurs portent des espaces insecables (U+00A0)
+  avant : ; ! ? et apres les guillemets ouvrants. Ne pas les remplacer par des
+  espaces ordinaires en editant le fichier.
+{%- endcomment -%}
+
+{{ 'gf-club.css' | asset_url | stylesheet_tag }}
+
+{%- assign tag_requis = section.settings.tag_requis | strip -%}
+{%- assign acces = false -%}
+{%- if customer -%}
+  {%- if tag_requis == blank -%}
+    {%- assign acces = true -%}
+  {%- elsif customer.tags contains tag_requis -%}
+    {%- assign acces = true -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- assign guides = section.blocks | where: 'type', 'guide' -%}
+{%- assign annonces = section.blocks | where: 'type', 'avant_premiere' -%}
+{%- assign raccourcis = section.blocks | where: 'type', 'raccourci' -%}
+
+<div class="gfc" {{ section.shopify_attributes }}>
+
+  {%- if acces == false -%}
+
+    {%- comment -%} ---------- Verrou ---------- {%- endcomment -%}
+    <div class="gfc-verrou">
+      <span class="gfc-verrou-icone" aria-hidden="true">{{ section.settings.verrou_icone }}</span>
+
+      {%- if customer -%}
+        {%- comment -%} Connecte, mais il lui manque le tag demande. {%- endcomment -%}
+        <h1>{{ section.settings.attente_titre | escape }}</h1>
+        <div>{{ section.settings.attente_texte }}</div>
+        <div class="gfc-verrou-actions">
+          <a class="gfc-btn gfc-btn--fantome" href="{{ section.settings.club_url | default: '/pages/club' }}">
+            {{ section.settings.attente_bouton | escape }}
+          </a>
+        </div>
+      {%- else -%}
+        <h1>{{ section.settings.verrou_titre | escape }}</h1>
+        <div>{{ section.settings.verrou_texte }}</div>
+        <div class="gfc-verrou-actions">
+          <a class="gfc-btn" href="{{ routes.account_login_url }}">{{ section.settings.verrou_bouton_connexion | escape }}</a>
+          <a class="gfc-btn gfc-btn--fantome" href="{{ section.settings.club_url | default: '/pages/club' }}">
+            {{ section.settings.verrou_bouton_club | escape }}
+          </a>
+        </div>
+        {%- if section.settings.verrou_note != blank -%}
+          <p class="gfc-note">{{ section.settings.verrou_note | escape }}</p>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+  {%- else -%}
+
+    {%- comment -%} ---------- Accueil du membre ---------- {%- endcomment -%}
+    <div class="gfc-bienvenue">
+      <h1>
+        {%- if customer.first_name != blank -%}
+          {{ section.settings.bienvenue_titre | replace: '[prenom]', customer.first_name | escape }}
+        {%- else -%}
+          {{ section.settings.bienvenue_titre_anonyme | escape }}
+        {%- endif -%}
+      </h1>
+      {%- if section.settings.bienvenue_texte != blank -%}
+        <p>{{ section.settings.bienvenue_texte | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ---------- Guides reserves ---------- {%- endcomment -%}
+    {%- if guides.size > 0 -%}
+      <div class="gfc-rubrique">
+        <h2>{{ section.settings.guides_heading | escape }}</h2>
+        {%- if section.settings.guides_chapo != blank -%}
+          <p class="gfc-chapo">{{ section.settings.guides_chapo | escape }}</p>
+        {%- endif -%}
+        <div class="gfc-guides">
+          {%- for b in guides -%}
+            {%- comment -%} Un guide peut exiger un tag supplementaire (niveaux a venir). {%- endcomment -%}
+            {%- assign guide_tag = b.settings.tag_requis | strip -%}
+            {%- assign guide_visible = true -%}
+            {%- if guide_tag != blank -%}
+              {%- unless customer.tags contains guide_tag -%}
+                {%- assign guide_visible = false -%}
+              {%- endunless -%}
+            {%- endif -%}
+
+            {%- if guide_visible -%}
+              <article class="gfc-guide" {{ b.shopify_attributes }}>
+                {%- if b.settings.image != blank -%}
+                  <div class="gfc-guide-media">
+                    {{ b.settings.image | image_url: width: 800 | image_tag:
+                       loading: 'lazy',
+                       widths: '400, 600, 800',
+                       sizes: '(min-width: 900px) 400px, 100vw',
+                       alt: b.settings.titre }}
+                  </div>
+                {%- endif -%}
+                <div class="gfc-guide-corps">
+                  {%- if b.settings.badge != blank -%}
+                    <span class="gfc-badge">{{ b.settings.badge | escape }}</span>
+                  {%- endif -%}
+                  <h3>{{ b.settings.titre | escape }}</h3>
+                  <p>{{ b.settings.texte | escape }}</p>
+                  <div class="gfc-guide-actions">
+                    {%- if b.settings.fichier_url != blank -%}
+                      <a class="gfc-btn gfc-btn--petit" href="{{ b.settings.fichier_url }}" target="_blank" rel="noopener">
+                        {{ b.settings.bouton | default: 'Ouvrir le guide' | escape }}
+                      </a>
+                    {%- else -%}
+                      <span class="gfc-guide-bientot">{{ section.settings.guide_bientot | escape }}</span>
+                    {%- endif -%}
+                    {%- if b.settings.meta != blank -%}
+                      <span class="gfc-guide-meta">{{ b.settings.meta | escape }}</span>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </article>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ---------- Acces anticipe ---------- {%- endcomment -%}
+    {%- if annonces.size > 0 -%}
+      <div class="gfc-rubrique">
+        <h2>{{ section.settings.annonces_heading | escape }}</h2>
+        {%- if section.settings.annonces_chapo != blank -%}
+          <p class="gfc-chapo">{{ section.settings.annonces_chapo | escape }}</p>
+        {%- endif -%}
+        <ul class="gfc-annonces">
+          {%- for b in annonces -%}
+            <li class="gfc-annonce" {{ b.shopify_attributes }}>
+              {%- if b.settings.date != blank -%}
+                <span class="gfc-annonce-date">{{ b.settings.date | escape }}</span>
+              {%- endif -%}
+              {%- if b.settings.badge != blank -%}
+                <span class="gfc-badge gfc-badge--vert">{{ b.settings.badge | escape }}</span>
+              {%- endif -%}
+              <h3>{{ b.settings.titre | escape }}</h3>
+              <p>{{ b.settings.texte | escape }}</p>
+              {%- if b.settings.lien_url != blank -%}
+                <a class="gfc-btn gfc-btn--fantome gfc-btn--petit" href="{{ b.settings.lien_url }}">
+                  {{ b.settings.lien_label | default: 'Voir en avant-première' | escape }}
+                </a>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ---------- Raccourcis ---------- {%- endcomment -%}
+    {%- if raccourcis.size > 0 -%}
+      <div class="gfc-rubrique">
+        <h2>{{ section.settings.raccourcis_heading | escape }}</h2>
+        <div class="gfc-raccourcis">
+          {%- for b in raccourcis -%}
+            <a class="gfc-raccourci" href="{{ b.settings.url }}" {{ b.shopify_attributes }}>
+              <strong>{{ b.settings.titre | escape }}</strong>
+              <span>{{ b.settings.texte | escape }}</span>
+            </a>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ---------- Pied ---------- {%- endcomment -%}
+    <div class="gfc-pied">
+      <a href="{{ routes.account_url }}">{{ section.settings.pied_compte | escape }}</a>
+      <a href="{{ routes.account_logout_url }}">{{ section.settings.pied_deconnexion | escape }}</a>
+      {%- if section.settings.pied_note != blank -%}
+        <span>{{ section.settings.pied_note | escape }}</span>
+      {%- endif -%}
+    </div>
+
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Le Club — espace membre",
+  "tag": "section",
+  "class": "gf-espace-membre-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Verrou"
+    },
+    {
+      "type": "text",
+      "id": "tag_requis",
+      "label": "Tag client requis",
+      "info": "Vide = tout client connecté entre (recommandé pour un club gratuit). Sinon, seuls les clients portant ce tag voient la page."
+    },
+    {
+      "type": "text",
+      "id": "verrou_icone",
+      "label": "Émoji du verrou",
+      "default": "🔒"
+    },
+    {
+      "type": "text",
+      "id": "verrou_titre",
+      "label": "Titre (visiteur non connecté)",
+      "default": "Cet espace est réservé aux membres du Club"
+    },
+    {
+      "type": "richtext",
+      "id": "verrou_texte",
+      "label": "Texte (visiteur non connecté)",
+      "default": "<p>Les guides du Club et les nouveautés en avant-première vous attendent derrière cette porte. Connectez-vous pour l'ouvrir.</p>"
+    },
+    {
+      "type": "text",
+      "id": "verrou_bouton_connexion",
+      "label": "Bouton de connexion",
+      "default": "Me connecter"
+    },
+    {
+      "type": "text",
+      "id": "verrou_bouton_club",
+      "label": "Bouton d'adhésion",
+      "default": "Découvrir le Club"
+    },
+    {
+      "type": "text",
+      "id": "club_url",
+      "label": "Adresse de la page du Club",
+      "default": "/pages/club"
+    },
+    {
+      "type": "text",
+      "id": "verrou_note",
+      "label": "Note sous les boutons",
+      "default": "L'adhésion est gratuite et prend deux minutes."
+    },
+    {
+      "type": "header",
+      "content": "Membre connecté sans le tag requis"
+    },
+    {
+      "type": "text",
+      "id": "attente_titre",
+      "label": "Titre",
+      "default": "Votre accès n'est pas encore ouvert"
+    },
+    {
+      "type": "richtext",
+      "id": "attente_texte",
+      "label": "Texte",
+      "default": "<p>Votre compte existe bien, mais il n'est pas encore rattaché au Club. Écrivez-nous et nous réglons cela dans la journée.</p>"
+    },
+    {
+      "type": "text",
+      "id": "attente_bouton",
+      "label": "Bouton",
+      "default": "Rejoindre le Club"
+    },
+    {
+      "type": "header",
+      "content": "Accueil"
+    },
+    {
+      "type": "text",
+      "id": "bienvenue_titre",
+      "label": "Titre ([prenom] est remplacé)",
+      "default": "Bonjour [prenom]"
+    },
+    {
+      "type": "text",
+      "id": "bienvenue_titre_anonyme",
+      "label": "Titre si le prénom est inconnu",
+      "default": "Bienvenue dans votre espace"
+    },
+    {
+      "type": "textarea",
+      "id": "bienvenue_texte",
+      "label": "Texte",
+      "default": "Voici ce que le Club vous réserve. Cette page évolue : revenez-y, elle s'enrichit à chaque nouveau guide."
+    },
+    {
+      "type": "header",
+      "content": "Guides réservés"
+    },
+    {
+      "type": "text",
+      "id": "guides_heading",
+      "label": "Titre de la rubrique",
+      "default": "Vos guides réservés"
+    },
+    {
+      "type": "text",
+      "id": "guides_chapo",
+      "label": "Chapô",
+      "default": "À lire en ligne ou à emporter en PDF. Ils sont à vous."
+    },
+    {
+      "type": "text",
+      "id": "guide_bientot",
+      "label": "Mention quand le fichier manque",
+      "default": "Bientôt disponible"
+    },
+    {
+      "type": "header",
+      "content": "Accès anticipé"
+    },
+    {
+      "type": "text",
+      "id": "annonces_heading",
+      "label": "Titre de la rubrique",
+      "default": "En avant-première"
+    },
+    {
+      "type": "text",
+      "id": "annonces_chapo",
+      "label": "Chapô",
+      "default": "Ce que nous préparons, et que vous voyez avant tout le monde."
+    },
+    {
+      "type": "header",
+      "content": "Raccourcis"
+    },
+    {
+      "type": "text",
+      "id": "raccourcis_heading",
+      "label": "Titre de la rubrique",
+      "default": "Vos outils"
+    },
+    {
+      "type": "header",
+      "content": "Pied de page"
+    },
+    {
+      "type": "text",
+      "id": "pied_compte",
+      "label": "Lien vers le compte",
+      "default": "Mon compte et mes commandes"
+    },
+    {
+      "type": "text",
+      "id": "pied_deconnexion",
+      "label": "Lien de déconnexion",
+      "default": "Me déconnecter"
+    },
+    {
+      "type": "text",
+      "id": "pied_note",
+      "label": "Note",
+      "default": "Une question ? Écrivez-nous, nous répondons nous-mêmes."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "guide",
+      "name": "Guide réservé",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Couverture"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge",
+          "info": "Par exemple « Nouveau ». Laisser vide pour ne rien afficher."
+        },
+        {
+          "type": "text",
+          "id": "titre",
+          "label": "Titre du guide"
+        },
+        {
+          "type": "textarea",
+          "id": "texte",
+          "label": "Description"
+        },
+        {
+          "type": "url",
+          "id": "fichier_url",
+          "label": "Fichier du guide",
+          "info": "Déposez le PDF dans Contenu → Fichiers, puis collez son adresse ici. Vide = « Bientôt disponible »."
+        },
+        {
+          "type": "text",
+          "id": "bouton",
+          "label": "Libellé du bouton",
+          "default": "Ouvrir le guide"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Mention discrète",
+          "info": "Par exemple « PDF · 24 pages »."
+        },
+        {
+          "type": "text",
+          "id": "tag_requis",
+          "label": "Tag client requis pour ce guide",
+          "info": "Vide = visible par tous les membres."
+        }
+      ]
+    },
+    {
+      "type": "avant_premiere",
+      "name": "Avant-première",
+      "settings": [
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date ou mention"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge"
+        },
+        {
+          "type": "text",
+          "id": "titre",
+          "label": "Titre"
+        },
+        {
+          "type": "textarea",
+          "id": "texte",
+          "label": "Texte"
+        },
+        {
+          "type": "url",
+          "id": "lien_url",
+          "label": "Lien"
+        },
+        {
+          "type": "text",
+          "id": "lien_label",
+          "label": "Libellé du lien",
+          "default": "Voir en avant-première"
+        }
+      ]
+    },
+    {
+      "type": "raccourci",
+      "name": "Raccourci",
+      "settings": [
+        {
+          "type": "text",
+          "id": "titre",
+          "label": "Titre"
+        },
+        {
+          "type": "text",
+          "id": "texte",
+          "label": "Texte"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Lien"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Le Club — espace membre",
+      "blocks": [
+        { "type": "guide" },
+        { "type": "guide" },
+        { "type": "avant_premiere" },
+        { "type": "raccourci" },
+        { "type": "raccourci" }
+      ]
+    }
+  ]
+}
+{% endschema %}
