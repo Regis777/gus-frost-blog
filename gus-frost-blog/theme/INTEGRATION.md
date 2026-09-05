@@ -339,3 +339,45 @@ la liste.
   automatique sur le corps d'un `.liquid` — une insécable glissée dans un `!=`
   casse la page.
 - **Une seule section « Le Club » par page** (le JS est un singleton par racine).
+
+## 7. Thème en attente de publication : « Dawn 16 (accueil corrigé) »
+
+Brouillon `165262491869`, duplicata du publié `165258068189` + trois corrections.
+**Régis publie.**
+
+**a. Correctif `œ` enfin déployé** — `assets/gf-fonts.css.liquid` dans l'ordre latin-ext
+d'abord (section 6). Mesuré en aperçu sur `/blogs/chiens/chiot-besoin-macher`, qui contient
+un « œ » : **3 fichiers / 71 Ko** au lieu de 4 / 81 Ko. Les 10 Ko annoncés.
+
+**b. Titre de la bannière d'accueil, lisibilité.** Il était en `scheme-1`, vert `#314431`
+sur une photo sombre — illisible, et Fraunces l'aggravait, ses déliés étant plus fins que
+ceux de Montserrat SemiBold. Aucun jeu de couleurs du thème n'a de texte crème et le seul
+à texte clair est le vert acide du logo, trop criard pour une phrase de 80 signes. D'où le
+cartouche :
+
+| Réglage | Avant | Après |
+|---|---|---|
+| bloc Titre → `heading_size` | `h2` (24 px) | `h1` (40 px) |
+| `show_text_box` | `false` | `true` |
+| `color_scheme` | `scheme-1` (vert sur blanc) | `scheme-2` (noir sur beige `#EFE7DA`) |
+| `image_overlay_opacity` | `40` | `50` |
+
+**c. Bouton de remplissage retiré** — section « Pourquoi Gus et Frost ? », bloc
+`button_nBNayp` : le libellé était resté à `Texte du bouton` avec un lien vide.
+Devient `Découvrir nos produits` → `shopify://collections/all`.
+
+> **Piège** : `themeDuplicate` est **asynchrone**. Écrire dans la foulée échoue avec
+> « Le type de section X ne fait pas référence à un fichier de section existant » — les
+> `sections/*.liquid` ne sont pas encore copiés. Attendre `processing: false`.
+
+> **Piège** : sur un template JSON, le `size` rendu par l'API n'est **pas** la taille du
+> contenu (8 002 octets envoyés, 12 144 annoncés). Relire le contenu pour vérifier, pas la
+> taille.
+
+> **Piège MCP** : passer le contenu par `variables` échoue en « expected record, received
+> string » au-delà d'une certaine taille. Utiliser une **chaîne de bloc GraphQL** (`"""`)
+> directement dans la mutation — pas d'échappement, et ça passe.
+
+Après publication : l'actuel publié `165258068189` bascule en brouillon. Il y aura de
+nouveau deux brouillons avec `165203673309` — supprimer le plus ancien.
+
