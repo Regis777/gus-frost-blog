@@ -29,3 +29,45 @@ gus-frost-blog/**/*.zip
 # Rapports de commissions generes par affiliation/calcul_commissions.py :
 # sortie reproductible a partir des commandes Shopify, pas un livrable versionne.
 gus-frost-blog/affiliation/rapports/
+
+# --- Tri des fichiers non suivis, 05/09/2026 ---
+
+# Etat local de Claude Code. Les arbres de travail temporaires se posent DANS le
+# depot ; un worktree abandonne y trainait depuis juillet, a un vieux commit.
+gus-frost-blog/.claude/
+
+# Exports bureautiques. Le depot suit le contenu deployable (.html, .md, .csv) ;
+# ses versions Word et Excel sont des binaires opaques et vivent sur le Drive.
+gus-frost-blog/**/*.docx
+gus-frost-blog/**/*.xlsx
+
+# Restes d'un export de bac a sable deballe au mauvais endroit (le chemin
+# articles/files/mnt/user-data/outputs/... le trahit). Ces check-lists
+# doublonnent images-prompts/cluster-{1,2,3}/CHECKLIST_images.md dans un format
+# anterieur au generateur scripts/image_checklist.py.
+gus-frost-blog/articles/files/
+
+# Prompts de deploiement C5, laisses dans un dossier « temp » : le pipeline a
+# depuis ete formalise dans PROCESS_cluster-production.md et
+# PROMPT-GENERIQUE-CLUSTER.md, qui sont versionnes.
+gus-frost-blog/articles/cluster-5-repas-gamelle/Corrections pour claude code temp/
+
+# Premiere version de C6, abandonnee. Ces 12 articles ont ete remplaces par les
+# 7 sous-clusters chiot (accueil, alimentation, education, mordillements,
+# proprete, sante, socialisation), seuls deployes : aucun de ces slugs n'est
+# dans manifest.csv ni en ligne. Les versionner ferait croire a du contenu
+# vivant et exposerait une session future a redeployer des pages mortes. Ils
+# restent sur le Drive. Nommes un par un, et non par un motif *.html, pour
+# qu'un vrai article depose ici plus tard ne soit pas avale en silence.
+gus-frost-blog/articles/cluster-6-chiot/besoin-mastication-chiot.html
+gus-frost-blog/articles/cluster-6-chiot/chiot-accidents-proprete-solutions.html
+gus-frost-blog/articles/cluster-6-chiot/chiot-guide-premiers-mois.html
+gus-frost-blog/articles/cluster-6-chiot/dentition-chiot-etapes-solutions.html
+gus-frost-blog/articles/cluster-6-chiot/gerer-energie-chiot-jeu-repos.html
+gus-frost-blog/articles/cluster-6-chiot/manipulation-soins-chiot-habituation.html
+gus-frost-blog/articles/cluster-6-chiot/mordillements-chiot-canaliser.html
+gus-frost-blog/articles/cluster-6-chiot/premieres-nuits-chiot-sommeil.html
+gus-frost-blog/articles/cluster-6-chiot/premiers-jours-chiot-adaptation.html
+gus-frost-blog/articles/cluster-6-chiot/preparer-arrivee-chiot-maison.html
+gus-frost-blog/articles/cluster-6-chiot/socialiser-chiot-fenetre-rencontres.html
+gus-frost-blog/articles/cluster-6-chiot/temps-proprete-chiot-delais.html
