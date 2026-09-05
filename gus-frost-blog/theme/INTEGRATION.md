@@ -201,11 +201,32 @@ italique réelle sur les légendes de figure. **Deux fichiers de police téléch
 52 Ko au total** (Fraunces latin 32 Ko + Figtree latin 20 Ko), aucun appel à
 `fonts.shopifycdn.com` ni à `fonts.gstatic.com`, aucun doublon de téléchargement.
 
-## 5. Reste à faire pour passer en live
+## 5. Passage en live — par publication, pas par recopie
 
-Rejouer sur le thème publié les 7 dépôts d'assets **et** les 2 patchs de `theme.liquid`.
+Paire validée par Régis le 05/09/2026. Le thème d'essai a été renommé
+**« Gus & Frost — Dawn 16 (Fraunces + Figtree) »** (id `165258068189`) : il est publiable
+tel quel.
+
+**Pourquoi publier plutôt que rejouer les dépôts sur le thème en ligne ?** Diff md5 mené
+sur `layout/*`, `sections/gf-*`, `snippets/gf-*`, `config/settings_data.json` et
+`assets/gf-*` : **tous les fichiers communs sont identiques**, `settings_data.json`
+compris. Le seul écart est `layout/theme.liquid` plus les 8 assets ajoutés. Publier est
+donc atomique et sans état intermédiaire, là où une recopie fichier par fichier laisse le
+site à moitié basculé.
+
+**Le geste** (impossible par API — le connecteur MCP interdit `themePublish` comme
+l'écriture sur le thème MAIN) : Boutique en ligne → Thèmes → « Gus & Frost — Dawn 16
+(Fraunces + Figtree) » → **Publier**.
+
+Après publication : l'ancien live `165203673309` bascule en brouillon et devient le
+rollback naturel — plus récent et plus proche que `SAUVEGARDE — rollback Dawn 15`.
+Ne pas laisser vivre les deux indéfiniment.
+
 Le réglage `type_header_font` / `type_body_font` du thème peut rester sur Montserrat/Lora :
 il n'est plus lu pour l'affichage, seulement pour des `@font-face` inertes.
+
+> Note : Shopify génère automatiquement un `assets/gf-fonts.css` compilé à côté du
+> `gf-fonts.css.liquid` déposé. C'est normal, et c'est ce fichier que sert le CDN.
 
 ---
 
