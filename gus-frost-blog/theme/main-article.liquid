@@ -148,11 +148,14 @@
             </ul>
           </div>
           <style>
-            .gf-comment-intro{margin:0 0 2.6rem;font-size:1.6rem;line-height:1.6;color:rgba(var(--color-foreground),.85);}
-            .gf-comment-intro p{margin:0 0 1rem;}
+            .gf-comment-intro{margin:0 0 1.8rem;font-size:1.6rem;line-height:1.45;color:rgba(var(--color-foreground),.85);}
+            .gf-comment-intro p{margin:0 0 .6rem;}
             .gf-comment-intro ul{margin:0;padding-left:2.2rem;}
-            .gf-comment-intro li{margin:0 0 .7rem;}
+            .gf-comment-intro li{margin:0 0 .4rem;}
             .gf-comment-intro strong{font-weight:600;color:rgb(var(--color-foreground));}
+            /* G&F, formulaire de commentaire resserre : ecart entre les champs et autour du bouton. */
+            #comments .field{margin-bottom:1.6rem;}
+            #comments .article-template__comment-warning{margin-top:1.2rem;margin-bottom:1.4rem;}
           </style>
           {%- if form.errors -%}
             <div class="form__message" role="alert">
