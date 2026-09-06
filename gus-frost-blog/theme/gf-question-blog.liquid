@@ -122,7 +122,17 @@
   </style>
 
   <script>
-    /* Klaviyo en second canal. Ne doit JAMAIS empecher l'envoi du formulaire. */
+    /* Klaviyo en second canal.
+
+       ON NE TOUCHE PAS A L'ENVOI DU FORMULAIRE. Shopify protege les
+       formulaires de contact par un CAPTCHA dont le jeton est injecte
+       PENDANT l'evenement submit. Intercepter cet evenement puis appeler
+       form.submit() -- qui, lui, ne redeclenche aucun evenement -- fait
+       sauter cette injection : Shopify repond 400 «Missing CAPTCHA token»
+       et l'e-mail ne part jamais. Mesure faite en direct le 06/09/2026.
+
+       Donc : pas de preventDefault. Les appels Klaviyo partent en
+       `keepalive`, ce qui les fait survivre au changement de page. */
     (function () {
       var box = document.getElementById('gf-question');
       if (!box) return;
@@ -135,20 +145,24 @@
       if (!cfg.cle) return;                    /* cle vide : e-mail seul */
 
       var REVISION = '2024-10-15';
-      var parti = false;
 
       function post(chemin, corps) {
-        return fetch('https://a.klaviyo.com/client/' + chemin + '/?company_id=' + encodeURIComponent(cfg.cle), {
-          method: 'POST',
-          headers: { 'content-type': 'application/json', revision: REVISION },
-          body: JSON.stringify(corps)
-        });
+        try {
+          fetch('https://a.klaviyo.com/client/' + chemin + '/?company_id=' + encodeURIComponent(cfg.cle), {
+            method: 'POST',
+            headers: { 'content-type': 'application/json', revision: REVISION },
+            body: JSON.stringify(corps),
+            keepalive: true
+          }).catch(function (err) { console.warn('[question blog] Klaviyo indisponible', err); });
+        } catch (e) {
+          console.warn('[question blog] Klaviyo indisponible', e);
+        }
       }
 
       /* Evenement : question + terme cherche deviennent des proprietes
          consultables dans Klaviyo (Analytics > Metrics > Question blog). */
       function evenement(email, question) {
-        return post('events', {
+        post('events', {
           data: {
             type: 'event',
             attributes: {
@@ -168,8 +182,8 @@
 
       /* Inscription marketing : UNIQUEMENT si la case facultative est cochee. */
       function inscrit(email) {
-        if (!cfg.liste) return Promise.resolve();
-        return post('subscriptions', {
+        if (!cfg.liste) return;
+        post('subscriptions', {
           data: {
             type: 'subscription',
             attributes: {
@@ -185,25 +199,17 @@
         });
       }
 
-      form.addEventListener('submit', function (e) {
-        if (parti) return;                     /* 2e passage : on laisse filer */
+      /* Aucun preventDefault ici : l'envoi Shopify (et son jeton CAPTCHA)
+         suit son cours normal, les appels Klaviyo partent en parallele. */
+      form.addEventListener('submit', function () {
         var champEmail = form.querySelector('[name="contact[email]"]');
         var champTexte = form.querySelector('[name="contact[body]"]');
         if (!champEmail || !champTexte || !champEmail.value || !champTexte.value) return;
 
-        e.preventDefault();
-        parti = true;
+        evenement(champEmail.value, champTexte.value);
 
         var optin = form.querySelector('[name="contact[Inscription newsletter]"]');
-        var taches = [evenement(champEmail.value, champTexte.value)];
-        if (optin && optin.checked) taches.push(inscrit(champEmail.value));
-
-        var fini = false;
-        function suite() { if (fini) return; fini = true; form.submit(); }
-        setTimeout(suite, 2000);               /* filet : l'e-mail part quoi qu'il arrive */
-        Promise.all(taches)
-          .catch(function (err) { console.warn('[question blog] Klaviyo indisponible', err); })
-          .then(suite);
+        if (optin && optin.checked) inscrit(champEmail.value);
       });
     })();
   </script>
