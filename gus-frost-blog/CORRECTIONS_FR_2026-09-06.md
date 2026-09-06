@@ -28,10 +28,11 @@ Les métadonnées ont été propagées de la même façon dans `manifest_chat.cs
 | A2 | Mot « cluster » visible par le lecteur | 4 (chat) | 9 |
 | A3 | Fautes de langue | 5 | 5 |
 | A4 | Espaces insécables / apostrophes | 1 | 1 (voir §4 : défaut inexistant) |
-| A5a | Classe `gf-cas` (chien) | 0 | 0 — **en attente d'arbitrage** |
+| A5a | Classe `gf-cas` (chien) — arbitré par Régis en cours de session | 13 | 22 |
 | A5b | `id="faq"` sur les satellites chien | 12 | 12 |
 | A6 | Métadonnées tronquées ou fausses | 4 | 6 |
-| **Total** | | **26 articles lus, 25 modifiés** | **46** |
+| **Total lot A** | | **26 articles lus, 26 modifiés** | **68** |
+| B — argumentaires, atténuations, arbitrages | voir §7 | 13 | 20 |
 
 Contrôle final sur les 26 corps relus en ligne après écriture : **0 anomalie**
 (0 « votre chien » dans le cluster chat, 0 « cluster » en texte visible, `id="faq"` partout,
@@ -176,7 +177,7 @@ Seule correction retenue, dans l'autre sens : **l'unique apostrophe typographiqu
 
 ### A5a — classe `gf-cas` sur les encadrés « CAS PRATIQUE » chien : **en attente d'arbitrage**
 
-Le constat est exact : les 13 articles chien portent **19 encadrés `<div class="gf-conseil">` dont la première ligne est
+Le constat est exact : les 13 articles chien portent **22 encadrés `<div class="gf-conseil">` dont la première ligne est
 `<strong>CAS PRATIQUE</strong>`**, visuellement identiques aux encadrés « CONSEIL ».
 
 Le prompt conditionnait la correction à une vérification de rendu. Faite en direct sur
@@ -232,7 +233,7 @@ déjà, et qui est corrigée.
 
 ## 6. Points restés ouverts
 
-- **A5a** — classe `gf-cas` sur les 19 encadrés « CAS PRATIQUE » chien (voir §4).
+- **A5a** — classe `gf-cas` sur les 22 encadrés « CAS PRATIQUE » chien (voir §4).
 - **B1** — les 13 CTA « griffoir » du cluster chat, hors sujet.
 - **B2** — les 3 CTA problématiques du cluster chien, dont `echelle-stress-chien-morsure` (chaîne causale
   produit → réduction du risque de morsure, sans source).
@@ -244,3 +245,86 @@ déjà, et qui est corrigée.
 - **B7** — maillage interne en prose.
 - **§7 du prompt** — défauts hors articles (témoignages dupliqués sur les fiches produit, chaînes d'exemple du
   thème, « 19 € OFFERT », alt des infographies) : signalés à Régis, non traités ici.
+
+---
+
+## 7. Lot B — appliqué le 06/09/2026 après arbitrage de Régis
+
+### 7.1 Un aller-retour à consigner : les CTA
+
+J'ai d'abord relevé que les 13 CTA du cluster chat vantent un **griffoir** et les 13 CTA du cluster chien un
+**tapis de fouille**, tous deux absents du catalogue, et j'en ai conclu à un défaut. Sur cette base, Régis a
+validé la réécriture de 26 argumentaires, que j'ai appliquée.
+
+**La conclusion était fausse.** Les articles sont écrits en amont des fiches produit : ces deux produits sont à
+venir, et les CTA les préparent volontairement. Une absence au catalogue à l'instant T n'est pas un défaut du
+texte.
+
+**Les 26 CTA ont été restaurés à l'identique**, en ligne (à partir de `git show 669b3cc:` sur le clone) et dans
+les sources du dépôt (`git checkout --`). Vérification finale : **26/26 identiques au bit près** à leur état
+d'avant la session. Rien d'autre n'a été affecté.
+
+Trois CTA ont ensuite été réécrits, mais pour une raison qui ne tient pas au catalogue — **les produits cités
+y sont conservés** :
+
+| Article | Ce qui posait problème |
+|---|---|
+| `chien-leche-truffe-babines` | le CTA faisait du léchage un outil d'auto-apaisement, quand l'article entier le construit comme un signal d'inconfort |
+| `echelle-stress-chien-morsure` | chaîne causale produit → réduction du risque de morsure, sans source, dans un bloc commercial |
+| `idees-recues-langage-canin` | argumentaire sur le léchage et le reniflage, que le corps de l'article n'aborde pas |
+
+> **À retenir** (consigné en mémoire) : ne jamais compter l'absence d'un produit au catalogue comme une
+> incohérence du corpus. Si un CTA pose problème, l'argumenter sur le raisonnement, pas sur le produit.
+
+### 7.2 Atténuations des affirmations non étayées (11 remplacements, 8 articles)
+
+Principe : modaliser, ne rien supprimer, n'inventer aucune source.
+
+| Article | avant | après |
+|---|---|---|
+| `idees-recues-langage-chat` | accidents domestiques **fréquents** | accidents domestiques **auxquels le chat est exposé** |
+| `miaulements-chat-comprendre` | **Certaines races sont réputées** très bavardes | **Certains chats sont beaucoup plus bavards que d'autres** |
+| `vibrisses-moustaches-chat` | **résout souvent ce petit souci** | **suffit souvent à faire disparaître ce comportement** (×2 : corps + JSON-LD) |
+| `chien-leche-truffe-babines` | **Neuf fois sur dix** | **Le plus souvent** |
+| `idees-recues-langage-canin` | **La plupart des morsures** | **Beaucoup de morsures** |
+| `idees-recues-langage-canin` | révisées **par leurs propres auteurs, qui ont reconnu** | **largement révisées depuis, y compris par les chercheurs qui les avaient menées** |
+| `haletement-tremblements-chien-stress` | **Les recherches… montrent qu'il retentit** | **Un stress prolongé ne se limite pas aux réactions du moment : il retentit aussi** |
+| `baillement-chien-stress` | **l'hypothèse la plus solide relie** | **une autre hypothèse le relie** |
+| `oreilles-chien-emotions` | **au quart de seconde** | **en une fraction de seconde** |
+| `echelle-stress-chien-morsure` | prévient **l'immense majorité des accidents** | prévient **une grande part des accidents** |
+| `echelle-stress-chien-morsure` | **suffisent à prévenir l'immense majorité des morsures** | **préviennent une grande part des morsures** |
+
+Laissés inchangés dans `echelle-stress-chien-morsure` : « presque chaque morsure », « presque toujours fausse »,
+« c'est très rare ». Ils portent sur la lecture des signaux, que l'article documente, pas sur une proportion mesurée.
+
+### 7.3 Arbitrages des contradictions internes (7 articles)
+
+| # | Article | Arbitrage retenu |
+|---|---|---|
+| 1 | `postures-stress-chien` | **Le plus conséquent.** La « posture de prière » (douleur) était décrite exactement comme la révérence de jeu. Ajout du critère qui les sépare : la révérence est brève, souple, rebondissante et suivie de jeu ; la posture de prière est tenue, répétée, sans jeu autour, souvent avec dos voûté, gêne au toucher ou appétit en baisse — et justifie un avis vétérinaire. |
+| 2 | `pupilles-yeux-chat` | Fente **ou** dilatation face à une proie : c'est la dilatation qui est cohérente avec la thèse de l'article (lumière d'abord, émotion ensuite). La phrase sur les pupilles en fente « traduisant la chasse » est réécrite et renvoie à la section du regard de chasse. |
+| 3 | `queue-chat-signification` | « frétillement » et « frémissement » désignaient le même geste avec des lectures opposées. Un seul mot retenu (**frémissement**) et l'opposition devient une précision de contexte. |
+| 4 | `oreilles-chat-emotions` | « oreilles en avion » avait trois périmètres. La définition du corps fait foi (position **latérale**) ; la FAQ **et le JSON-LD** (2 occurrences, corrigées à l'identique) ainsi que la meta s'y alignent. |
+| 5 | `baillement-chien-stress` | Le « quatrième bâillement » apparaissait avant le « troisième ». L'excitation devient un **cas particulier**, les trois annoncés sont préservés. |
+| 6 | `queue-chien-signification` | Quaranta 2007 était « suggéré » / « montré » / « c'est réel ». Aligné sur **« ont montré »** ; la réserve d'usage (« trop subtil pour se lire à l'œil nu »), déjà présente aux trois endroits, suffit. |
+| 7 | `echelle-stress-chien-morsure` | L'excerpt disait « **Aucune** morsure n'arrive sans prévenir » quand le corps explique comment se fabriquent les morsures sans avertissement. C'est l'excerpt qui est corrigé, pas le corps. |
+
+**Non retenu — `oreilles-chien-emotions`, tableau vs section suivante.** À la relecture, ce n'est pas une
+contradiction : la colonne s'intitule déjà « Lecture la plus probable » et trois lignes sur cinq portent leur
+propre réserve. La FAQ (« la position seule ne tranche pas ») confirme le tableau au lieu de le contredire.
+
+### 7.4 Incident de typographie, détecté et corrigé
+
+Le fichier d'édition du lot B avait perdu son caractère U+00A0 (normalisé en espace ordinaire à l'écriture).
+Une atténuation est partie en ligne avec **une espace ordinaire avant un `:`** dans
+`haletement-tremblements-chien-stress`. Détecté par l'audit d'insécables passé sur les 26 corps, corrigé dans
+la foulée. Contrôle final : **0 faute d'insécable sur les 26 articles**.
+
+### 7.5 Vérification finale du lot B
+
+Sur les 26 corps relus en ligne après toutes les écritures :
+
+- CTA identiques à leur état d'avant la session : **26/26** ;
+- lot A intact : 0 « votre chien » côté chat, 0 « cluster » visible, `id="faq"` partout, `gf-cas` sur les 13 articles chien ;
+- typographie : **0 violation** ;
+- JSON-LD : 1 par article, valide, et **chaque question comme chaque réponse retrouvée à l'identique dans le corps**.
