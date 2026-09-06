@@ -101,22 +101,35 @@ def main():
         sections.extend(blocs_hub + blocs_pilier)  # le hub ouvre son cluster
     n_clu, n_art = len(sections), len(vus)
 
+    # NB Dawn : html{font-size:62.5%} -> 1rem = 10px. Les tailles ci-dessous sont
+    # donc x10 (2rem = 20px). C'est ce piege qui rendait le titre de pilier
+    # (1.25rem = 12.5px) PLUS PETIT que ses satellites (body = 1.5rem = 15px) et le
+    # champ de recherche illisible (1rem = 10px). Couleurs : creme #EFE7DA
+    # (scheme-2 du theme) sur page blanche, encre vert profond #314431 (scheme-1),
+    # contraste 8,4:1.
     style = (
         '<style>\n'
         '  .gf-hub-intro{max-width:60ch;margin:0 auto 2rem;text-align:center;}\n'
         '  .gf-hub-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;}\n'
         '  @media (min-width:750px){.gf-hub-grid{grid-template-columns:1fr 1fr;gap:2rem;}}\n'
-        '  .gf-hub-cluster{border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:1.2rem 1.4rem;background:rgb(var(--color-background));}\n'
-        '  .gf-hub-pilier{font-size:1.25rem;margin:0 0 .6rem;line-height:1.3;}\n'
+        '  .gf-hub-cluster{border:1px solid rgba(49,68,49,.14);border-radius:14px;'
+        'padding:1.8rem 2rem;background:#efe7da;}\n'
+        '  .gf-hub-pilier{font-size:2rem;font-weight:600;margin:0 0 1rem;line-height:1.25;}\n'
         '  .gf-hub-pilier a{text-decoration:none;}\n'
-        '  .gf-hub-list{list-style:none;margin:0;padding:0;}\n'
-        '  .gf-hub-list li{padding:.25rem 0;border-top:1px solid rgba(0,0,0,.06);}\n'
-        '  .gf-hub-list li:first-child{border-top:0;}\n'
+        '  .gf-hub-list{list-style:none;margin:0;padding:0;font-size:1.55rem;}\n'
+        '  .gf-hub-list li{padding:.7rem 0;border-top:1px solid rgba(49,68,49,.16);line-height:1.4;}\n'
+        '  .gf-hub-list li:first-child{border-top:0;padding-top:0;}\n'
         '  .gf-hub-list a{text-decoration:none;}\n'
         '  .gf-hub-list a:hover,.gf-hub-pilier a:hover{text-decoration:underline;}\n'
-        '  .gf-hub-search{display:flex;gap:.5rem;max-width:34rem;margin:0 auto 2rem;}\n'
-        '  .gf-hub-search input[type=search]{flex:1;padding:.7rem 1rem;font-size:1rem;border:1px solid rgba(0,0,0,.2);border-radius:999px;background:rgb(var(--color-background));color:inherit;}\n'
-        '  .gf-hub-search button{padding:.7rem 1.3rem;font-size:1rem;border:0;border-radius:999px;cursor:pointer;background:rgb(var(--color-foreground,26 26 26));color:rgb(var(--color-background,255 255 255));}\n'
+        '  .gf-hub-search{display:flex;gap:.8rem;max-width:44rem;margin:0 auto 3rem;}\n'
+        '  .gf-hub-search input[type=search]{flex:1;padding:1.2rem 1.8rem;font-size:1.6rem;'
+        'border:1px solid rgba(49,68,49,.3);border-radius:999px;'
+        'background:rgb(var(--color-background));color:inherit;}\n'
+        '  .gf-hub-search input[type=search]::placeholder{opacity:.65;}\n'
+        '  .gf-hub-search button{padding:1.2rem 2.2rem;font-size:1.6rem;font-weight:500;'
+        'border:0;border-radius:999px;cursor:pointer;white-space:nowrap;'
+        'background:rgb(var(--color-foreground,26 26 26));'
+        'color:rgb(var(--color-background,255 255 255));}\n'
         '  .gf-hub-search button:hover{opacity:.9;}\n'
         '</style>'
     )
