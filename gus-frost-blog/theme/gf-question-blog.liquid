@@ -45,15 +45,20 @@
             <p class="gf-question__erreur" role="alert">{{ form.errors | default_errors }}</p>
           {%- endif -%}
 
-          {%- comment -%} Contexte de la recherche : repris tel quel dans l’e-mail recu. {%- endcomment -%}
-          <input type="hidden" name="contact[Recherche]" value="{{ terme }}">
-          <input type="hidden" name="contact[Résultats trouvés]" value="{{ search.results_count }}">
-          <input type="hidden" name="contact[Origine]" value="Page de résultats de recherche">
-
           <div class="gf-question__champ">
             <label for="GfQuestionBody">{{ section.settings.label_question }} <span aria-hidden="true">*</span></label>
             <textarea id="GfQuestionBody" name="contact[body]" rows="4" required placeholder="{{ section.settings.exemple | escape }}">{{ form.body }}</textarea>
           </div>
+
+          {%- comment -%}
+            Contexte de la recherche, repris tel quel dans l’e-mail recu.
+            PLACES ICI EXPRES : Shopify liste les champs dans l’ordre du DOM.
+            Juste apres le corps, l’e-mail se lit donc « la question, puis le
+            terme cherche, puis qui l’a posee » — l’ordre utile a la lecture.
+          {%- endcomment -%}
+          <input type="hidden" name="contact[Recherche]" value="{{ terme }}">
+          <input type="hidden" name="contact[Résultats trouvés]" value="{{ search.results_count }}">
+          <input type="hidden" name="contact[Origine]" value="Page de résultats de recherche">
 
           <div class="gf-question__champ">
             <label for="GfQuestionEmail">{{ section.settings.label_email }} <span aria-hidden="true">*</span></label>
