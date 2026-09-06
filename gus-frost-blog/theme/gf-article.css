@@ -118,3 +118,36 @@
   .gf-carnet-promo { gap: 1rem; padding: 1.3rem 1.4rem; }
   .gf-carnet-promo-btn { width: 100%; text-align: center; }
 }
+
+/* ---------- Encadrés des articles chat (CH1–CH12) ---------- */
+/* Le gabarit chat écrit <p class="gf-encadre-titre"> pour le libellé et une boîte
+   <div class="gf-cas"> « nue » (sans .gf-box). Ces règles les stylent sans toucher
+   au markup C5 chien (.gf-box.gf-cas, plus spécifique) via :not(.gf-box). */
+.gf-article .gf-encadre-titre {
+  display: block;
+  margin: 0 0 0.5rem;
+  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  color: #314431;
+}
+.gf-article .gf-cas .gf-encadre-titre { color: #c16b47; }
+
+.gf-article .gf-cas:not(.gf-box) {
+  background: #fff;
+  border: 1px solid #e3ddcf;
+  border-left: 4px solid #c16b47;
+  border-radius: 8px;
+  padding: 1.1rem 1.3rem 1.1rem 1.4rem;
+  margin: 1.8rem 0;
+}
+.gf-article .gf-cas:not(.gf-box) p:last-child { margin-bottom: 0; }
+
+/* ---------- Sources et références (bloc gf-refs, fin d'article, sans lien sortant) ---------- */
+.gf-refs { background: #faf8f3; border: 1px solid #e3ddcf; border-radius: 8px; padding: 1.1rem 1.5rem; margin: 2.4rem 0 0; font-size: 1.45rem; line-height: 1.5; color: #5c6a5f; }
+.gf-refs h2 { border: none; margin: 0 0 0.6rem; padding: 0; font-size: 1.5rem; color: #314431; letter-spacing: 0.05em; text-transform: uppercase; }
+.gf-refs ul { margin: 0; padding-left: 1.5rem; }
+.gf-refs li { margin: 0.4rem 0; }
+.gf-refs em { font-style: italic; }
