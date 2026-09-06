@@ -797,9 +797,19 @@
     }
   };
 
+  /* Remplace l'affichage natif du nom de fichier, que l'on vient de masquer. */
+  function majNomPhoto(nom) {
+    var span = racine && racine.querySelector('[data-gfc-fnom]');
+    if (span) span.textContent = nom || 'Aucune photo choisie';
+  }
+
   function champHtml(c, val) {
     var id = 'gfc-f-' + c.k;
-    var lab = '<label for="' + id + '">' + c.l + (c.requis ? '&nbsp;*' : '') + '</label>';
+    // Champ photo : le seul <label for> du groupe est le bouton de choix du
+    // fichier, sinon l'input se retrouve avec deux étiquettes concurrentes.
+    var lab = c.t === 'photo'
+      ? '<span class="gfc-field-lab">' + c.l + '</span>'
+      : '<label for="' + id + '">' + c.l + (c.requis ? '&nbsp;*' : '') + '</label>';
     var note = c.note ? '<div class="gfc-field-note">' + c.note + '</div>' : '';
     var corps;
 
@@ -812,10 +822,18 @@
       corps = '<textarea id="' + id + '" name="' + c.k + '">' + esc(val || '') + '</textarea>';
     } else if (c.t === 'photo') {
       var apercu = photoEnCours || '';
+      // L'input[type=file] natif affiche « Choose file / No file chosen » dans la
+      // langue du NAVIGATEUR, pas celle de la page, et aucun texte ni CSS ne peut
+      // le traduire. On le masque visuellement (il reste focusable au clavier) et
+      // on rend nous-mêmes le bouton et l'état, en français.
       corps = '<div class="gfc-photo-pick">' +
         '<img class="gfc-photo-prev" data-gfc-prev alt="" src="' + (apercu || 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==') + '">' +
-        '<div><input type="file" id="' + id + '" name="' + c.k + '" accept="image/*" data-gfc-photo>' +
-        (apercu ? '<button type="button" class="gfc-btn gfc-btn--sm gfc-btn--danger" data-act="photo-clear" style="margin-top:8px">Retirer la photo</button>' : '') +
+        '<div class="gfc-photo-act">' +
+          '<input type="file" class="gfc-file-input" id="' + id + '" name="' + c.k + '" accept="image/*" data-gfc-photo>' +
+          '<label class="gfc-btn gfc-btn--sm gfc-file-lab" for="' + id + '">Choisir une photo…</label>' +
+          '<span class="gfc-file-nom" data-gfc-fnom>' + (apercu ? 'Photo enregistrée' : 'Aucune photo choisie') + '</span>' +
+          '<button type="button" class="gfc-btn gfc-btn--sm gfc-btn--danger" data-act="photo-clear"' +
+            (apercu ? '' : ' hidden') + '>Retirer la photo</button>' +
         '</div></div>';
     } else if (c.t === 'number') {
       // Volontairement type="text" : un input[type=number] renvoie une valeur VIDE
@@ -1600,7 +1618,10 @@
           photoEnCours = null;
           var prev = racine.querySelector('[data-gfc-prev]');
           if (prev) prev.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-          el.remove();
+          var champPhoto = racine.querySelector('[data-gfc-photo]');
+          if (champPhoto) champPhoto.value = '';
+          majNomPhoto('');
+          el.hidden = true;
           break;
         case 'goto-sante': animalActif = id; ongletActif = 'sante'; rendu(); break;
         case 'rappel-fait': basculeRappel(id, true); break;
@@ -1638,6 +1659,9 @@
           photoEnCours = dataUrl;
           var prev = racine.querySelector('[data-gfc-prev]');
           if (prev) prev.src = dataUrl;
+          majNomPhoto(file.name);
+          var retire = racine.querySelector('[data-act="photo-clear"]');
+          if (retire) retire.hidden = false;
         }).catch(function (e) { toast(esc(e.message)); });
       }
       if (ev.target.matches('[data-gfc-import]')) {
