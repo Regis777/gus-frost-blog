@@ -107,6 +107,17 @@ def main():
     # champ de recherche illisible (1rem = 10px). Couleurs : creme #EFE7DA
     # (scheme-2 du theme) sur page blanche, encre vert profond #314431 (scheme-1),
     # contraste 8,4:1.
+    # 2e piege : le scheme-1 pose `--color-link: 225,192,137` (#E1C089, sable) et
+    # Dawn l'applique a TOUT `a` via `color:rgba(var(--color-link),var(--alpha-link))`
+    # avec `--alpha-link:.85`. Les titres et les liens d'articles n'heritaient donc
+    # jamais de l'encre : illisibles sur creme (~1,3:1). D'ou le `color` explicite
+    # ci-dessous sur `.gf-hub-pilier a` et `.gf-hub-list a` -> 8,5:1.
+    # 3e piege (mobile) : `min-width:0` sur le champ de recherche. Un `input` est
+    # un element remplace : en flex il garde un `min-width:auto` calé sur son
+    # attribut `size` (~233px) et refuse de retrecir malgre `flex:1`. Avec le
+    # bouton passe a 127px, la somme depassait les 345px d'un mobile 375px et la
+    # page defilait horizontalement. Invisible avant, le bouton a 10px ne faisant
+    # que 85px : c'est l'agrandissement lui-meme qui declenchait le debordement.
     style = (
         '<style>\n'
         '  .gf-hub-intro{max-width:60ch;margin:0 auto 2rem;text-align:center;}\n'
@@ -115,15 +126,15 @@ def main():
         '  .gf-hub-cluster{border:1px solid rgba(49,68,49,.14);border-radius:14px;'
         'padding:1.8rem 2rem;background:#efe7da;}\n'
         '  .gf-hub-pilier{font-size:2rem;font-weight:600;margin:0 0 1rem;line-height:1.25;}\n'
-        '  .gf-hub-pilier a{text-decoration:none;}\n'
+        '  .gf-hub-pilier a{text-decoration:none;color:rgb(49,68,49);}\n'
         '  .gf-hub-list{list-style:none;margin:0;padding:0;font-size:1.55rem;}\n'
         '  .gf-hub-list li{padding:.7rem 0;border-top:1px solid rgba(49,68,49,.16);line-height:1.4;}\n'
         '  .gf-hub-list li:first-child{border-top:0;padding-top:0;}\n'
-        '  .gf-hub-list a{text-decoration:none;}\n'
+        '  .gf-hub-list a{text-decoration:none;color:rgb(49,68,49);}\n'
         '  .gf-hub-list a:hover,.gf-hub-pilier a:hover{text-decoration:underline;}\n'
         '  .gf-hub-search{display:flex;gap:.8rem;max-width:44rem;margin:0 auto 3rem;}\n'
-        '  .gf-hub-search input[type=search]{flex:1;padding:1.2rem 1.8rem;font-size:1.6rem;'
-        'border:1px solid rgba(49,68,49,.3);border-radius:999px;'
+        '  .gf-hub-search input[type=search]{flex:1;min-width:0;padding:1.2rem 1.8rem;'
+        'font-size:1.6rem;border:1px solid rgba(49,68,49,.3);border-radius:999px;'
         'background:rgb(var(--color-background));color:inherit;}\n'
         '  .gf-hub-search input[type=search]::placeholder{opacity:.65;}\n'
         '  .gf-hub-search button{padding:1.2rem 2.2rem;font-size:1.6rem;font-weight:500;'
@@ -131,6 +142,9 @@ def main():
         'background:rgb(var(--color-foreground,26 26 26));'
         'color:rgb(var(--color-background,255 255 255));}\n'
         '  .gf-hub-search button:hover{opacity:.9;}\n'
+        '  @media (max-width:479px){.gf-hub-search{gap:.6rem;}'
+        '.gf-hub-search input[type=search]{padding:1.2rem 1.4rem;}'
+        '.gf-hub-search button{padding:1.2rem 1.6rem;}}\n'
         '</style>'
     )
     search = (
