@@ -148,10 +148,21 @@
 /* ---------- Sources et références (bloc gf-refs, fin d'article, sans lien sortant) ---------- */
 .gf-refs { background: #faf8f3; border: 1px solid #e3ddcf; border-radius: 8px; padding: 1.1rem 1.5rem; margin: 2.4rem 0 0; font-size: 1.45rem; line-height: 1.5; color: #5c6a5f; }
 .gf-refs h2 { border: none; margin: 0 0 0.6rem; padding: 0; font-size: 1.5rem; color: #314431; letter-spacing: 0.05em; text-transform: uppercase; }
-/* Le thème colore les H2 d'article via une règle inline « #shopify-section-… .article-template h2 { color … !important } »
-   (id + !important) qu'aucune classe ne peut battre. En cascade, un !important placé dans une @layer l'emporte sur un
-   !important hors couche, quelle que soit la spécificité : c'est ce qui rend le titre vert. */
-@layer gf-refs { .gf-refs h2 { color: #314431 !important; } }
 .gf-refs ul { margin: 0; padding-left: 1.5rem; }
 .gf-refs li { margin: 0.4rem 0; }
 .gf-refs em { font-style: italic; }
+
+/* ---------- Haut de page d'article : pas de bande blanche ---------- */
+/* Le bloc `featured_image` a ete retire du gabarit d'article le 06/09/2026 : la
+   photo a la une s'affichait en banniere ET dans le corps, soit deux fois.
+   Or Dawn pose `.article-template > :first-child:not(.article-template__hero-container)
+   { margin-top: 5rem }` — le `:not()` montre que la mise en page compte sur la
+   banniere pour coller au bandeau. Sans elle, cette marge s'applique et, faute
+   de padding ou de bordure sur `.article-template`, elle s'echappe du conteneur
+   (fusion de marges) : le fond creme demarrait 50px plus bas, laissant une bande
+   blanche sous l'en-tete. On rend la marge interne au conteneur et on l'annule.
+   `!important` necessaire : section-blog-post.css de Dawn est chargee APRES
+   cette feuille (lien pose dans la section, pas dans le head). */
+.article-template { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+.article-template > :first-child:not(.article-template__hero-container) { margin-top: 0 !important; }
+.article-template > :last-child { margin-bottom: 0 !important; }
