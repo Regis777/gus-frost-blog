@@ -5,8 +5,10 @@ Remonte la figure de l'image a la une en TETE du corps des articles.
 
 Contexte : le 06/09/2026, la banniere du theme a ete retiree du gabarit
 d'article (la meme photo s'affichait deux fois, cf. memoire hero-image-dupliquee).
-Consequence pour le blog chats : sa photo est posee 400 a 860 mots plus bas dans
-le corps, donc l'article ouvre sur un long pave de texte. On la remonte.
+Sans banniere, l'article s'ouvre sur ce que contient son corps — or la photo y
+etait souvent posee tres bas, donc l'article demarrait sur un pave de texte.
+Mesure du 06/09/2026 : mediane a 0 mot pour chats (apres passage), 191 mots pour
+chiens, dont 115 articles a plus de 300 mots et un maximum a 1404.
 
 C'est un DEPLACEMENT, jamais une insertion : on retire le bloc existant et on
 replace exactement la meme chaine en tete. La legende suit sa photo.
@@ -18,9 +20,9 @@ photo apparait en `hero-x.png` (corps, /files/) et
 fait croire a deux images differentes. D'ou `cle()` ci-dessous.
 
 Usage :
-  python deploy/remonter_hero_chats.py --blog chats                        # dry-run
-  python deploy/remonter_hero_chats.py --blog chats --slug <slug> --apply  # palier
-  python deploy/remonter_hero_chats.py --blog chats --backup sauv.json --apply
+  python deploy/remonter_hero.py --blog chiens                        # dry-run
+  python deploy/remonter_hero.py --blog chiens --slug <slug> --apply  # palier
+  python deploy/remonter_hero.py --blog chiens --backup sauv.json --apply
 """
 import argparse, json, os, re, sys, time, urllib.request
 
