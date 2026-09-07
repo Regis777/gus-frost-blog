@@ -272,6 +272,41 @@ d'articles) — 235 liens vers `/collections/stress`, 220 vers `/collections/cha
 
 ---
 
+## 6 bis. Thème d'aperçu — dépôt du 07/09/2026
+
+Thème **165320982749**, « APERCU — JSON-LD produit (ne pas publier) », dupliqué
+depuis le thème en ligne. Le thème publié n'est pas touché.
+
+Les quatre fichiers y sont déposés et vérifiés **par empreinte MD5**, à l'octet
+près. Dépôt fait par `body: {type: URL}` vers le dépôt GitHub, SHA épinglé : une
+chaîne de bloc GraphQL altère les insécables d'un gros Liquid.
+
+Aperçu : `https://gusetfrost.fr/?preview_theme_id=165320982749` — page servie en
+200, **aucune erreur Liquid**. `layout/theme.liquid`, le fichier à risque, est sain.
+
+### Ce que le rendu réel a révélé, et que la simulation ne pouvait pas voir
+
+Le tapis a été remis en ligne deux minutes pour charger sa fiche sur le thème
+d'aperçu. Résultat : **un seul bloc `Product`**, avec `image`, `description`,
+`offers` (15), `shippingDetails`, `hasMerchantReturnPolicy` — et **aucun balisage
+d'avis**. Puis produit repassé en brouillon.
+
+Un défaut réel est apparu là : **l'image de tête sortait deux fois.** Le
+dédoublonnage comparait `media.preview_image.id` à `product.featured_image.id`,
+qui ne désignent pas la même chose. Le simulateur hors ligne ne pouvait pas le
+voir, puisqu'il parcourt les médias une seule fois. Corrigé : comparaison sur
+l'URL rendue, parcours porté à 12 médias.
+
+Deuxième écart, sans gravité : Shopify rend les images sur
+`https://gusetfrost.fr/cdn/shop/files/…` et non `cdn.shopify.com`. C'est le domaine
+canonique, c'est mieux ainsi.
+
+**Le fragment corrigé est déposé et son empreinte est conforme, mais son rendu
+n'a pas été revérifié** — il faudrait remettre une fiche en ligne une seconde
+fois. À faire sur la première vraie fiche produit, avant tout déploiement.
+
+---
+
 ## 7. Ce que le test des résultats enrichis devrait afficher
 
 Sur une fiche avec image et description :
