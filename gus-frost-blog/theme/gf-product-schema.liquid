@@ -68,12 +68,20 @@
   assign gf_marque = product.vendor | default: shop.name
   assign gf_annee = 'now' | date: '%Y' | plus: 1
 -%}
+{%- comment -%}
+  Dedoublonnage par URL, et non par `id` : `product.featured_image.id` et
+  `media.preview_image.id` ne designent pas la meme chose, si bien qu'une
+  comparaison d'id laissait l'image de tete sortir DEUX fois (constate sur le
+  rendu reel du 07/09/2026, invisible en simulation).
+{%- endcomment -%}
 {%- capture gf_images -%}
   {%- if gf_img != blank -%}
-    {{- gf_img | image_url: width: 1946 | prepend: 'https:' | json -}}
-    {%- for media in product.media limit: 8 -%}
-      {%- if media.preview_image != blank and media.preview_image.id != gf_img.id -%}
-        ,{{ media.preview_image | image_url: width: 1946 | prepend: 'https:' | json }}
+    {%- assign gf_url_tete = gf_img | image_url: width: 1946 | prepend: 'https:' -%}
+    {{- gf_url_tete | json -}}
+    {%- for media in product.media limit: 12 -%}
+      {%- if media.preview_image != blank -%}
+        {%- assign gf_url = media.preview_image | image_url: width: 1946 | prepend: 'https:' -%}
+        {%- unless gf_url == gf_url_tete -%},{{ gf_url | json }}{%- endunless -%}
       {%- endif -%}
     {%- endfor -%}
   {%- endif -%}
