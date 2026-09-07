@@ -1,0 +1,163 @@
+{%- comment -%}
+  Section « Avis produit » — Gus & Frost
+  Affiche les avis clients liés à la fiche produit via le metafield custom.avis
+  (liste de références vers le metaobject « avis »). Affichage seul (MVP).
+{%- endcomment -%}
+
+{%- liquid
+  assign avis_list = product.metafields.custom.avis.value
+  assign total = 0
+  assign count = 0
+  for avis in avis_list
+    assign n = avis.note.value | plus: 0
+    assign total = total | plus: n
+    assign count = count | plus: 1
+  endfor
+  assign average = 0
+  if count > 0
+    assign average = total | times: 1.00 | divided_by: count
+  endif
+  assign avg_pct = average | times: 20
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<style>
+  .gf-avis__wrapper { max-width: 78rem; margin: 0 auto; }
+  .gf-avis__heading { margin: 0 0 1.5rem; text-align: center; }
+  .gf-avis__summary {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: 1.2rem; margin-bottom: 3rem; padding-bottom: 2.4rem;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.12);
+  }
+  .gf-avis__avg-num { font-size: 4.2rem; font-weight: 700; line-height: 1; }
+  .gf-avis__avg-den { font-size: 1.6rem; opacity: 0.55; }
+  .gf-avis__count { font-size: 1.5rem; opacity: 0.8; }
+  .gf-stars {
+    position: relative; display: inline-block; white-space: nowrap;
+    line-height: 1; letter-spacing: 0.15em; font-size: 2rem;
+  }
+  .gf-stars--sm { font-size: 1.6rem; }
+  .gf-stars__bg { color: rgba(var(--color-foreground), 0.2); }
+  .gf-stars__fg {
+    position: absolute; top: 0; left: 0; overflow: hidden;
+    color: #f5b301; width: var(--pct, 0%);
+  }
+  .gf-avis__list { display: grid; gap: 2rem; }
+  .gf-avis__item {
+    padding: 2rem; border: 1px solid rgba(var(--color-foreground), 0.12);
+    border-radius: 1rem;
+  }
+  .gf-avis__item-head {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 0.8rem 1.2rem; margin-bottom: 0.8rem;
+  }
+  .gf-avis__badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 1.2rem; font-weight: 600; color: #1a7f4b;
+    background: rgba(26, 127, 75, 0.1); padding: 0.2rem 0.8rem; border-radius: 2rem;
+  }
+  .gf-avis__item-title { font-size: 1.7rem; font-weight: 700; margin: 0 0 0.6rem; }
+  .gf-avis__meta { font-size: 1.3rem; opacity: 0.65; margin-left: auto; }
+  .gf-avis__body { font-size: 1.5rem; line-height: 1.6; margin: 0; }
+  .gf-avis__empty { text-align: center; opacity: 0.7; font-size: 1.5rem; }
+</style>
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="gf-avis__wrapper">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="gf-avis__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+
+      {%- if count > 0 -%}
+        <div class="gf-avis__summary">
+          <span class="gf-avis__avg-num">{{ average | round: 1 | replace: '.', ',' }}</span>
+          <span class="gf-avis__avg-den">/&nbsp;5</span>
+          <span class="gf-stars" style="--pct: {{ avg_pct }}%;" aria-hidden="true">
+            <span class="gf-stars__bg">★★★★★</span>
+            <span class="gf-stars__fg">★★★★★</span>
+          </span>
+          <span class="gf-avis__count">{{ count }}&nbsp;avis</span>
+        </div>
+
+        <div class="gf-avis__list">
+          {%- for avis in avis_list -%}
+            {%- assign note = avis.note.value | plus: 0 -%}
+            {%- assign item_pct = note | times: 20 -%}
+            <div class="gf-avis__item">
+              <div class="gf-avis__item-head">
+                <span class="gf-stars gf-stars--sm" style="--pct: {{ item_pct }}%;" aria-label="{{ note }} sur 5">
+                  <span class="gf-stars__bg">★★★★★</span>
+                  <span class="gf-stars__fg">★★★★★</span>
+                </span>
+                {%- if section.settings.show_verified_badge and avis.verifie.value -%}
+                  <span class="gf-avis__badge">✔&nbsp;Achat vérifié</span>
+                {%- endif -%}
+                {%- if avis.date_avis.value != blank -%}
+                  <span class="gf-avis__meta">{{ avis.date_avis.value | date: '%d/%m/%Y' }}</span>
+                {%- endif -%}
+              </div>
+              {%- if avis.titre.value != blank -%}
+                <p class="gf-avis__item-title">{{ avis.titre.value | escape }}</p>
+              {%- endif -%}
+              <p class="gf-avis__body">{{ avis.contenu.value | newline_to_br }}</p>
+              {%- if avis.auteur.value != blank -%}
+                <p class="gf-avis__meta" style="margin-left:0;margin-top:1rem;">— {{ avis.auteur.value | escape }}</p>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%}
+          Le bloc JSON-LD qui se trouvait ici emettait un second "@type": "Product"
+          reduit a name + aggregateRating + review : sans image, sans description et
+          sans offers. Sur le gabarit product.tapis-lechage (qui n'inclut pas
+          main-product) c'etait le SEUL balisage produit de la page — d'ou le
+          « champ image manquant » critique remonte par la Search Console.
+
+          Il publiait de surcroit trois avis de DEMONSTRATION comme s'ils etaient
+          reels, ce que les regles Google interdisent.
+
+          L'affichage visuel des avis, lui, est conserve tel quel ci-dessus. Le
+          balisage des avis sera rebranche dans snippets/gf-product-schema.liquid
+          le jour ou de vrais avis clients existeront.
+        {%- endcomment -%}
+
+      {%- else -%}
+        {%- if request.design_mode -%}
+          <p class="gf-avis__empty">Aucun avis lié à ce produit pour l'instant. Ajoute des avis dans <strong>Contenu → Métaobjets → Avis produit</strong>, puis relie-les via le champ <strong>Avis clients</strong> de la fiche produit.</p>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Avis produit",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Avis clients" },
+    { "type": "checkbox", "id": "show_verified_badge", "label": "Afficher le badge « Achat vérifié »", "default": true },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Jeu de couleurs", "default": "background-1" },
+    { "type": "header", "content": "Marges" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Marge haute", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Marge basse", "default": 48 }
+  ],
+  "presets": [ { "name": "Avis produit" } ],
+  "enabled_on": { "templates": ["product"] }
+}
+{% endschema %}

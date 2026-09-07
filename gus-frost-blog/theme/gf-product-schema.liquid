@@ -1,0 +1,186 @@
+{%- comment -%}
+  gf-product-schema.liquid — balisage JSON-LD « Product » du site.
+
+  SOURCE UNIQUE. Ce fragment est appele une seule fois, depuis layout/theme.liquid,
+  sous condition `request.page_type == 'product'`. Il couvre donc les cinq gabarits
+  de fiche produit (defaut, conversion, monoproduit, tapis-lechage, produit-digital),
+  y compris ceux qui n'incluent pas la section main-product.
+
+  Ne jamais ajouter un second bloc "@type": "Product" ailleurs dans le theme :
+  deux blocs concurrents produisent exactement les erreurs Search Console de
+  septembre 2026 (champ image manquant, description manquante).
+
+  Avis : aucun balisage review / aggregateRating n'est emis ici, faute de vrais
+  avis clients. Point de branchement indique plus bas.
+{%- endcomment -%}
+
+{%- if product != blank -%}
+{%- liquid
+  # ------------------------------------------------------------------ reglages
+  # Livraison et retours dans le balisage. Passer a false une fois Google
+  # Merchant Center configure : les reglages du compte priment alors, et ce
+  # balisage n'a plus qu'a decrire le produit.
+  assign gf_livraison_retours = true
+
+  # Livraison — zone France + Monaco du « Profil general » (relevee le 07/09/2026).
+  # TODO a confirmer : 8,80 € est le tarif SOUS le seuil de gratuite (50 €). Le seuil
+  # lui-meme n'est pas exprimable en schema.org ; on annonce donc le tarif le plus
+  # eleve, jamais sous-estime. C'est l'argument central en faveur de Merchant Center.
+  assign gf_port_montant = '8.80'
+  assign gf_port_pays = 'FR'
+
+  # TODO a confirmer : delais valables pour un article en stock, expedie de France
+  # (politique d'expedition, sections 3 et 4). Un article reapprovisionne depuis la
+  # Chine part sur 12 a 25 jours : ne pas laisser ce balisage tel quel sur un
+  # produit en dropshipping.
+  assign gf_prepa_min = 1
+  assign gf_prepa_max = 2
+  assign gf_transit_min = 2
+  assign gf_transit_max = 6
+
+  # Retours — politique de remboursement du 02/09/2026 (sections 3 et 5).
+  assign gf_retour_jours = 14
+
+  # ------------------------------------------------------------------- donnees
+  assign gf_devise = cart.currency.iso_code | default: 'EUR'
+  assign gf_variante = product.selected_or_first_available_variant
+  assign gf_base = shop.url | append: product.url
+
+  if gf_variante.featured_media.preview_image != blank
+    assign gf_img = gf_variante.featured_media.preview_image
+  else
+    assign gf_img = product.featured_image
+  endif
+
+  # Description : `strip_html` seul colle les mots des listes (</li><li>) et laisse
+  # les entites HTML telles quelles (« Gus &amp; Frost » partirait ainsi dans le
+  # balisage). D'ou l'espace insere avant chaque balise, puis le decodage des
+  # entites — `&amp;` en dernier, sinon `&amp;lt;` se decoderait deux fois.
+  assign gf_desc = product.description | replace: '<', ' <' | strip_html | strip_newlines
+  assign gf_desc = gf_desc | replace: '&nbsp;', ' ' | replace: '&#39;', "'" | replace: '&quot;', '"'
+  assign gf_desc = gf_desc | replace: '&lt;', '<' | replace: '&gt;', '>' | replace: '&amp;', '&'
+  assign gf_desc = gf_desc | replace: '   ', ' ' | replace: '  ', ' ' | replace: '  ', ' '
+  # L'espace insere avant les balises laisse « Frost .» quand la balise precedait
+  # un point. On ne recolle QUE la ponctuation basse : les espaces avant : ; ! ? »
+  # du corpus sont des insecables U+00A0, que ces replace ne touchent pas.
+  assign gf_desc = gf_desc | replace: ' .', '.' | replace: ' ,', ',' | replace: ' )', ')' | strip | truncate: 5000
+
+  assign gf_marque = product.vendor | default: shop.name
+  assign gf_annee = 'now' | date: '%Y' | plus: 1
+-%}
+{%- capture gf_images -%}
+  {%- if gf_img != blank -%}
+    {{- gf_img | image_url: width: 1946 | prepend: 'https:' | json -}}
+    {%- for media in product.media limit: 8 -%}
+      {%- if media.preview_image != blank and media.preview_image.id != gf_img.id -%}
+        ,{{ media.preview_image | image_url: width: 1946 | prepend: 'https:' | json }}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "@id": {{ gf_base | append: '#product' | json }},
+  "name": {{ product.title | json }},
+  "url": {{ gf_base | json }}
+  {%- if gf_images != blank -%},
+  "image": [{{ gf_images }}]
+  {%- endif -%}
+  {%- if gf_desc != blank -%},
+  "description": {{ gf_desc | json }}
+  {%- endif -%}
+  {%- if gf_marque != blank -%},
+  "brand": { "@type": "Brand", "name": {{ gf_marque | json }} }
+  {%- endif -%}
+  {%- if product.type != blank -%},
+  "category": {{ product.type | json }}
+  {%- endif -%}
+  {%- if gf_variante.sku != blank -%},
+  "sku": {{ gf_variante.sku | json }},
+  "mpn": {{ gf_variante.sku | json }}
+  {%- endif -%}
+  {%- if gf_variante.barcode != blank and gf_variante.barcode.size == 13 -%},
+  "gtin13": {{ gf_variante.barcode | json }}
+  {%- endif -%},
+  "offers": [
+    {%- for variante in product.variants limit: 25 -%}
+    {
+      "@type": "Offer",
+      "@id": {{ gf_base | append: '?variant=' | append: variante.id | append: '#offer' | json }},
+      "url": {{ gf_base | append: '?variant=' | append: variante.id | json }},
+      "priceCurrency": {{ gf_devise | json }},
+      "price": {{ variante.price | divided_by: 100.0 | json }},
+      "priceValidUntil": "{{ gf_annee }}-12-31",
+      "itemCondition": "https://schema.org/NewCondition",
+      "availability": {%- if variante.available %} "https://schema.org/InStock"{%- else %} "https://schema.org/OutOfStock"{%- endif -%},
+      "seller": { "@type": "Organization", "name": {{ shop.name | json }} }
+      {%- if variante.sku != blank -%},
+      "sku": {{ variante.sku | json }}
+      {%- endif -%}
+      {%- if variante.barcode != blank and variante.barcode.size == 13 -%},
+      "gtin13": {{ variante.barcode | json }}
+      {%- endif -%}
+      {%- if gf_livraison_retours -%}
+        {%- if variante.requires_shipping -%},
+      "shippingDetails": {
+        "@type": "OfferShippingDetails",
+        "shippingRate": {
+          "@type": "MonetaryAmount",
+          "value": {{ gf_port_montant | json }},
+          "currency": {{ gf_devise | json }}
+        },
+        "shippingDestination": {
+          "@type": "DefinedRegion",
+          "addressCountry": {{ gf_port_pays | json }}
+        },
+        "deliveryTime": {
+          "@type": "ShippingDeliveryTime",
+          "handlingTime": {
+            "@type": "QuantitativeValue",
+            "minValue": {{ gf_prepa_min }},
+            "maxValue": {{ gf_prepa_max }},
+            "unitCode": "DAY"
+          },
+          "transitTime": {
+            "@type": "QuantitativeValue",
+            "minValue": {{ gf_transit_min }},
+            "maxValue": {{ gf_transit_max }},
+            "unitCode": "DAY"
+          }
+        }
+      },
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": {{ gf_port_pays | json }},
+        "returnPolicyCountry": {{ gf_port_pays | json }},
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": {{ gf_retour_jours }},
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/ReturnFeesCustomerResponsibility",
+        "refundType": "https://schema.org/FullRefund",
+        "merchantReturnLink": {{ shop.url | append: '/policies/refund-policy' | json }}
+      }
+        {%- else -%},
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": {{ gf_port_pays | json }},
+        "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
+        "merchantReturnLink": {{ shop.url | append: '/policies/refund-policy' | json }}
+      }
+        {%- endif -%}
+      {%- endif -%}
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+
+  {%- comment -%}
+    Point de branchement des avis. Quand de VRAIS avis clients existeront
+    (metaobjets « avis » relies par product.metafields.custom.avis), ajouter ici
+    "aggregateRating" et "review" calcules sur ces avis — jamais sur des
+    exemples de demonstration.
+  {%- endcomment -%}
+}
+</script>
+{%- endif -%}
