@@ -190,9 +190,11 @@ politiques du 02/09/2026 :
 `scripts/audit_sitemap.py` lit `sitemap.xml`, descend dans les sous-sitemaps et
 teste chaque URL. **499 URL** trouvées.
 
-Sur les **197 testées avant que le pare-feu Shopify ne limite mon adresse IP
-(HTTP 429) : 197 réponses 200, aucun 404, aucune redirection.** La reprise des
-302 restantes tourne au ralenti.
+**Résultat définitif : 499 réponses 200. Aucun 404, aucune redirection.**
+
+Le pare-feu Shopify a limité mon adresse IP (HTTP 429) au premier passage ;
+`scripts/audit_sitemap_reprise.py` a repris les 302 URL restantes après une pause,
+à 4 s par requête. Le sitemap est donc sain de bout en bout.
 
 ### Ce que le sitemap ne peut pas dire
 
@@ -230,12 +232,26 @@ d'articles) — 235 liens vers `/collections/stress`, 220 vers `/collections/cha
 
 ## 6. Ce qui reste, par canal
 
-**Shopify admin**
+**Shopify admin — fait le 07/09/2026, sur ta décision**
 
-* Dépublier ou compléter les neuf fiches squelettes (voir §1, cause A).
-* Supprimer les trois avis de démonstration : Contenu → Métaobjets → Avis produit.
+* ✅ **Les 12 produits publiés sont passés en brouillon.** Le catalogue en ligne est
+  vide. Cela supprime à la source l'erreur critique « champ image manquant » et les
+  deux avis sur les offres : plus aucune page produit n'est servie.
+* ✅ **Le champ « Avis clients » de la fiche tapis est vidé** (metafield
+  `custom.avis` supprimé). Le balisage de faux avis et leur affichage à l'écran ont
+  disparu sans attendre le déploiement du thème. Les trois métaobjets « Avis
+  produit » restent en base comme gabarit de saisie.
+
+**Shopify admin — à faire**
+
+* ⚠ **Quatre collections sont désormais vides** : `/collections/stress` (liée 235
+  fois depuis les articles), `/collections/chat` (220 fois), `/collections/education`
+  et `/collections/senior` (déjà vides avant). Elles répondent 200 mais ne montrent
+  rien. À repeupler dès les premières vraies fiches, sinon ce sont 455 liens
+  internes qui mènent à du vide.
 * Trancher la Norvège et la Suisse dans la politique d'expédition.
-* Déployer les quatre fichiers du thème quand tu auras relu.
+* Déployer les quatre fichiers du thème quand tu auras relu — **avant** de publier
+  les vraies fiches produit, sinon deux gabarits sur cinq sortiront sans balisage.
 
 **Merchant Center** (compte 5847008347)
 
