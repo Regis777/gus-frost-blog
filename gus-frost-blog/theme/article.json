@@ -1,0 +1,52 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "blog_show_date": false,
+            "blog_show_author": false
+          }
+        },
+        "content": {
+          "type": "content",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "content"
+      ],
+      "custom_css": [
+        "/* Appliquer le nuancier 2 aux pages d'articles de blog */.article-template {background-color: #efe7da; /* Fond beige clair */ color: #000000; /* Texte noir */}",
+        ".article-template .article__content {background-color: #efe7da; color: #000000;}",
+        " /* Titres en noir pour les articles de blog */.article-template h1,.article-template h2,.article-template h3 {color: #000000 !important;}"
+      ],
+      "settings": {}
+    },
+    "gf_blog_search": {
+      "type": "gf-blog-search",
+      "settings": {}
+    },
+    "gf_article_css": {
+      "type": "gf-article-css",
+      "settings": {}
+    }
+  },
+  "order": [
+    "gf_article_css",
+    "main",
+    "gf_blog_search"
+  ]
+}
