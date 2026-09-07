@@ -183,52 +183,74 @@ politiques du 02/09/2026 :
 
 ---
 
-## 5. Indexation — 404 et pages avec redirection
+## 5. Indexation — chiffres relevés dans la Search Console
 
-### Ce que le sitemap dit
+Rapport « Indexation des pages », propriété de domaine, dernière mise à jour du
+04/09/2026 : **462 pages dans l'index, 237 non indexées**, en quatre motifs.
 
-`scripts/audit_sitemap.py` lit `sitemap.xml`, descend dans les sous-sitemaps et
-teste chaque URL. **499 URL** trouvées.
+| Motif | Source | Pages |
+|---|---|---|
+| Introuvable (404) | Site Web | **56** |
+| Page avec redirection | Site Web | **37** |
+| Détectée, actuellement non indexée | Systèmes Google | 142 |
+| Explorée, actuellement non indexée | Systèmes Google | 2 |
 
-**Résultat définitif : 499 réponses 200. Aucun 404, aucune redirection.**
+### Les 56 « Introuvable (404) » — rien à corriger
 
-Le pare-feu Shopify a limité mon adresse IP (HTTP 429) au premier passage ;
-`scripts/audit_sitemap_reprise.py` a repris les 302 URL restantes après une pause,
-à 4 s par requête. Le sitemap est donc sain de bout en bout.
+Les 56 URL ont été relevées, page par page. **56 sur 56 portent un préfixe de
+locale** : `/de/`, `/es/`, `/it/`, plus un `/en/`. Aucune URL du site en français.
+Exemples : `/es/blogs/chats/adopter-chaton-refuge-eleveur`,
+`/it/blogs/chats/hydratation-eau-chat`, `/de/pages/conseils-chiens`,
+`/es/products/tapis-de-lechage-chien-chat`.
 
-### Ce que le sitemap ne peut pas dire
+Première détection : 05/09/2026 — trois jours après le retrait de `de`/`es`/`it`
+du marché France, qui a ramené 1 989 URL à 498. **C'est le résultat exact de ce
+nettoyage volontaire. Ces 404 sont légitimes et Google les retirera seul.**
 
-C'est le point important : **les URL qui déclenchent l'alerte ne sont pas dans le
-sitemap.** Un sitemap Shopify ne liste que les pages vivantes. Les 404 que Google
-signale sont, par définition, des URL qu'il a connues ailleurs et qui n'y sont
-plus. Le crawl du sitemap vérifie que rien n'est cassé *à l'intérieur* — utile,
-mais ce n'est pas la réponse à l'alerte.
+### Les 37 « Page avec redirection » — rien à corriger non plus
 
-**Il me faut l'export du rapport d'indexation** pour produire le CSV de
-redirections. Sans lui, toute liste serait inventée.
+Trois familles, toutes des 301 délibérées :
+* l'ancien handle de blog **`/blogs/cats/…`**, renommé en `/blogs/chats/…` —
+  l'essentiel du lot (`/blogs/cats/sommeil-chat`, `/blogs/cats/proprete-chaton`,
+  `/blogs/cats/clignement-lent-chat`…) ;
+* `http://gusetfrost.fr/` → HTTPS ;
+* une page de locale résiduelle (`/es/password`).
 
-### Deux explications très probables, à confirmer par l'export
+« Page avec redirection, non indexée » est le résultat *attendu* d'une 301 : Google
+indexe la cible, pas la source.
 
-1. **Le nettoyage des locales du 02/09/2026.** 1 989 URL ramenées à 498 en
-   retirant `de`/`es`/`it` du marché France. Des centaines d'URL `/de/…`, `/es/…`,
-   `/it/…` étaient indexées et ne répondent plus. L'alerte arrive quatre jours
-   après. **C'est le comportement voulu : rien à corriger.**
-2. **Les 16 redirections déjà en place** (relevées dans l'admin) — 12 anciens
-   handles d'articles chiot renommés, 3 anciennes pages piliers, 1 fichier
-   IndexNow. Google les classe « Page avec redirection, non indexée », ce qui est
-   le résultat attendu d'une redirection 301. **Rien à corriger non plus.**
+### Le CSV de redirections est donc vide, et c'est la bonne réponse
 
-Autrement dit : les deux alertes d'indexation décrivent probablement le résultat
-normal de deux nettoyages volontaires. À confirmer sur l'export avant de conclure.
+Les 93 URL des deux motifs sont soit des locales retirées volontairement, soit des
+redirections déjà en place. **Aucune redirection à créer.** Créer une 301 pour ces
+locales serait même une erreur : elle ferait vivre des URL qu'on vient de supprimer.
 
-### Aucune redirection à créer pour l'instant
+### Le sitemap, en confirmation
 
-Le CSV `Redirect from,Redirect to` est donc vide à ce stade. Les liens internes du
-corpus pointent vers des **collections**, pas vers des fiches produit
-(`reference/placeholder-map.json` : aucun `PLACEHOLDER_produit-*` dans les corps
-d'articles) — 235 liens vers `/collections/stress`, 220 vers `/collections/chat`.
+`scripts/audit_sitemap.py` a testé les **499 URL** du sitemap et de ses
+sous-sitemaps : **499 réponses 200, aucun 404, aucune redirection.** Le pare-feu
+Shopify a limité l'adresse IP (HTTP 429) au premier passage ;
+`scripts/audit_sitemap_reprise.py` a repris les 302 URL restantes après une pause.
+Cohérent avec ce qui précède : les URL problématiques ne sont pas dans le sitemap,
+puisqu'elles n'existent plus.
 
----
+### Les deux rapports de données structurées, chiffres au 06/09/2026
+
+**Fiches de marchand** — 15 valides, **1 non valide**. L'unique élément critique
+« champ image manquant » est
+`/products/diffuseur-apaisant-maison-adaptateur-diffuseur-stress-anxiete` : une des
+neuf fiches squelettes, confirmant la cause A. Les autres squelettes ne figurent
+pas ici parce qu'ils sont restés « Détectée, actuellement non indexée » — Google ne
+les a jamais validés. Améliorations : `hasMerchantReturnPolicy` manquant sur 16,
+`shippingDetails` sur 16, `description` sur 16.
+
+Le `description` manquant sur **16 éléments sur 16** confirme le diagnostic du §1 :
+la description existe au niveau `ProductGroup`, mais **pas sur le `Product`
+imbriqué** que Google lit comme fiche de marchand.
+
+**Extraits de produits** — 3 valides, **0 non valide**. `aggregateRating` et
+`review` manquants sur 2 éléments : c'est l'avertissement voulu, en attente de
+vrais avis.
 
 ## 6. Ce qui reste, par canal
 
