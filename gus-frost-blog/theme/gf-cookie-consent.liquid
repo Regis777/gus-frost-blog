@@ -88,13 +88,21 @@
     color: inherit; opacity: .8; text-decoration: underline; text-underline-offset: 3px;
   }
   .gf-cc-footerlink:hover { opacity: 1; }
+  {%- comment -%}
+    FLEX ET NON GRID. En grid, la colonne implicite est dimensionnee en `auto` :
+    le `max-width: 100%` du panneau se resolvait contre cette colonne, elle-meme
+    calee sur les 560px demandes. Sur un ecran de 375px le panneau sortait donc
+    a 526px de large, deborde de 76px de chaque cote — mesure le 08/09/2026.
+    En flex, `width: min(560px, 100%)` se resout contre la largeur reelle.
+  {%- endcomment -%}
   #gf-cc .gf-overlay {
     position: fixed; inset: 0; z-index: 9999; background: rgba(20,14,8,.5);
-    display: grid; place-items: center; padding: 20px; animation: gf-fade .25s ease both;
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+    animation: gf-fade .25s ease both;
   }
   @keyframes gf-fade { from { opacity: 0; } to { opacity: 1; } }
   #gf-cc .gf-modal {
-    width: 560px; max-width: 100%; max-height: 90vh; overflow: auto; background: var(--gf-card);
+    width: min(560px, 100%); min-width: 0; max-height: 90vh; max-height: 90dvh; overflow: auto; background: var(--gf-card);
     color: var(--gf-ink); border-radius: 24px; border: 1px solid var(--gf-line); box-shadow: var(--gf-shadow);
     font-family: var(--font-body-family); animation: gf-pop .4s cubic-bezier(.2,.9,.25,1.1) both;
   }
@@ -125,6 +133,21 @@
     transition: opacity .3s ease, transform .3s ease;
   }
   #gf-cc .gf-toast.gf-show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  {%- comment -%} ---------- Telephone : gouttieres, boutons empiles ---------- {%- endcomment -%}
+  @media screen and (max-width: 480px) {
+    #gf-cc .gf-banner { left: 12px; right: 12px; bottom: 12px; width: auto; max-width: none; }
+    #gf-cc .gf-overlay { padding: 12px; }
+    #gf-cc .gf-modal { border-radius: 18px; }
+    #gf-cc .gf-mhead { padding: 18px 16px 4px; }
+    #gf-cc .gf-mhead h2 { font-size: 2.1rem; }
+    #gf-cc .gf-cats { padding: 10px 16px 4px; }
+    #gf-cc .gf-cat { padding: 12px 13px; gap: 10px; }
+    #gf-cc .gf-mfoot { padding: 14px 16px; gap: 8px; }
+    #gf-cc .gf-mfoot .gf-btn { flex: 1 1 100%; }
+    #gf-cc .gf-legal { padding: 0 16px 18px; }
+    #gf-cc .gf-fab { right: 12px; left: auto; bottom: 12px; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     #gf-cc *, #gf-cc *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
   }
