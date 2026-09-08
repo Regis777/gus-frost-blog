@@ -38,8 +38,22 @@
             style="--animation-order: {{ forloop.index }};"
           {% endif %}
         >
+          {%- comment -%}
+            `pleine_largeur` : en disposition « collage », le premier article
+            occupe toute la largeur (1 100px sur un ecran de 1 280). Sans cette
+            information, article-card annonce une demi-colonne et le navigateur
+            chargeait une image de 720px pour un affichage de 1 100 : la
+            vignette de tete du blog etait floue. Corrige le 08/09/2026.
+          {%- endcomment -%}
+          {%- liquid
+            assign pleine_largeur = false
+            if section.settings.layout == 'collage' and forloop.first
+              assign pleine_largeur = true
+            endif
+          -%}
           {%- render 'article-card',
             article: article,
+            pleine_largeur: pleine_largeur,
             media_height: section.settings.image_height,
             media_aspect_ratio: article.image.aspect_ratio,
             show_image: section.settings.show_image,

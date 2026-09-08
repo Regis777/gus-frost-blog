@@ -46,6 +46,14 @@
   .footer .policies li {
     margin: 0 0.4rem;
   }
+
+  /* Sur telephone, la ligne des politiques casse en cinq ou six lignes et le
+     separateur « · », rendu en ::before, se retrouvait seul en tete de chacune.
+     On le retire et on laisse l'espacement separer les liens. */
+  @media screen and (max-width: 749px) {
+    .footer .policies li::before { content: none; }
+    .footer .policies li { margin: 0 0.9rem; }
+  }
 {%- endstyle -%}
 
 <footer class="footer color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">

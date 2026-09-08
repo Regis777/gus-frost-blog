@@ -176,3 +176,34 @@
    pour une transition franche vers la section de recherche. */
 .article-template { padding-bottom: 0 !important; }
 .article-template__comment-wrapper { background-color: transparent !important; padding-bottom: 4rem !important; }
+
+/* ---------- Tableaux sur telephone : plus de mot coupe net ---------- */
+/* Dawn pose `table-layout: fixed` (colonnes de largeur egale) et cette feuille
+   `overflow: hidden` sur la table, pour l'arrondi. Combines, sur un ecran de
+   375px, un mot plus long que la colonne (108px a 3 colonnes) depassait et se
+   faisait ECRETER : « Dedramatiser » s'affichait « Dedramatise », le texte
+   etait perdu. Mesure le 08/09/2026 sur l'article anxiete-separation-chien.
+   La cesure autorisee regle le fond ; les paddings et la taille resserres sur
+   petit ecran rendent quelques pixels a chaque colonne. */
+.gf-article td, .gf-article th { overflow-wrap: break-word; hyphens: auto; }
+/* PAS `word-break: break-word` : cette valeur se comporte comme
+   `overflow-wrap: anywhere` et coupe un mot des que ca arrange le calcul, meme
+   quand il tiendrait sur la ligne suivante — « desamorcer » (83px pour 96px
+   disponibles) partait en « desamorce / r ». `overflow-wrap: break-word` ne
+   coupe que ce qui ne tient pas sur une ligne entiere. */
+
+/* `!important` : Dawn pose `padding: 1em` sur les cellules dans une feuille
+   chargee APRES celle-ci (le lien est dans la section, pas dans le head), a
+   specificite egale. Sans cela le padding restait a 14,5px par cote, soit 79px
+   utiles sur les 108px d'une colonne — « desamorcer » (83px) ne tenait pas et
+   se coupait. Avec 6px par cote, 96px utiles : les mots passent. */
+@media (max-width: 749px) {
+  /* `auto` plutot que le `fixed` de Dawn : a colonnes egales (108px sur un
+     ecran de 375), « Semaine 1 » gaspillait la place dont les colonnes de
+     phrases manquaient. Reparti au contenu (74 / 115 / 136), le tableau perd
+     un cinquieme de sa hauteur et le groupe insecable « Dedramatiser : » cesse
+     de renvoyer le deux-points seul en debut de ligne. */
+  .gf-article table { font-size: 1.45rem; table-layout: auto !important; }
+  .gf-article th { font-size: 1.4rem; padding: 0.6rem !important; }
+  .gf-article td { padding: 0.6rem !important; }
+}
