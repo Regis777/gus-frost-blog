@@ -166,3 +166,13 @@
 .article-template { padding-top: 4rem !important; padding-bottom: 4rem !important; }
 .article-template > :first-child:not(.article-template__hero-container) { margin-top: 0 !important; }
 .article-template > :last-child { margin-bottom: 0 !important; }
+
+/* ---------- Bas de page d'article : pas de bande beige sous les commentaires ---------- */
+/* Dawn teinte le bloc des commentaires (rgba(--color-foreground), 0.04) : sur le
+   beige de l'article, la nuance se voit. Le bloc s'arretait ensuite 40px avant la
+   fin du conteneur (padding-bottom pose ci-dessus), et ces 40px de beige pur
+   dessinaient une bande pleine largeur sous le bouton « Publier le commentaire ».
+   On rend le bloc transparent (il herite du beige) et on lui confie l'air du bas,
+   pour une transition franche vers la section de recherche. */
+.article-template { padding-bottom: 0 !important; }
+.article-template__comment-wrapper { background-color: transparent !important; padding-bottom: 4rem !important; }
