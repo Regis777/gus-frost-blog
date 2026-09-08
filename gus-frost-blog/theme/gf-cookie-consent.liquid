@@ -204,10 +204,25 @@
           <div><h3>{{ section.settings.cat_marketing_title }}</h3><p>{{ section.settings.cat_marketing_desc }}</p></div>
           <label class="gf-switch"><input type="checkbox" data-gf-cat="marketing"><span class="gf-track"></span></label>
         </div>
-        <div class="gf-cat">
-          <div><h3>{{ section.settings.cat_sale_title }} <span class="gf-pill">CCPA</span></h3><p>{{ section.settings.cat_sale_desc }}</p></div>
-          <label class="gf-switch"><input type="checkbox" data-gf-cat="sale"><span class="gf-track"></span></label>
-        </div>
+        {%- comment -%}
+          Categorie CCPA (Californie), masquee par defaut depuis le 08/09/2026.
+          La loi californienne ne vise que les entreprises qui font des affaires
+          en Californie ET depassent un seuil (25 M$ de chiffre d'affaires,
+          100 000 consommateurs californiens, ou la moitie du CA tiree de la
+          revente de donnees). La boutique ne vend qu'en France, Belgique,
+          Suisse, Luxembourg et Monaco : aucun seuil n'est approche. La ligne
+          « Ne pas vendre mes infos » ajoutait surtout une cinquieme carte a lire
+          sur telephone, et laissait croire que des donnees sont vendues.
+          Sans cette case, le consentement envoye porte sale_of_data = false,
+          soit la position la plus protectrice. Reactivable d'un clic dans
+          l'editeur de theme (reglage « Afficher la categorie CCPA »).
+        {%- endcomment -%}
+        {%- if section.settings.show_ccpa -%}
+          <div class="gf-cat">
+            <div><h3>{{ section.settings.cat_sale_title }} <span class="gf-pill">CCPA</span></h3><p>{{ section.settings.cat_sale_desc }}</p></div>
+            <label class="gf-switch"><input type="checkbox" data-gf-cat="sale"><span class="gf-track"></span></label>
+          </div>
+        {%- endif -%}
       </div>
       <div class="gf-mfoot">
         <button class="gf-btn gf-ghost" data-gf="refuse-all">{{ section.settings.btn_refuse }}</button>
@@ -412,6 +427,8 @@
     { "type": "textarea", "id": "cat_preferences_desc", "label": "Personnalisation — description", "default": "Retenir vos préférences : langue, articles déjà lus, tapis favori." },
     { "type": "text", "id": "cat_marketing_title", "label": "Marketing — titre", "default": "Marketing & réseaux" },
     { "type": "textarea", "id": "cat_marketing_desc", "label": "Marketing — description", "default": "Publicités et contenus Pinterest/Facebook adaptés à vos centres d'intérêt." },
+    { "type": "checkbox", "id": "show_ccpa", "label": "Afficher la catégorie CCPA (Californie)", "default": false,
+      "info": "Utile seulement si la boutique vend en Californie et dépasse les seuils de la loi. Décochée : le consentement envoyé porte sale_of_data = false." },
     { "type": "text", "id": "cat_sale_title", "label": "CCPA — titre", "default": "Ne pas vendre / partager mes infos" },
     { "type": "textarea", "id": "cat_sale_desc", "label": "CCPA — description", "default": "Résidents de Californie : refuser tout partage de données à des fins publicitaires." },
     { "type": "textarea", "id": "legal_note", "label": "Mention légale", "default": "Conforme RGPD / CNIL : refuser est aussi simple qu'accepter, aucune case n'est pré-cochée, et votre choix est conservé 6 mois." },
