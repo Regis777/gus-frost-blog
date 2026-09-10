@@ -36,7 +36,7 @@
     assign r = section.settings.rayon
     assign esp = section.settings.espacement
     assign esp_bas = esp | times: 1.4 | round: 0
-    assign esp_mobile = esp | times: 0.6 | round: 0
+    assign esp_mobile = esp | times: 0.45 | round: 0
   -%}
   {%- style -%}
     #MainContent {
@@ -89,21 +89,21 @@
            interne par carte, 117 pour un titre de trois lignes, et un interligne
            de corps a 1,8. Resserre : 486px, sans rien retirer du contenu. */
         #MainContent > .shopify-section [class*="-padding"] {
-          padding-top: 1.2rem !important;
-          padding-bottom: 1.2rem !important;
+          padding-top: 0.8rem !important;
+          padding-bottom: 0.8rem !important;
         }
 
         #MainContent .title.h0,
         #MainContent .title.h1,
         #MainContent .title.h2 {
-          font-size: 2.2rem !important;
+          font-size: 2rem !important;
           line-height: 1.15 !important;
         }
 
         #MainContent .title-wrapper,
         #MainContent .title-wrapper--no-top-margin {
           margin-top: 0 !important;
-          margin-bottom: 1.2rem !important;
+          margin-bottom: 0.8rem !important;
         }
 
         /* 1,8 d'interligne sur un ecran etroit hache la lecture plus qu'il ne
@@ -114,10 +114,15 @@
           line-height: 1.5 !important;
         }
 
-        #MainContent .multicolumn-card__info { padding: 0.6rem 0 0 !important; margin-top: 0.2rem !important; }
-        #MainContent .multicolumn-card__info h3 { margin-bottom: 0.3rem !important; }
-        #MainContent .multicolumn-list__item { padding: 0 0 1rem !important; }
-        #MainContent .card__information { padding-top: 0.8rem !important; padding-bottom: 0.8rem !important; }
+        #MainContent .multicolumn-card__info { padding: 0.4rem 0 0 !important; margin-top: 0 !important; }
+        #MainContent .multicolumn-card__info h3 { margin-bottom: 0.2rem !important; }
+        #MainContent .multicolumn-list__item { padding: 0 0 0.4rem !important; }
+        #MainContent .multicolumn-card { padding-top: 0 !important; padding-bottom: 0 !important; }
+        #MainContent .card__information { padding-top: 0.6rem !important; padding-bottom: 0.6rem !important; }
+
+        /* Les icones passent de 68 a 50px : deux rangees, donc 36px rendus a la
+           page, et elles restent parfaitement lisibles a cette taille. */
+        #MainContent .multicolumn-card__image-wrapper { max-width: 5rem !important; }
         #MainContent .article-card__excerpt { margin-top: 0.4rem !important; }
         #MainContent .collapsible-content__heading { margin-bottom: 1rem !important; }
         #MainContent .center .button,
