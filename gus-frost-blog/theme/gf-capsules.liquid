@@ -1,0 +1,167 @@
+{%- comment -%}
+  gf-capsules - Gus & Frost
+
+  Pose chaque section de la page en « capsule » : un bloc arrondi, borde, sur un
+  fond de page beige. Demande de Regis le 10/09/2026, apres un essai en direct.
+
+  POURQUOI UNE SECTION MAISON ET PAS UNE RETOUCHE DE DAWN
+  Une greffe dans un fichier de Dawn saute a la premiere mise a jour du theme
+  (lecon de la migration Dawn 16). Ici, aucun fichier de Dawn n'est touche : la
+  section pose sa propre feuille de style et ne rend rien de visible.
+
+  COMMENT LES SECTIONS SONT CIBLEES
+  Par leur place dans `#MainContent`, pas par leur nom : toute section ajoutee
+  plus tard prend la capsule sans intervention. Deux exceptions, ecrites en
+  `:has()` pour ne dependre d'aucun ordre :
+    - celle-ci (marqueur `.gf-capsules-marqueur`), sinon elle dessinerait une
+      capsule vide ;
+    - la banniere d'accueil (`.banner`), qui perd son effet d'accroche si elle
+      n'est plus pleine largeur — reactivable par un reglage.
+
+  LES FONDS INTERNES
+  Les nuanciers 2 (beige) et 3 (blanc) sont rendus transparents dans les
+  capsules : c'est la capsule qui porte la couleur, sinon on verrait un aplat
+  rectangulaire deborder de l'arrondi. Les autres nuanciers sont conserves —
+  le vert fonce de « Chez nous on montre patte blanche » reste vert.
+
+  L'INTERRUPTEUR
+  Reglage « Activer les capsules » : decoche, la section ne rend plus rien et la
+  page reprend exactement son aspect d'avant. Aucun autre fichier a toucher.
+{%- endcomment -%}
+
+<div class="gf-capsules-marqueur" hidden></div>
+
+{%- if section.settings.actif -%}
+  {%- liquid
+    assign r = section.settings.rayon
+    assign esp = section.settings.espacement
+    assign esp_bas = esp | times: 1.4 | round: 0
+    assign esp_mobile = esp | times: 0.6 | round: 0
+  -%}
+  {%- style -%}
+    #MainContent {
+      background: {{ section.settings.fond_page }};
+      padding: {{ esp }}px 0 {{ esp_bas }}px;
+    }
+
+    #MainContent > .shopify-section:not(:has(> .gf-capsules-marqueur))
+      {%- unless section.settings.capsule_banniere %}:not(:has(.banner)){% endunless %} {
+      width: min(100% - 4rem, {{ section.settings.largeur }}px);
+      margin: 0 auto {{ esp }}px;
+      border-radius: {{ r }}px;
+      overflow: hidden;
+      border: 1px solid {{ section.settings.bordure }};
+      background: {{ section.settings.fond_capsule }};
+      {% if section.settings.ombre %}box-shadow: 0 14px 34px -28px rgba(49, 68, 49, .55);{% endif %}
+    }
+
+    /* La capsule porte la couleur : les aplats beige et blanc des sections
+       deborderaient de l'arrondi. */
+    #MainContent > .shopify-section:not(:has(> .gf-capsules-marqueur)) .color-scheme-2,
+    #MainContent > .shopify-section:not(:has(> .gf-capsules-marqueur)) .color-scheme-3 {
+      background-color: transparent;
+    }
+
+    @media screen and (max-width: 749px) {
+      #MainContent {
+        padding: {{ esp_mobile }}px 0 {{ esp }}px;
+      }
+
+      #MainContent > .shopify-section:not(:has(> .gf-capsules-marqueur))
+        {%- unless section.settings.capsule_banniere %}:not(:has(.banner)){% endunless %} {
+        width: calc(100% - 2.4rem);
+        margin-bottom: {{ esp_mobile }}px;
+        border-radius: {{ r | times: 0.75 | round: 0 }}px;
+      }
+
+      /* Les gouttieres de la capsule s'ajoutent a celles de la section : sans
+         cela le texte perdrait 30px de large sur un telephone. */
+      #MainContent > .shopify-section:not(:has(> .gf-capsules-marqueur)) .page-width {
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+      }
+    }
+  {%- endstyle -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Capsules de page",
+  "enabled_on": { "templates": ["index"] },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Pose chaque section de la page dans un bloc arrondi sur fond beige. Ne rend rien de visible par elle-même : à laisser en première position."
+    },
+    {
+      "type": "checkbox",
+      "id": "actif",
+      "default": true,
+      "label": "Activer les capsules",
+      "info": "Décochez pour revenir à l'aspect précédent, sans rien supprimer."
+    },
+    {
+      "type": "color",
+      "id": "fond_page",
+      "default": "#efe7da",
+      "label": "Fond de la page"
+    },
+    {
+      "type": "color",
+      "id": "fond_capsule",
+      "default": "#faf8f3",
+      "label": "Fond des capsules"
+    },
+    {
+      "type": "color",
+      "id": "bordure",
+      "default": "#e0d7c6",
+      "label": "Filet des capsules"
+    },
+    {
+      "type": "range",
+      "id": "rayon",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 26,
+      "label": "Arrondi des angles"
+    },
+    {
+      "type": "range",
+      "id": "espacement",
+      "min": 8,
+      "max": 56,
+      "step": 4,
+      "unit": "px",
+      "default": 28,
+      "label": "Espace entre les capsules"
+    },
+    {
+      "type": "range",
+      "id": "largeur",
+      "min": 1000,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 1220,
+      "label": "Largeur maximale"
+    },
+    {
+      "type": "checkbox",
+      "id": "ombre",
+      "default": true,
+      "label": "Ombre portée"
+    },
+    {
+      "type": "checkbox",
+      "id": "capsule_banniere",
+      "default": false,
+      "label": "Mettre aussi la bannière du haut en capsule",
+      "info": "Décochée, la bannière reste pleine largeur."
+    }
+  ],
+  "presets": [{ "name": "Capsules de page" }]
+}
+{% endschema %}
