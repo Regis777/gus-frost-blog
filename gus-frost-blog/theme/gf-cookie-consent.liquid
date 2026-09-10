@@ -275,7 +275,9 @@
       sm.className = 'copyright__content';
       sm.appendChild(a);
       li.appendChild(sm);
-      host.appendChild(li);
+      // En TETE de la ligne du pied de page (demande du 10/09/2026) : c'est le
+      // seul lien de cette ligne qui ouvre un reglage, pas un document legal.
+      host.insertBefore(li, host.firstChild);
     } else {
       a.className = 'gf-cc-footerlink';
       host.appendChild(a);
