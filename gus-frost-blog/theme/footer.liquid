@@ -343,16 +343,34 @@
           de la marque. Le lien est optionnel cote Shopify, rien n'oblige a l'afficher.
           Pour le remettre : {% raw %}<small class="copyright__content">{{ powered_by_link }}</small>{% endraw %}
         {%- endcomment -%}
-        {%- if section.settings.show_policy -%}
+        {%- if section.settings.show_policy or section.settings.bottom_menu != blank -%}
           <ul class="policies list-unstyled">
-            {%- for policy in shop.policies -%}
-              {%- if policy != blank -%}
-                <li>
-                  <small class="copyright__content"
-                    ><a href="{{ policy.url }}">{{ policy.title | escape }}</a></small
-                  >
-                </li>
-              {%- endif -%}
+            {%- if section.settings.show_policy -%}
+              {%- for policy in shop.policies -%}
+                {%- if policy != blank -%}
+                  <li>
+                    <small class="copyright__content"
+                      ><a href="{{ policy.url }}">{{ policy.title | escape }}</a></small
+                    >
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- comment -%}
+              Menu discret de bas de page (10/09/2026). Rendu ICI, dans la meme
+              ligne que les politiques, et non dans un bloc du haut du pied de
+              page : ce sont des liens qu'on ne pousse pas — « Devenir
+              ambassadeur » aujourd'hui. Passer par un menu plutot que par un
+              lien en dur laisse Regis en ajouter ou en retirer depuis l'admin,
+              sans toucher au theme.
+            {%- endcomment -%}
+            {%- for link in section.settings.bottom_menu.links -%}
+              <li>
+                <small class="copyright__content"
+                  ><a href="{{ link.url }}">{{ link.title | escape }}</a></small
+                >
+              </li>
             {%- endfor -%}
           </ul>
         {%- endif -%}
@@ -531,6 +549,13 @@
       "default": true,
       "label": "t:sections.footer.settings.show_policy.label",
       "info": "t:sections.footer.settings.show_policy.info"
+    },
+    {
+      "type": "link_list",
+      "id": "bottom_menu",
+      "default": "footer",
+      "label": "Menu discret en bas de page",
+      "info": "Affiché sur la même ligne que les politiques, en petit. Pour les liens qu'on ne met pas en avant."
     },
     {
       "type": "header",

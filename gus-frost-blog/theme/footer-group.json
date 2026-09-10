@@ -13,18 +13,6 @@
   "sections": {
     "footer": {
       "type": "footer",
-      "blocks": {
-        "menu_pied": {
-          "type": "link_list",
-          "settings": {
-            "heading": "",
-            "menu": "footer"
-          }
-        }
-      },
-      "block_order": [
-        "menu_pied"
-      ],
       "settings": {
         "color_scheme": "scheme-5",
         "newsletter_enable": true,
@@ -35,6 +23,7 @@
         "enable_language_selector": false,
         "payment_enable": true,
         "show_policy": true,
+        "bottom_menu": "footer",
         "margin_top": 0,
         "padding_top": 12,
         "padding_bottom": 0
