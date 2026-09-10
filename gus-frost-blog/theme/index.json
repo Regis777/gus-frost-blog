@@ -126,36 +126,39 @@
           "type": "column",
           "name": "Colonne",
           "settings": {
-            "title": "",
-            "text": "",
+            "title": "<strong>Service client</strong>",
+            "text": "<p>Une vraie personne vous répond, pas un robot.</p>",
             "link_label": "",
-            "link": ""
+            "link": "",
+            "image": "shopify://shop_images/gf-icone-service-client.png"
           }
         },
         "column_AE76pj": {
           "type": "column",
           "settings": {
-            "title": "",
-            "text": "",
+            "title": "<strong>Expédié en 24 à 48 h</strong>",
+            "text": "<p>Commandes préparées en 24 à 48 h ouvrées, avec numéro de suivi.</p>",
             "link_label": "",
-            "link": ""
+            "link": "",
+            "image": "shopify://shop_images/gf-icone-expedition.png"
           }
         },
         "column_nmRMxY": {
           "type": "column",
           "settings": {
-            "title": "",
-            "text": "",
+            "title": "<strong>Retour sous 14 jours</strong>",
+            "text": "<p>Le délai légal de rétractation, appliqué sans discussion.</p>",
             "link_label": "",
-            "link": ""
+            "link": "",
+            "image": "shopify://shop_images/gf-icone-retractation.png"
           }
         },
         "column_CJnqAy": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/service-client.png",
-            "title": "<strong>Service client</strong>",
-            "text": "",
+            "image": "shopify://shop_images/gf-icone-conseils.png",
+            "title": "<strong>480 conseils gratuits</strong>",
+            "text": "<p>Chien et chat : nos articles sont sourcés et gratuits, sans inscription.</p>",
             "link_label": "",
             "link": ""
           }
