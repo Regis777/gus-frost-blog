@@ -80,6 +80,49 @@
         padding-left: 1.2rem;
         padding-right: 1.2rem;
       }
+
+      {%- if section.settings.compact_mobile -%}
+        /* ---------- Telephone : resserrer ----------
+           Dawn est calibre pour un grand ecran et garde les memes respirations
+           sur un telephone : chaque section occupait presque une hauteur d'ecran.
+           Mesure le 10/09/2026 sur « patte blanche » : 709px, dont 50 de padding
+           interne par carte, 117 pour un titre de trois lignes, et un interligne
+           de corps a 1,8. Resserre : 486px, sans rien retirer du contenu. */
+        #MainContent > .shopify-section [class*="-padding"] {
+          padding-top: 1.2rem !important;
+          padding-bottom: 1.2rem !important;
+        }
+
+        #MainContent .title.h0,
+        #MainContent .title.h1,
+        #MainContent .title.h2 {
+          font-size: 2.2rem !important;
+          line-height: 1.15 !important;
+        }
+
+        #MainContent .title-wrapper,
+        #MainContent .title-wrapper--no-top-margin {
+          margin-top: 0 !important;
+          margin-bottom: 1.2rem !important;
+        }
+
+        /* 1,8 d'interligne sur un ecran etroit hache la lecture plus qu'il ne
+           l'aide ; 1,5 reste confortable. */
+        #MainContent .rte p,
+        #MainContent .multicolumn-card__info p,
+        #MainContent .card__information p {
+          line-height: 1.5 !important;
+        }
+
+        #MainContent .multicolumn-card__info { padding: 0.6rem 0 0 !important; margin-top: 0.2rem !important; }
+        #MainContent .multicolumn-card__info h3 { margin-bottom: 0.3rem !important; }
+        #MainContent .multicolumn-list__item { padding: 0 0 1rem !important; }
+        #MainContent .card__information { padding-top: 0.8rem !important; padding-bottom: 0.8rem !important; }
+        #MainContent .article-card__excerpt { margin-top: 0.4rem !important; }
+        #MainContent .collapsible-content__heading { margin-bottom: 1rem !important; }
+        #MainContent .center .button,
+        #MainContent .blog__view-all { margin-top: 1.2rem !important; }
+      {%- endif -%}
     }
   {%- endstyle -%}
 {%- endif -%}
@@ -147,6 +190,13 @@
       "unit": "px",
       "default": 1220,
       "label": "Largeur maximale"
+    },
+    {
+      "type": "checkbox",
+      "id": "compact_mobile",
+      "default": true,
+      "label": "Resserrer l'affichage sur téléphone",
+      "info": "Réduit les marges, les interlignes et la taille des titres sous 750 px, sans rien retirer du contenu."
     },
     {
       "type": "checkbox",
