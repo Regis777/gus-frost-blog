@@ -47,12 +47,32 @@
     margin: 0 0.4rem;
   }
 
-  /* Sur telephone, la ligne des politiques casse en cinq ou six lignes et le
-     separateur « · », rendu en ::before, se retrouvait seul en tete de chacune.
-     On le retire et on laisse l'espacement separer les liens. */
+  .footer__content-bottom .copyright__content--derniere {
+    display: block;
+    margin-top: 1.2rem;
+  }
+
+  /* Le separateur « · » de Dawn est pose sur CHAQUE element : le copyright
+     ouvrait la ligne et le masquait. Depuis qu'il est passe en derniere ligne,
+     le premier lien commencait par un point orphelin. */
+  .footer .policies li:first-child::before {
+    content: none;
+  }
+
+  /* Sur telephone : deux colonnes pour les liens (demande du 10/09/2026), et
+     plus de separateur « · » — rendu en ::before, il se retrouvait seul en tete
+     de chacune des lignes. Les libelles longs passent sur deux lignes : a 14px
+     « Politique de remboursement » mesure ~190px pour une colonne de 173. */
   @media screen and (max-width: 749px) {
+    .footer .policies {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.2rem 1.4rem;
+      justify-items: start;
+      text-align: left;
+    }
+    .footer .policies li { margin: 0; }
     .footer .policies li::before { content: none; }
-    .footer .policies li { margin: 0 0.9rem; }
   }
 {%- endstyle -%}
 
@@ -334,9 +354,6 @@
     </div>
     <div class="footer__content-bottom-wrapper page-width{% if section.settings.enable_country_selector == false and section.settings.enable_language_selector == false %} footer__content-bottom-wrapper--center{% endif %}">
       <div class="footer__copyright caption">
-        <small class="copyright__content"
-          >&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url -}}
-        </small>
         {%- comment -%}
           « Commerce électronique propulsé par Shopify » retire le 08/09/2026 a la
           demande de Regis : la ligne de bas de page ne porte plus que le copyright
@@ -374,6 +391,15 @@
             {%- endfor -%}
           </ul>
         {%- endif -%}
+
+        {%- comment -%}
+          Copyright en TOUTE DERNIERE ligne, sous les liens (demande du
+          10/09/2026). Insecables apres le symbole et avant le tiret cadratin,
+          pour qu'aucun des deux ne se retrouve seul en bout de ligne.
+        {%- endcomment -%}
+        <small class="copyright__content copyright__content--derniere"
+          >&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url }} &mdash; Tous droits r&eacute;serv&eacute;s</small
+        >
       </div>
     </div>
   </div>
