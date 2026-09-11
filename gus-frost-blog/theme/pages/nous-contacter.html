@@ -1,0 +1,60 @@
+<style>
+/* Page « Nous contacter » — encarts aux couleurs de la marque.
+   Vocabulaire repris des encarts d'article (fond credeux, filet terracotta,
+   pastille verte) plutot que du modele jaune/vert vif propose en exemple. */
+.gfc { max-width: 68rem; margin: 0 auto; font-size: 1.7rem; line-height: 1.6; color: #2a2a2a; }
+.gfc-carte { border-radius: 14px; padding: 2.4rem 2.2rem; margin: 0 0 1.8rem; }
+.gfc-carte--delai { background: #fbf1ea; border: 1px solid #e6bca4; text-align: center; }
+.gfc-icone { font-size: 3.2rem; line-height: 1; margin: 0 0 .8rem; }
+.gfc-carte--delai h2 { margin: 0 0 .8rem; font-size: 2.4rem; line-height: 1.25; color: #17110c; }
+.gfc-carte--delai p { margin: 0; color: #4a4038; }
+.gfc-carte--vite { background: #f1f5f0; border: 1px solid #cbdcc8; }
+.gfc-surtitre { margin: 0 0 1.4rem; font-size: 1.4rem; font-weight: 700; letter-spacing: .12em;
+                text-transform: uppercase; color: #314431; }
+.gfc-liste { list-style: none; margin: 0; padding: 0; }
+.gfc-liste li { display: flex; gap: 1.1rem; align-items: flex-start; margin: 0 0 1.2rem; }
+.gfc-liste li:last-child { margin-bottom: 0; }
+.gfc-puce { flex: none; width: 2.4rem; height: 2.4rem; margin-top: .2rem; border-radius: 50%;
+            background: #314431; color: #fff; font-size: 1.4rem; line-height: 2.4rem;
+            text-align: center; }
+.gfc-grille { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+.gfc-carte--mail { background: #faf8f3; border: 1px solid #e3ddcf; border-left: 4px solid #c16b47;
+                   margin: 0; }
+.gfc-carte--mail h3 { margin: 0 0 .4rem; font-size: 1.7rem; color: #17110c; }
+.gfc-carte--mail p { margin: 0; font-size: 1.55rem; color: #5c6a5f; }
+.gfc-carte--mail a { color: #314431; font-weight: 600; }
+@media screen and (max-width: 749px) {
+  .gfc { font-size: 1.6rem; }
+  .gfc-carte { padding: 1.8rem 1.5rem; }
+  .gfc-carte--delai h2 { font-size: 2.1rem; }
+  .gfc-grille { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="gfc">
+  <div class="gfc-carte gfc-carte--delai">
+    <div class="gfc-icone">📬</div>
+    <h2>On vous r&eacute;pond sous 48 h ouvr&eacute;es</h2>
+    <p>Une question sur un produit, une commande en cours, un retour ou un &eacute;change ? &Eacute;crivez-nous avec le formulaire ci-dessous : chaque message est lu par une vraie personne.</p>
+  </div>
+
+  <div class="gfc-carte gfc-carte--vite">
+    <p class="gfc-surtitre">Pour aller plus vite</p>
+    <ul class="gfc-liste">
+      <li><span class="gfc-puce">&#10003;</span><span><strong>Une commande en cours :</strong> donnez votre num&eacute;ro de commande et ce qui pose probl&egrave;me — article manquant, ab&icirc;m&eacute;, taille.</span></li>
+      <li><span class="gfc-puce">&#10003;</span><span><strong>Avant d&rsquo;acheter :</strong> dites-nous le produit et votre question pr&eacute;cise — mati&egrave;re, dimensions, ce qui conviendrait &agrave; votre animal.</span></li>
+      <li><span class="gfc-puce">&#10003;</span><span><strong>Un retour ou un &eacute;change :</strong> num&eacute;ro de commande et motif suffisent. Les conditions figurent dans notre <a href="/policies/refund-policy">politique de remboursement</a>.</span></li>
+    </ul>
+  </div>
+
+  <div class="gfc-grille">
+    <div class="gfc-carte gfc-carte--mail">
+      <h3>Par courriel</h3>
+      <p><a href="mailto:contact@gusetfrost.fr">contact@gusetfrost.fr</a><br>Commandes, produits, service apr&egrave;s-vente.</p>
+    </div>
+    <div class="gfc-carte gfc-carte--mail">
+      <h3>Vos donn&eacute;es personnelles</h3>
+      <p><a href="mailto:rgpd@gusetfrost.fr">rgpd@gusetfrost.fr</a><br>Acc&egrave;s, rectification, suppression.</p>
+    </div>
+  </div>
+</div>
