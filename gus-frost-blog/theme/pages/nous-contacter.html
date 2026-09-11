@@ -1,27 +1,31 @@
 <style>
-/* Page « Nous contacter » — encarts aux couleurs de la marque.
-   Vocabulaire repris des encarts d'article (fond credeux, filet terracotta,
-   pastille verte) plutot que du modele jaune/vert vif propose en exemple. */
-.gfc { max-width: 68rem; margin: 0 auto; font-size: 1.7rem; line-height: 1.6; color: #2a2a2a; }
+/* Page « Nous contacter » — encarts dans la palette de la marque (11/09/2026) :
+   creme #faf8f3, sauge adouci #b6bfa3, filet sauge #9dae8b, accent terracotta
+   #c16b47 (filet des encarts, comme ceux du blog), texte vert fonce #314431.
+   Contrastes du vert fonce : 9,9:1 sur le creme, 5,5:1 sur le sauge. */
+.gfc { max-width: 68rem; margin: 0 auto; font-size: 1.7rem; line-height: 1.6; color: #314431; }
 .gfc-carte { border-radius: 14px; padding: 2.4rem 2.2rem; margin: 0 0 1.8rem; }
-.gfc-carte--delai { background: #fbf1ea; border: 1px solid #e6bca4; text-align: center; }
+.gfc-carte--delai { background: #faf8f3; border: 1px solid #9dae8b; text-align: center; }
 .gfc-icone { font-size: 3.2rem; line-height: 1; margin: 0 0 .8rem; }
-.gfc-carte--delai h2 { margin: 0 0 .8rem; font-size: 2.4rem; line-height: 1.25; color: #17110c; }
-.gfc-carte--delai p { margin: 0; color: #4a4038; }
-.gfc-carte--vite { background: #f1f5f0; border: 1px solid #cbdcc8; }
+.gfc-carte--delai h2 { margin: 0 0 .8rem; font-size: 2.4rem; line-height: 1.25; color: #314431; }
+.gfc-carte--delai p { margin: 0; color: #314431; }
+.gfc-carte--vite { background: #b6bfa3; border: 1px solid #9dae8b; }
 .gfc-surtitre { margin: 0 0 1.4rem; font-size: 1.4rem; font-weight: 700; letter-spacing: .12em;
                 text-transform: uppercase; color: #314431; }
-.gfc-liste { list-style: none; margin: 0; padding: 0; }
+.gfc-liste { list-style: none; margin: 0; padding: 0; color: #314431; }
+/* Dawn pose `.rte ul { padding-left }` (plus specifique) : sans ceci, la liste
+   gardait ~50px de retrait sur telephone. */
+.gfc ul.gfc-liste { padding-left: 0 !important; margin-left: 0 !important; }
 .gfc-liste li { display: flex; gap: 1.1rem; align-items: flex-start; margin: 0 0 1.2rem; }
 .gfc-liste li:last-child { margin-bottom: 0; }
+.gfc-liste a { color: #314431; }
 .gfc-puce { flex: none; width: 2.4rem; height: 2.4rem; margin-top: .2rem; border-radius: 50%;
-            background: #314431; color: #fff; font-size: 1.4rem; line-height: 2.4rem;
+            background: #314431; color: #efe7da; font-size: 1.4rem; line-height: 2.4rem;
             text-align: center; }
 .gfc-grille { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
-.gfc-carte--mail { background: #faf8f3; border: 1px solid #e3ddcf; border-left: 4px solid #c16b47;
-                   margin: 0; }
-.gfc-carte--mail h3 { margin: 0 0 .4rem; font-size: 1.7rem; color: #17110c; }
-.gfc-carte--mail p { margin: 0; font-size: 1.55rem; color: #5c6a5f; }
+.gfc-carte--mail { background: #faf8f3; border: 1px solid #9dae8b; border-left: 4px solid #c16b47; margin: 0; }
+.gfc-carte--mail h3 { margin: 0 0 .4rem; font-size: 1.7rem; color: #314431; }
+.gfc-carte--mail p { margin: 0; font-size: 1.55rem; color: #314431; }
 .gfc-carte--mail a { color: #314431; font-weight: 600; }
 @media screen and (max-width: 749px) {
   .gfc { font-size: 1.6rem; }
@@ -35,7 +39,7 @@
   <div class="gfc-carte gfc-carte--delai">
     <div class="gfc-icone">📬</div>
     <h2>On vous r&eacute;pond sous 48 h ouvr&eacute;es</h2>
-    <p>Une question sur un produit, une commande en cours, un retour ou un &eacute;change ? &Eacute;crivez-nous avec le formulaire ci-dessous : chaque message est lu par une vraie personne.</p>
+    <p>Une question sur un produit, une commande en cours, un retour ou un &eacute;change ? &Eacute;crivez-nous avec le formulaire ci-dessous : nous r&eacute;pondons &agrave; toutes vos questions.</p>
   </div>
 
   <div class="gfc-carte gfc-carte--vite">
