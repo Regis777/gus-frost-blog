@@ -27,7 +27,23 @@
 .gfc-carte--mail h3 { margin: 0 0 .4rem; font-size: 1.7rem; color: #314431; }
 .gfc-carte--mail p { margin: 0; font-size: 1.55rem; color: #314431; }
 .gfc-carte--mail a { color: #314431; font-weight: 600; }
+/* ---------- Formulaire (section contact-form de Dawn, conteneur .contact) ----------
+   Champs arrondis pour s'accorder aux encarts (14px) et au bouton (13px). Dawn
+   dessine le contour avec var(--inputs-radius) : on la redefinit ICI, sur la
+   seule page de contact — les autres champs du site gardent le reglage global.
+   L'« outset » (anneau de focus) doit suivre, sinon il reste carre. */
+.contact {
+  --inputs-radius: 12px;
+  --inputs-radius-outset: 13px;
+}
+
 @media screen and (max-width: 749px) {
+  /* Bouton pleine largeur sur telephone, comme celui du bloc « Votre question » :
+     122px de large, il se touchait mal au pouce. */
+  .contact .contact__button,
+  .contact form .button {
+    width: 100%;
+  }
   .gfc { font-size: 1.6rem; }
   .gfc-carte { padding: 1.8rem 1.5rem; }
   .gfc-carte--delai h2 { font-size: 2.1rem; }
