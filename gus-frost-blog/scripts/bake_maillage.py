@@ -43,6 +43,8 @@ FIN = "<!-- gf-maillage:fin -->"
 RX_BLOC = re.compile(re.escape(DEBUT) + r".*?" + re.escape(FIN), re.S)
 
 MANIFESTS = {"chiens": "manifest.csv", "chats": "manifest_chat.csv"}
+# L'encart Carnet parle de l'animal du blog : une source par blog.
+PROMOS = {"chiens": "gf-carnet-promo.liquid", "chats": "gf-carnet-promo-chat.liquid"}
 NBSP = u" "
 
 
@@ -80,24 +82,26 @@ def carte(blog, art, img):
             % (blog, art["handle"], vignette, esc(art["title"])))
 
 
-def promo_carnet():
-    """L'encart « Le Carnet », lu depuis sa source versionnee.
+def promo_carnet(blog):
+    """L'encart « Le Carnet » du blog, lu depuis sa source versionnee.
 
     Le snippet est du HTML statique : on le cuit tel quel, apres avoir retire
-    son commentaire Liquid. Une seule source de verite — modifier
-    theme/gf-carnet-promo.liquid puis relancer ce script suffit a le propager.
+    son commentaire Liquid. Une source par blog (PROMOS) — modifier
+    theme/gf-carnet-promo.liquid (chiens) ou theme/gf-carnet-promo-chat.liquid
+    (chats) puis relancer ce script suffit a le propager. Les deux ne doivent
+    differer que par l'animal.
     """
-    src = io.open(os.path.join(ROOT, "theme", "gf-carnet-promo.liquid"),
-                  encoding="utf-8").read()
+    nom = PROMOS[blog]
+    src = io.open(os.path.join(ROOT, "theme", nom), encoding="utf-8").read()
     src = re.sub(r"\{%-?\s*comment\s*-?%\}.*?\{%-?\s*endcomment\s*-?%\}", "", src, flags=re.S)
     if "{%" in src or "{{" in src:
-        sys.exit("REFUS : gf-carnet-promo.liquid n'est plus statique, il ne peut plus etre cuit.")
+        sys.exit("REFUS : %s n'est plus statique, il ne peut plus etre cuit." % nom)
     return src.strip()
 
 
 def bloc(blog, courant, pilier, freres, images):
     """Encart Carnet puis articles lies — l'ordre d'origine, avant le degreffage."""
-    carnet = promo_carnet()
+    carnet = promo_carnet(blog)
     if not freres:
         return "\n".join([DEBUT, carnet, FIN])   # l'encart seul, pas de cadre vide
     est_pilier = pilier is not None and pilier["handle"] == courant["handle"]
@@ -183,7 +187,9 @@ def main():
             # 2) l'article en ligne
             corps = art.get("body_html") or ""
             neuf = pose(corps, bl)
-            if neuf == corps:
+            # Shopify decode &nbsp; en U+00A0 a l'enregistrement : sans cette
+            # normalisation, chaque passage reecrivait tous les articles.
+            if neuf.replace("&nbsp;", NBSP) == corps.replace("&nbsp;", NBSP):
                 stats["inchanges"] += 1
                 continue
             stats["ecrits"] += 1

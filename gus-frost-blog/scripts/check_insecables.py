@@ -29,6 +29,7 @@ DEFAUT = [
     "theme/gf-carnet-landing.liquid",
     "theme/gf-carnet.liquid",
     "theme/gf-carnet-promo.liquid",
+    "theme/gf-carnet-promo-chat.liquid",
     "theme/gf-carnet.js",
 ]
 
