@@ -123,6 +123,29 @@
         padding-right: 1.2rem;
       }
 
+      /* Mentions a 10px chez Dawn (`.caption` = 1rem) : dates des articles,
+         compteur du carrousel, « Taxes incluses / Frais d'expedition ». Trop
+         petit sur un telephone ; 12px est le plancher confortable. */
+      #MainContent .caption,
+      #MainContent .caption-with-letter-spacing,
+      #MainContent .product__tax,
+      #MainContent .product__tax a,
+      #MainContent .slider-counter,
+      #MainContent time {
+        font-size: 1.2rem !important;
+      }
+
+      /* Carrousels : Dawn laisse deborder la carte suivante pour signaler qu'on
+         peut faire glisser. L'arrondi de la capsule impose `overflow: hidden`
+         et rognait ce debord a 15px — l'indice disparaissait. Cartes a 82 % de
+         la largeur : la suivante apparait sur une soixantaine de pixels. */
+      #MainContent .slider--mobile > .slider__slide,
+      #MainContent .slider--tablet > .slider__slide {
+        width: 82% !important;
+        max-width: 82% !important;
+        flex: 0 0 82% !important;
+      }
+
       {%- if section.settings.compact_mobile -%}
         /* ---------- Telephone : resserrer ----------
            Dawn est calibre pour un grand ecran et garde les memes respirations
@@ -135,10 +158,26 @@
           padding-bottom: 0.8rem !important;
         }
 
+        /* Tous les titres de section a la meme taille. Dawn les nomme
+           differemment selon le type de section : `.title` couvrait « Nos
+           produits » et « Pourquoi », mais pas `.blog__title` ni
+           `.collapsible-content__heading` — « Articles de blog » et « Foire aux
+           Questions » restaient a 30px contre 20 (mesure le 11/09/2026). */
         #MainContent .title.h0,
         #MainContent .title.h1,
-        #MainContent .title.h2 {
+        #MainContent .title.h2,
+        #MainContent .blog__title,
+        #MainContent .collapsible-content__heading,
+        #MainContent .image-with-text__heading {
           font-size: 2rem !important;
+          line-height: 1.15 !important;
+        }
+
+        /* Le titre du produit vedette reste un cran au-dessus : c'est un
+           produit, pas un intitule de rubrique. 30 -> 24px. */
+        #MainContent .product__title,
+        #MainContent .product__title > * {
+          font-size: 2.4rem !important;
           line-height: 1.15 !important;
         }
 

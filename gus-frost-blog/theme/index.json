@@ -126,31 +126,31 @@
           "type": "column",
           "name": "Colonne",
           "settings": {
+            "image": "shopify://shop_images/gf-icone-service-client-fonce.png",
             "title": "<strong>Service client</strong>",
             "text": "",
             "link_label": "",
-            "link": "",
-            "image": "shopify://shop_images/gf-icone-service-client-fonce.png"
+            "link": ""
           }
         },
         "column_AE76pj": {
           "type": "column",
           "settings": {
+            "image": "shopify://shop_images/gf-icone-expedition-fonce.png",
             "title": "<strong>Expédié en 48 h</strong>",
             "text": "",
             "link_label": "",
-            "link": "",
-            "image": "shopify://shop_images/gf-icone-expedition-fonce.png"
+            "link": ""
           }
         },
         "column_nmRMxY": {
           "type": "column",
           "settings": {
+            "image": "shopify://shop_images/gf-icone-retractation-fonce.png",
             "title": "<strong>Retour sous 14 jours</strong>",
             "text": "",
             "link_label": "",
-            "link": "",
-            "image": "shopify://shop_images/gf-icone-retractation-fonce.png"
+            "link": ""
           }
         },
         "column_CJnqAy": {
@@ -225,14 +225,14 @@
         "heading_U9ry9L": {
           "type": "heading",
           "settings": {
-            "heading": "Pourquoi Gus et Frost ?",
+            "heading": "Pourquoi Gus et Frost ?",
             "heading_size": "h2"
           }
         },
         "text_Gcf67A": {
           "type": "text",
           "settings": {
-            "text": "<p>Nous avons créé Gus et Frost avec une idée simple : proposer moins de produits, mais de meilleurs produits.</p><p>Chaque article est sélectionné avec soin, en privilégiant la qualité, l’utilité réelle et la satisfaction client sur le long terme.</p>",
+            "text": "<p>Nous avons créé Gus et Frost avec une idée simple : proposer moins de produits, mais de meilleurs produits.</p><p>Chaque article est sélectionné avec soin, en privilégiant la qualité, l’utilité réelle et la satisfaction client sur le long terme.</p>",
             "text_style": "body"
           }
         },
@@ -291,7 +291,7 @@
         "collapsible_row_TbrFhU": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Vos produits conviennent-ils à tous les chiens et chats ?",
+            "heading": "Vos produits conviennent-ils à tous les chiens et chats ?",
             "icon": "question_mark",
             "row_content": "<p>Oui. Nos produits sont sélectionnés pour couvrir la majorité des morphologies et tempéraments. Chaque fiche produit précise les tailles, usages et recommandations.</p>",
             "page": ""
@@ -300,7 +300,7 @@
         "collapsible_row_XN4aVA": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Livrez-vous en France et en Europe ?",
+            "heading": "Livrez-vous en France et en Europe ?",
             "icon": "question_mark",
             "row_content": "<p>Oui. Nous livrons en France et dans la plupart des pays européens avec un suivi de commande à chaque étape.</p>",
             "page": ""
@@ -309,7 +309,7 @@
         "collapsible_row_LBmtAb": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Combien de temps faut-il pour recevoir ma commande ?",
+            "heading": "Combien de temps faut-il pour recevoir ma commande ?",
             "icon": "question_mark",
             "row_content": "<p>En moyenne, la livraison prend entre <strong>5 et 10 jours ouvrés</strong>, selon le produit et votre lieu de résidence.</p>",
             "page": ""
@@ -318,7 +318,7 @@
         "collapsible_row_TymYrP": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Puis-je retourner un article s’il ne convient pas ?",
+            "heading": "Puis-je retourner un article s’il ne convient pas ?",
             "icon": "question_mark",
             "row_content": "<p>Bien sûr. Vous disposez de <strong>14 jours</strong> après réception pour nous contacter. Notre service client vous accompagne simplement.</p>",
             "page": ""
@@ -327,7 +327,7 @@
         "collapsible_row_F8kh49": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Pourquoi faire confiance à Gus & Frost ?",
+            "heading": "Pourquoi faire confiance à Gus & Frost ?",
             "icon": "question_mark",
             "row_content": "<p>Nous sélectionnons uniquement des produits utiles, testés et validés pour le bien-être de votre animal. Pas de gadgets, pas de compromis sur la qualité.</p>",
             "page": ""
@@ -367,8 +367,7 @@
       "type": "gf-capsules",
       "settings": {
         "actif": true,
-        "bordure": "#9dae8b",
-        "alternance": true
+        "bordure": "#9dae8b"
       }
     }
   },
