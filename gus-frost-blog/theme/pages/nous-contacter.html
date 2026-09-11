@@ -3,7 +3,10 @@
    creme #faf8f3, sauge adouci #b6bfa3, filet sauge #9dae8b, accent terracotta
    #c16b47 (filet des encarts, comme ceux du blog), texte vert fonce #314431.
    Contrastes du vert fonce : 9,9:1 sur le creme, 5,5:1 sur le sauge. */
-.gfc { max-width: 68rem; margin: 0 auto; font-size: 1.7rem; line-height: 1.6; color: #314431; }
+/* Pleine largeur de la colonne de page : limites a 68rem, les encarts etaient
+   en retrait de 23px de chaque cote par rapport au titre et au formulaire,
+   qui occupent la colonne entiere (726px sur un ecran de 1440). */
+.gfc { max-width: none; margin: 0; font-size: 1.7rem; line-height: 1.6; color: #314431; }
 .gfc-carte { border-radius: 14px; padding: 2.4rem 2.2rem; margin: 0 0 1.8rem; }
 .gfc-carte--delai { background: #faf8f3; border: 1px solid #9dae8b; text-align: center; }
 .gfc-icone { font-size: 3.2rem; line-height: 1; margin: 0 0 .8rem; }
@@ -27,6 +30,10 @@
 .gfc-carte--mail h3 { margin: 0 0 .4rem; font-size: 1.7rem; color: #314431; }
 .gfc-carte--mail p { margin: 0; font-size: 1.55rem; color: #314431; }
 .gfc-carte--mail a { color: #314431; font-weight: 600; }
+/* « apres-vente » se coupait sur son trait d'union en fin de ligne. Un span
+   insecable plutot que le trait d'union insecable U+2011, que toutes les
+   polices ne dessinent pas. */
+.gfc-insecable { white-space: nowrap; }
 /* ---------- Formulaire (section contact-form de Dawn, conteneur .contact) ----------
    Champs arrondis pour s'accorder aux encarts (14px) et au bouton (13px). Dawn
    dessine le contour avec var(--inputs-radius) : on la redefinit ICI, sur la
@@ -70,7 +77,7 @@
   <div class="gfc-grille">
     <div class="gfc-carte gfc-carte--mail">
       <h3>Par courriel</h3>
-      <p><a href="mailto:contact@gusetfrost.fr">contact@gusetfrost.fr</a><br>Commandes, produits, service apr&egrave;s-vente.</p>
+      <p><a href="mailto:contact@gusetfrost.fr">contact@gusetfrost.fr</a><br>Commandes, produits, service <span class="gfc-insecable">apr&egrave;s-vente</span>.</p>
     </div>
     <div class="gfc-carte gfc-carte--mail">
       <h3>Vos donn&eacute;es personnelles</h3>
