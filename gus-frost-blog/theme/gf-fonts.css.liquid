@@ -146,3 +146,18 @@
   color: rgb(var(--color-foreground)) !important;
 }
 
+/* ---------- Texte courant des nuanciers clairs : 85 % au lieu de 75 % ----------
+   Le texte des nuanciers 1, 2 et 3 est passe du noir (ou du brun) au vert fonce
+   de la marque le 11/09/2026. Dawn affiche le texte courant a 75 % d'opacite :
+   c'etait sans consequence avec du noir (9,3:1 sur le beige), mais le vert
+   fonce, plus clair, tombait alors a 4,47:1 sur le beige #efe7da — juste sous
+   le seuil de 4,5:1. A 85 % : 5,8:1 sur le beige, 6,4 sur le creme des
+   capsules, 6,7 sur le blanc. Les titres restent a 100 %, la hierarchie tient.
+   Meme specificite que la regle de Dawn, mais cette feuille est chargee apres. */
+body,
+.color-scheme-1,
+.color-scheme-2,
+.color-scheme-3 {
+  color: rgba(var(--color-foreground), 0.85);
+}
+
