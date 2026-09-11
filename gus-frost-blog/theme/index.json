@@ -130,7 +130,7 @@
             "text": "",
             "link_label": "",
             "link": "",
-            "image": "shopify://shop_images/gf-icone-service-client.png"
+            "image": "shopify://shop_images/gf-icone-service-client-fonce.png"
           }
         },
         "column_AE76pj": {
@@ -140,7 +140,7 @@
             "text": "",
             "link_label": "",
             "link": "",
-            "image": "shopify://shop_images/gf-icone-expedition.png"
+            "image": "shopify://shop_images/gf-icone-expedition-fonce.png"
           }
         },
         "column_nmRMxY": {
@@ -150,13 +150,13 @@
             "text": "",
             "link_label": "",
             "link": "",
-            "image": "shopify://shop_images/gf-icone-retractation.png"
+            "image": "shopify://shop_images/gf-icone-retractation-fonce.png"
           }
         },
         "column_CJnqAy": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/gf-icone-conseils.png",
+            "image": "shopify://shop_images/gf-icone-conseils-fonce.png",
             "title": "<strong>480 conseils gratuits</strong>",
             "text": "",
             "link_label": "",
@@ -184,7 +184,7 @@
         "columns_desktop": 4,
         "column_alignment": "center",
         "background_style": "none",
-        "color_scheme": "scheme-5",
+        "color_scheme": "scheme-1",
         "columns_mobile": "2",
         "swipe_on_mobile": false,
         "padding_top": 8,

@@ -19,7 +19,14 @@ des fichiers image (PNG/JPG/WEBP), un SVG televerse arrive en « fichier
 generique » et n'apparait pas dans la liste.
 
   python scripts/gen_icones.py --dest <dossier>
+  python scripts/gen_icones.py --dest <dossier> --couleur 314431 --suffixe fonce
 Puis televersement par scripts/upload_images.py (staged_upload + file_create).
+
+VARIANTES
+Vert clair #a8ff6a (defaut) : pour un fond vert fonce.
+Vert fonce #314431 (--suffixe fonce) : pour une capsule creme — c'est la
+version en ligne depuis le 11/09/2026, la page d'accueil reservant le couple
+vert fonce / vert clair a l'en-tete et au pied de page.
 """
 import argparse, math, os
 from PIL import Image, ImageDraw
@@ -28,7 +35,8 @@ S, SS = 512, 4
 N = S * SS
 U = N / 64.0
 W = int(round(2.6 * U))
-COUL = (168, 255, 106, 255)   # #a8ff6a
+COUL = (168, 255, 106, 255)   # #a8ff6a, modifiable par --couleur
+SUFFIXE = ""
 
 
 def P(x, y):
@@ -71,6 +79,9 @@ def toile():
 
 
 def sauver(img, dest, nom):
+    if SUFFIXE:
+        racine, ext = os.path.splitext(nom)
+        nom = "%s-%s%s" % (racine, SUFFIXE, ext)
     chemin = os.path.join(dest, nom)
     img.resize((S, S), Image.LANCZOS).save(chemin, "PNG", optimize=True)
     return chemin
@@ -124,7 +135,13 @@ def conseils(dest):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dest", required=True, help="dossier de sortie")
+    ap.add_argument("--couleur", default="a8ff6a", help="couleur du trait, hexa sans #")
+    ap.add_argument("--suffixe", default="", help="ajoute au nom de fichier (ex. fonce)")
     a = ap.parse_args()
+    global COUL, SUFFIXE
+    h = a.couleur.lstrip("#")
+    COUL = (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16), 255)
+    SUFFIXE = a.suffixe
     os.makedirs(a.dest, exist_ok=True)
     for f in (service_client, expedition, retractation, conseils):
         print("OK", f(a.dest))

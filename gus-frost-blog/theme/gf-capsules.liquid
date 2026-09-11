@@ -19,7 +19,7 @@
       n'est plus pleine largeur — reactivable par un reglage.
 
   LES FONDS INTERNES
-  Les nuanciers 2 (beige) et 3 (blanc) sont rendus transparents dans les
+  Les nuanciers 1 et 3 (blancs) et 2 (beige) sont rendus transparents dans les
   capsules : c'est la capsule qui porte la couleur, sinon on verrait un aplat
   rectangulaire deborder de l'arrondi. Les autres nuanciers sont conserves —
   le vert fonce de « Chez nous on montre patte blanche » reste vert.
@@ -41,8 +41,21 @@
   {%- style -%}
     #MainContent {
       background: {{ section.settings.fond_page }};
-      padding: {{ esp }}px 0 {{ esp_bas }}px;
+      padding: 0 0 {{ esp_bas }}px;
     }
+
+    {%- comment -%}
+      Pas de marge haute quand la page s'ouvre sur une banniere pleine largeur :
+      ces {{ esp }}px dessinaient une bande beige entre l'en-tete vert et l'image
+      (signale par Regis le 11/09/2026). L'air est pose SOUS la banniere a la
+      place. Si la banniere est elle-meme mise en capsule, la marge haute revient.
+    {%- endcomment -%}
+    {%- if section.settings.capsule_banniere -%}
+      #MainContent { padding-top: {{ esp }}px; }
+    {%- else -%}
+      #MainContent:not(:has(.banner)) { padding-top: {{ esp }}px; }
+      #MainContent > .shopify-section:has(.banner) { margin-bottom: {{ esp }}px; }
+    {%- endif -%}
 
     #MainContent > .shopify-section:not(:has(> .gf-capsules-marqueur))
       {%- unless section.settings.capsule_banniere %}:not(:has(.banner)){% endunless %} {
@@ -57,6 +70,7 @@
 
     /* La capsule porte la couleur : les aplats beige et blanc des sections
        deborderaient de l'arrondi. */
+    #MainContent > .shopify-section:not(:has(> .gf-capsules-marqueur)) .color-scheme-1,
     #MainContent > .shopify-section:not(:has(> .gf-capsules-marqueur)) .color-scheme-2,
     #MainContent > .shopify-section:not(:has(> .gf-capsules-marqueur)) .color-scheme-3 {
       background-color: transparent;
@@ -64,8 +78,14 @@
 
     @media screen and (max-width: 749px) {
       #MainContent {
-        padding: {{ esp_mobile }}px 0 {{ esp }}px;
+        padding-bottom: {{ esp }}px;
       }
+      {%- if section.settings.capsule_banniere -%}
+        #MainContent { padding-top: {{ esp_mobile }}px; }
+      {%- else -%}
+        #MainContent:not(:has(.banner)) { padding-top: {{ esp_mobile }}px; }
+        #MainContent > .shopify-section:has(.banner) { margin-bottom: {{ esp_mobile }}px; }
+      {%- endif -%}
 
       #MainContent > .shopify-section:not(:has(> .gf-capsules-marqueur))
         {%- unless section.settings.capsule_banniere %}:not(:has(.banner)){% endunless %} {
