@@ -129,3 +129,20 @@
    un leger resserrement rend les gros titres plus fermes. Sans effet sous 24 px. */
 .gf-article h1 { letter-spacing: -0.012em; }
 .gf-article h2 { letter-spacing: -0.008em; }
+
+/* ---------- Nuancier 6 « Sauge » : texte courant a pleine opacite ----------
+   Place ici parce que cette feuille est la seule des notres chargee sur TOUTES
+   les pages (en fin de <head>) : le nuancier peut etre applique a n'importe
+   quelle rubrique depuis l'editeur, la correction doit le suivre partout.
+
+   Dawn affiche le texte courant a 75 % d'opacite. Sur le fond sauge #b6bfa3,
+   le vert fonce passe alors de 5,5:1 a 3,4:1 — sous le seuil de 4,5:1 exige
+   pour un texte de 15px. Mesure le 11/09/2026 sur « Pourquoi Gus et Frost ? ».
+   `!important` : les feuilles de section sont chargees apres celle-ci. */
+.color-scheme-6,
+.color-scheme-6 p,
+.color-scheme-6 .rte,
+.color-scheme-6 .rte p {
+  color: rgb(var(--color-foreground)) !important;
+}
+

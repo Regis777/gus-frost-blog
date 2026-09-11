@@ -204,6 +204,17 @@
           "secondary_button_label": "#ffffff",
           "shadow": "#121212"
         }
+      },
+      "scheme-6": {
+        "settings": {
+          "background": "#b6bfa3",
+          "background_gradient": "",
+          "text": "#314431",
+          "button": "#314431",
+          "button_label": "#efe7da",
+          "secondary_button_label": "#314431",
+          "shadow": "#121212"
+        }
       }
     }
   },

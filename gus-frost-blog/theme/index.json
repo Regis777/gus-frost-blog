@@ -261,8 +261,8 @@
         "desktop_content_position": "top",
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
-        "section_color_scheme": "scheme-2",
-        "color_scheme": "scheme-2",
+        "section_color_scheme": "scheme-6",
+        "color_scheme": "scheme-6",
         "padding_top": 4,
         "padding_bottom": 4
       }
@@ -366,7 +366,8 @@
     "gf_capsules": {
       "type": "gf-capsules",
       "settings": {
-        "actif": true
+        "actif": true,
+        "bordure": "#9dae8b"
       }
     }
   },
