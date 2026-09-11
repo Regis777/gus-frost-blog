@@ -76,6 +76,28 @@
       background-color: transparent;
     }
 
+    {%- if section.settings.alternance -%}
+      {%- comment -%}
+        ALTERNANCE CREME / SAUGE (11/09/2026). Une capsule sur deux prend le
+        fond alterne, D'APRES SA POSITION : `:nth-child(even of ...)` ne compte
+        que les capsules (ni cette section, ni la banniere pleine largeur). Une
+        section ajoutee ou deplacee suit donc le rythme sans intervention.
+
+        Le texte y est force a pleine opacite : Dawn affiche le texte courant a
+        75 % (85 % chez nous), ce qui sur le sauge adouci tombe sous 4,5:1 —
+        mesure a 3,4:1 a 75 %. Seuls les textes sont vises : les boutons gardent
+        leur propre couleur.
+      {%- endcomment -%}
+      {%- capture capsule_n -%}:not(:has(> .gf-capsules-marqueur)){% unless section.settings.capsule_banniere %}:not(:has(.banner)){% endunless %}{%- endcapture -%}
+      #MainContent > .shopify-section:nth-child(even of {{ capsule_n }}) {
+        background: {{ section.settings.fond_alterne }};
+      }
+      #MainContent > .shopify-section:nth-child(even of {{ capsule_n }}) :is(.color-scheme-1, .color-scheme-2, .color-scheme-3),
+      #MainContent > .shopify-section:nth-child(even of {{ capsule_n }}) :is(p, .rte, .rte p, .caption, .article-card__excerpt, .accordion__content, summary) {
+        color: rgb(var(--color-foreground)) !important;
+      }
+    {%- endif -%}
+
     @media screen and (max-width: 749px) {
       #MainContent {
         padding-bottom: {{ esp }}px;
@@ -215,6 +237,20 @@
       "unit": "px",
       "default": 1220,
       "label": "Largeur maximale"
+    },
+    {
+      "type": "checkbox",
+      "id": "alternance",
+      "default": true,
+      "label": "Alterner crème et sauge",
+      "info": "Une capsule sur deux prend le fond alterné, selon sa position : une section ajoutée ou déplacée suit le rythme d'elle-même."
+    },
+    {
+      "type": "color",
+      "id": "fond_alterne",
+      "default": "#b6bfa3",
+      "label": "Fond alterné",
+      "info": "Par défaut, le sauge de la marque (#9dae8b) adouci sur le beige : le vert foncé y reste lisible (5,5:1)."
     },
     {
       "type": "checkbox",
