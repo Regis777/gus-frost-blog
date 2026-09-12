@@ -207,3 +207,18 @@
   .gf-article th { font-size: 1.4rem; padding: 0.6rem !important; }
   .gf-article td { padding: 0.6rem !important; }
 }
+
+/* ---------- Colonne de lecture sur grand ecran ----------
+   Mesure le 12/09/2026 a 1440px : 81 caracteres par ligne (fourchette de
+   confort : 60 a 75), et le titre debordait de 10px a gauche par rapport au
+   texte — la gouttiere de 1rem de .gf-article, utile sur telephone, ne l'est
+   pas ici.
+
+   On resserre le conteneur commun a l'article (titre, corps, encarts, bloc des
+   commentaires suivent) et on retire la gouttiere : le texte tombe a ~76
+   caracteres et tout s'aligne sur le meme bord. Sous 750px, rien ne change. */
+@media screen and (min-width: 750px) {
+  .article-template .page-width--narrow { max-width: 66rem; }
+  .gf-article { max-width: none; padding-left: 0; padding-right: 0; }
+}
+
