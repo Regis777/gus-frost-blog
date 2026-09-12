@@ -48,13 +48,22 @@
      sinon il reste carre. Redefini ICI, donc sans effet sur le reste du site. */
   .gf-contact { --inputs-radius: 12px; --inputs-radius-outset: 13px; }
 
+  /* ---------- Capsule : tout le formulaire dans un bloc beige ----------
+     Demande de Regis (12/09/2026) : un fond derriere les champs, les champs
+     restant blancs. Le beige #efe7da plutot que le creme #faf8f3 du bandeau
+     juste au-dessus : deux blocs creme colles se lisaient comme un seul.
+     Les cartes de motif passent en blanc, comme les champs. */
+  .gf-contact__capsule { background: #efe7da; border-radius: 20px; padding: 2.6rem 2.4rem 2.8rem; }
+  /* Dawn pose 3 a 4 rem au-dessus du bouton : trop d’air dans un bloc ferme. */
+  .gf-contact__capsule .contact__button { margin-top: 2rem; }
+
   /* ---------- Motif : 3 choix, un seul possible ---------- */
   .gf-motif { margin: 0 0 1.5rem; padding: 0; border: 0; }
   .gf-motif__legende { padding: 0; margin: 0 0 1.1rem; font-size: 1.6rem; font-weight: 600; color: #314431; }
   .gf-motif__choix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
   .gf-motif__opt { display: flex; gap: 1rem; align-items: center; margin: 0;
                    padding: 1.4rem 1.6rem; border: 1px solid #9dae8b; border-radius: 12px;
-                   background: #faf8f3; font-size: 1.6rem; line-height: 1.35; cursor: pointer; }
+                   background: #fff; font-size: 1.6rem; line-height: 1.35; cursor: pointer; }
   .gf-motif__opt input { flex: none; width: 1.8rem; height: 1.8rem; margin: 0; accent-color: #c16b47; }
   /* Survol reserve a la souris : au doigt, l’etat :hover reste colle sur la
      derniere carte touchee et on croit avoir coche deux motifs. */
@@ -76,6 +85,7 @@
   .gf-contact__ok { margin: 0; font-size: 1.8rem; }
 
   @media screen and (max-width: 749px) {
+    .gf-contact__capsule { padding: 1.8rem 1.6rem 2rem; border-radius: 16px; }
     .gf-motif__choix { grid-template-columns: 1fr; }
     /* Bouton pleine largeur au pouce : 122px de large, il se touchait mal. */
     .gf-contact .contact__button .button { width: 100%; }
@@ -116,6 +126,7 @@
           </ul>
         {%- endif -%}
 
+        <div class="gf-contact__capsule">
         <fieldset class="gf-motif">
           <legend class="gf-motif__legende">Votre demande concerne&nbsp;: <span aria-hidden="true">*</span></legend>
           <div class="gf-motif__choix">
@@ -252,6 +263,7 @@
 
         <div class="contact__button">
           <button type="submit" class="button">Envoyer</button>
+        </div>
         </div>
       {%- endif -%}
     {%- endform -%}
