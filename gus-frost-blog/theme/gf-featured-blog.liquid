@@ -37,6 +37,12 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem 1.5rem;
+    /* Les boutons frolaient le bord bas de la capsule (9px mesures le
+       12/09/2026). L'air se prend ICI, pas dans l'espacement bas de la section :
+       une marge interne laisse l'ecart entre la capsule du blog et celle de la
+       Foire aux Questions inchange, et elle survit au resserrage mobile de
+       gf-capsules, qui plafonne les paddings de section en !important. */
+    margin-bottom: 1.6rem;
   }
 
   @media screen and (max-width: 749px) {
