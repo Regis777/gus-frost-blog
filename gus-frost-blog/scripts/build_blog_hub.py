@@ -120,6 +120,8 @@ def main():
     # que 85px : c'est l'agrandissement lui-meme qui declenchait le debordement.
     style = (
         '<style>\n'
+        '  .gf-hub-compte{max-width:60ch;margin:0 auto .8rem;text-align:center;'
+        'font-size:1.6rem;}\n'
         '  .gf-hub-intro{max-width:60ch;margin:0 auto 2rem;text-align:center;}\n'
         '  .gf-hub-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;}\n'
         '  @media (min-width:750px){.gf-hub-grid{grid-template-columns:1fr 1fr;gap:2rem;}}\n'
@@ -161,8 +163,19 @@ def main():
         "organisés par thème. Chaque thème s'ouvre sur un guide principal, complété par des articles détaillés."
     )
     intro = '<p class="gf-hub-intro">%s</p>' % esc(intro_txt)
-    body = "%s\n%s\n%s\n<div class=\"gf-hub-grid\">\n%s\n</div>\n" % (
-        style, intro, search, "\n".join(sections))
+
+    # Compteur (12/09/2026), le meme que sous le titre des blogs : le visiteur
+    # mesure l'etendue du sommaire d'un coup d'oeil. n_art = articles reellement
+    # listes sur cette page (brouillons ecartes par --draft), donc le chiffre ne
+    # peut pas promettre plus que ce qui est cliquable.
+    sujet = {"chiens": "votre chien", "chats": "votre chat"}.get(BLOG, "")
+    compte_txt = "%d article%s" % (n_art, "s" if n_art > 1 else "")
+    if sujet:
+        compte_txt += " pour mieux comprendre %s" % sujet
+    compte = '<p class="gf-hub-compte">%s</p>' % esc(compte_txt)
+
+    body = "%s\n%s\n%s\n%s\n<div class=\"gf-hub-grid\">\n%s\n</div>\n" % (
+        style, compte, intro, search, "\n".join(sections))
 
     outp = os.path.join(ROOT, args.out)
     os.makedirs(os.path.dirname(outp), exist_ok=True)
