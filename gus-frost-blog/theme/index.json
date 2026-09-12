@@ -264,14 +264,18 @@
         "section_color_scheme": "scheme-2",
         "color_scheme": "scheme-2",
         "padding_top": 4,
-        "padding_bottom": 4
+        "padding_bottom": 4,
+        "heading_size": "h1"
       }
     },
     "featured_blog_Phh7Mz": {
-      "type": "featured-blog",
-      "name": "t:sections.featured-blog.presets.name",
+      "type": "gf-featured-blog",
+      "name": "Articles de blog maison",
       "settings": {
         "blog": "chats",
+        "blog_bouton_1": "chiens",
+        "blog_bouton_2": "chats",
+        "prefixe_bouton": "Conseils",
         "post_limit": 4,
         "heading": "Articles de blog",
         "heading_size": "h1",

@@ -14,6 +14,12 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  .gf-blog-compte {
+    /* le H1 a 4rem de marge basse : on remonte la ligne sous le titre */
+    margin: -2.4rem 0 2.5rem;
+    font-size: 1.6rem;
+  }
 {%- endstyle -%}
 
 {%- comment -%}
@@ -28,6 +34,30 @@
     <h1 class="title--primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       {{ blog.title | escape }}
     </h1>
+
+    {%- comment -%}
+      Nombre d'articles sous le titre (11/09/2026), pour que le visiteur mesure
+      l'etendue du blog. `paginate.items` = articles publies reellement listes
+      (brouillons exclus), a jour a chaque mise en ligne. Hors du H1 : le titre
+      reste « Chiens » / « Chats » pour Google et ne change pas a chaque cluster.
+    {%- endcomment -%}
+    {%- liquid
+      assign gf_nb_articles = paginate.items
+      case blog.handle
+        when 'chiens'
+          assign gf_sujet = 'votre chien'
+        when 'chats'
+          assign gf_sujet = 'votre chat'
+        else
+          assign gf_sujet = ''
+      endcase
+    -%}
+    {%- if gf_nb_articles > 0 -%}
+      <p class="gf-blog-compte">
+        {{- gf_nb_articles }}&nbsp;article{% if gf_nb_articles > 1 %}s{% endif %}
+        {%- if gf_sujet != '' %} pour mieux comprendre {{ gf_sujet }}{% endif -%}
+      </p>
+    {%- endif -%}
 
     <div class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}">
       {%- for article in blog.articles -%}
