@@ -68,6 +68,17 @@
     assign blogs_boutons = section.settings.blog.handle
   endif
   assign blogs_boutons = blogs_boutons | split: ','
+
+  # Melange (12/09/2026) : un article de chaque blog, en alternance, pris dans
+  # l'ordre de chaque blog (le plus recent d'abord). Alterner plutot que trier
+  # les deux blogs par date : nos articles sortent par paquets, un tri par date
+  # redonnerait quatre articles du meme blog le lendemain d'un cluster.
+  assign melanger = false
+  if section.settings.melanger_blogs and blogs_boutons.size > 1
+    assign melanger = true
+  endif
+  assign par_blog = section.settings.post_limit | plus: 1 | divided_by: 2
+  assign rendus = 0
 -%}
 <div class="blog color-{{ section.settings.color_scheme }} gradient{% if section.settings.heading == blank %} no-heading{% endif %}">
   <div class="page-width-desktop isolate{% if posts_displayed < 3 %} page-width-tablet{% endif %} section-{{ section.id }}-padding">
@@ -91,7 +102,42 @@
         class="blog__posts articles-wrapper contains-card contains-card--article{% if settings.blog_card_style == 'standard' %} contains-card--standard{% endif %} grid grid--peek grid--2-col-tablet grid--{{ section.settings.columns_desktop }}-col-desktop slider {% if posts_displayed > 2 %}slider--tablet{% else %}slider--mobile{% endif %}"
         role="list"
       >
-        {%- if section.settings.blog != blank and section.settings.blog.articles_count > 0 -%}
+        {%- if melanger -%}
+          {%- for tour in (1..par_blog) -%}
+            {%- assign rang = tour | minus: 1 -%}
+            {%- for handle in blogs_boutons -%}
+              {%- assign blog_carte = blogs[handle] -%}
+              {%- comment -%}
+                Parcours plutot qu'acces par rang (`articles[rang]`) : la liste
+                d'articles d'un blog est chargee paresseusement et ne repond pas
+                toujours a l'indexation.
+              {%- endcomment -%}
+              {%- for article in blog_carte.articles limit: par_blog -%}
+                {%- if forloop.index0 == rang and rendus < section.settings.post_limit -%}
+                  {%- assign rendus = rendus | plus: 1 -%}
+                  <li
+                    id="Slide-{{ section.id }}-{{ rendus }}"
+                    class="blog__post grid__item article slider__slide slider__slide--full-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                    {% if settings.animations_reveal_on_scroll %}
+                      data-cascade
+                      style="--animation-order: {{ rendus }};"
+                    {% endif %}
+                  >
+                    {% render 'article-card',
+                      blog: blog_carte,
+                      article: article,
+                      media_aspect_ratio: 1.66,
+                      show_image: section.settings.show_image,
+                      show_date: section.settings.show_date,
+                      show_author: section.settings.show_author,
+                      show_excerpt: true
+                    %}
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endfor -%}
+          {%- endfor -%}
+        {%- elsif section.settings.blog != blank and section.settings.blog.articles_count > 0 -%}
           {%- for article in section.settings.blog.articles limit: section.settings.post_limit -%}
             <li
               id="Slide-{{ section.id }}-{{ forloop.index }}"
@@ -307,6 +353,13 @@
       "type": "blog",
       "id": "blog_bouton_1",
       "label": "Premier bouton : blog"
+    },
+    {
+      "type": "checkbox",
+      "id": "melanger_blogs",
+      "default": false,
+      "label": "Mélanger les articles des deux blogs",
+      "info": "Un article de chaque blog des boutons, en alternance. Décoché, les articles viennent du seul blog choisi en haut."
     },
     {
       "type": "blog",

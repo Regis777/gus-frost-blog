@@ -274,6 +274,7 @@
         "blog": "chats",
         "blog_bouton_1": "chiens",
         "blog_bouton_2": "chats",
+        "melanger_blogs": true,
         "prefixe_bouton": "Conseils",
         "post_limit": 4,
         "heading": "Articles de blog",
