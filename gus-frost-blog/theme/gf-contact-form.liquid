@@ -1,0 +1,340 @@
+{%- comment -%}
+  Section « Nous contacter » — remplace la section Dawn `contact-form` sur la
+  page /pages/nous-contacter (gabarit page.contact).
+
+  Pourquoi une section maison (12/09/2026) :
+    1. Le formulaire remonte JUSTE SOUS le bandeau « 48 h ouvrees » : le corps
+       de la page ne contient plus que ce bandeau, la section suit aussitot.
+    2. Deux champs que Dawn n’a pas : le MOTIF (3 choix, un seul possible) et le
+       NUMERO DE COMMANDE. Tout champ `contact[...]` part dans l’e-mail recu,
+       dans l’ordre du DOM : motif, n° de commande, puis qui ecrit, puis le
+       message — l’ordre utile a la lecture.
+    3. Plus aucune adresse e-mail affichee sur la page : le formulaire est le
+       seul canal, sinon le visiteur hesite entre les deux.
+
+  Le n° de commande devient OBLIGATOIRE quand le motif choisi est « Retour ou
+  echange » ou « Question sur une commande ». C’est fait en basculant l’attribut
+  `required` (validation native du navigateur) : on n’intercepte JAMAIS l’envoi
+  du formulaire, sinon le jeton hCaptcha saute et Shopify repond 400 en silence
+  (piege deja rencontre sur la section « Votre question »).
+
+  Rappels : Dawn met 1rem = 10 px (racine a 62,5 %). Typographie FR : espaces
+  insecables (&nbsp;) avant : ; ! ? et dans les guillemets.
+{%- endcomment -%}
+{{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<style>
+  /* Palette de marque : creme #faf8f3, sauge #9dae8b, terracotta #c16b47,
+     vert fonce #314431. Le vert fonce donne 9,9:1 sur le creme. */
+  .gf-contact { color: #314431; }
+  .gf-contact .gf-contact__titre { margin: 0 0 1.6rem; }
+
+  /* Champs arrondis (14px sur les encarts, 13px sur le bouton) : Dawn dessine
+     le contour avec var(--inputs-radius) ; l’anneau de focus doit suivre,
+     sinon il reste carre. Redefini ICI, donc sans effet sur le reste du site. */
+  .gf-contact { --inputs-radius: 12px; --inputs-radius-outset: 13px; }
+
+  /* ---------- Motif : 3 choix, un seul possible ---------- */
+  .gf-motif { margin: 0 0 1.5rem; padding: 0; border: 0; }
+  .gf-motif__legende { padding: 0; margin: 0 0 1.1rem; font-size: 1.6rem; font-weight: 600; color: #314431; }
+  .gf-motif__choix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .gf-motif__opt { display: flex; gap: 1rem; align-items: center; margin: 0;
+                   padding: 1.4rem 1.6rem; border: 1px solid #9dae8b; border-radius: 12px;
+                   background: #faf8f3; font-size: 1.6rem; line-height: 1.35; cursor: pointer; }
+  .gf-motif__opt input { flex: none; width: 1.8rem; height: 1.8rem; margin: 0; accent-color: #c16b47; }
+  /* Survol reserve a la souris : au doigt, l’etat :hover reste colle sur la
+     derniere carte touchee et on croit avoir coche deux motifs. */
+  @media (hover: hover) {
+    .gf-motif__opt:hover { border-color: #c16b47; }
+  }
+  /* :has() plutot qu’une classe posee en JS : la carte reste soulignee meme si
+     le JavaScript ne s’execute pas. */
+  .gf-motif__opt:has(input:checked) { border-color: #c16b47; box-shadow: inset 0 0 0 1px #c16b47; }
+
+  /* ---------- Numero de commande ---------- */
+  .gf-contact__aide { display: block; margin: -0.9rem 0 2rem; font-size: 1.4rem; color: #314431; opacity: .8; }
+  .gf-contact .field { margin-bottom: 1.5rem; }
+
+  /* ---------- Rappel retours, sous le bouton ---------- */
+  .gf-contact__note { margin: 2.4rem 0 0; font-size: 1.5rem; line-height: 1.5; color: #314431; }
+  .gf-contact__note a { color: #314431; }
+
+  .gf-contact__ok { margin: 0; font-size: 1.8rem; }
+
+  @media screen and (max-width: 749px) {
+    .gf-motif__choix { grid-template-columns: 1fr; }
+    /* Bouton pleine largeur au pouce : 122px de large, il se touchait mal. */
+    .gf-contact .contact__button .button { width: 100%; }
+  }
+</style>
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="contact gf-contact page-width page-width--narrow section-{{ section.id }}-padding">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gf-contact__titre inline-richtext {{ section.settings.heading_size }}">
+        {{ section.settings.heading }}
+      </h2>
+    {%- else -%}
+      <h2 class="visually-hidden">Nous contacter</h2>
+    {%- endif -%}
+
+    {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="form-status form__message gf-contact__ok" role="status" tabindex="-1" autofocus>
+          {{- 'icon-success.svg' | inline_asset_content -}}
+          Merci, votre message est parti. Nous vous répondons sous 48&nbsp;h ouvrées.
+        </p>
+      {%- else -%}
+        {%- if form.errors -%}
+          <div class="form__message">
+            <h3 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>
+              {{- 'icon-error.svg' | inline_asset_content -}}
+              Votre message n’a pas pu être envoyé&nbsp;:
+            </h3>
+          </div>
+          <ul class="form-status-list caption-large" role="list">
+            <li>
+              <a href="#ContactForm-email" class="link">
+                {{ form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email }}
+              </a>
+            </li>
+          </ul>
+        {%- endif -%}
+
+        <fieldset class="gf-motif">
+          <legend class="gf-motif__legende">Votre demande concerne&nbsp;: <span aria-hidden="true">*</span></legend>
+          <div class="gf-motif__choix">
+            <label class="gf-motif__opt" for="ContactForm-motif-1">
+              <input
+                type="radio"
+                id="ContactForm-motif-1"
+                name="contact[Motif]"
+                value="Retour ou échange"
+                data-gf-commande="requis"
+                required
+              >
+              <span>Un retour ou un échange</span>
+            </label>
+            <label class="gf-motif__opt" for="ContactForm-motif-2">
+              <input
+                type="radio"
+                id="ContactForm-motif-2"
+                name="contact[Motif]"
+                value="Question sur une commande"
+                data-gf-commande="requis"
+                required
+              >
+              <span>Une commande en cours</span>
+            </label>
+            <label class="gf-motif__opt" for="ContactForm-motif-3">
+              <input
+                type="radio"
+                id="ContactForm-motif-3"
+                name="contact[Motif]"
+                value="Autre question"
+                required
+              >
+              <span>Une autre question</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <input
+            type="text"
+            id="ContactForm-commande"
+            class="field__input"
+            name="contact[Numéro de commande]"
+            aria-describedby="ContactForm-commande-aide"
+            placeholder="Numéro de commande"
+          >
+          <label class="field__label" for="ContactForm-commande">
+            Numéro de commande
+            <span data-gf-commande-etoile aria-hidden="true" hidden>*</span>
+          </label>
+        </div>
+        <small class="gf-contact__aide" id="ContactForm-commande-aide">
+          Il figure dans l’e-mail de confirmation, sous la forme #1042.
+        </small>
+
+        <div class="contact__fields">
+          <div class="field">
+            <input
+              class="field__input"
+              autocomplete="name"
+              type="text"
+              id="ContactForm-name"
+              name="contact[Nom]"
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              placeholder="Nom"
+            >
+            <label class="field__label" for="ContactForm-name">Nom</label>
+          </div>
+          <div class="field field--with-error">
+            <input
+              autocomplete="email"
+              type="email"
+              id="ContactForm-email"
+              class="field__input"
+              name="contact[email]"
+              spellcheck="false"
+              autocapitalize="off"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              aria-required="true"
+              required
+              {% if form.errors contains 'email' %}
+                aria-invalid="true"
+                aria-describedby="ContactForm-email-error"
+              {% endif %}
+              placeholder="E-mail"
+            >
+            <label class="field__label" for="ContactForm-email">
+              E-mail <span aria-hidden="true">*</span>
+            </label>
+            {%- if form.errors contains 'email' -%}
+              <small class="contact__field-error" id="ContactForm-email-error">
+                <span class="visually-hidden">Erreur&nbsp;:</span>
+                <span class="form__message">
+                  <span class="svg-wrapper">
+                    {{- 'icon-error.svg' | inline_asset_content -}}
+                  </span>
+                  {{- form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email -}}
+                </span>
+              </small>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="field">
+          <input
+            type="tel"
+            id="ContactForm-phone"
+            class="field__input"
+            autocomplete="tel"
+            name="contact[Téléphone]"
+            value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+            placeholder="Téléphone (facultatif)"
+          >
+          <label class="field__label" for="ContactForm-phone">Téléphone (facultatif)</label>
+        </div>
+
+        <div class="field">
+          <textarea
+            rows="8"
+            id="ContactForm-body"
+            class="text-area field__input"
+            name="contact[body]"
+            required
+            placeholder="Votre message"
+          >
+            {{- form.body -}}
+          </textarea>
+          <label class="form__label field__label" for="ContactForm-body">
+            Votre message <span aria-hidden="true">*</span>
+          </label>
+        </div>
+
+        <div class="contact__button">
+          <button type="submit" class="button">Envoyer</button>
+        </div>
+      {%- endif -%}
+    {%- endform -%}
+
+    <p class="gf-contact__note">
+      Retour ou échange&nbsp;: les conditions et les délais figurent dans notre
+      <a href="/policies/refund-policy">politique de remboursement</a>.
+    </p>
+  </div>
+</div>
+
+<script>
+  // Le numero de commande devient obligatoire pour un retour, un echange ou une
+  // question sur une commande. On ne touche QUE l’attribut `required` : la
+  // validation reste celle du navigateur, l’envoi du formulaire n’est jamais
+  // intercepte (sinon le jeton hCaptcha saute).
+  (function () {
+    var form = document.getElementById('ContactForm');
+    if (!form) return;
+    var champ = form.querySelector('#ContactForm-commande');
+    var etoile = form.querySelector('[data-gf-commande-etoile]');
+    var motifs = form.querySelectorAll('input[name="contact[Motif]"]');
+    if (!champ || !motifs.length) return;
+
+    function majCommande() {
+      var choisi = form.querySelector('input[name="contact[Motif]"]:checked');
+      var requis = !!(choisi && choisi.getAttribute('data-gf-commande') === 'requis');
+      champ.required = requis;
+      champ.setAttribute('aria-required', requis ? 'true' : 'false');
+      if (etoile) etoile.hidden = !requis;
+    }
+
+    Array.prototype.forEach.call(motifs, function (r) {
+      r.addEventListener('change', majCommande);
+    });
+    majCommande();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Contact Gus & Frost",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Écrivez-nous",
+      "label": "Titre"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Petit" },
+        { "value": "h1", "label": "Moyen" },
+        { "value": "h0", "label": "Grand" }
+      ],
+      "default": "h2",
+      "label": "Taille du titre"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Jeu de couleurs",
+      "default": "scheme-1"
+    },
+    { "type": "header", "content": "Marges de la section" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0, "max": 100, "step": 4, "unit": "px",
+      "label": "Marge haute", "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0, "max": 100, "step": 4, "unit": "px",
+      "label": "Marge basse", "default": 36
+    }
+  ],
+  "presets": [{ "name": "Contact Gus & Frost" }]
+}
+{% endschema %}
