@@ -107,6 +107,10 @@
               background: #faf8f3; border: 1px solid #9dae8b; border-radius: 20px;
               text-align: center; color: #314431; }
   .gf-merci:focus { outline: none; }
+  /* Shopify renvoie vers #ContactForm : sans marge d’ancre, le haut de la carte
+     (icone + debut du titre) passait sous l’en-tete fixe (117 px sur ordinateur). */
+  .gf-merci { scroll-margin-top: 15rem; }
+  @media screen and (max-width: 749px) { .gf-merci { scroll-margin-top: 9rem; } }
   .gf-merci__icone { margin: 0 0 1.6rem; font-size: 4.4rem; line-height: 1; }
   .gf-merci__titre { margin: 0 0 1.6rem; font-size: 3.2rem; line-height: 1.2; color: #314431; }
   .gf-merci__texte { margin: 0 0 .8rem; font-size: 1.8rem; line-height: 1.6; }
