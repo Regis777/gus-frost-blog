@@ -9,6 +9,12 @@
        NUMERO DE COMMANDE. Tout champ `contact[...]` part dans l’e-mail recu,
        dans l’ordre du DOM : motif, n° de commande, puis qui ecrit, puis le
        message — l’ordre utile a la lecture.
+       ATTENTION aux NOMS de champs : Shopify met une majuscule a CHAQUE mot du
+       nom dans l’e-mail (`contact[Numéro de commande]` -> « Numéro De
+       Commande »). D’ou les noms d’un seul mot : Commande, Message, Nom,
+       Motif, Téléphone. Corollaire : le message ne s’appelle plus `body`,
+       qui s’affichait « Corps » ; on perd le repeuplement `form.body` en cas
+       d’erreur de saisie, ce qui ne concerne que l’e-mail invalide.
     3. Plus aucune adresse e-mail affichee sur la page : le formulaire est le
        seul canal, sinon le visiteur hesite entre les deux.
 
@@ -170,7 +176,7 @@
             type="text"
             id="ContactForm-commande"
             class="field__input"
-            name="contact[Numéro de commande]"
+            name="contact[Commande]"
             aria-describedby="ContactForm-commande-aide"
             placeholder="Numéro de commande"
           >
@@ -250,12 +256,10 @@
             rows="8"
             id="ContactForm-body"
             class="text-area field__input"
-            name="contact[body]"
+            name="contact[Message]"
             required
             placeholder="Votre message"
-          >
-            {{- form.body -}}
-          </textarea>
+          ></textarea>
           <label class="form__label field__label" for="ContactForm-body">
             Votre message <span aria-hidden="true">*</span>
           </label>
