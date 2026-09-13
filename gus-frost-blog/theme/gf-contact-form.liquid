@@ -24,9 +24,21 @@
   du formulaire, sinon le jeton hCaptcha saute et Shopify repond 400 en silence
   (piege deja rencontre sur la section « Votre question »).
 
+  PAGE DE REMERCIEMENT (13/09/2026) : apres l’envoi, Shopify ramene le visiteur
+  sur la meme page avec ?contact_posted=true. Avant, on y revoyait le titre
+  « Nous contacter », le bandeau « Une question ? » et une ligne de merci perdue
+  en dessous. Desormais cette section rend TOUTE la page (titre + corps de page
+  compris, la section Dawn `main-page` a ete retiree du gabarit) et, une fois le
+  message parti, n’affiche plus qu’un bloc de remerciement.
+  Technique : `form.posted_successfully?` n’existe qu’a l’interieur du
+  {% form %}. Le formulaire est donc rendu d’abord dans un `capture`, qui pose
+  `gf_envoye`, puis on choisit quoi afficher. Test sans envoyer de message :
+  /pages/nous-contacter?contact_posted=true
+
   Rappels : Dawn met 1rem = 10 px (racine a 62,5 %). Typographie FR : espaces
   insecables (&nbsp;) avant : ; ! ? et dans les guillemets.
 {%- endcomment -%}
+{{ 'section-main-page.css' | asset_url | stylesheet_tag }}
 {{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
@@ -47,7 +59,9 @@
   /* Palette de marque : creme #faf8f3, sauge #9dae8b, terracotta #c16b47,
      vert fonce #314431. Le vert fonce donne 9,9:1 sur le creme. */
   .gf-contact { color: #314431; }
-  .gf-contact .gf-contact__titre { margin: 0 0 1.6rem; }
+  /* 3,2 rem au-dessus : l’ecart qu’il y avait entre les deux sections quand le
+     titre et le bandeau venaient encore de `main-page`. */
+  .gf-contact .gf-contact__titre { margin: 3.2rem 0 1.6rem; }
 
   /* Champs arrondis (14px sur les encarts, 13px sur le bouton) : Dawn dessine
      le contour avec var(--inputs-radius) ; l’anneau de focus doit suivre,
@@ -88,32 +102,34 @@
   .gf-contact__note { margin: 2.4rem 0 0; font-size: 1.5rem; line-height: 1.5; color: #314431; }
   .gf-contact__note a { color: #314431; }
 
-  .gf-contact__ok { margin: 0; font-size: 1.8rem; }
+  /* ---------- Page de remerciement ---------- */
+  .gf-merci { max-width: 60rem; margin: 1.6rem auto 0; padding: 4.8rem 3.2rem;
+              background: #faf8f3; border: 1px solid #9dae8b; border-radius: 20px;
+              text-align: center; color: #314431; }
+  .gf-merci:focus { outline: none; }
+  .gf-merci__icone { margin: 0 0 1.6rem; font-size: 4.4rem; line-height: 1; }
+  .gf-merci__titre { margin: 0 0 1.6rem; font-size: 3.2rem; line-height: 1.2; color: #314431; }
+  .gf-merci__texte { margin: 0 0 .8rem; font-size: 1.8rem; line-height: 1.6; }
+  .gf-merci__astuce { margin: 0; font-size: 1.5rem; line-height: 1.5; opacity: .8; }
+  .gf-merci .button { margin-top: 3.2rem; }
 
   @media screen and (max-width: 749px) {
     .gf-contact__capsule { padding: 1.8rem 1.6rem 2rem; border-radius: 16px; }
     .gf-motif__choix { grid-template-columns: 1fr; }
+    .gf-merci { padding: 3.2rem 2rem; border-radius: 16px; }
+    .gf-merci__titre { font-size: 2.6rem; }
+    .gf-merci__texte { font-size: 1.7rem; }
+    .gf-merci .button { width: 100%; }
     /* Bouton pleine largeur au pouce : 122px de large, il se touchait mal. */
     .gf-contact .contact__button .button { width: 100%; }
   }
 </style>
 
-<div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="contact gf-contact page-width page-width--narrow section-{{ section.id }}-padding">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="gf-contact__titre inline-richtext {{ section.settings.heading_size }}">
-        {{ section.settings.heading }}
-      </h2>
-    {%- else -%}
-      <h2 class="visually-hidden">Nous contacter</h2>
-    {%- endif -%}
-
+{%- assign gf_envoye = false -%}
+{%- capture gf_formulaire -%}
     {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
       {%- if form.posted_successfully? -%}
-        <p class="form-status form__message gf-contact__ok" role="status" tabindex="-1" autofocus>
-          {{- 'icon-success.svg' | inline_asset_content -}}
-          Merci, votre message est parti. Nous vous répondons sous 48&nbsp;h ouvrées.
-        </p>
+        {%- assign gf_envoye = true -%}
       {%- else -%}
         {%- if form.errors -%}
           <div class="form__message">
@@ -271,11 +287,42 @@
         </div>
       {%- endif -%}
     {%- endform -%}
+{%- endcapture -%}
 
-    <p class="gf-contact__note">
-      Retour ou échange&nbsp;: les conditions et les délais figurent dans notre
-      <a href="/policies/refund-policy">politique de remboursement</a>.
-    </p>
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="contact gf-contact page-width page-width--narrow section-{{ section.id }}-padding">
+    {%- if gf_envoye -%}
+      {%- comment -%}
+        id="ContactForm" : Shopify renvoie vers ?contact_posted=true#ContactForm,
+        l’ancre tombe ainsi sur le remerciement. Aucun doublon d’id : dans cet
+        etat, le formulaire capture n’est pas affiche.
+      {%- endcomment -%}
+      <div class="gf-merci" id="ContactForm" role="status" tabindex="-1">
+        <div class="gf-merci__icone" aria-hidden="true">💌</div>
+        <h1 class="gf-merci__titre">Merci, votre message est bien parti</h1>
+        <p class="gf-merci__texte">Nous vous répondons sous 48&nbsp;h ouvrées, à l’adresse e-mail que vous nous avez indiquée.</p>
+        <p class="gf-merci__astuce">Pas de réponse&nbsp;? Pensez à regarder dans vos courriers indésirables.</p>
+        <a class="button" href="{{ routes.root_url }}">Retour à l’accueil</a>
+      </div>
+    {%- else -%}
+      <h1 class="main-page-title page-title h0">{{ page.title | escape }}</h1>
+      <div class="rte">{{ page.content }}</div>
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="gf-contact__titre inline-richtext {{ section.settings.heading_size }}">
+          {{ section.settings.heading }}
+        </h2>
+      {%- else -%}
+        <h2 class="visually-hidden">Nous contacter</h2>
+      {%- endif -%}
+
+      {{ gf_formulaire }}
+
+      <p class="gf-contact__note">
+        Retour ou échange&nbsp;: les conditions et les délais figurent dans notre
+        <a href="/policies/refund-policy">politique de remboursement</a>.
+      </p>
+    {%- endif -%}
   </div>
 </div>
 
