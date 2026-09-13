@@ -155,7 +155,11 @@ function envoyerAccuse_(demande, test) {
     'Merci pour votre message' + NBSP + ': il nous est bien parvenu. Nous vous répondons sous 48' + NBSP + 'h ouvrées.',
     rappel ? '\n' + rappel : '',
     '',
-    'Si ce message est arrivé dans vos courriers indésirables, marquez-le comme «' + NBSP + 'non indésirable' + NBSP + '»' + NBSP + ': notre réponse arrivera ainsi dans votre boîte de réception.',
+    // Ne JAMAIS reparler de « courriers indésirables » ici : le 13/09/2026, le
+    // premier accusé qui le faisait est arrivé en Spam chez Gmail (SPF, DKIM et
+    // DMARC en ordre) — parler de spam est un signal classique des filtres. Ce
+    // conseil reste sur la page de remerciement du site, pas dans l'e-mail.
+    'Pour être sûr de recevoir notre réponse, ajoutez contact@gusetfrost.fr à vos contacts.',
     '',
     'À très vite,',
     'L’équipe Gus et Frost'
@@ -167,7 +171,7 @@ function envoyerAccuse_(demande, test) {
       '<p style="' + p + '">' + echapper_(bonjour) + '</p>' +
       '<p style="' + p + '">Merci pour votre message&nbsp;: il nous est bien parvenu. Nous vous répondons sous 48&nbsp;h ouvrées.</p>' +
       (rappel ? '<p style="' + p + '">' + echapper_(rappel) + '</p>' : '') +
-      '<p style="' + p + '">Si ce message est arrivé dans vos courriers indésirables, marquez-le comme «&nbsp;non indésirable&nbsp;»&nbsp;: notre réponse arrivera ainsi dans votre boîte de réception.</p>' +
+      '<p style="' + p + '">Pour être sûr de recevoir notre réponse, ajoutez contact@gusetfrost.fr à vos contacts.</p>' +
       '<p style="margin:0;">À très vite,<br>L’équipe Gus et Frost</p>' +
     '</div>';
 
