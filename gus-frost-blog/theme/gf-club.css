@@ -124,7 +124,13 @@
 .gfc-form-carte h2 { font-size: 24px; margin-bottom: 8px; }
 .gfc-form-carte .gfc-chapo { color: var(--gfc-vert-clair); font-size: 16px; margin: 0 0 20px; }
 .gfc-form { margin: 0; }
-.gfc-champs { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+/* align-items: end aligne les cadres de saisie entre eux, même quand un
+   libellé passe sur deux lignes (cas « Le prénom de votre chien ou de votre
+   chat » sur une grille à trois colonnes). */
+.gfc-champs {
+  display: grid; gap: 14px; align-items: end;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
 .gfc-champ { display: block; }
 .gfc-champ > span {
   display: block; font-family: var(--gfc-sans); font-size: 13.5px;
