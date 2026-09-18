@@ -28,19 +28,31 @@
   -%}
   <div class="gf-question page-width" id="gf-question">
     <div class="gf-question__box">
-      <h2 class="gf-question__titre">
-        {%- if vide -%}
-          {{ section.settings.titre_vide | replace: '[terme]', terme }}
-        {%- else -%}
-          {{ section.settings.titre }}
-        {%- endif -%}
-      </h2>
-      <p class="gf-question__intro">{{ section.settings.intro }}</p>
-
+      {%- comment -%}
+        Le titre et l’introduction sont DANS le formulaire, pas au-dessus : une
+        fois la question envoyee, ils doivent disparaitre avec lui. Les laisser
+        dehors donnait un bloc qui se contredisait -- « Vous n’avez pas trouve
+        votre reponse ? » surmontant un accuse de reception. Et la variable
+        form.posted_successfully? n’existe qu’a l’interieur du bloc form.
+      {%- endcomment -%}
       {%- form 'contact', id: 'GfQuestionBlog', class: 'gf-question__form' -%}
         {%- if form.posted_successfully? -%}
-          <p class="gf-question__ok" role="status" tabindex="-1" autofocus>{{ section.settings.merci }}</p>
+          <div class="gf-question__merci" role="status" tabindex="-1">
+            <svg class="gf-question__coche" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+            <p class="gf-question__ok">{{ section.settings.merci }}</p>
+          </div>
         {%- else -%}
+          <h2 class="gf-question__titre">
+            {%- if vide -%}
+              {{ section.settings.titre_vide | replace: '[terme]', terme }}
+            {%- else -%}
+              {{ section.settings.titre }}
+            {%- endif -%}
+          </h2>
+          <p class="gf-question__intro">{{ section.settings.intro }}</p>
+
           {%- if form.errors -%}
             <p class="gf-question__erreur" role="alert">{{ form.errors | default_errors }}</p>
           {%- endif -%}
@@ -122,12 +134,22 @@
     .gf-question__rgpd a{color:inherit;}
     .gf-question__bouton{padding:1rem 2.2rem;font-family:inherit;font-size:1.5rem;font-weight:600;letter-spacing:.03em;border:0;border-radius:999px;cursor:pointer;background:#314431;color:#efe7da;}
     .gf-question__bouton:hover{opacity:.9;}
-    .gf-question__ok{margin:0;padding:1.2rem 1.4rem;font-size:1.55rem;line-height:1.4;border-radius:.8rem;background:rgba(255,255,255,.5);color:#17110c;}
+    /* Etat «envoye» : c’est le seul contenu du bloc, il porte donc le poids
+       visuel qu’avait le titre. Panneau blanc plein (et non translucide) pour
+       qu’il se detache franchement du terracotta. */
+    .gf-question__merci{display:flex;align-items:flex-start;gap:1.2rem;margin:0;padding:2rem 2.2rem;border-radius:.8rem;background:#fff;}
+    .gf-question__merci:focus{outline:2px solid #17110c;outline-offset:3px;}
+    .gf-question__merci:focus:not(:focus-visible){outline:none;}
+    .gf-question__coche{flex:0 0 auto;width:3rem;height:3rem;margin-top:.1rem;fill:none;stroke:#314431;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+    .gf-question__ok{margin:0;font-size:1.9rem;line-height:1.4;font-weight:600;color:#17110c;}
     .gf-question__erreur{margin:0 0 1.2rem;font-size:1.45rem;line-height:1.35;color:#5c1410;font-weight:600;}
     @media screen and (max-width: 749px){
       .gf-question{margin:2rem auto 2.6rem;}
       .gf-question__box{padding:1.6rem 1.4rem;border-radius:1rem;}
       .gf-question__titre{font-size:1.8rem;}
+      .gf-question__merci{gap:1rem;padding:1.6rem 1.6rem;}
+      .gf-question__coche{width:2.6rem;height:2.6rem;}
+      .gf-question__ok{font-size:1.75rem;}
       .gf-question__bouton{width:100%;}
     }
   </style>
@@ -143,7 +165,7 @@
 
        `autofocus` sur un <p> ne suffit pas : le support est irregulier. */
     (function () {
-      var ok = document.querySelector('#gf-question .gf-question__ok');
+      var ok = document.querySelector('#gf-question .gf-question__merci');
       if (!ok) return;
       var amener = function () {
         ok.scrollIntoView({ block: 'center' });
