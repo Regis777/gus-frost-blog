@@ -96,32 +96,38 @@
   </div>
 
   <style>
-    .gf-question{margin:4rem auto 5rem;}
-    .gf-question__box{max-width:64rem;margin:0 auto;padding:2.8rem 3rem;border:1px solid rgba(var(--color-foreground),.14);border-radius:1.2rem;background:rgba(var(--color-foreground),.03);}
-    .gf-question__titre{margin:0 0 .8rem;font-size:2.2rem;line-height:1.25;}
-    .gf-question__intro{margin:0 0 2rem;font-size:1.6rem;line-height:1.45;color:rgba(var(--color-foreground),.85);}
-    .gf-question__champ{margin:0 0 1.4rem;}
-    .gf-question__champ label{display:block;margin:0 0 .5rem;font-size:1.5rem;font-weight:600;}
+    /* Fond terracotta de la marque (#c16b47, deja le filet des encarts d'article).
+       Les couleurs sont ecrites en dur et non en rgba(var(--color-foreground)) :
+       sur un fond impose, un texte qui suit le nuancier de la page n'a plus de
+       contraste garanti. Mesure sur #c16b47 : noir = 5,4:1 (AA), blanc = 3,8:1
+       (sous le seuil) — d'ou le texte noir.
+       Bloc resserre : marges, interlignes et hauteur du champ reduits. */
+    .gf-question{margin:2.4rem auto 3.2rem;}
+    .gf-question__box{max-width:64rem;margin:0 auto;padding:2rem 2.4rem;border:1px solid rgba(0,0,0,.18);border-radius:1.2rem;background:#c16b47;color:#17110c;}
+    .gf-question__titre{margin:0 0 .4rem;font-size:2rem;line-height:1.2;color:#17110c;}
+    .gf-question__intro{margin:0 0 1.2rem;font-size:1.55rem;line-height:1.35;color:rgba(0,0,0,.85);}
+    .gf-question__champ{margin:0 0 1rem;}
+    .gf-question__champ label{display:block;margin:0 0 .35rem;font-size:1.45rem;font-weight:600;color:#17110c;}
     .gf-question__champ textarea,
-    .gf-question__champ input[type=email]{width:100%;box-sizing:border-box;padding:1.1rem 1.4rem;font-family:inherit;font-size:1.6rem;line-height:1.4;border:1px solid rgba(var(--color-foreground),.25);border-radius:.8rem;background:rgb(var(--color-background));color:rgb(var(--color-foreground));}
-    .gf-question__champ textarea{resize:vertical;min-height:9rem;}
+    .gf-question__champ input[type=email]{width:100%;box-sizing:border-box;padding:.9rem 1.2rem;font-family:inherit;font-size:1.55rem;line-height:1.35;border:1px solid rgba(0,0,0,.25);border-radius:.8rem;background:#fff;color:#17110c;}
+    .gf-question__champ textarea{resize:vertical;min-height:7rem;}
     .gf-question__champ textarea::placeholder,
-    .gf-question__champ input[type=email]::placeholder{color:rgba(var(--color-foreground),.5);}
+    .gf-question__champ input[type=email]::placeholder{color:rgba(0,0,0,.5);}
     .gf-question__champ textarea:focus,
-    .gf-question__champ input[type=email]:focus{outline:2px solid rgba(var(--color-foreground),.5);outline-offset:1px;}
-    .gf-question__optin{display:flex;align-items:flex-start;gap:.8rem;margin:0 0 1.2rem;}
-    .gf-question__optin input{margin-top:.35rem;flex:0 0 auto;width:1.6rem;height:1.6rem;}
-    .gf-question__optin label{font-size:1.4rem;line-height:1.4;color:rgba(var(--color-foreground),.85);}
-    .gf-question__rgpd{margin:0 0 1.8rem;font-size:1.3rem;line-height:1.4;color:rgba(var(--color-foreground),.65);}
+    .gf-question__champ input[type=email]:focus{outline:2px solid #17110c;outline-offset:1px;}
+    .gf-question__optin{display:flex;align-items:flex-start;gap:.7rem;margin:0 0 .8rem;}
+    .gf-question__optin input{margin-top:.3rem;flex:0 0 auto;width:1.6rem;height:1.6rem;accent-color:#314431;}
+    .gf-question__optin label{font-size:1.4rem;line-height:1.35;color:rgba(0,0,0,.85);}
+    .gf-question__rgpd{margin:0 0 1.2rem;font-size:1.3rem;line-height:1.35;color:rgba(0,0,0,.78);}
     .gf-question__rgpd a{color:inherit;}
-    .gf-question__bouton{padding:1.2rem 2.6rem;font-family:inherit;font-size:1.5rem;font-weight:600;letter-spacing:.03em;border:0;border-radius:999px;cursor:pointer;background:rgb(var(--color-foreground));color:rgb(var(--color-background));}
+    .gf-question__bouton{padding:1rem 2.2rem;font-family:inherit;font-size:1.5rem;font-weight:600;letter-spacing:.03em;border:0;border-radius:999px;cursor:pointer;background:#314431;color:#efe7da;}
     .gf-question__bouton:hover{opacity:.9;}
-    .gf-question__ok{margin:0;padding:1.4rem 1.6rem;font-size:1.6rem;line-height:1.45;border-radius:.8rem;background:rgba(var(--color-foreground),.07);}
-    .gf-question__erreur{margin:0 0 1.4rem;font-size:1.5rem;line-height:1.4;color:#b3261e;}
+    .gf-question__ok{margin:0;padding:1.2rem 1.4rem;font-size:1.55rem;line-height:1.4;border-radius:.8rem;background:rgba(255,255,255,.5);color:#17110c;}
+    .gf-question__erreur{margin:0 0 1.2rem;font-size:1.45rem;line-height:1.35;color:#5c1410;font-weight:600;}
     @media screen and (max-width: 749px){
-      .gf-question{margin:3rem auto 4rem;}
-      .gf-question__box{padding:2rem 1.8rem;border-radius:1rem;}
-      .gf-question__titre{font-size:1.9rem;}
+      .gf-question{margin:2rem auto 2.6rem;}
+      .gf-question__box{padding:1.6rem 1.4rem;border-radius:1rem;}
+      .gf-question__titre{font-size:1.8rem;}
       .gf-question__bouton{width:100%;}
     }
   </style>
