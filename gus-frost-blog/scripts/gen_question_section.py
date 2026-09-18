@@ -140,6 +140,29 @@ T = u"""{%- comment -%}
   </style>
 
   <script>
+    /* Retour apres envoi : amener le remerciement sous les yeux.
+
+       Le bloc est sous les resultats de recherche, soit ~3 000 px plus bas.
+       Shopify renvoie bien sur `?contact_posted=true#GfQuestionBlog`, mais le
+       saut d'ancre est mis en defaut par les vignettes en chargement differe,
+       qui rallongent la page APRES le saut : le visiteur retombe en haut et
+       croit que son envoi n'a rien donne. Constate le 18/09/2026.
+
+       `autofocus` sur un <p> ne suffit pas : le support est irregulier. */
+    (function () {
+      var ok = document.querySelector('#gf-question .gf-question__ok');
+      if (!ok) return;
+      var amener = function () {
+        ok.scrollIntoView({ block: 'center' });
+        try { ok.focus({ preventScroll: true }); } catch (e) { ok.focus(); }
+      };
+      amener();
+      /* Deuxieme passage une fois les images posees, sinon la position bouge. */
+      window.addEventListener('load', function () { setTimeout(amener, 120); });
+    })();
+  </script>
+
+  <script>
     /* Klaviyo en second canal.
 
        ON NE TOUCHE PAS A L'ENVOI DU FORMULAIRE. Shopify protege les
