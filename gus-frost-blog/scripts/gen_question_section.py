@@ -31,32 +31,45 @@ T = u"""{%- comment -%}
 
   Rappel Dawn : 1rem = 10 px (racine a 62,5 %).
 {%- endcomment -%}
-{%- if search.performed -%}
-  {%- liquid
-    assign terme = search.terms | escape
-    assign vide = false
-    if search.results_count == 0
-      assign vide = true
-    endif
-  -%}
-  <div class="gf-question page-width" id="gf-question">
-    <div class="gf-question__box">
-      {%- comment -%}
-        Le titre et l@introduction sont DANS le formulaire, pas au-dessus : une
-        fois la question envoyee, ils doivent disparaitre avec lui. Les laisser
-        dehors donnait un bloc qui se contredisait -- <<~Vous n@avez pas trouve
-        votre reponse~?~>> surmontant un accuse de reception. Et la variable
-        form.posted_successfully? n@existe qu@a l@interieur du bloc form.
-      {%- endcomment -%}
-      {%- form 'contact', id: 'GfQuestionBlog', class: 'gf-question__form' -%}
-        {%- if form.posted_successfully? -%}
-          <div class="gf-question__merci" role="status" tabindex="-1">
-            <svg class="gf-question__coche" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M20 6 9 17l-5-5"/>
-            </svg>
-            <p class="gf-question__ok">{{ section.settings.merci }}</p>
-          </div>
-        {%- else -%}
+{%- liquid
+  assign terme = search.terms | escape
+  assign vide = false
+  if search.results_count == 0
+    assign vide = true
+  endif
+-%}
+{%- comment -%}
+  ATTENTION a la structure, elle repare deux defauts mesures en ligne :
+
+  1. Le bloc doit pouvoir s@afficher SANS recherche. Apres l@envoi, Shopify
+     renvoie sur /search?contact_posted=true en laissant tomber le q= de la
+     recherche. Un garde search.performed en tete de section faisait donc
+     disparaitre TOUTE la section au retour, accuse de reception compris :
+     le visiteur croyait son envoi perdu. Constate le 19/09/2026.
+
+  2. Le titre et l@introduction doivent etre DANS le formulaire, pas au-dessus,
+     sinon ils survivent a l@envoi et <<~Vous n@avez pas trouve votre reponse~?~>>
+     surmonte l@accuse de reception.
+
+  D@ou la capture : form.posted_successfully? n@existe qu@a l@interieur du bloc
+  form, on rend donc le contenu d@abord, on releve l@etat au passage, et on
+  n@enveloppe que s@il y a quelque chose a montrer.
+{%- endcomment -%}
+{%- capture gf_contenu -%}
+  {%- form 'contact', id: 'GfQuestionBlog', class: 'gf-question__form' -%}
+    {%- if form.posted_successfully? -%}
+      {%- assign gf_etat = 'merci' -%}
+      <div class="gf-question__merci" role="status" tabindex="-1">
+        <svg class="gf-question__coche" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M20 6 9 17l-5-5"/>
+        </svg>
+        <div class="gf-question__merci-texte">
+          <p class="gf-question__ok">{{ section.settings.merci_titre }}</p>
+          <p class="gf-question__ok-detail">{{ section.settings.merci }}</p>
+        </div>
+      </div>
+    {%- elsif search.performed -%}
+      {%- assign gf_etat = 'formulaire' -%}
           <h2 class="gf-question__titre">
             {%- if vide -%}
               {{ section.settings.titre_vide | replace: '[terme]', terme }}
@@ -103,9 +116,13 @@ T = u"""{%- comment -%}
           </p>
 
           <button type="submit" class="gf-question__bouton">{{ section.settings.bouton }}</button>
-        {%- endif -%}
-      {%- endform -%}
-    </div>
+    {%- endif -%}
+  {%- endform -%}
+{%- endcapture -%}
+
+{%- if gf_etat -%}
+  <div class="gf-question page-width" id="gf-question" data-gfq-etat="{{ gf_etat }}">
+    <div class="gf-question__box">{{ gf_contenu }}</div>
 
     {%- comment -%} ---------- Configuration passee au JS (Klaviyo) ---------- {%- endcomment -%}
     <script type="application/json" data-gfq-question-config>
@@ -154,7 +171,9 @@ T = u"""{%- comment -%}
     .gf-question__merci:focus{outline:2px solid #17110c;outline-offset:3px;}
     .gf-question__merci:focus:not(:focus-visible){outline:none;}
     .gf-question__coche{flex:0 0 auto;width:3rem;height:3rem;margin-top:.1rem;fill:none;stroke:#314431;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
-    .gf-question__ok{margin:0;font-size:1.9rem;line-height:1.4;font-weight:600;color:#17110c;}
+    .gf-question__merci-texte{min-width:0;}
+    .gf-question__ok{margin:0 0 .5rem;font-size:2.1rem;line-height:1.25;font-weight:600;color:#17110c;}
+    .gf-question__ok-detail{margin:0;font-size:1.5rem;line-height:1.45;color:rgba(0,0,0,.82);}
     .gf-question__erreur{margin:0 0 1.2rem;font-size:1.45rem;line-height:1.35;color:#5c1410;font-weight:600;}
     @media screen and (max-width: 749px){
       .gf-question{margin:2rem auto 2.6rem;}
@@ -162,7 +181,8 @@ T = u"""{%- comment -%}
       .gf-question__titre{font-size:1.8rem;}
       .gf-question__merci{gap:1rem;padding:1.6rem 1.6rem;}
       .gf-question__coche{width:2.6rem;height:2.6rem;}
-      .gf-question__ok{font-size:1.75rem;}
+      .gf-question__ok{font-size:1.9rem;}
+      .gf-question__ok-detail{font-size:1.45rem;}
       .gf-question__bouton{width:100%;}
     }
   </style>
@@ -348,10 +368,16 @@ T = u"""{%- comment -%}
       "default": "Envoyer ma question"
     },
     {
+      "type": "text",
+      "id": "merci_titre",
+      "label": "Confirmation~: titre",
+      "default": "Merci, votre question est bien arrivee~!"
+    },
+    {
       "type": "textarea",
       "id": "merci",
-      "label": "Message de confirmation",
-      "default": "Merci~! Votre question est bien arrivee. Nous vous repondons par e-mail, et si le sujet manque au blog, il rejoint notre liste d@articles a ecrire."
+      "label": "Confirmation~: explication",
+      "default": "Nous vous repondons par e-mail. Si le sujet manque au blog, il rejoint notre liste d@articles a ecrire."
     },
     {
       "type": "header",
@@ -407,7 +433,9 @@ ACCENTS = [
     (u"elle n’est ni revendue ni cedee. Vous pouvez demander sa suppression a tout moment",
      u"elle n’est ni revendue ni cédée. Vous pouvez demander sa suppression à tout moment"),
     (u"Libelle du bouton", u"Libellé du bouton"),
-    (u"Votre question est bien arrivee.", u"Votre question est bien arrivée."),
+    (u"Merci, votre question est bien arrivee", u"Merci, votre question est bien arrivée"),
+    (u"Nous vous repondons par e-mail. Si le sujet manque au blog",
+     u"Nous vous répondons par e-mail. Si le sujet manque au blog"),
     (u"il rejoint notre liste d’articles a ecrire.",
      u"il rejoint notre liste d’articles à écrire."),
     (u"Cle vide = seul l’e-mail fonctionne.", u"Clé vide = seul l’e-mail fonctionne."),
