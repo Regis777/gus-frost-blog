@@ -13,7 +13,7 @@
   la case vit donc sur la page panier, avant la validation de la commande.
 
   Pose : Boutique en ligne › Thèmes › Personnaliser › page Panier ›
-  Ajouter une section › « Renoncement à la rétractation ».
+  Ajouter une section › « Renoncement rétractation ».
 {%- endcomment -%}
 
 {%- assign tag_cible = section.settings.tag | default: 'renoncement' -%}
@@ -160,7 +160,7 @@
 
 {% schema %}
 {
-  "name": "Renoncement à la rétractation",
+  "name": "Renoncement rétractation",
   "tag": "section",
   "enabled_on": { "templates": ["cart"] },
   "settings": [
@@ -207,6 +207,6 @@
       "info": "C'est sous ce libellé que l'accord apparaîtra sur la commande, dans l'admin. Ne pas le changer une fois des commandes passées."
     }
   ],
-  "presets": [{ "name": "Renoncement à la rétractation" }]
+  "presets": [{ "name": "Renoncement rétractation" }]
 }
 {% endschema %}
