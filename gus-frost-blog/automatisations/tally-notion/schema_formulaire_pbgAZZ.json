@@ -1,0 +1,2788 @@
+[
+ {
+  "type": "FORM_TITLE",
+  "groupType": "TEXT",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Votre bilan comportemental"
+    ]
+   ],
+   "title": "Votre bilan comportemental"
+  },
+  "uuid": "93a38a8a-582c-4839-a063-e88ccf9903ff",
+  "groupUuid": "9d059570-1cc3-45e0-9997-c5bf4a2658d2"
+ },
+ {
+  "type": "TEXT",
+  "groupType": "TEXT",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Prenez le temps&nbsp;: ce questionnaire est la matière première de votre bilan. Comptez une vingtaine de minutes. Plus vos réponses sont précises, plus le bilan le sera."
+    ]
+   ]
+  },
+  "uuid": "6126f729-62cb-42e9-b6cb-4aa19a047f0b",
+  "groupUuid": "928f2782-9cd0-402b-86b8-a57964be11f9"
+ },
+ {
+  "type": "HIDDEN_FIELDS",
+  "groupType": "HIDDEN_FIELDS",
+  "payload": {
+   "hiddenFields": [
+    {
+     "uuid": "c1bb2ba1-c454-4a46-b2bd-d6ac26579d21",
+     "name": "order_id"
+    },
+    {
+     "uuid": "872e22a3-4474-4df2-920e-97b13f3ea0ac",
+     "name": "email"
+    },
+    {
+     "uuid": "a2d0fa28-494c-4edd-a7cf-48de34c12b40",
+     "name": "first_name"
+    }
+   ]
+  },
+  "uuid": "0423c39d-a1aa-40ff-8536-9aa505fac073",
+  "groupUuid": "4fb8ee72-d7cb-4900-b328-011826f412a4"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Votre prénom"
+    ]
+   ]
+  },
+  "uuid": "84c698f8-6b56-4573-b232-b00e9cef0e26",
+  "groupUuid": "f56cdb38-b48c-4806-8627-fbaeb0b2938b"
+ },
+ {
+  "type": "INPUT_TEXT",
+  "groupType": "INPUT_TEXT",
+  "payload": {
+   "isRequired": true,
+   "name": "Prénom du client",
+   "placeholder": ""
+  },
+  "uuid": "9460cc4e-0207-4068-aa28-7ea0e1833ec9",
+  "groupUuid": "086db5d0-a0b6-4748-b43f-be912e903901"
+ },
+ {
+  "type": "PAGE_BREAK",
+  "groupType": "PAGE_BREAK",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false
+  },
+  "uuid": "d951879d-ba64-4b37-8a57-179cc7b3b69d",
+  "groupUuid": "8ba89ce7-891d-48fb-a825-97deda94abfa"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Votre chien"
+    ]
+   ]
+  },
+  "uuid": "3bd9e95e-708f-4dc7-9271-41650baca5b7",
+  "groupUuid": "d841d728-8132-4e0b-9006-b629f19d2bfa"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Son nom"
+    ]
+   ]
+  },
+  "uuid": "3502b1eb-5eff-4104-a0da-2efb264636f7",
+  "groupUuid": "19aa2dd4-cf61-4d3e-bca2-2feaf274e88b"
+ },
+ {
+  "type": "INPUT_TEXT",
+  "groupType": "INPUT_TEXT",
+  "payload": {
+   "isRequired": true,
+   "name": "Nom du chien",
+   "placeholder": ""
+  },
+  "uuid": "61ff2355-db85-4da9-a53b-002c61d7caff",
+  "groupUuid": "3b84b2a2-b70d-4e87-8a06-615bdb74a6a9"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Son sexe"
+    ]
+   ]
+  },
+  "uuid": "45027729-d95f-442e-821c-c99db0d771fa",
+  "groupUuid": "134deb0c-711d-4af3-96f1-1d5c041cb9be"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Sexe",
+   "text": "Mâle"
+  },
+  "uuid": "a62efa02-b8d0-43dd-87e3-e17dc1c03a34",
+  "groupUuid": "194e59ab-b898-475b-98ee-8be1f3af9112"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Sexe",
+   "text": "Femelle"
+  },
+  "uuid": "77d1a965-aad6-47d6-8771-ca136f1f8952",
+  "groupUuid": "194e59ab-b898-475b-98ee-8be1f3af9112"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Est-il stérilisé ou castré&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "25dc6803-80fb-427d-8f82-5c7917a2ee8d",
+  "groupUuid": "91c2927f-d9a7-41f9-b95f-874968f79e63"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Stérilisé",
+   "text": "Oui"
+  },
+  "uuid": "a6440597-295d-4be5-a462-ec9a97309659",
+  "groupUuid": "2241a9f7-604b-4b0b-8216-97fb2cdc6fdd"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Stérilisé",
+   "text": "Non"
+  },
+  "uuid": "7431de8f-eff4-40ba-a64e-9ef1382f1c05",
+  "groupUuid": "2241a9f7-604b-4b0b-8216-97fb2cdc6fdd"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Stérilisé",
+   "text": "Je ne sais pas"
+  },
+  "uuid": "55d617e4-3a1b-4f47-bed7-838e6829e4e5",
+  "groupUuid": "2241a9f7-604b-4b0b-8216-97fb2cdc6fdd"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Si oui, à quel âge&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "ffccfedd-334a-48c4-9bce-7e632d358405",
+  "groupUuid": "261aa538-68fc-4de7-ae53-83dd6f4d8ec8"
+ },
+ {
+  "type": "INPUT_TEXT",
+  "groupType": "INPUT_TEXT",
+  "payload": {
+   "isRequired": false,
+   "name": "Âge à la stérilisation",
+   "placeholder": "Par exemple : vers 8 mois"
+  },
+  "uuid": "13728676-af4f-4d1c-a76b-d8a05160ed2f",
+  "groupUuid": "4fc569b2-57cf-4996-a008-afd5e55fcbe2"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Sa race, ou le croisement que vous supposez"
+    ]
+   ]
+  },
+  "uuid": "d8e68add-e7dc-4955-b524-4f4ec7b7f9b2",
+  "groupUuid": "9b064b8c-97f8-451d-8576-5187ccf92e65"
+ },
+ {
+  "type": "INPUT_TEXT",
+  "groupType": "INPUT_TEXT",
+  "payload": {
+   "isRequired": true,
+   "name": "Race",
+   "placeholder": ""
+  },
+  "uuid": "4b847fd4-9428-4267-b85e-f47d56640829",
+  "groupUuid": "bd8c3567-e448-4788-a87c-a9f6e037c69a"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Son âge aujourd'hui"
+    ]
+   ]
+  },
+  "uuid": "f5f3307a-ca01-42ff-9331-7dac36e83f7b",
+  "groupUuid": "544d797f-995d-403f-af9b-378ab7e43d05"
+ },
+ {
+  "type": "INPUT_TEXT",
+  "groupType": "INPUT_TEXT",
+  "payload": {
+   "isRequired": true,
+   "name": "Âge",
+   "placeholder": "Par exemple : 3 ans et 4 mois"
+  },
+  "uuid": "9431eab4-bd23-43ea-a04a-4bb63b5a1e58",
+  "groupUuid": "435c8be9-8408-46c8-86b1-2f7590c3e714"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Son poids approximatif, en kilos"
+    ]
+   ]
+  },
+  "uuid": "09dbeabd-dafb-4573-a1e4-3428614d09ac",
+  "groupUuid": "1ab35b5d-70b2-475a-bab6-0f5d1a4ef224"
+ },
+ {
+  "type": "INPUT_NUMBER",
+  "groupType": "INPUT_NUMBER",
+  "payload": {
+   "isRequired": false,
+   "name": "Poids",
+   "placeholder": ""
+  },
+  "uuid": "97656d99-72b0-49fd-9a99-f6c05a98870f",
+  "groupUuid": "4fdc3321-9947-47ab-b694-3899e5219e67"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "D'où vient-il&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "94343083-29c4-4212-9e2c-fbe7a7335c50",
+  "groupUuid": "75e49cbd-f188-45ae-9107-1c55c0001d58"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Provenance",
+   "text": "Élevage"
+  },
+  "uuid": "9b425c82-1244-4adf-bcc9-4110b5de6977",
+  "groupUuid": "1d48bf18-9b1f-4362-81de-051bf5181b86"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Provenance",
+   "text": "Refuge"
+  },
+  "uuid": "2c68c2e1-4462-44c7-8bad-33f138c39f94",
+  "groupUuid": "1d48bf18-9b1f-4362-81de-051bf5181b86"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Provenance",
+   "text": "Association"
+  },
+  "uuid": "b34f4a9f-ac29-428a-9ae7-07c7f5042741",
+  "groupUuid": "1d48bf18-9b1f-4362-81de-051bf5181b86"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Provenance",
+   "text": "Particulier"
+  },
+  "uuid": "b1c8afac-1416-4fc8-973c-ed6b7338e43d",
+  "groupUuid": "1d48bf18-9b1f-4362-81de-051bf5181b86"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Provenance",
+   "text": "Animalerie"
+  },
+  "uuid": "81d02287-6477-44c6-bde0-05113a1571d4",
+  "groupUuid": "1d48bf18-9b1f-4362-81de-051bf5181b86"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 5,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Provenance",
+   "text": "Trouvé"
+  },
+  "uuid": "560cc51e-916d-4bf0-893f-962994b0767a",
+  "groupUuid": "1d48bf18-9b1f-4362-81de-051bf5181b86"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 6,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Provenance",
+   "text": "Né chez vous"
+  },
+  "uuid": "eaf9e405-4593-4e37-b17b-e145163f4263",
+  "groupUuid": "1d48bf18-9b1f-4362-81de-051bf5181b86"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Quel âge avait-il, en semaines, quand il est arrivé chez vous&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "b2cbe705-7d62-491f-aa8b-b95c6565a157",
+  "groupUuid": "7571ffe1-922c-4331-a9c8-5906a62b948c"
+ },
+ {
+  "type": "INPUT_NUMBER",
+  "groupType": "INPUT_NUMBER",
+  "payload": {
+   "isRequired": true,
+   "name": "Âge à l'arrivée (semaines)",
+   "placeholder": ""
+  },
+  "uuid": "1e409e7a-1f74-4fbd-b114-c57015c3adff",
+  "groupUuid": "e77a56ea-ce7c-47fb-abc1-c7bf9a9133ae"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Date de son arrivée dans le foyer"
+    ]
+   ]
+  },
+  "uuid": "ceba7e9b-58de-4e31-a85d-ff8720f0d0f7",
+  "groupUuid": "7f1d1697-d452-4918-bdee-492d2888d930"
+ },
+ {
+  "type": "INPUT_DATE",
+  "groupType": "INPUT_DATE",
+  "payload": {
+   "isRequired": true,
+   "name": "Date d'arrivée",
+   "placeholder": ""
+  },
+  "uuid": "df7ecff6-c553-4517-9e52-864c112276cf",
+  "groupUuid": "470b8853-335d-49dd-9170-e8fec466a31f"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Ce que vous savez de ses quatre premiers mois"
+    ]
+   ]
+  },
+  "uuid": "a85f9174-1eef-493f-b1c3-0254c4b8d2ad",
+  "groupUuid": "f4418b72-507c-4af3-b08e-7b6882836179"
+ },
+ {
+  "type": "TEXTAREA",
+  "groupType": "TEXTAREA",
+  "payload": {
+   "isRequired": false,
+   "name": "Quatre premiers mois",
+   "placeholder": "Portée, mère, fratrie, conditions de vie. Si vous ne savez pas, dites-le : c'est déjà une information."
+  },
+  "uuid": "c6d16d96-ba9c-43e9-8638-6f3f1cdf34e3",
+  "groupUuid": "0b8d89a3-e60f-46c5-bd9e-7a89ddce8e8f"
+ },
+ {
+  "type": "PAGE_BREAK",
+  "groupType": "PAGE_BREAK",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false
+  },
+  "uuid": "d5e6f517-f286-49da-a475-eaf72c5972e7",
+  "groupUuid": "079ebfbf-fb89-41de-b6eb-c9988af45754"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Ce qui vous amène"
+    ]
+   ]
+  },
+  "uuid": "203d7936-4f3f-41c9-974a-dead520d8a5d",
+  "groupUuid": "70654aa2-e39f-4a76-a361-106e9900bfe1"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "La difficulté principale, en une phrase"
+    ]
+   ]
+  },
+  "uuid": "48aa3e58-54eb-41c9-9b8f-3263859e5750",
+  "groupUuid": "624f847b-81eb-4c66-929f-a30a1202a6d0"
+ },
+ {
+  "type": "INPUT_TEXT",
+  "groupType": "INPUT_TEXT",
+  "payload": {
+   "isRequired": true,
+   "name": "Motif",
+   "placeholder": ""
+  },
+  "uuid": "5f54bad7-169a-4277-8492-027013360cb2",
+  "groupUuid": "90c7e122-7a0e-4a13-b415-93ea8d6bdadd"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Décrivez-la plus longuement"
+    ]
+   ]
+  },
+  "uuid": "9edac321-9889-4dca-98df-94e17c64fe26",
+  "groupUuid": "79e4c18b-9830-4983-a4fe-8f010d399aaa"
+ },
+ {
+  "type": "TEXTAREA",
+  "groupType": "TEXTAREA",
+  "payload": {
+   "isRequired": true,
+   "name": "Motif détaillé",
+   "placeholder": ""
+  },
+  "uuid": "5323c5f9-8575-43f7-a4a7-f720c20e3331",
+  "groupUuid": "cd61e3a4-b9a8-4362-b586-557cff96497f"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Depuis quand&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "8e788fd4-b35e-4d4c-9a9d-032f12aa7acf",
+  "groupUuid": "7f7b5201-b511-4dfd-a895-0f0714bee225"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Ancienneté",
+   "text": "Moins d'un mois"
+  },
+  "uuid": "7f79a7e4-c51d-4d6f-97d0-113c91c8fc66",
+  "groupUuid": "b4ea1e00-8d6f-41fb-9060-da5b7c19ede0"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Ancienneté",
+   "text": "De 1 à 6 mois"
+  },
+  "uuid": "ba8c9787-6c15-41c1-b419-6d1145905ffa",
+  "groupUuid": "b4ea1e00-8d6f-41fb-9060-da5b7c19ede0"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Ancienneté",
+   "text": "De 6 à 12 mois"
+  },
+  "uuid": "833c9255-01ed-47e2-8a90-e0cceafca59a",
+  "groupUuid": "b4ea1e00-8d6f-41fb-9060-da5b7c19ede0"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Ancienneté",
+   "text": "Plus d'un an"
+  },
+  "uuid": "fb2d08fb-9743-4bcd-ad55-9e936f3012ee",
+  "groupUuid": "b4ea1e00-8d6f-41fb-9060-da5b7c19ede0"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Ancienneté",
+   "text": "Depuis toujours"
+  },
+  "uuid": "837cdaac-09e3-4782-9d5d-d010f588ab83",
+  "groupUuid": "b4ea1e00-8d6f-41fb-9060-da5b7c19ede0"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Que s'est-il passé au moment où c'est apparu&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "94d99faf-8876-44c3-902f-47aa7538c2cc",
+  "groupUuid": "d5b2c4b4-0ad2-4b6b-a4ac-cddd87b27e4e"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Contexte d'apparition",
+   "text": "Déménagement"
+  },
+  "uuid": "2baf61f1-48bb-45dd-b12b-93fc126c1b31",
+  "groupUuid": "a978479e-2ee4-4677-86af-910952ed93bc"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Contexte d'apparition",
+   "text": "Naissance ou arrivée d'un enfant"
+  },
+  "uuid": "dc1f0813-24a5-4a15-8320-7aedbd317932",
+  "groupUuid": "a978479e-2ee4-4677-86af-910952ed93bc"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Contexte d'apparition",
+   "text": "Départ d'un membre du foyer"
+  },
+  "uuid": "40ed1c7d-59a1-4d13-9285-d6643ab913c5",
+  "groupUuid": "a978479e-2ee4-4677-86af-910952ed93bc"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Contexte d'apparition",
+   "text": "Décès, humain ou animal"
+  },
+  "uuid": "5820932e-e280-42e7-9bce-7d2f6e033a95",
+  "groupUuid": "a978479e-2ee4-4677-86af-910952ed93bc"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Contexte d'apparition",
+   "text": "Arrivée d'un autre animal"
+  },
+  "uuid": "59b98b10-fc64-4717-9e2c-3532b503ae6b",
+  "groupUuid": "a978479e-2ee4-4677-86af-910952ed93bc"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 5,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Contexte d'apparition",
+   "text": "Changement de rythme de travail"
+  },
+  "uuid": "dcf61739-57b5-44f8-ac2c-33f589596d10",
+  "groupUuid": "a978479e-2ee4-4677-86af-910952ed93bc"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 6,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Contexte d'apparition",
+   "text": "Hospitalisation ou opération du chien"
+  },
+  "uuid": "a91ec6d2-1de0-473d-8705-d076d179e250",
+  "groupUuid": "a978479e-2ee4-4677-86af-910952ed93bc"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 7,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Contexte d'apparition",
+   "text": "Événement effrayant"
+  },
+  "uuid": "824b70e4-0c21-49f6-a9b9-5eb9ce206a62",
+  "groupUuid": "a978479e-2ee4-4677-86af-910952ed93bc"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 8,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Contexte d'apparition",
+   "text": "Rien d'identifié"
+  },
+  "uuid": "cab2c281-c8b2-4451-b92b-6c32a81a7642",
+  "groupUuid": "a978479e-2ee4-4677-86af-910952ed93bc"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "À quelle fréquence cela se produit-il&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "3bc247a3-4ab8-43ac-88e8-5a29718d1085",
+  "groupUuid": "0547d283-cbfe-4eae-b11d-24902e943d7d"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Fréquence",
+   "text": "Plusieurs fois par jour"
+  },
+  "uuid": "f7754980-bd2f-409a-93e1-7cc98c3fb48a",
+  "groupUuid": "9b557004-1ef6-4a1a-b56f-9a468958506f"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Fréquence",
+   "text": "Tous les jours"
+  },
+  "uuid": "3763599d-e656-4f07-98cc-85f849d57ba1",
+  "groupUuid": "9b557004-1ef6-4a1a-b56f-9a468958506f"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Fréquence",
+   "text": "Plusieurs fois par semaine"
+  },
+  "uuid": "98ab3f08-4f9f-4580-952f-0725d7326ccb",
+  "groupUuid": "9b557004-1ef6-4a1a-b56f-9a468958506f"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Fréquence",
+   "text": "Une fois par semaine"
+  },
+  "uuid": "e5922d38-069a-4738-be03-f480b56e6a83",
+  "groupUuid": "9b557004-1ef6-4a1a-b56f-9a468958506f"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Fréquence",
+   "text": "De temps en temps"
+  },
+  "uuid": "610ef775-a78f-49ae-8fe7-9cb6bb171897",
+  "groupUuid": "9b557004-1ef6-4a1a-b56f-9a468958506f"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Comment cela a-t-il évolué ces trois derniers mois&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "4643b9ec-5d5d-4c4c-aed4-2c745d21beef",
+  "groupUuid": "8ee0b792-7149-4076-9d68-5b6943f07d94"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Évolution",
+   "text": "Cela s'aggrave"
+  },
+  "uuid": "e45952e3-e287-4cdb-9200-04709d4852a6",
+  "groupUuid": "67be985c-b0cc-4a1a-8766-dddd30a6a77f"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Évolution",
+   "text": "C'est stable"
+  },
+  "uuid": "f6d0f63e-4649-4d2c-ac79-514dbd9dac98",
+  "groupUuid": "67be985c-b0cc-4a1a-8766-dddd30a6a77f"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Évolution",
+   "text": "Cela s'améliore"
+  },
+  "uuid": "f1dd40f4-003a-4648-a4a5-7867e85823c7",
+  "groupUuid": "67be985c-b0cc-4a1a-8766-dddd30a6a77f"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Évolution",
+   "text": "En dents de scie"
+  },
+  "uuid": "31e24e5c-f9aa-4790-8259-1cfea94ae0b4",
+  "groupUuid": "67be985c-b0cc-4a1a-8766-dddd30a6a77f"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Qu'est-ce qui déclenche le comportement&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "2ec32ccb-1756-4763-aaa4-c271ec28ffe9",
+  "groupUuid": "0f49fc91-9e3f-45e4-8997-509508e29135"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Déclencheurs",
+   "text": "Personnes inconnues"
+  },
+  "uuid": "cef99a68-f310-4081-9669-219e6c320546",
+  "groupUuid": "5872b61b-6b61-4a4e-b7a1-5de2c84929df"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Déclencheurs",
+   "text": "Enfants"
+  },
+  "uuid": "415f5176-f4f3-4481-9399-8d27945a53e8",
+  "groupUuid": "5872b61b-6b61-4a4e-b7a1-5de2c84929df"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Déclencheurs",
+   "text": "Autres chiens"
+  },
+  "uuid": "7420d311-e0fe-4e64-86cd-f42e7a536ed2",
+  "groupUuid": "5872b61b-6b61-4a4e-b7a1-5de2c84929df"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Déclencheurs",
+   "text": "Autres espèces"
+  },
+  "uuid": "43d50fab-ae70-4603-b233-e7268e8556b2",
+  "groupUuid": "5872b61b-6b61-4a4e-b7a1-5de2c84929df"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Déclencheurs",
+   "text": "Bruits"
+  },
+  "uuid": "3311c0bc-8fec-4116-931c-0161bfcae399",
+  "groupUuid": "5872b61b-6b61-4a4e-b7a1-5de2c84929df"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 5,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Déclencheurs",
+   "text": "La solitude"
+  },
+  "uuid": "c9b2844a-dd61-4168-ab29-8090b1412dce",
+  "groupUuid": "5872b61b-6b61-4a4e-b7a1-5de2c84929df"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 6,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Déclencheurs",
+   "text": "Manipulations et soins"
+  },
+  "uuid": "8ab6babe-8168-47e5-933a-11801098c391",
+  "groupUuid": "5872b61b-6b61-4a4e-b7a1-5de2c84929df"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 7,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Déclencheurs",
+   "text": "Repas ou possession d'objets"
+  },
+  "uuid": "3a167d37-8999-4dfe-ba8d-c63c157c90fb",
+  "groupUuid": "5872b61b-6b61-4a4e-b7a1-5de2c84929df"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 8,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Déclencheurs",
+   "text": "Voiture et transports"
+  },
+  "uuid": "c2882fae-f156-4bbd-9a9f-0d374dd377ba",
+  "groupUuid": "5872b61b-6b61-4a4e-b7a1-5de2c84929df"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 9,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Déclencheurs",
+   "text": "Vétérinaire"
+  },
+  "uuid": "b1403c74-3f16-449a-9715-714f175eddaf",
+  "groupUuid": "5872b61b-6b61-4a4e-b7a1-5de2c84929df"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 10,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Déclencheurs",
+   "text": "Aucun déclencheur identifié"
+  },
+  "uuid": "f3555c4f-54b1-4690-b50e-ca0fa5bec75a",
+  "groupUuid": "5872b61b-6b61-4a4e-b7a1-5de2c84929df"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 11,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Déclencheurs",
+   "text": "Autre"
+  },
+  "uuid": "42ae9875-adfd-4799-9b98-0a9b4ff98ca7",
+  "groupUuid": "5872b61b-6b61-4a4e-b7a1-5de2c84929df"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Racontez le dernier épisode en détail"
+    ]
+   ]
+  },
+  "uuid": "d37bdc4c-6d6c-44e7-aabe-a2936e1a76c7",
+  "groupUuid": "f8411e96-5179-4e2d-b461-3ad05d426689"
+ },
+ {
+  "type": "TEXTAREA",
+  "groupType": "TEXTAREA",
+  "payload": {
+   "isRequired": true,
+   "name": "Dernier épisode",
+   "placeholder": "Que se passait-il juste avant ? Qu'a fait votre chien, exactement, dans l'ordre ? Qu'avez-vous fait ? Comment cela s'est-il terminé ?"
+  },
+  "uuid": "a796af8e-dbd2-4e8f-a94a-d52edef39a5a",
+  "groupUuid": "c0c9a76a-304c-439f-b6af-4f5249b1dbea"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Y a-t-il déjà eu un contact physique sur une personne ou un animal&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "321b88ee-bf9c-4703-8ed0-64e7a38e6af1",
+  "groupUuid": "68605df9-2188-491d-8934-85a14f9760b0"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Niveau de risque",
+   "text": "Non, jamais"
+  },
+  "uuid": "f48352ef-727a-4ec8-95ab-acbd8a1a52b7",
+  "groupUuid": "ebf74f14-6a82-47c2-ad44-0a32fd624fd4"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Niveau de risque",
+   "text": "Contact sans marque"
+  },
+  "uuid": "74650f98-7282-4556-aead-faf385ea88d2",
+  "groupUuid": "ebf74f14-6a82-47c2-ad44-0a32fd624fd4"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Niveau de risque",
+   "text": "Marque ou rougeur sans plaie"
+  },
+  "uuid": "a216d595-74db-414f-bccf-59560143917e",
+  "groupUuid": "ebf74f14-6a82-47c2-ad44-0a32fd624fd4"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Niveau de risque",
+   "text": "Plaie superficielle"
+  },
+  "uuid": "b2bc8ff2-c494-436a-a720-bc31c124d96f",
+  "groupUuid": "ebf74f14-6a82-47c2-ad44-0a32fd624fd4"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Niveau de risque",
+   "text": "Plaie profonde ou morsures multiples"
+  },
+  "uuid": "0771f831-7eee-4d81-a67b-69fad9b8384c",
+  "groupUuid": "ebf74f14-6a82-47c2-ad44-0a32fd624fd4"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Comment réagissez-vous quand cela se produit&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "8924dab1-c511-4e41-8724-fa4a5d2d03bc",
+  "groupUuid": "f6d90b9b-6cd7-4905-9015-904a3faa2ce9"
+ },
+ {
+  "type": "TEXTAREA",
+  "groupType": "TEXTAREA",
+  "payload": {
+   "isRequired": true,
+   "name": "Réaction du maître",
+   "placeholder": ""
+  },
+  "uuid": "4d891ddf-73e4-4ddd-aa81-69faa7c39a24",
+  "groupUuid": "d56c4c9d-3278-4dea-8337-9439064040c2"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Qu'avez-vous déjà essayé, et avec quel résultat&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "d09d99f8-03df-4ae5-b541-0a06f50d5e9f",
+  "groupUuid": "08d73bf8-4d72-4844-b405-74b11457963d"
+ },
+ {
+  "type": "TEXTAREA",
+  "groupType": "TEXTAREA",
+  "payload": {
+   "isRequired": true,
+   "name": "Déjà essayé",
+   "placeholder": ""
+  },
+  "uuid": "2777f3bf-c79f-476e-b62c-deae78caeb48",
+  "groupUuid": "3564e14d-9c57-4e31-ad78-e8e1670c1db8"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Dans trois mois, qu'est-ce qui vous ferait dire que ça va mieux&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "03248ca7-b657-46ed-8f4a-e784da4910ac",
+  "groupUuid": "0a644fcd-6901-4857-9bf6-595d43923d47"
+ },
+ {
+  "type": "TEXTAREA",
+  "groupType": "TEXTAREA",
+  "payload": {
+   "isRequired": true,
+   "name": "Objectif",
+   "placeholder": ""
+  },
+  "uuid": "70e3015c-f6db-4d80-8a9c-37da7f8a4b67",
+  "groupUuid": "03f8d220-8b0e-4de6-8462-1411b85d4d6d"
+ },
+ {
+  "type": "PAGE_BREAK",
+  "groupType": "PAGE_BREAK",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false
+  },
+  "uuid": "4ebdff60-7c7b-4aa3-a2f6-fe94d59c87ea",
+  "groupUuid": "e5848f28-dcdd-43ed-8f8e-817e036f8555"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Le foyer et le quotidien"
+    ]
+   ]
+  },
+  "uuid": "062e62f4-7d0e-4584-8b3f-45658e9a9045",
+  "groupUuid": "7d3f8fda-5a84-4f2c-84e0-c6dab15cb423"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Votre type d'habitat"
+    ]
+   ]
+  },
+  "uuid": "45efc866-2b6c-4c6f-bd47-c2ddf125a02f",
+  "groupUuid": "bc8fcf8a-c01e-4a4d-b5d9-c60889def014"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Habitat",
+   "text": "Appartement sans extérieur"
+  },
+  "uuid": "9d03c407-643f-448e-a712-23f3148589dd",
+  "groupUuid": "a30411e2-abb5-4eba-a36e-ce9d9cc3db97"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Habitat",
+   "text": "Appartement avec balcon"
+  },
+  "uuid": "02888bc2-0fcf-4378-a52d-33743ab41ea3",
+  "groupUuid": "a30411e2-abb5-4eba-a36e-ce9d9cc3db97"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Habitat",
+   "text": "Maison sans jardin"
+  },
+  "uuid": "9c027fa6-26a6-4a2f-8e8d-32dcc00d9fd0",
+  "groupUuid": "a30411e2-abb5-4eba-a36e-ce9d9cc3db97"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Habitat",
+   "text": "Maison avec jardin clôturé"
+  },
+  "uuid": "fb561dfb-3a8d-48cc-8773-3456d391da53",
+  "groupUuid": "a30411e2-abb5-4eba-a36e-ce9d9cc3db97"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Habitat",
+   "text": "Maison avec jardin non clôturé"
+  },
+  "uuid": "b9c5a851-4774-4dfd-bd1a-6cff6084d4f7",
+  "groupUuid": "a30411e2-abb5-4eba-a36e-ce9d9cc3db97"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Votre environnement"
+    ]
+   ]
+  },
+  "uuid": "ded25e52-dd2a-4e8c-abf3-2dfec5254b46",
+  "groupUuid": "17835765-ba8d-4e86-8102-94acc665ac69"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": false,
+   "name": "Environnement",
+   "text": "Centre-ville"
+  },
+  "uuid": "b5638b9e-d773-43bd-83ea-0717bc2cb96c",
+  "groupUuid": "1f78073b-a4e8-431b-898c-3d80a0a72c47"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": false,
+   "name": "Environnement",
+   "text": "Périurbain"
+  },
+  "uuid": "088b2772-2c18-436d-a1c7-c668f6fc688c",
+  "groupUuid": "1f78073b-a4e8-431b-898c-3d80a0a72c47"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": false,
+   "name": "Environnement",
+   "text": "Rural"
+  },
+  "uuid": "cc9ca7e9-e2a9-43f5-b9a1-8f1dec84247e",
+  "groupUuid": "1f78073b-a4e8-431b-898c-3d80a0a72c47"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Combien d'adultes vivent au foyer&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "a6e8448d-d24c-489c-b4cc-33ed4d045db5",
+  "groupUuid": "b1f5ee41-4a96-4a4a-ac93-8bdcf02d9f5d"
+ },
+ {
+  "type": "INPUT_NUMBER",
+  "groupType": "INPUT_NUMBER",
+  "payload": {
+   "isRequired": true,
+   "name": "Adultes au foyer",
+   "placeholder": ""
+  },
+  "uuid": "74f86fbd-a755-4334-a505-9a0a7851ed6c",
+  "groupUuid": "aee10620-081f-4ed1-93fd-09779c1c143c"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Des enfants vivent-ils au foyer&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "e8e1dc3d-b06d-4273-8c9a-bd8594b5a2ce",
+  "groupUuid": "c0c5577e-4e86-4a71-a31b-c79776dbb822"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Enfants au foyer",
+   "text": "Aucun"
+  },
+  "uuid": "8dce419c-1c72-4c50-b607-9341f201c7d4",
+  "groupUuid": "6c3d4ce0-744c-4769-9741-8e96f9a7b2a2"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Enfants au foyer",
+   "text": "De 0 à 3 ans"
+  },
+  "uuid": "1721a80b-73f0-47a0-80eb-50087528d436",
+  "groupUuid": "6c3d4ce0-744c-4769-9741-8e96f9a7b2a2"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Enfants au foyer",
+   "text": "De 4 à 10 ans"
+  },
+  "uuid": "3e2efa38-ca1c-4931-a368-55f1974cb9fe",
+  "groupUuid": "6c3d4ce0-744c-4769-9741-8e96f9a7b2a2"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Enfants au foyer",
+   "text": "De 11 à 17 ans"
+  },
+  "uuid": "82339e11-fc0c-4e2a-9d7e-20f1d18a32e2",
+  "groupUuid": "6c3d4ce0-744c-4769-9741-8e96f9a7b2a2"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Les autres animaux du foyer"
+    ]
+   ]
+  },
+  "uuid": "06b0805f-65a3-4af1-8858-a33b42349e64",
+  "groupUuid": "b59665a8-ee36-4f47-b5cc-4e6bd64470df"
+ },
+ {
+  "type": "TEXTAREA",
+  "groupType": "TEXTAREA",
+  "payload": {
+   "isRequired": true,
+   "name": "Autres animaux",
+   "placeholder": "Pour chacun : espèce, sexe, âge, stérilisé ou non, et comment ils s'entendent."
+  },
+  "uuid": "50681f99-10b5-49d7-a050-8a6d88eaa028",
+  "groupUuid": "9fb182b2-b49a-4e34-acf0-1f5a69276b00"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Qui s'occupe de lui, et les consignes sont-elles les mêmes pour tous&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "198f61c7-8875-46a0-ba1b-e974c2bbd1bb",
+  "groupUuid": "ede59dc9-de17-4cac-8ad2-fc4474590663"
+ },
+ {
+  "type": "TEXTAREA",
+  "groupType": "TEXTAREA",
+  "payload": {
+   "isRequired": true,
+   "name": "Cohérence du foyer",
+   "placeholder": ""
+  },
+  "uuid": "8e9046f6-2774-4092-be19-84b88bfc1e19",
+  "groupUuid": "f6bac0df-c96d-4933-9353-4b9589dd5dc0"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Combien de temps reste-t-il seul par jour&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "24ae3730-268d-41d2-9f90-182727012bbb",
+  "groupUuid": "e7effd2d-d13f-4ac2-95d5-bc3e68ce2a6a"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Temps seul",
+   "text": "Moins d'1 heure"
+  },
+  "uuid": "23d64a89-68f2-4588-965c-ad2e9cfc4dfc",
+  "groupUuid": "f5a0cbd6-1db9-46f2-ad84-4f2a3b0ec80a"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Temps seul",
+   "text": "De 1 à 3 heures"
+  },
+  "uuid": "a6253e32-6c9a-4d86-ad85-8cd01b17457e",
+  "groupUuid": "f5a0cbd6-1db9-46f2-ad84-4f2a3b0ec80a"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Temps seul",
+   "text": "De 3 à 5 heures"
+  },
+  "uuid": "d7e2c3bd-e692-4d6f-b49f-fde3f339f954",
+  "groupUuid": "f5a0cbd6-1db9-46f2-ad84-4f2a3b0ec80a"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Temps seul",
+   "text": "De 5 à 8 heures"
+  },
+  "uuid": "da2030aa-4a93-49f5-9780-7cc9af74b9a1",
+  "groupUuid": "f5a0cbd6-1db9-46f2-ad84-4f2a3b0ec80a"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Temps seul",
+   "text": "Plus de 8 heures"
+  },
+  "uuid": "009dc1ab-e0d7-4f34-b731-c99f93d23d30",
+  "groupUuid": "f5a0cbd6-1db9-46f2-ad84-4f2a3b0ec80a"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Comment se passe la solitude&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "290baa85-68bd-4e7b-b492-1ae58258f102",
+  "groupUuid": "64df1f03-e083-449a-933a-ba84e945aeee"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Solitude",
+   "text": "Calme"
+  },
+  "uuid": "fcbe06f5-8aa9-4ec7-bd91-23e5058ed932",
+  "groupUuid": "b05ce94e-21af-45e7-bcbc-f4cc2fd5adb5"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Solitude",
+   "text": "Vocalises"
+  },
+  "uuid": "8dd626f7-e3ad-4fbf-8272-a41bf6271266",
+  "groupUuid": "b05ce94e-21af-45e7-bcbc-f4cc2fd5adb5"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Solitude",
+   "text": "Destructions"
+  },
+  "uuid": "aa2e92e2-a3e3-40bb-b08c-e0a39667063e",
+  "groupUuid": "b05ce94e-21af-45e7-bcbc-f4cc2fd5adb5"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Solitude",
+   "text": "Malpropreté"
+  },
+  "uuid": "13af8222-4284-4e08-b187-9e618e50397d",
+  "groupUuid": "b05ce94e-21af-45e7-bcbc-f4cc2fd5adb5"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Solitude",
+   "text": "Salivation ou halètement"
+  },
+  "uuid": "1f1c879c-66be-451e-b9fc-70a9680e28cb",
+  "groupUuid": "b05ce94e-21af-45e7-bcbc-f4cc2fd5adb5"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 5,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Solitude",
+   "text": "Je ne sais pas, je n'ai pas de caméra"
+  },
+  "uuid": "f072066f-a3d0-4132-be3c-150bc98df4c8",
+  "groupUuid": "b05ce94e-21af-45e7-bcbc-f4cc2fd5adb5"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Ses sorties&nbsp;: combien par jour, et pour quelle durée totale&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "ee6485b8-83ac-49dd-9c35-ed5901660467",
+  "groupUuid": "98cdcc9e-bb57-4950-a9cd-85c690601b7e"
+ },
+ {
+  "type": "INPUT_TEXT",
+  "groupType": "INPUT_TEXT",
+  "payload": {
+   "isRequired": true,
+   "name": "Sorties",
+   "placeholder": ""
+  },
+  "uuid": "bbabb5d1-292c-4d54-b7e9-0f9fc2f7fb1b",
+  "groupUuid": "c81a4ea4-c2d8-4b26-857b-4f1b50ac05e9"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Quel type de sorties&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "80321191-2119-4b06-9caf-5a62b20ea7d8",
+  "groupUuid": "06f34312-bc56-4e28-9e52-5389805f12fd"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Type de sorties",
+   "text": "Hygiénique, autour du pâté de maisons"
+  },
+  "uuid": "3d67b0db-05ef-4061-a1d9-e3523d08ed85",
+  "groupUuid": "fc9b8eb6-a6b4-4de6-a484-093ff98ee6d7"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Type de sorties",
+   "text": "Balade en ville"
+  },
+  "uuid": "1fd59dbe-a861-4b3f-a3b6-0349e2930425",
+  "groupUuid": "fc9b8eb6-a6b4-4de6-a484-093ff98ee6d7"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Type de sorties",
+   "text": "Nature en laisse"
+  },
+  "uuid": "aaa2925a-1d25-447f-b4ce-2f46a9873856",
+  "groupUuid": "fc9b8eb6-a6b4-4de6-a484-093ff98ee6d7"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Type de sorties",
+   "text": "Longe"
+  },
+  "uuid": "4f4b7837-1136-4d53-afa6-af74290fd1a7",
+  "groupUuid": "fc9b8eb6-a6b4-4de6-a484-093ff98ee6d7"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Type de sorties",
+   "text": "Liberté"
+  },
+  "uuid": "65de0bff-0750-45e9-9a43-7fe4b9dcb6a6",
+  "groupUuid": "fc9b8eb6-a6b4-4de6-a484-093ff98ee6d7"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Quel matériel utilisez-vous&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "ad10307d-c845-46e9-a5a7-9e59b76c0d43",
+  "groupUuid": "97e4dc5e-b225-4637-86fc-b4c40a328841"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Matériel",
+   "text": "Collier plat"
+  },
+  "uuid": "ec6e4143-1cce-4f7a-8a74-e06618615da0",
+  "groupUuid": "c18bfefc-34ac-4787-9772-a812e5f2e888"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Matériel",
+   "text": "Harnais"
+  },
+  "uuid": "b4ebfce7-5117-4f08-9b82-c2ccc6ed53d6",
+  "groupUuid": "c18bfefc-34ac-4787-9772-a812e5f2e888"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Matériel",
+   "text": "Licol"
+  },
+  "uuid": "4a72df1d-f05d-43c0-93de-7c4c787bd5b6",
+  "groupUuid": "c18bfefc-34ac-4787-9772-a812e5f2e888"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Matériel",
+   "text": "Collier semi-étrangleur"
+  },
+  "uuid": "10c1a863-a91e-422a-839e-2a88fc8b9d07",
+  "groupUuid": "c18bfefc-34ac-4787-9772-a812e5f2e888"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Matériel",
+   "text": "Collier étrangleur ou à pointes"
+  },
+  "uuid": "4efe50f3-0cbf-4a5e-bf74-c18fe4763c4b",
+  "groupUuid": "c18bfefc-34ac-4787-9772-a812e5f2e888"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 5,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Matériel",
+   "text": "Collier électrique ou à spray"
+  },
+  "uuid": "4dfbfa83-9895-4c2c-8d62-703b14ffa7ef",
+  "groupUuid": "c18bfefc-34ac-4787-9772-a812e5f2e888"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 6,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Matériel",
+   "text": "Laisse fixe"
+  },
+  "uuid": "a8dc364f-96f8-489c-89fc-b56c38c4734e",
+  "groupUuid": "c18bfefc-34ac-4787-9772-a812e5f2e888"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 7,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Matériel",
+   "text": "Longe"
+  },
+  "uuid": "8a624316-1f0e-4945-9bc5-739e4cab78bd",
+  "groupUuid": "c18bfefc-34ac-4787-9772-a812e5f2e888"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 8,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Matériel",
+   "text": "Enrouleur"
+  },
+  "uuid": "96b11808-5302-4097-bacb-f00409052c6e",
+  "groupUuid": "c18bfefc-34ac-4787-9772-a812e5f2e888"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Quelles activités d'occupation lui proposez-vous&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "d188cbdb-99c3-4df4-a89e-d73eeefbd00e",
+  "groupUuid": "71927d3a-50cd-4761-ab02-48bb38bc05c8"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Occupation",
+   "text": "Mastication"
+  },
+  "uuid": "633cf1ee-3b6e-4254-9940-afcca3b4ced7",
+  "groupUuid": "77eb6649-c1f6-40bb-bb73-51b0653006c4"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Occupation",
+   "text": "Jeux de flair"
+  },
+  "uuid": "c96c1e9c-7bfe-43f6-96d5-986b02455e5f",
+  "groupUuid": "77eb6649-c1f6-40bb-bb73-51b0653006c4"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Occupation",
+   "text": "Jouets distributeurs"
+  },
+  "uuid": "316395df-afa7-4469-9876-d0aa9c32b34b",
+  "groupUuid": "77eb6649-c1f6-40bb-bb73-51b0653006c4"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Occupation",
+   "text": "Séances d'apprentissage"
+  },
+  "uuid": "7224eabc-cfff-4fe0-87b4-04256470d434",
+  "groupUuid": "77eb6649-c1f6-40bb-bb73-51b0653006c4"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Occupation",
+   "text": "Sport canin"
+  },
+  "uuid": "95d6f0fa-d001-40e6-b230-8ca82026b5f2",
+  "groupUuid": "77eb6649-c1f6-40bb-bb73-51b0653006c4"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 5,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Occupation",
+   "text": "Aucune"
+  },
+  "uuid": "36b4c433-c95e-4f3c-a64f-7802dd6b37eb",
+  "groupUuid": "77eb6649-c1f6-40bb-bb73-51b0653006c4"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Son alimentation"
+    ]
+   ]
+  },
+  "uuid": "d4580883-3220-4513-a885-40adaac5572c",
+  "groupUuid": "8802f673-08ba-4fa3-a71c-38f6ddc24b36"
+ },
+ {
+  "type": "INPUT_TEXT",
+  "groupType": "INPUT_TEXT",
+  "payload": {
+   "isRequired": false,
+   "name": "Alimentation",
+   "placeholder": "Type, nombre de repas, et distribution en gamelle ou via une activité."
+  },
+  "uuid": "9017a30e-33a6-4cc1-9c62-a4ca87f4cb90",
+  "groupUuid": "cb3e71be-7580-4645-9544-c95aa32b1f3b"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Où dort-il, et combien d'heures dort-il par 24&nbsp;heures&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "decff361-7dc1-4fcd-ada9-a986f106b6cb",
+  "groupUuid": "f884524d-013f-4e27-b5d1-fc99b605519f"
+ },
+ {
+  "type": "INPUT_TEXT",
+  "groupType": "INPUT_TEXT",
+  "payload": {
+   "isRequired": true,
+   "name": "Sommeil",
+   "placeholder": ""
+  },
+  "uuid": "ff557841-4bf2-4a4a-ab56-7cdbb98f8440",
+  "groupUuid": "95c0438d-11e3-4324-a919-94e458ac0a16"
+ },
+ {
+  "type": "PAGE_BREAK",
+  "groupType": "PAGE_BREAK",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": false
+  },
+  "uuid": "21044257-f142-46ce-828f-b27f07f8a806",
+  "groupUuid": "dd223906-a4d3-4f94-9a9b-c6ed0b8c0214"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Sa santé"
+    ]
+   ]
+  },
+  "uuid": "3449893d-69d2-441f-90bb-bfb7931bcef2",
+  "groupUuid": "facf13fb-9d50-42d7-a648-e937f63486c2"
+ },
+ {
+  "type": "TEXT",
+  "groupType": "TEXT",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Ces questions ne servent pas à poser un diagnostic&nbsp;: elles servent à savoir si une piste médicale doit être écartée avant tout travail comportemental."
+    ]
+   ]
+  },
+  "uuid": "ec20d7e7-7f61-4f3a-ad6a-491a544898c7",
+  "groupUuid": "3f419844-b376-4a99-a6fa-b22cf63dad7f"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Ce motif précis a-t-il été présenté à un vétérinaire&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "a3e3585e-aeb7-4854-ac1f-a56f779f6c78",
+  "groupUuid": "a0a171b3-0df4-4b7d-921c-8b18eeb2de3d"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Vétérinaire consulté",
+   "text": "Oui, une cause médicale a été écartée"
+  },
+  "uuid": "8a52a813-0c32-4565-a2ca-5e145f46ca78",
+  "groupUuid": "bbad38c9-f422-4c17-8e71-6fd6782bc9a4"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Vétérinaire consulté",
+   "text": "Oui, un traitement est en cours"
+  },
+  "uuid": "d77ac8c7-e9ad-408a-8cd8-e086dbe70c17",
+  "groupUuid": "bbad38c9-f422-4c17-8e71-6fd6782bc9a4"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Vétérinaire consulté",
+   "text": "Oui, mais sans examen approfondi"
+  },
+  "uuid": "23eceb12-651e-4d52-a1ef-72833066f54a",
+  "groupUuid": "bbad38c9-f422-4c17-8e71-6fd6782bc9a4"
+ },
+ {
+  "type": "MULTIPLE_CHOICE_OPTION",
+  "groupType": "MULTIPLE_CHOICE",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Vétérinaire consulté",
+   "text": "Non, jamais"
+  },
+  "uuid": "99999d83-6548-4ed4-9f45-ce37674de815",
+  "groupUuid": "bbad38c9-f422-4c17-8e71-6fd6782bc9a4"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Date de son dernier examen vétérinaire"
+    ]
+   ]
+  },
+  "uuid": "752994e0-8508-45eb-b42c-a2e839e0b734",
+  "groupUuid": "d46ed46b-6884-4612-ae6c-8c8e25abb46a"
+ },
+ {
+  "type": "INPUT_DATE",
+  "groupType": "INPUT_DATE",
+  "payload": {
+   "isRequired": true,
+   "name": "Dernier examen",
+   "placeholder": ""
+  },
+  "uuid": "1e69afef-05b5-4353-a36e-eb1d4e58f309",
+  "groupUuid": "41dcc015-c2d9-4095-80e4-9738b4df7066"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Ses problèmes de santé connus"
+    ]
+   ]
+  },
+  "uuid": "6bb41269-ece9-47c4-936a-2c87752b1f4d",
+  "groupUuid": "7cecc98e-b63a-4b46-a64a-ddf89743c421"
+ },
+ {
+  "type": "TEXTAREA",
+  "groupType": "TEXTAREA",
+  "payload": {
+   "isRequired": true,
+   "name": "Santé connue",
+   "placeholder": "Si aucun, écrivez simplement : aucun."
+  },
+  "uuid": "27f0cfd5-7652-4db4-bb50-f439e7840999",
+  "groupUuid": "78fee8e1-3261-4b09-9794-ca77d25b2b32"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Ses traitements en cours"
+    ]
+   ]
+  },
+  "uuid": "1c4ee4f5-1a99-4b62-80fa-9639ec872e88",
+  "groupUuid": "3d99abc0-c9c6-4c45-9170-329bf3ff9248"
+ },
+ {
+  "type": "TEXTAREA",
+  "groupType": "TEXTAREA",
+  "payload": {
+   "isRequired": true,
+   "name": "Traitements",
+   "placeholder": "Nom du produit et depuis quand."
+  },
+  "uuid": "95cac034-5797-4b27-97e7-f894edb9a5be",
+  "groupUuid": "55115282-5a81-4e9a-bf72-a12cad0528b8"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Observez-vous des signes évoquant une douleur, même discrets&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "ee7cecb1-cbc1-41ca-b78d-b9312a69a585",
+  "groupUuid": "3481ab9a-b54e-48d9-9bb2-9a76dd022a24"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Signes de douleur",
+   "text": "Boiterie"
+  },
+  "uuid": "a1b2931e-e3db-40e7-ae91-4f39ce944f8c",
+  "groupUuid": "960ce2fe-180f-4c69-a8cb-63602c3c53f4"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 1,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Signes de douleur",
+   "text": "Raideur au lever"
+  },
+  "uuid": "630904d0-774c-4558-8670-c39185945130",
+  "groupUuid": "960ce2fe-180f-4c69-a8cb-63602c3c53f4"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 2,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Signes de douleur",
+   "text": "Léchage insistant d'une zone"
+  },
+  "uuid": "6047715c-66f5-45dd-b3c8-58343f7347b7",
+  "groupUuid": "960ce2fe-180f-4c69-a8cb-63602c3c53f4"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 3,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Signes de douleur",
+   "text": "Sensibilité au toucher"
+  },
+  "uuid": "4f9fe5a9-7630-4dad-914c-7271f1359621",
+  "groupUuid": "960ce2fe-180f-4c69-a8cb-63602c3c53f4"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 4,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Signes de douleur",
+   "text": "Changement d'appétit"
+  },
+  "uuid": "86b86f7e-5e7a-4767-aa2d-5d79adfb37c8",
+  "groupUuid": "960ce2fe-180f-4c69-a8cb-63602c3c53f4"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 5,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Signes de douleur",
+   "text": "Soif augmentée"
+  },
+  "uuid": "a58e3276-15af-485f-a306-741f7567ece4",
+  "groupUuid": "960ce2fe-180f-4c69-a8cb-63602c3c53f4"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 6,
+   "isFirst": false,
+   "isLast": false,
+   "isRequired": true,
+   "name": "Signes de douleur",
+   "text": "Changement de propreté"
+  },
+  "uuid": "66bc85bd-5206-4d2b-9107-4fab71bba5fd",
+  "groupUuid": "960ce2fe-180f-4c69-a8cb-63602c3c53f4"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 7,
+   "isFirst": false,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Signes de douleur",
+   "text": "Aucun"
+  },
+  "uuid": "caf53bc6-9ce5-413d-abd2-0af61b8b8dcb",
+  "groupUuid": "960ce2fe-180f-4c69-a8cb-63602c3c53f4"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Compléments, phéromones, CBD ou fleurs de Bach déjà utilisés"
+    ]
+   ]
+  },
+  "uuid": "f5bfe330-5a97-48e4-ad9b-d7d2c33863d0",
+  "groupUuid": "9ff38dca-26b2-4930-b692-f482942ee633"
+ },
+ {
+  "type": "INPUT_TEXT",
+  "groupType": "INPUT_TEXT",
+  "payload": {
+   "isRequired": false,
+   "name": "Compléments",
+   "placeholder": ""
+  },
+  "uuid": "62fc01db-7f8e-41a9-b81c-7460932c82cb",
+  "groupUuid": "76e4c3d4-3fe6-44c7-b6ad-82f2a6465d26"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Un autre professionnel a-t-il déjà été consulté pour ce problème&nbsp;?"
+    ]
+   ]
+  },
+  "uuid": "0757a889-ed04-41b0-a70c-497c0823d42b",
+  "groupUuid": "e841a212-a0e8-426b-90d4-32cfa9d0ea79"
+ },
+ {
+  "type": "TEXTAREA",
+  "groupType": "TEXTAREA",
+  "payload": {
+   "isRequired": true,
+   "name": "Autre professionnel",
+   "placeholder": "Éducateur, comportementaliste, vétérinaire comportementaliste, et ce qui avait été proposé."
+  },
+  "uuid": "6d19ea6a-71f7-48e1-bdb0-160bd331f453",
+  "groupUuid": "8aca669b-c628-4d09-bc90-8c89a0736e3d"
+ },
+ {
+  "type": "PAGE_BREAK",
+  "groupType": "PAGE_BREAK",
+  "payload": {
+   "index": 5,
+   "isFirst": false,
+   "isLast": false
+  },
+  "uuid": "7cae606b-26b7-43c8-8379-d497d1f33d91",
+  "groupUuid": "be34d6bd-5979-43f6-9ef9-700ac4808abf"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Votre vidéo"
+    ]
+   ]
+  },
+  "uuid": "ea2a3455-19e3-471d-8af6-c862e0b51e8f",
+  "groupUuid": "7f0eacc9-9928-40b8-8698-9dc8efb609ef"
+ },
+ {
+  "type": "TEXT",
+  "groupType": "TEXT",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Votre Programme comprend l'analyse d'une vidéo. Filmez deux minutes de la situation qui coince&nbsp;: le départ, l'orage, le retour du soir. Cadrez sur votre chien, sans personne reconnaissable à l'image. Déposez-la sur Google Drive, sur YouTube en non répertorié ou sur Loom, puis collez le lien ci-dessous&nbsp;: rien n'est stocké chez nous, et vous pouvez retirer l'accès quand vous le souhaitez. Vous pouvez aussi nous l'envoyer plus tard."
+    ]
+   ]
+  },
+  "uuid": "64135282-e391-4077-bdf4-4e8bf7e76e92",
+  "groupUuid": "ccf4e315-f8a4-4850-94dc-4fd90d3f1d63"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Le lien vers votre vidéo"
+    ]
+   ]
+  },
+  "uuid": "2634d3ba-0b90-47fb-abf0-484d9e1ada16",
+  "groupUuid": "41828b74-34b8-474e-84e5-c53d73e20fe8"
+ },
+ {
+  "type": "INPUT_LINK",
+  "groupType": "INPUT_LINK",
+  "payload": {
+   "isRequired": false,
+   "name": "Lien vidéo",
+   "placeholder": ""
+  },
+  "uuid": "2eb06d84-07b3-4d26-a267-22b91484c78d",
+  "groupUuid": "892ba6b7-0f42-44e0-9161-5e69b5934c00"
+ },
+ {
+  "type": "PAGE_BREAK",
+  "groupType": "PAGE_BREAK",
+  "payload": {
+   "index": 6,
+   "isFirst": false,
+   "isLast": false
+  },
+  "uuid": "1c93c17d-15b2-4178-b48c-6ea865d1ce90",
+  "groupUuid": "bb48cc64-11c3-4c0d-8812-d58a16420e39"
+ },
+ {
+  "type": "TITLE",
+  "groupType": "TITLE",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Avant d'envoyer"
+    ]
+   ]
+  },
+  "uuid": "ca6e9a12-c6cf-4856-8e28-7c121ddab716",
+  "groupUuid": "29df71e3-6134-4811-9a12-06692306cb38"
+ },
+ {
+  "type": "TEXT",
+  "groupType": "TEXT",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Comment vos données sont traitées.",
+     [
+      [
+       "tag",
+       "span"
+      ],
+      [
+       "font-weight",
+       "bold"
+      ]
+     ]
+    ],
+    [
+     " Les informations de ce formulaire sont traitées par Bleu Citron, SARL au capital de 1 000&nbsp;euros, 58 rue de Monceau, CS 48756, 75380 Paris Cedex 08, SIRET 982 818 130 00014, responsable de traitement, pour réaliser votre accompagnement comportemental (base légale&nbsp;: l'exécution du contrat conclu avec vous) et, si vous y consentez, pour vous adresser nos conseils par e-mail (base légale&nbsp;: votre consentement, retirable à tout moment). Les champs obligatoires sont nécessaires à la prestation&nbsp;; à défaut, elle ne peut pas être menée."
+    ]
+   ]
+  },
+  "uuid": "86d15d57-9d7d-4ccc-bd16-30c1b7687812",
+  "groupUuid": "70b413ee-6840-49ac-9109-1e20fbb20cae"
+ },
+ {
+  "type": "TEXT",
+  "groupType": "TEXT",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Qui y a accès.",
+     [
+      [
+       "tag",
+       "span"
+      ],
+      [
+       "font-weight",
+       "bold"
+      ]
+     ]
+    ],
+    [
+     " Bleu Citron uniquement, ainsi que nos prestataires techniques agissant sur nos instructions&nbsp;: Tally pour l'hébergement de ce formulaire (société belge, données hébergées dans l'Union européenne), Make pour l'automatisation, Notion pour votre dossier de suivi, Klaviyo pour les e-mails et Shopify pour votre commande. Certains de ces prestataires sont établis hors de l'Union européenne&nbsp;; ces transferts sont encadrés par une décision d'adéquation ou par des clauses contractuelles types."
+    ]
+   ]
+  },
+  "uuid": "1eca1c16-4e47-41f7-ab78-3f717b84892b",
+  "groupUuid": "b04ac054-f02c-498a-86ab-4c1a2be31a55"
+ },
+ {
+  "type": "TEXT",
+  "groupType": "TEXT",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Combien de temps.",
+     [
+      [
+       "tag",
+       "span"
+      ],
+      [
+       "font-weight",
+       "bold"
+      ]
+     ]
+    ],
+    [
+     " Votre dossier de suivi est conservé 3&nbsp;ans à compter de notre dernier contact, les pièces comptables 10&nbsp;ans. Vos réponses brutes sont effacées de ce formulaire 90&nbsp;jours après leur intégration à votre dossier."
+    ]
+   ]
+  },
+  "uuid": "7984fe1c-006d-4222-b674-e289d778b4f5",
+  "groupUuid": "5c203b4f-8e1c-45cc-a606-155660c6a240"
+ },
+ {
+  "type": "TEXT",
+  "groupType": "TEXT",
+  "payload": {
+   "safeHTMLSchema": [
+    [
+     "Vos droits.",
+     [
+      [
+       "tag",
+       "span"
+      ],
+      [
+       "font-weight",
+       "bold"
+      ]
+     ]
+    ],
+    [
+     " Vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité, ainsi que du droit de définir des directives sur le sort de vos données après votre décès. Pour les exercer&nbsp;: rgpd@gusetfrost.fr. Vous pouvez également introduire une réclamation auprès de la CNIL (cnil.fr). Notre politique de confidentialité complète est consultable sur https://gusetfrost.fr/policies/privacy-policy."
+    ]
+   ]
+  },
+  "uuid": "74bb361c-f328-43a0-bb7d-0a4d31826173",
+  "groupUuid": "158fa6b5-6e61-4f2f-ae75-78ebed6f4d1a"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Consentement cadre",
+   "text": "Je comprends que l'accompagnement proposé est de nature éducative et comportementale. Il ne constitue ni un diagnostic, ni une prescription, ni un traitement vétérinaire, et ne remplace pas une consultation vétérinaire. Je m'engage à consulter un vétérinaire si l'état de santé de mon chien le nécessite, et j'ai été informé que certains troubles du comportement peuvent avoir une origine médicale."
+  },
+  "uuid": "f44a0c24-9e63-4fe6-bcc1-a025d84ce298",
+  "groupUuid": "7cf1c3d3-81b8-4263-a7ff-68c5fe0b6d9c"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Consentement exactitude",
+   "text": "Je certifie que les informations transmises sont exactes et complètes à ma connaissance, et je comprends que la qualité du bilan dépend directement de leur précision."
+  },
+  "uuid": "444baf17-9572-49b4-96e7-737ba262691d",
+  "groupUuid": "197ee3e6-5aa6-4fc6-a629-4eccf86b1fe5"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": true,
+   "isRequired": true,
+   "name": "Consentement rétractation",
+   "text": "Je demande expressément que l'accompagnement commence dès maintenant, avant la fin du délai de rétractation de 14 jours, et je reconnais qu'une fois la prestation pleinement exécutée je perdrai mon droit de rétractation sur celle-ci, conformément à l'article L. 221-28 du code de la consommation. Les produits physiques de ma commande restent couverts par le délai de 14 jours."
+  },
+  "uuid": "3c9c3ede-820b-4fdb-86a7-24a14748ab04",
+  "groupUuid": "a0b9fac8-65ba-4f8b-b1fe-f371eccaf29d"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": true,
+   "isRequired": false,
+   "name": "Consentement e-mail",
+   "text": "Je souhaite recevoir par e-mail les conseils comportementaux et les actualités de Gus et Frost. Je peux me désinscrire à tout moment."
+  },
+  "uuid": "bbcbf15e-d597-431a-af42-26ab34fa5441",
+  "groupUuid": "5424dc2b-6153-420b-83a4-2237d8130d6b"
+ },
+ {
+  "type": "CHECKBOX",
+  "groupType": "CHECKBOXES",
+  "payload": {
+   "index": 0,
+   "isFirst": true,
+   "isLast": true,
+   "isRequired": false,
+   "name": "Consentement cas pédagogique",
+   "text": "J'autorise Gus et Frost à utiliser mon cas de manière anonymisée à des fins pédagogiques. Le nom de mon chien sera modifié et aucun élément permettant de m'identifier ne sera publié. Je peux retirer cette autorisation à tout moment."
+  },
+  "uuid": "420a89b1-f29a-437f-929d-dd8413812757",
+  "groupUuid": "20df2c27-ec08-44a6-bb14-d27017e96623"
+ }
+]
