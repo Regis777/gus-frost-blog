@@ -6,8 +6,7 @@ donc aucune insecable perdue.
 """
 import io, json, os, sys, urllib.request, urllib.error
 
-SCRIPTS = r"C:\Users\regis\Google Drive\Gus et Frost\BLOGS_Gus et Frost\scripts"
-sys.path.insert(0, SCRIPTS)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import publish  # noqa: E402
 
 PID = "gid://shopify/Product/9672845230301"
