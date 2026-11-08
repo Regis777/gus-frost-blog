@@ -26,6 +26,6 @@ for chemin, blocs in trouve_blocs(d):
     for b in blocs:
         types[b.get("type")] = types.get(b.get("type"), 0) + 1
     print("   ", types)
-    with io.open("tally_blocs.json", "w", encoding="utf-8") as f:
+    with io.open("schema_formulaire_pbgAZZ.json", "w", encoding="utf-8") as f:
         json.dump(blocs, f, ensure_ascii=False, indent=1)
     break

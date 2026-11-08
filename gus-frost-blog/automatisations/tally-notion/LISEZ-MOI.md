@@ -21,12 +21,14 @@ Tally (formulaire pbgAZZ) → webhook → Make (scénario 8430553) → Notion (3
 2. Cherche le client par e-mail dans **Clients**.
 3. S'il est inconnu, crée sa fiche ; sinon, la réutilise.
 4. Crée la fiche **Animal**, reliée au client.
-5. Crée le **Dossier**, relié à l'animal, avec le motif, le niveau de risque,
-   le statut vétérinaire, l'analyse et le digest des réponses.
-6. Rafraîchit la fiche Client : dernier contact, consentements et leurs dates.
-7. Prévient `contact@gusetfrost.fr`.
+5. Crée le **Dossier**, relié à l'animal, avec le motif, le niveau de risque
+   et le statut vétérinaire.
+6. Écrit le questionnaire **dans le corps de la page Dossier**, en vrais blocs
+   Notion : deux intitulés et vingt-deux lignes « étiquette en gras : réponse ».
+7. Rafraîchit la fiche Client : dernier contact, consentements et leurs dates.
+8. Prévient `contact@gusetfrost.fr`.
 
-Coût : 8 à 9 opérations Make par questionnaire.
+Coût : 9 à 10 opérations Make par questionnaire.
 
 ## Régénérer le blueprint
 
@@ -37,8 +39,11 @@ python -I blueprint_v2.py blueprint.json
 puis pousser le contenu de `blueprint.json` dans le scénario 8430553.
 Le script lit `schema_formulaire_pbgAZZ.json`, qui est le schéma du formulaire
 publié (extrait par `extrait_tally.py` depuis `https://tally.so/r/pbgAZZ`).
+Il refuse de livrer si un saut de ligne traîne dans le blueprint, si une
+insécable manque devant un signe double, ou si un libellé cherché dans la
+charge utile Tally n'existe pas dans le formulaire.
 
-## Quatre pièges, tous rencontrés le 07/11/2026
+## Les pièges, tous rencontrés et tous payés comptant
 
 1. **Tally n'envoie pas l'intitulé affiché de la question.** Le champ `label`
    de la charge utile porte le **nom interne** du bloc (`Nom du chien`,
@@ -63,14 +68,44 @@ publié (extrait par `extrait_tally.py` depuis `https://tally.so/r/pbgAZZ`).
    En `no-cors`, le navigateur rétrograde le `Content-Type` en `text/plain`,
    Make ne parse pas le JSON et toutes les formules renvoient du vide.
 
-## Défaut cosmétique connu
+5. **Le module Notion de Make remplace tout saut de ligne par la chaîne
+   littérale « <br /> »** dans une propriété texte. Mesuré le 08/11/2026 : un
+   saut, deux sauts et un saut produit par une formule (`decodeURL("%0A")`)
+   donnent tous le même résultat, car le remplacement a lieu après l'évaluation
+   de la formule. **Aucun saut de ligne ne peut donc atteindre une propriété
+   Notion par Make.** Les deux textes longs passent désormais par le corps de
+   la page, où chaque ligne est un bloc.
 
-Dans les propriétés texte de Notion, Make convertit les sauts de ligne en
-`<br />` littéraux, visibles dans « Réponses brutes » et « Analyse ».
-Le contenu est complet et dans l'ordre ; seule la présentation souffre.
+6. **Un contenu réduit à « espace + formule » est ramené par Make à la valeur
+   brute**, espace comprise. L'espace qui sépare l'étiquette de la réponse est
+   donc un troisième fragment de texte, statique, à part.
+
+7. **Un champ numérique renvoie un nombre**, et Notion exige une chaîne dans un
+   bloc : d'où le `toString()` autour de chaque valeur.
+
+8. **Une erreur arrête le scénario.** Make le désactive et garde la charge utile
+   dans la file du webhook. Après correction : réactiver, puis vider la file
+   (un `scenarios_run` suffit, il consomme la soumission en attente).
+
+## Ce qu'il faut savoir sur les données écrites
+
+- Les propriétés **« Analyse »** et **« Réponses brutes »** de la base Dossiers
+  ne sont plus remplies : leur contenu est dans le corps de la page. Elles
+  peuvent être supprimées de la base, ou « Analyse » gardée pour les notes
+  personnelles. Elles plafonnaient de toute façon à 2 000 caractères.
+- Une réponse de plus de **1 900 caractères est coupée** (`substring`), pour la
+  même raison : un bloc Notion plafonne à 2 000 caractères, et une erreur ferait
+  perdre tout le questionnaire. L'original reste consultable dans Tally.
+- Un champ laissé vide s'écrit **« non renseigné »** plutôt que rien.
 
 ## Reste à faire
 
+- **Huit questions à choix multiples ne sont pas reprises** : contexte
+  d'apparition, déclencheurs, enfants au foyer, solitude, type de sorties,
+  matériel, occupation, signes de douleur. Elles ne sont ni dans les bases ni
+  dans le corps du Dossier, alors que les déclencheurs et les signes de douleur
+  comptent cliniquement. Tally envoie un champ booléen par option, ce qui rend
+  la reconstitution possible mais verbeuse ; à ajouter si Régis le souhaite.
 - Dédoublonnage des **Animaux** : une seconde commande du même client pour le
   même chien créerait une deuxième fiche animal. Le dédoublonnage n'est posé
   que sur Clients.

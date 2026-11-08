@@ -3,7 +3,7 @@
 import io, json, re
 
 NB = " "
-blocs = json.load(io.open("tally_blocs.json", encoding="utf-8"))
+blocs = json.load(io.open("schema_formulaire_pbgAZZ.json", encoding="utf-8"))
 TAG = re.compile(r"<[^>]+>")
 
 
