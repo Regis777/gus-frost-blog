@@ -98,9 +98,27 @@ def switch(nom, paires):
     return '{{switch(%s; %s; "")}}' % (choix(nom)[2:-2], args)
 
 
+SEPARATEUR = " · "     # pas une virgule : trois options en contiennent une
+
+
+def cases(nom):
+    """Les textes des options cochees d'une question a cases, sur une ligne.
+
+    Tally envoie les identifiants coches dans `value` et le dictionnaire
+    identifiant -> texte dans `options`. Le quatrieme argument de map() accepte
+    plusieurs valeurs separees par une virgule : on lui passe les identifiants.
+    """
+    lab = N(nom)
+    vals = 'get(map(%s; "value"; "label"; "%s"); 1)' % (F, lab)
+    opts = 'get(map(%s; "options"; "label"; "%s"); 1)' % (F, lab)
+    return 'join(map(%s; "text"; "id"; join(%s; ",")); "%s")' % (opts, vals, SEPARATEUR)
+
+
 def valeur(nom):
     """La valeur d'un champ, telle qu'elle s'affiche dans le corps du Dossier."""
-    if nom in OPTIONS:
+    if TYPES.get(N(nom)) == "CHECKBOX":
+        inner = cases(nom)
+    elif nom in OPTIONS:
         inner = choix(nom)[2:-2]
     else:
         inner = brut(nom)
@@ -133,20 +151,28 @@ MOTIF = ["Motif détaillé", "Dernier épisode", "Déjà essayé",
 
 QUESTIONNAIRE = [
     "Ancienneté",
+    "Contexte d'apparition",
     "Fréquence",
     "Évolution",
+    "Déclencheurs",
     "Réaction du maître",
     "Habitat",
     "Environnement",
     "Adultes au foyer",
+    "Enfants au foyer",
     "Autres animaux",
     "Cohérence du foyer",
     "Temps seul",
+    "Solitude",
     "Sorties",
+    "Type de sorties",
+    "Matériel",
+    "Occupation",
     "Alimentation",
     "Sommeil",
     "Santé connue",
     "Traitements",
+    "Signes de douleur",
     "Compléments",
     "Autre professionnel",
     "Quatre premiers mois",

@@ -27,7 +27,7 @@ Tally (formulaire pbgAZZ) → webhook → Make (scénario 8430553) → Notion (3
 5. Crée le **Dossier**, relié à l'animal, avec le motif, le niveau de risque et
    le statut vétérinaire.
 6. Écrit le questionnaire **dans le corps de la page Dossier**, en vrais blocs
-   Notion : deux intitulés et vingt-deux lignes « étiquette en gras : réponse ».
+   Notion : deux intitulés et trente lignes « étiquette en gras : réponse ».
 7. Rafraîchit la fiche Client : dernier contact, consentements et leurs dates.
 8. Prévient `contact@gusetfrost.fr`.
 
@@ -116,6 +116,20 @@ formule référence un module situé dans une autre route**.
     utile dans la file du webhook. Après correction : réactiver, puis vider
     la file (un `scenarios_run` suffit, il consomme la soumission en attente).
 
+11. **Une question à cases se relit en une formule, pas en huit.** Tally
+    envoie les identifiants cochés dans `value` et le dictionnaire
+    identifiant → texte dans `options`. Le quatrième argument de `map()`
+    accepte plusieurs valeurs séparées par une virgule, donc :
+
+    ```
+    join(map(options; "text"; "id"; join(value; ",")); " · ")
+    ```
+
+    Le séparateur est un point médian et non une virgule : trois options
+    en contiennent une (« Décès, humain ou animal »). Vérifié le
+    11/11/2026 sur les huit questions, avec plusieurs cases cochées.
+    Les booléens par option que Tally envoie en plus ne servent à rien.
+
 ## Ce qu'il faut savoir sur les données écrites
 
 - Les propriétés « Analyse » et « Réponses brutes » ont été **supprimées** de la
@@ -124,6 +138,12 @@ formule référence un module situé dans une autre route**.
 - Une réponse de plus de **1 900 caractères est coupée** (`substring`), pour la
   même raison : un bloc Notion plafonne à 2 000 caractères, et une erreur ferait
   perdre tout le questionnaire. L'original reste consultable dans Tally.
+- Les **huit questions à cases** (contexte d'apparition, déclencheurs,
+  enfants au foyer, solitude, type de sorties, matériel, occupation, signes
+  de douleur) sont recopiées depuis le 11/11/2026, une ligne chacune, les
+  réponses cochées séparées par un point médian.
+- La date du dernier examen vétérinaire n'est recopiée nulle part : elle
+  ne se lit que dans Tally.
 - Un champ laissé vide s'écrit **« non renseigné »** plutôt que rien.
 - Un animal existant **n'est pas mis à jour** : son âge et son poids restent
   ceux de la première commande. C'est voulu, pour ne pas écraser une correction
@@ -164,10 +184,5 @@ Chaque fiche n'est signalée qu'une fois, le statut servant de mémoire.
   vérification et l'annonce en clair. Donc : un `blueprint.json` du dépôt
   poussé tel quel **retire la signature**. Pour la garder, régénérer avec le
   jeton en environnement, vers un fichier hors dépôt, et l'importer dans Make.
-- **Huit questions à choix multiples ne sont pas reprises** : contexte
-  d'apparition, déclencheurs, enfants au foyer, solitude, type de sorties,
-  matériel, occupation, signes de douleur. Les déclencheurs et les signes de
-  douleur comptent cliniquement. Tally envoie un booléen par option, ce qui rend
-  la reconstitution possible mais verbeuse.
 - Un questionnaire envoyé sans e-mail (formulaire ouvert hors du lien de
   commande) créerait une fiche client sans adresse. Non traité.
