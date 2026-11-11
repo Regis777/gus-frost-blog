@@ -27,7 +27,7 @@ Tally (formulaire pbgAZZ) → webhook → Make (scénario 8430553) → Notion (3
 5. Crée le **Dossier**, relié à l'animal, avec le motif, le niveau de risque et
    le statut vétérinaire.
 6. Écrit le questionnaire **dans le corps de la page Dossier**, en vrais blocs
-   Notion : deux intitulés et trente lignes « étiquette en gras : réponse ».
+   Notion : deux intitulés et trente et une lignes « étiquette en gras : réponse ».
 7. Rafraîchit la fiche Client : dernier contact, consentements et leurs dates.
 8. Prévient `contact@gusetfrost.fr`.
 
@@ -142,8 +142,10 @@ formule référence un module situé dans une autre route**.
   enfants au foyer, solitude, type de sorties, matériel, occupation, signes
   de douleur) sont recopiées depuis le 11/11/2026, une ligne chacune, les
   réponses cochées séparées par un point médian.
-- La date du dernier examen vétérinaire n'est recopiée nulle part : elle
-  ne se lit que dans Tally.
+- La **date du dernier examen vétérinaire** est recopiée depuis le 11/11/2026,
+  entre « Sommeil » et « Santé connue », au format 03/11/2026. La formule
+  retourne la date par découpage, `join(reverse(split(valeur; "-")); "/")`,
+  et non par `parseDate` : une date vide donne du vide, jamais une erreur.
 - Un champ laissé vide s'écrit **« non renseigné »** plutôt que rien.
 - Un animal existant **n'est pas mis à jour** : son âge et son poids restent
   ceux de la première commande. C'est voulu, pour ne pas écraser une correction

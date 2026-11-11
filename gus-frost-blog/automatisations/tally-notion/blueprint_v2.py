@@ -120,6 +120,10 @@ def valeur(nom):
         inner = cases(nom)
     elif nom in OPTIONS:
         inner = choix(nom)[2:-2]
+    elif TYPES.get(N(nom)) == "INPUT_DATE":
+        # Tally envoie 2026-11-03 ; on l'affiche 03/11/2026. Par decoupage et
+        # non par parseDate : une date vide donne du vide, jamais une erreur.
+        inner = 'join(reverse(split(%s; "-")); "/")' % brut(nom)
     else:
         inner = brut(nom)
         if TYPES.get(N(nom)) in LIBRE:
@@ -170,6 +174,7 @@ QUESTIONNAIRE = [
     "Occupation",
     "Alimentation",
     "Sommeil",
+    "Dernier examen",
     "Santé connue",
     "Traitements",
     "Signes de douleur",
@@ -178,10 +183,18 @@ QUESTIONNAIRE = [
     "Quatre premiers mois",
 ]
 
+# L'etiquette affichee est le nom interne du champ, sauf exception ci-dessous.
+ETIQUETTES = {"Dernier examen": "Dernier examen vétérinaire"}
+
+
+def etiquette(nom):
+    return ETIQUETTES.get(nom, nom)
+
+
 CORPS = ([h3("Le motif, par le client")] +
-         [ligne(e, e) for e in MOTIF] +
+         [ligne(etiquette(e), e) for e in MOTIF] +
          [h3("Le questionnaire tel que reçu")] +
-         [ligne(e, e) for e in QUESTIONNAIRE])
+         [ligne(etiquette(e), e) for e in QUESTIONNAIRE])
 
 # ------------------------------------------------------------------- scenario
 
@@ -482,7 +495,8 @@ def controle_insecables(texte):
         raise AssertionError("espace ordinaire avant un signe double : %r"
                              % texte[max(0, m.start() - 40):m.end() + 10])
     for e in MOTIF + QUESTIONNAIRE:
-        assert (e + NB + ":") in texte, "etiquette sans insecable : %r" % e
+        assert (etiquette(e) + NB + ":") in texte, \
+            "etiquette sans insecable : %r" % e
 
 
 def controle_etiquettes(texte):
