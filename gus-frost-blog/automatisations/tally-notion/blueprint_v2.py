@@ -24,7 +24,7 @@ Quatre lecons payees comptant.
    ET son client (`relation:contains`), jamais par son nom seul, sinon deux
    clients ayant un chien du meme nom partageraient la fiche.
 """
-import io, json, re, sys
+import io, json, os, re, sys
 
 NB = u" "
 SCHEMA = "schema_formulaire_pbgAZZ.json"
@@ -242,14 +242,30 @@ def rien_trouve(idm):
 
 
 # Le webhook est une URL publique : on ne traite que ce qui a la forme d'une
-# soumission du bon formulaire. Cela n'arrete pas un faussaire qui connaitrait
-# l'URL (il faudrait pour cela un secret partage avec Tally), mais cela ecarte
-# tout ce qui arrive par erreur ou au hasard.
+# soumission du bon formulaire, et, quand le jeton est configure, ce qui porte
+# l'en-tete convenu avec Tally.
+ENTETE = "x-gf-jeton"
+
+# Make n'expose les en-tetes que si la capture est activee sur le hook
+# (data.headers = true), et il les expose sous __IMTHEADERS__ : un TABLEAU
+# d'objets name/value, noms en minuscules. Mesure du 11/11/2026 : un acces du
+# genre 1.headers.x-gf-jeton ne resout rien, il faut la recherche ci-dessous.
+LECTURE = '{{get(map(1.__IMTHEADERS__; "value"; "name"; "%s"); 1)}}' % ENTETE
+
+conditions = [{"a": "{{1.eventType}}", "o": "text:equal",
+               "b": "FORM_RESPONSE"},
+              {"a": "{{1.data.formId}}", "o": "text:equal",
+               "b": "pbgAZZ"}]
+
+# Le jeton n'est JAMAIS ecrit dans un fichier versionne : il est lu dans
+# l'environnement au moment de la generation. Absent, la verification est
+# simplement omise, et le generateur le dit en clair.
+JETON = os.environ.get("JETON_WEBHOOK_TALLY", "").strip()
+if JETON:
+    conditions.append({"a": LECTURE, "o": "text:equal", "b": JETON})
+
 authentique = {"name": "Une soumission de CE formulaire",
-               "conditions": [[{"a": "{{1.eventType}}", "o": "text:equal",
-                                "b": "FORM_RESPONSE"},
-                               {"a": "{{1.data.formId}}", "o": "text:equal",
-                                "b": "pbgAZZ"}]]}
+               "conditions": [conditions]}
 
 porte = cherche_client(2, 300, 0, "Ce client existe-t-il déjà" + NB + "?")
 porte["filter"] = authentique
@@ -477,7 +493,22 @@ controle_insecables(s)
 controle_etiquettes(s)
 controle_routes(flow)
 
+# Un blueprint qui porte le jeton ne doit pas atterrir dans un dossier
+# versionne ou synchronise : on le refuse plutot que de laisser filer le secret.
+if JETON:
+    chemin = os.path.abspath(sys.argv[1]).replace("\\", "/")
+    for interdit in ("/gus-frost-blog/", "/BLOGS_Gus et Frost/", "/gfbrepo/"):
+        assert interdit not in chemin, (
+            "ce blueprint porte le jeton : l'ecrire ailleurs que dans %s"
+            % interdit.strip("/"))
+
 io.open(sys.argv[1], "w", encoding="utf-8", newline="\n").write(s)
 print("blueprint v4 ecrit : %d octets" % len(s))
+if JETON:
+    print("verification de l'en-tete %s : INCLUSE" % ENTETE)
+else:
+    print("ATTENTION : JETON_WEBHOOK_TALLY absent de l'environnement.")
+    print("  blueprint produit SANS verification d'en-tete : la chaine")
+    print("  fonctionne, mais le webhook n'est pas signe.")
 print("corps du Dossier : %d blocs" % len(CORPS))
 print("insecables : %d" % s.count(NB))
