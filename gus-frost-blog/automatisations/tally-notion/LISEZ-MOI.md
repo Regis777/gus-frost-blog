@@ -11,24 +11,39 @@ Tally (formulaire pbgAZZ) → webhook → Make (scénario 8430553) → Notion (3
 | Formulaire Tally | `pbgAZZ`, public sur `https://tally.so/r/pbgAZZ` |
 | Webhook Make | `4058042`, zone **eu1** (donc UE) |
 | Scénario Make | `8430553`, équipe 1912350, organisation 7996217 |
+| Purge RGPD | scénario Make `8509120`, le 1ᵉʳ de chaque mois à 6 h |
 | Base Clients | `3ddfde7b-711d-4824-8cd7-c7f893911dc0` |
 | Base Animaux | `de7e8e55-5bb7-4521-8aa1-eab0d6431faf` |
 | Base Dossiers | `6cfb904e-03b1-44b6-8f18-0be7f2656ddf` |
 
 ## Ce que fait le scénario
 
-1. Reçoit la soumission.
-2. Cherche le client par e-mail dans **Clients**.
-3. S'il est inconnu, crée sa fiche ; sinon, la réutilise.
-4. Crée la fiche **Animal**, reliée au client.
-5. Crée le **Dossier**, relié à l'animal, avec le motif, le niveau de risque
-   et le statut vétérinaire.
+1. Reçoit la soumission, et ne traite que ce qui porte `eventType = FORM_RESPONSE`
+   et `formId = pbgAZZ`.
+2. Cherche le client par e-mail dans **Clients** ; s'il est inconnu, le crée.
+3. **Le recherche à nouveau**, pour disposer de son identifiant dans tous les cas.
+4. Cherche l'animal par **son nom ET son client** ; s'il est inconnu, le crée,
+   puis le recherche à nouveau.
+5. Crée le **Dossier**, relié à l'animal, avec le motif, le niveau de risque et
+   le statut vétérinaire.
 6. Écrit le questionnaire **dans le corps de la page Dossier**, en vrais blocs
    Notion : deux intitulés et vingt-deux lignes « étiquette en gras : réponse ».
 7. Rafraîchit la fiche Client : dernier contact, consentements et leurs dates.
 8. Prévient `contact@gusetfrost.fr`.
 
-Coût : 9 à 10 opérations Make par questionnaire.
+Coût : 11 à 12 opérations Make par questionnaire.
+
+## Rejouer une soumission
+
+```
+python -I charge_utile_test.py <url du webhook> [--nom ZZTest] [--email x@y]
+```
+
+Le script lit le schéma du formulaire publié et fabrique une charge utile de la
+même forme que celle de Tally (118 champs, les vrais identifiants d'options).
+C'est le seul moyen de tester la chaîne sans remplir les sept pages à la main.
+L'URL du webhook se passe en argument : c'est un secret, elle n'est pas écrite
+dans le dépôt.
 
 ## Régénérer le blueprint
 
@@ -37,77 +52,94 @@ python -I blueprint_v2.py blueprint.json
 ```
 
 puis pousser le contenu de `blueprint.json` dans le scénario 8430553.
-Le script lit `schema_formulaire_pbgAZZ.json`, qui est le schéma du formulaire
-publié (extrait par `extrait_tally.py` depuis `https://tally.so/r/pbgAZZ`).
-Il refuse de livrer si un saut de ligne traîne dans le blueprint, si une
-insécable manque devant un signe double, ou si un libellé cherché dans la
-charge utile Tally n'existe pas dans le formulaire.
+Le script lit `schema_formulaire_pbgAZZ.json`, extrait par `extrait_tally.py`.
+Il refuse de livrer si le blueprint contient un saut de ligne, s'il manque une
+insécable devant un signe double, si un libellé Tally est inconnu, ou **si une
+formule référence un module situé dans une autre route**.
 
 ## Les pièges, tous rencontrés et tous payés comptant
 
 1. **Tally n'envoie pas l'intitulé affiché de la question.** Le champ `label`
    de la charge utile porte le **nom interne** du bloc (`Nom du chien`,
-   `Niveau de risque`, `Consentement e-mail`…), pas le titre vu par le client
-   (`Son nom`, `Y a-t-il déjà eu un contact physique…`). `noms_champs.py`
-   affiche la correspondance. Avantage : ces noms ne contiennent aucune
-   espace insécable, contrairement aux titres.
+   `Niveau de risque`…), pas le titre vu par le client (`Son nom`).
+   `noms_champs.py` affiche la correspondance. Avantage : ces noms ne
+   contiennent aucune espace insécable, contrairement aux titres et aux textes
+   d'options.
 
 2. **Le type Notion s'écrit `rich_text`, pas `text`.** Avec `"type": "text"`,
    Make envoie une propriété vide et Notion répond
    `400 body failed validation … should be defined, instead was undefined`,
-   en nommant deux propriétés au hasard. Le message ne désigne pas le
-   coupable : chercher les champs texte.
+   en nommant deux propriétés au hasard.
 
 3. **La connexion Make doit être ajoutée à la page Notion parente.**
    `Dossiers clients — Le Programme du Foyer Apaisé` → menu `•••` → Plus →
-   Connexions → Make. Sans cela : `404 Could not find data_source`.
-   Dans l'interface Notion, le sous-menu ne s'ouvre qu'avec un **survol
-   progressif** de la souris ; un clic direct le referme.
+   Connexions → Make. Sans cela : `404 Could not find data_source`. Le
+   sous-menu Notion ne s'ouvre qu'avec un **survol progressif** de la souris.
 
 4. **Rejouer une charge utile depuis le navigateur exige `mode: 'cors'`.**
-   En `no-cors`, le navigateur rétrograde le `Content-Type` en `text/plain`,
-   Make ne parse pas le JSON et toutes les formules renvoient du vide.
+   En `no-cors`, le `Content-Type` est rétrogradé et Make ne parse pas le JSON.
+   `charge_utile_test.py` évite entièrement le navigateur.
 
-5. **Le module Notion de Make remplace tout saut de ligne par la chaîne
-   littérale « <br /> »** dans une propriété texte. Mesuré le 08/11/2026 : un
-   saut, deux sauts et un saut produit par une formule (`decodeURL("%0A")`)
-   donnent tous le même résultat, car le remplacement a lieu après l'évaluation
-   de la formule. **Aucun saut de ligne ne peut donc atteindre une propriété
-   Notion par Make.** Les deux textes longs passent désormais par le corps de
-   la page, où chaque ligne est un bloc.
+5. **Le module Notion de Make remplace tout saut de ligne par « <br /> »**
+   dans une propriété texte. Mesuré le 08/11/2026 : un saut, deux sauts et un
+   saut produit par une formule donnent le même résultat, le remplacement ayant
+   lieu après l'évaluation. Aucun saut de ligne ne peut donc atteindre une
+   propriété ; les textes longs vont dans le corps de la page.
 
 6. **Un contenu réduit à « espace + formule » est ramené par Make à la valeur
    brute**, espace comprise. L'espace qui sépare l'étiquette de la réponse est
    donc un troisième fragment de texte, statique, à part.
 
-7. **Un champ numérique renvoie un nombre**, et Notion exige une chaîne dans un
-   bloc : d'où le `toString()` autour de chaque valeur.
+7. **Un champ numérique renvoie un nombre**, que Notion refuse dans un bloc :
+   d'où le `toString()` autour de chaque valeur.
 
-8. **Une erreur arrête le scénario.** Make le désactive et garde la charge utile
+8. **Un module ne peut pas lire la sortie d'un module situé dans une AUTRE
+   route du routeur.** Make résout la référence par du vide, sans rien dire.
+   `ifempty(get(map(3.array; "id"); 1); 5.id)` ne valait donc rien dès que la
+   route 1 venait de créer le client : **la chaîne échouait à la fiche Animal
+   pour tout client nouveau**, et seule la présence préalable du client la
+   faisait passer. Remède : après le routeur, rechercher à nouveau la fiche.
+   Le garde-fou `controle_routes` refuse désormais ce motif, et `essai_garde.py`
+   vérifie le garde-fou lui-même.
+
+9. **Une erreur arrête le scénario.** Make le désactive et garde la charge utile
    dans la file du webhook. Après correction : réactiver, puis vider la file
    (un `scenarios_run` suffit, il consomme la soumission en attente).
 
 ## Ce qu'il faut savoir sur les données écrites
 
-- Les propriétés **« Analyse »** et **« Réponses brutes »** de la base Dossiers
-  ne sont plus remplies : leur contenu est dans le corps de la page. Elles
-  peuvent être supprimées de la base, ou « Analyse » gardée pour les notes
-  personnelles. Elles plafonnaient de toute façon à 2 000 caractères.
+- Les propriétés « Analyse » et « Réponses brutes » ont été **supprimées** de la
+  base Dossiers le 11/11/2026 : leur contenu est dans le corps de la page, et
+  elles plafonnaient de toute façon à 2 000 caractères.
 - Une réponse de plus de **1 900 caractères est coupée** (`substring`), pour la
   même raison : un bloc Notion plafonne à 2 000 caractères, et une erreur ferait
   perdre tout le questionnaire. L'original reste consultable dans Tally.
 - Un champ laissé vide s'écrit **« non renseigné »** plutôt que rien.
+- Un animal existant **n'est pas mis à jour** : son âge et son poids restent
+  ceux de la première commande. C'est voulu, pour ne pas écraser une correction
+  faite à la main.
+
+## La purge RGPD (scénario 8509120)
+
+Le 1ᵉʳ de chaque mois, les fiches Clients dont « À purger le » (dernier contact
++ 3 ans) est échu passent au statut « À purger » et déclenchent un e-mail.
+**La suppression reste manuelle**, et volontairement : elle doit entraîner celle
+des fiches Animal et Dossier liées, et une purge automatique qui se tromperait
+de filtre détruirait des dossiers clients sans retour possible.
+Chaque fiche n'est signalée qu'une fois, le statut servant de mémoire.
 
 ## Reste à faire
 
+- **La signature du webhook.** Tally sait poser un en-tête HTTP personnalisé
+  (webhook → Modifier → « Add HTTP headers »), ce qui permettrait à Make de
+  vérifier un jeton partagé sans toucher à la lecture de la charge utile. Un
+  jeton est déjà généré dans le `.env` sous `JETON_WEBHOOK_TALLY`, mais il reste
+  à le poser des deux côtés. Le filtre actuel écarte ce qui arrive par erreur,
+  pas un faussaire qui connaîtrait l'URL.
 - **Huit questions à choix multiples ne sont pas reprises** : contexte
   d'apparition, déclencheurs, enfants au foyer, solitude, type de sorties,
-  matériel, occupation, signes de douleur. Elles ne sont ni dans les bases ni
-  dans le corps du Dossier, alors que les déclencheurs et les signes de douleur
-  comptent cliniquement. Tally envoie un champ booléen par option, ce qui rend
-  la reconstitution possible mais verbeuse ; à ajouter si Régis le souhaite.
-- Dédoublonnage des **Animaux** : une seconde commande du même client pour le
-  même chien créerait une deuxième fiche animal. Le dédoublonnage n'est posé
-  que sur Clients.
-- Signature du webhook (Tally sait signer ; Make ne vérifie pas encore).
-- Purge annuelle des fiches échues (propriété « À purger le » déjà calculée).
+  matériel, occupation, signes de douleur. Les déclencheurs et les signes de
+  douleur comptent cliniquement. Tally envoie un booléen par option, ce qui rend
+  la reconstitution possible mais verbeuse.
+- Un questionnaire envoyé sans e-mail (formulaire ouvert hors du lien de
+  commande) créerait une fiche client sans adresse. Non traité.
