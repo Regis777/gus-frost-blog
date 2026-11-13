@@ -1,0 +1,907 @@
+{% comment %}
+  ============================================================
+  Section : Produit, achat guide (Gus et Frost)
+  Page produit longue, sans application. Lit l'objet product.
+  ------------------------------------------------------------
+  - Option 1 du produit = le palier (ex. « Nombre de tapis » 1/2/3).
+  - Option 2 (facultative) = la couleur, rendue en pastilles.
+  - Le nombre d'articles est porte par la VARIANTE, quantite panier = 1.
+  - Avis : lus dans product.metafields.custom.avis. Rien ne s'affiche
+    (ni note, ni bloc) tant qu'aucun avis reel n'est relie au produit.
+  - Aucun JSON-LD ici : il vient de snippets/gf-product-schema.liquid.
+  - Tailles en px : Dawn regle 1rem = 10px.
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign s = section.settings
+  assign p = product
+  assign cur = p.selected_or_first_available_variant
+  assign opt_qty = p.options_with_values[0]
+  assign opt_color = p.options_with_values[1]
+  assign has_tiers = false
+  if opt_qty and p.has_only_default_variant == false
+    assign has_tiers = true
+  endif
+  assign rid = 'gfpg-' | append: section.id
+  assign fid = 'gfpg-form-' | append: section.id
+
+  assign first_v = p.variants.first
+  assign base_n = first_v.option1 | plus: 0
+  if base_n < 1
+    assign base_n = 1
+  endif
+  assign base_unit = first_v.price | divided_by: base_n
+
+  assign avis_list = p.metafields.custom.avis.value
+  assign avis_total = 0
+  assign avis_count = 0
+  for a in avis_list
+    assign n = a.note.value | plus: 0
+    assign avis_total = avis_total | plus: n
+    assign avis_count = avis_count | plus: 1
+  endfor
+  assign avis_avg = 0
+  if avis_count > 0
+    assign avis_avg = avis_total | times: 1.0 | divided_by: avis_count | round: 1
+  endif
+
+  assign moments = section.blocks | where: 'type', 'moment'
+  assign onglets = section.blocks | where: 'type', 'onglet'
+  assign profils = section.blocks | where: 'type', 'profil'
+  assign jalons = section.blocks | where: 'type', 'jalon'
+  assign gestes = section.blocks | where: 'type', 'geste'
+  assign compares = section.blocks | where: 'type', 'compare'
+  assign faqs = section.blocks | where: 'type', 'faq'
+-%}
+
+{%- style -%}
+  #{{ rid }}{
+    --bg: {{ s.color_bg }}; --card: {{ s.color_card }}; --g: {{ s.color_primary }};
+    --on-g: {{ s.color_on_primary }}; --ac: {{ s.color_accent }}; --sage: {{ s.color_sage }};
+    --ink: {{ s.color_primary }}; --mut: rgba(49,68,49,.82); --line: rgba(49,68,49,.16);
+    background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.55;
+    padding: {{ s.padding_top }}px 16px {{ s.padding_bottom }}px;
+  }
+  #{{ rid }} *{ box-sizing: border-box; }
+  #{{ rid }} p{ margin: 0; color: inherit; }
+  #{{ rid }} .w{ max-width: 1120px; margin: 0 auto; }
+  #{{ rid }} .sec{ margin-top: 64px; }
+  #{{ rid }} h1, #{{ rid }} h2, #{{ rid }} h3{ font-family: var(--font-heading-family); font-weight: 600; color: var(--ink); margin: 0; letter-spacing: 0; }
+  #{{ rid }} h2{ font-size: 30px; line-height: 1.15; }
+  #{{ rid }} .lead{ color: var(--mut); margin-top: 10px; max-width: 620px; }
+  #{{ rid }} .kick{ font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--ac); margin-bottom: 8px; }
+  #{{ rid }} .head{ margin-bottom: 26px; }
+  #{{ rid }} .gp-card{ background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+  #{{ rid }} svg.i{ width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; flex: 0 0 auto; }
+  #{{ rid }} button{ font-family: inherit; }
+
+  /* ---------- HAUT DE PAGE ---------- */
+  #{{ rid }} .hero{ display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 44px; align-items: flex-start; }
+  #{{ rid }} .gal{ position: sticky; top: 16px; }
+  #{{ rid }} .gal, #{{ rid }} .buy{ min-width: 0; }
+  #{{ rid }} .gmain{ width: 100%; height: auto; aspect-ratio: 1/1; object-fit: cover; border-radius: 18px; border: 1px solid var(--line); background: var(--card); display: block; }
+  #{{ rid }} .gth{ display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
+  #{{ rid }} .gth button{ flex: 0 0 64px; width: 64px; height: 64px; padding: 0; border: 2px solid transparent; border-radius: 10px; overflow: hidden; background: var(--card); cursor: pointer; opacity: .72; }
+  #{{ rid }} .gth button.on{ border-color: var(--g); opacity: 1; }
+  #{{ rid }} .gth img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  #{{ rid }} .badge{ display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
+  #{{ rid }} .rate{ display: flex; align-items: center; gap: 8px; font-size: 14px; margin-top: 12px; color: var(--mut); }
+  #{{ rid }} .stars{ position: relative; display: inline-block; font-size: 17px; line-height: 1; letter-spacing: 2px; color: rgba(49,68,49,.22); }
+  #{{ rid }} .stars::before{ content: "★★★★★"; }
+  #{{ rid }} .stars span{ position: absolute; left: 0; top: 0; overflow: hidden; white-space: nowrap; color: var(--ac); }
+  #{{ rid }} .stars span::before{ content: "★★★★★"; }
+  #{{ rid }} h1{ font-size: 36px; line-height: 1.1; margin-top: 14px; }
+  #{{ rid }} .sub{ font-size: 17px; color: var(--mut); margin-top: 10px; }
+  #{{ rid }} .chips{ list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  #{{ rid }} .chips li{ display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 600; background: var(--g); color: var(--on-g); border-radius: 8px; padding: 6px 11px; }
+  #{{ rid }} .chips svg.i{ width: 15px; height: 15px; }
+  #{{ rid }} .facts{ display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; margin-top: 18px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  #{{ rid }} .fact{ display: flex; gap: 9px; align-items: flex-start; font-size: 13px; line-height: 1.35; }
+  #{{ rid }} .fact b{ display: block; font-weight: 700; }
+  #{{ rid }} .fact span{ color: var(--mut); }
+
+  /* ---------- ACHAT GUIDE ---------- */
+  #{{ rid }} .box{ margin-top: 18px; padding: 18px; }
+  #{{ rid }} .box + .box{ margin-top: 12px; }
+  #{{ rid }} .stp{ font-size: 11.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--ac); }
+  #{{ rid }} .box h3{ font-size: 19px; margin: 2px 0 12px; }
+  #{{ rid }} .prof{ display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+  #{{ rid }} .prof button{ display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 84px; padding: 10px 6px; font-size: 13.5px; font-weight: 600; line-height: 1.25; text-align: center; color: var(--ink); background: var(--bg); border: 2px solid var(--line); border-radius: 12px; cursor: pointer; }
+  #{{ rid }} .prof button.on{ background: var(--g); border-color: var(--g); color: var(--on-g); }
+  #{{ rid }} .hint{ font-size: 13.5px; color: var(--mut); margin-top: 10px; min-height: 20px; }
+  #{{ rid }} .hint b{ color: var(--ink); }
+  #{{ rid }} .tiers{ display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+  #{{ rid }} .tier{ position: relative; display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; color: var(--ink); background: var(--bg); border: 2px solid var(--line); border-radius: 12px; padding: 14px; cursor: pointer; }
+  #{{ rid }} .tier.on{ border-color: var(--g); box-shadow: 0 0 0 3px rgba(49,68,49,.12); background: var(--card); }
+  #{{ rid }} .rad{ width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(49,68,49,.45); flex: 0 0 auto; display: flex; align-items: center; justify-content: center; }
+  #{{ rid }} .tier.on .rad{ border-color: var(--g); }
+  #{{ rid }} .tier.on .rad::after{ content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--g); }
+  #{{ rid }} .tb{ flex: 1; min-width: 0; }
+  #{{ rid }} .tt{ display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 16px; font-weight: 700; }
+  #{{ rid }} .pct{ font-size: 11.5px; font-weight: 700; background: var(--sage); color: var(--ink); border-radius: 6px; padding: 2px 7px; }
+  #{{ rid }} .td{ display: block; font-size: 13px; color: var(--mut); margin-top: 2px; line-height: 1.35; }
+  #{{ rid }} .tp{ text-align: right; flex: 0 0 auto; }
+  #{{ rid }} .tp b{ display: block; font-size: 18px; font-weight: 700; line-height: 1.15; }
+  #{{ rid }} .tp small{ display: block; font-size: 12px; color: var(--mut); }
+  #{{ rid }} .tp s{ display: block; font-size: 12px; color: var(--mut); }
+  #{{ rid }} .reco{ position: absolute; top: -11px; right: 12px; display: none; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--ac); color: #17110c; border-radius: 999px; padding: 3px 10px; }
+  #{{ rid }} .tier.reco-on .reco{ display: block; }
+  #{{ rid }} .clab{ font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+  #{{ rid }} .clab span{ font-weight: 400; color: var(--mut); }
+  #{{ rid }} .sws{ display: flex; flex-wrap: wrap; gap: 10px; }
+  #{{ rid }} .sw{ width: 38px; height: 38px; padding: 0; border-radius: 50%; border: 2px solid var(--line); cursor: pointer; }
+  #{{ rid }} .sw.on{ border-color: var(--g); box-shadow: 0 0 0 3px var(--card) inset; }
+  #{{ rid }} .incl{ list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-direction: column; gap: 7px; font-size: 14px; }
+  #{{ rid }} .incl li{ display: flex; gap: 9px; align-items: flex-start; }
+  #{{ rid }} .incl svg.i{ margin-top: 2px; color: var(--ac); }
+  #{{ rid }} .cta{ display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 16px; min-height: 56px; padding: 14px 20px; font-size: 16px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--on-g); background: var(--g); border: 0; border-radius: 12px; cursor: pointer; text-decoration: none; }
+  #{{ rid }} .cta:hover{ filter: brightness(1.12); }
+  #{{ rid }} .cta:disabled{ opacity: .5; cursor: not-allowed; }
+  #{{ rid }} .micro{ display: flex; gap: 8px; justify-content: center; align-items: center; font-size: 13px; color: var(--mut); margin-top: 10px; text-align: center; }
+  #{{ rid }} .expert{ display: flex; gap: 16px; align-items: center; margin-top: 16px; padding: 18px; background: var(--g); color: var(--on-g); border-radius: 16px; }
+  #{{ rid }} .expert img{ width: 84px; height: 84px; border-radius: 50%; object-fit: cover; flex: 0 0 auto; }
+  #{{ rid }} .expert .ek{ display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: var(--on-g); color: var(--g); border-radius: 999px; padding: 3px 10px; }
+  #{{ rid }} .expert b{ display: block; font-size: 16px; margin-top: 8px; }
+  #{{ rid }} .expert q{ display: block; font-size: 14.5px; line-height: 1.45; margin-top: 4px; quotes: none; font-style: italic; }
+
+  /* ---------- ONGLETS ---------- */
+  #{{ rid }} .tabs{ margin-top: 16px; overflow: hidden; }
+  #{{ rid }} .tabbar{ display: flex; background: var(--g); }
+  #{{ rid }} .tabbar button{ flex: 1; min-height: 46px; padding: 8px 6px; font-size: 13.5px; font-weight: 600; color: var(--on-g); background: transparent; border: 0; border-right: 1px solid rgba(239,231,218,.25); cursor: pointer; }
+  #{{ rid }} .tabbar button:last-child{ border-right: 0; }
+  #{{ rid }} .tabbar button.on{ background: var(--card); color: var(--ink); }
+  #{{ rid }} .pane{ padding: 18px; font-size: 14.5px; }
+  #{{ rid }} .pane[hidden]{ display: none; }
+  #{{ rid }} .pane h4{ font-family: var(--font-body-family); font-size: 15px; font-weight: 700; margin: 0 0 8px; color: var(--ink); }
+  #{{ rid }} .pane p + p{ margin-top: 10px; }
+  #{{ rid }} .pane ul{ margin: 8px 0 0; padding-left: 20px; }
+  #{{ rid }} .pane li + li{ margin-top: 5px; }
+
+  /* ---------- BANDE DE REASSURANCE ---------- */
+  #{{ rid }} .strip{ display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 34px; padding: 18px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-size: 13px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+  #{{ rid }} .strip span{ display: inline-flex; align-items: center; gap: 8px; }
+  #{{ rid }} .strip svg.i{ color: var(--ac); }
+
+  /* ---------- MOMENTS ---------- */
+  #{{ rid }} .mbar{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  #{{ rid }} .mbar button{ min-height: 44px; padding: 8px 16px; font-size: 14.5px; font-weight: 600; color: var(--ink); background: transparent; border: 1.5px solid var(--g); border-radius: 999px; cursor: pointer; }
+  #{{ rid }} .mbar button.on{ background: var(--g); color: var(--on-g); }
+  #{{ rid }} .mom{ display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); gap: 0; overflow: hidden; }
+  #{{ rid }} .mom.noimg{ grid-template-columns: minmax(0,1fr); }
+  #{{ rid }} .mom[hidden]{ display: none; }
+  #{{ rid }} .mtx{ padding: 28px; }
+  #{{ rid }} .mtx h3{ font-size: 22px; margin-bottom: 10px; }
+  #{{ rid }} .mtx h4{ font-family: var(--font-body-family); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ac); margin: 20px 0 10px; }
+  #{{ rid }} .mtx ul{ list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  #{{ rid }} .mtx li{ display: flex; gap: 10px; align-items: flex-start; }
+  #{{ rid }} .mtx li svg.i{ margin-top: 3px; color: var(--ac); }
+  #{{ rid }} .mom > img{ width: 100%; height: 100%; min-height: 280px; object-fit: cover; display: block; }
+
+  /* ---------- PARCOURS ---------- */
+  #{{ rid }} .gp-path{ display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+  #{{ rid }} .gp-jal{ padding: 22px; position: relative; }
+  #{{ rid }} .gp-jal .when{ display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--g); color: var(--on-g); border-radius: 999px; padding: 4px 12px; }
+  #{{ rid }} .gp-jal h3{ font-size: 19px; margin: 12px 0 10px; }
+  #{{ rid }} .gp-jal ul{ list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; font-size: 14.5px; }
+  #{{ rid }} .gp-jal li{ display: flex; gap: 9px; align-items: flex-start; }
+  #{{ rid }} .gp-jal li svg.i{ margin-top: 2px; color: var(--ac); }
+
+  /* ---------- MODE D'EMPLOI ---------- */
+  #{{ rid }} .use{ display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 28px; align-items: center; }
+  #{{ rid }} .use.noimg{ grid-template-columns: minmax(0,1fr); }
+  #{{ rid }} .use > img{ width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; border-radius: 16px; display: block; }
+  #{{ rid }} .gst{ display: flex; flex-direction: column; gap: 12px; }
+  #{{ rid }} .use.noimg .gst{ display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
+  #{{ rid }} .ge{ display: flex; gap: 14px; padding: 18px; }
+  #{{ rid }} .ge .n{ width: 34px; height: 34px; border-radius: 50%; background: var(--g); color: var(--on-g); font-weight: 700; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+  #{{ rid }} .ge b{ display: block; font-size: 16px; }
+  #{{ rid }} .ge span{ display: block; font-size: 14.5px; color: var(--mut); margin-top: 2px; }
+
+  /* ---------- COMPARATIF ---------- */
+  #{{ rid }} .cmp{ overflow: hidden; }
+  #{{ rid }} .cmp table{ width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 14.5px; }
+  #{{ rid }} .cmp th, #{{ rid }} .cmp td{ padding: 13px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); border-left: 0; border-right: 0; border-top: 0; color: var(--ink); overflow-wrap: break-word; hyphens: auto; }
+  #{{ rid }} .cmp tr:last-child td{ border-bottom: 0; }
+  #{{ rid }} .cmp thead th{ font-size: 13px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+  #{{ rid }} .cmp .us{ background: var(--g); color: var(--on-g); }
+  #{{ rid }} .cmp td.us{ font-weight: 600; border-bottom-color: rgba(239,231,218,.22); }
+  #{{ rid }} .cmp td.them{ color: var(--mut); }
+  #{{ rid }} .cmp td:first-child{ font-weight: 700; width: 28%; }
+
+  /* ---------- GARANTIE ---------- */
+  #{{ rid }} .guar{ display: flex; gap: 20px; align-items: center; padding: 30px; background: var(--g); color: var(--on-g); border-radius: 18px; }
+  #{{ rid }} .guar h2{ color: var(--on-g); font-size: 26px; }
+  #{{ rid }} .guar p{ margin-top: 8px; max-width: 700px; }
+  #{{ rid }} .guar .gi{ width: 60px; height: 60px; border-radius: 50%; background: rgba(239,231,218,.14); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+  #{{ rid }} .guar .gi svg.i{ width: 28px; height: 28px; }
+
+  /* ---------- AVIS ---------- */
+  #{{ rid }} .revs{ display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
+  #{{ rid }} .rv{ padding: 20px; font-size: 14.5px; }
+  #{{ rid }} .rv b{ display: block; font-size: 15px; margin: 10px 0 4px; }
+  #{{ rid }} .rv .who{ display: block; font-size: 13px; color: var(--mut); margin-top: 12px; }
+
+  /* ---------- FAQ ---------- */
+  #{{ rid }} .faq{ max-width: 820px; }
+  #{{ rid }} .faq details{ border-bottom: 1px solid var(--line); }
+  #{{ rid }} .faq summary{ display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 56px; padding: 14px 0; font-size: 16.5px; font-weight: 600; cursor: pointer; list-style: none; }
+  #{{ rid }} .faq summary::-webkit-details-marker{ display: none; }
+  #{{ rid }} .faq summary::after{ content: "+"; font-size: 24px; font-weight: 400; line-height: 1; flex: 0 0 auto; }
+  #{{ rid }} .faq details[open] summary::after{ content: "\2212"; }
+  #{{ rid }} .faq .ans{ padding: 0 0 18px; color: var(--mut); max-width: 700px; }
+
+  /* ---------- FIN + BARRE MOBILE ---------- */
+  #{{ rid }} .end{ text-align: center; padding: 40px 22px; }
+  #{{ rid }} .end .lead{ margin-left: auto; margin-right: auto; }
+  #{{ rid }} .end .cta{ max-width: 380px; margin: 22px auto 0; }
+  #{{ rid }} .bar{ display: none; }
+
+  @media (max-width: 899px){
+    #{{ rid }} .hero{ grid-template-columns: minmax(0,1fr); gap: 22px; }
+    #{{ rid }} .gal{ position: static; }
+    #{{ rid }} h1{ font-size: 29px; }
+    #{{ rid }} h2{ font-size: 25px; }
+    #{{ rid }} .sec{ margin-top: 48px; }
+    #{{ rid }} .mom, #{{ rid }} .use, #{{ rid }} .gp-path, #{{ rid }} .revs, #{{ rid }} .use.noimg .gst{ grid-template-columns: minmax(0,1fr); }
+    #{{ rid }} .mom > img{ min-height: 0; aspect-ratio: 4/3; height: auto; order: -1; }
+    #{{ rid }} .mtx{ padding: 22px 18px; }
+    #{{ rid }} .guar{ flex-direction: column; align-items: flex-start; padding: 24px 20px; }
+    #{{ rid }} .strip{ justify-content: flex-start; font-size: 12px; }
+    #{{ rid }} .bar{ position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: flex; align-items: center; gap: 12px; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); background: var(--card); border-top: 1px solid var(--line); box-shadow: 0 -6px 18px rgba(49,68,49,.14); transform: translateY(110%); transition: transform .2s ease; }
+    #{{ rid }} .bar.show{ transform: none; }
+    #{{ rid }} .bar .bi{ flex: 1; min-width: 0; font-size: 13px; line-height: 1.25; }
+    #{{ rid }} .bar .bi b{ display: block; font-size: 16px; }
+    #{{ rid }} .bar .cta{ width: auto; min-height: 48px; margin: 0; padding: 10px 18px; font-size: 14px; }
+  }
+  @media (max-width: 479px){
+    #{{ rid }} .facts{ grid-template-columns: 1fr; gap: 8px; }
+    #{{ rid }} .prof button{ font-size: 12.5px; }
+    #{{ rid }} .cmp th, #{{ rid }} .cmp td{ padding: 11px 9px; font-size: 13.5px; }
+    #{{ rid }} .cmp td:first-child{ width: 24%; }
+    #{{ rid }} .expert{ align-items: flex-start; }
+    #{{ rid }} .expert img{ width: 64px; height: 64px; }
+  }
+  @media (prefers-reduced-motion: reduce){ #{{ rid }} .bar{ transition: none; } }
+{%- endstyle -%}
+
+{%- capture ico_check -%}<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>{%- endcapture -%}
+{%- capture ico_shield -%}<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>{%- endcapture -%}
+{%- capture ico_truck -%}<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7z"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg>{%- endcapture -%}
+{%- capture ico_book -%}<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg>{%- endcapture -%}
+{%- capture ico_paw -%}<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="9" r="1.7"/><circle cx="12" cy="6.5" r="1.7"/><circle cx="17" cy="9" r="1.7"/><path d="M12 12c-3 0-5 2.2-5 4.2S9 19 12 19s5-.8 5-2.8-2-4.2-5-4.2z"/></svg>{%- endcapture -%}
+
+<div id="{{ rid }}" class="gfpg">
+  <div class="w">
+
+    {%- comment -%} ================= HAUT DE PAGE ================= {%- endcomment -%}
+    <div class="hero">
+      <div class="gal">
+        {%- if p.featured_image -%}
+          <img class="gmain" data-main
+            src="{{ p.featured_image | image_url: width: 1100 }}"
+            srcset="{{ p.featured_image | image_url: width: 550 }} 550w, {{ p.featured_image | image_url: width: 1100 }} 1100w"
+            sizes="(max-width: 899px) 100vw, 540px"
+            alt="{{ p.featured_image.alt | default: p.title | escape }}" width="1100" height="1100" fetchpriority="high">
+        {%- else -%}
+          <div class="gmain">{{ 'product-1' | placeholder_svg_tag }}</div>
+        {%- endif -%}
+        {%- if p.images.size > 1 -%}
+          <div class="gth">
+            {%- for img in p.images limit: 10 -%}
+              <button type="button" class="{% if forloop.first %}on{% endif %}" data-thumb="{{ img | image_url: width: 1100 }}" aria-label="Voir la photo {{ forloop.index }}">
+                <img src="{{ img | image_url: width: 140 }}" alt="" width="64" height="64" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="buy">
+        {%- if s.badge != blank -%}<span class="badge">{{ ico_paw }}{{ s.badge }}</span>{%- endif -%}
+
+        {%- if avis_count > 0 -%}
+          <div class="rate">
+            <span class="stars" aria-hidden="true"><span style="width:{{ avis_avg | times: 20 }}%"></span></span>
+            <span>{{ avis_avg | replace: '.', ',' }}/5 · {{ avis_count }} avis</span>
+          </div>
+        {%- endif -%}
+
+        <h1>{{ s.title_override | default: p.title }}</h1>
+        {%- if s.subtitle != blank -%}<p class="sub">{{ s.subtitle }}</p>{%- endif -%}
+
+        {%- if s.chips != blank -%}
+          <ul class="chips">
+            {%- assign lines = s.chips | newline_to_br | split: '<br />' -%}
+            {%- for line in lines -%}{%- assign c = line | strip -%}{%- if c != blank -%}<li>{{ ico_check }}{{ c }}</li>{%- endif -%}{%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <div class="facts">
+          {%- if s.fact1_title != blank -%}<div class="fact">{{ ico_truck }}<div><b>{{ s.fact1_title }}</b><span>{{ s.fact1_text }}</span></div></div>{%- endif -%}
+          {%- if s.fact2_title != blank -%}<div class="fact">{{ ico_book }}<div><b>{{ s.fact2_title }}</b><span>{{ s.fact2_text }}</span></div></div>{%- endif -%}
+          {%- if s.fact3_title != blank -%}<div class="fact">{{ ico_shield }}<div><b>{{ s.fact3_title }}</b><span>{{ s.fact3_text }}</span></div></div>{%- endif -%}
+        </div>
+
+        <form id="{{ fid }}" action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" style="margin:0">
+          <input type="hidden" name="id" value="{{ cur.id }}" data-varid>
+          <input type="hidden" name="quantity" value="1">
+
+          {%- if has_tiers -%}
+            <div class="gp-card box">
+              <p class="stp">{{ s.step1_kicker }}</p>
+              <h3>{{ s.step1_heading }}</h3>
+              {%- if profils.size > 0 -%}
+                <div class="prof" role="group" aria-label="{{ s.step1_heading | escape }}">
+                  {%- for b in profils -%}
+                    <button type="button" data-prof="{{ b.settings.tier | escape }}" data-hint="{{ b.settings.hint | escape }}" aria-pressed="false" {{ b.shopify_attributes }}>{{ b.settings.label }}</button>
+                  {%- endfor -%}
+                </div>
+                <p class="hint" data-hint-out aria-live="polite">{{ s.step1_hint }}</p>
+              {%- endif -%}
+
+              <div class="tiers" role="radiogroup" aria-label="{{ opt_qty.name | escape }}">
+                {%- for val in opt_qty.values -%}
+                  {%- liquid
+                    assign n = val | plus: 0
+                    if n < 1
+                      assign n = 1
+                    endif
+                    assign tv = nil
+                    for v in p.variants
+                      if v.option1 == val
+                        assign tv = v
+                        break
+                      endif
+                    endfor
+                    assign unit = tv.price | divided_by: n
+                    assign ref = base_unit | times: n
+                    assign pct = 0
+                    if ref > tv.price
+                      assign pct = ref | minus: tv.price | times: 100.0 | divided_by: ref | round
+                    endif
+                    case forloop.index
+                      when 1
+                        assign extra = s.tier1_text
+                      when 2
+                        assign extra = s.tier2_text
+                      else
+                        assign extra = s.tier3_text
+                    endcase
+                  -%}
+                  <button type="button" class="tier{% if val == s.popular_qty %} on reco-on{% endif %}" role="radio" aria-checked="{% if val == s.popular_qty %}true{% else %}false{% endif %}" data-tier="{{ val | escape }}">
+                    <span class="reco">{{ s.popular_label }}</span>
+                    <span class="rad"></span>
+                    <span class="tb">
+                      <span class="tt">{{ val }} {{ s.unit_label }}{% if pct > 0 %}<span class="pct">-{{ pct }} %</span>{% endif %}</span>
+                      {%- if extra != blank -%}<span class="td">{{ extra }}</span>{%- endif -%}
+                    </span>
+                    <span class="tp">
+                      <b>{{ tv.price | money }}</b>
+                      {%- if n > 1 -%}<small>soit {{ unit | money }} l’unité</small>{%- endif -%}
+                      {%- if s.show_compare and tv.compare_at_price > tv.price -%}<s>{{ tv.compare_at_price | money }}</s>{%- endif -%}
+                    </span>
+                  </button>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if has_tiers and opt_color -%}
+            <div class="gp-card box">
+              <p class="stp">{{ s.step2_kicker }}</p>
+              <p class="clab">{{ opt_color.name }} : <span data-color-label>{{ cur.option2 }}</span></p>
+              <div class="sws" role="radiogroup" aria-label="{{ opt_color.name | escape }}">
+                {%- for val in opt_color.values -%}
+                  {%- assign low = val | downcase -%}
+                  {%- case low -%}
+                    {%- when 'vert' -%}{%- assign hex = '#6f9c53' -%}
+                    {%- when 'bleu' -%}{%- assign hex = '#5b86b0' -%}
+                    {%- when 'violet' -%}{%- assign hex = '#8f7bb0' -%}
+                    {%- when 'beige' -%}{%- assign hex = '#d8c8a8' -%}
+                    {%- when 'gris' -%}{%- assign hex = '#9aa0a3' -%}
+                    {%- when 'rose' -%}{%- assign hex = '#d99aa5' -%}
+                    {%- when 'noir' -%}{%- assign hex = '#2b2b2b' -%}
+                    {%- else -%}{%- assign hex = '#cccccc' -%}
+                  {%- endcase -%}
+                  <button type="button" class="sw{% if val == cur.option2 %} on{% endif %}" role="radio" aria-checked="{% if val == cur.option2 %}true{% else %}false{% endif %}" aria-label="{{ val | escape }}" title="{{ val | escape }}" data-sw="{{ val | escape }}" style="background:{{ hex }}"></button>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if s.included != blank -%}
+            <ul class="incl">
+              {%- assign lines = s.included | newline_to_br | split: '<br />' -%}
+              {%- for line in lines -%}{%- assign c = line | strip -%}{%- if c != blank -%}<li>{{ ico_check }}<span>{{ c }}</span></li>{%- endif -%}{%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          <button type="submit" class="cta" data-atc {% unless cur.available %}disabled{% endunless %}>
+            <span data-btnlabel>{{ s.cta_label }}</span><span data-btnprice>· {{ cur.price | money }}</span>
+          </button>
+        </form>
+        {%- if s.cta_micro != blank -%}<p class="micro">{{ ico_shield }}<span>{{ s.cta_micro }}</span></p>{%- endif -%}
+
+        {%- if s.expert_quote != blank -%}
+          <div class="expert">
+            {%- if s.expert_image -%}
+              <img src="{{ s.expert_image | image_url: width: 240 }}" alt="{{ s.expert_name | escape }}" width="84" height="84" loading="lazy">
+            {%- endif -%}
+            <div>
+              {%- if s.expert_kicker != blank -%}<span class="ek">{{ s.expert_kicker }}</span>{%- endif -%}
+              <b>{{ s.expert_name }}</b>
+              <q>{{ s.expert_quote }}</q>
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- if onglets.size > 0 -%}
+          <div class="gp-card tabs" data-tabs>
+            <div class="tabbar" role="tablist">
+              {%- for b in onglets -%}
+                <button type="button" role="tab" class="{% if forloop.first %}on{% endif %}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" data-tab="{{ forloop.index }}">{{ b.settings.title }}</button>
+              {%- endfor -%}
+            </div>
+            {%- for b in onglets -%}
+              <div class="pane" role="tabpanel" data-pane="{{ forloop.index }}" {% unless forloop.first %}hidden{% endunless %} {{ b.shopify_attributes }}>
+                {%- if b.settings.heading != blank -%}<h4>{{ b.settings.heading }}</h4>{%- endif -%}
+                {{ b.settings.content }}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} ================= BANDE DE REASSURANCE ================= {%- endcomment -%}
+    {%- if s.strip != blank -%}
+      <div class="sec strip">
+        {%- assign lines = s.strip | newline_to_br | split: '<br />' -%}
+        {%- for line in lines -%}{%- assign c = line | strip -%}{%- if c != blank -%}<span>{{ ico_check }}{{ c }}</span>{%- endif -%}{%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ================= MOMENTS D'USAGE ================= {%- endcomment -%}
+    {%- if moments.size > 0 -%}
+      <div class="sec" data-tabs>
+        <div class="head">
+          {%- if s.moments_kicker != blank -%}<p class="kick">{{ s.moments_kicker }}</p>{%- endif -%}
+          <h2>{{ s.moments_heading }}</h2>
+          {%- if s.moments_lead != blank -%}<p class="lead">{{ s.moments_lead }}</p>{%- endif -%}
+        </div>
+        <div class="mbar" role="tablist">
+          {%- for b in moments -%}
+            <button type="button" role="tab" class="{% if forloop.first %}on{% endif %}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" data-tab="{{ forloop.index }}">{{ b.settings.tab }}</button>
+          {%- endfor -%}
+        </div>
+        {%- for b in moments -%}
+          <div class="gp-card mom{% unless b.settings.image %} noimg{% endunless %}" role="tabpanel" data-pane="{{ forloop.index }}" {% unless forloop.first %}hidden{% endunless %} {{ b.shopify_attributes }}>
+            <div class="mtx">
+              <h3>{{ b.settings.heading }}</h3>
+              <p>{{ b.settings.text }}</p>
+              {%- if b.settings.points != blank -%}
+                <h4>{{ s.moments_points_label }}</h4>
+                <ul>
+                  {%- assign lines = b.settings.points | newline_to_br | split: '<br />' -%}
+                  {%- for line in lines -%}{%- assign c = line | strip -%}{%- if c != blank -%}<li>{{ ico_check }}<span>{{ c }}</span></li>{%- endif -%}{%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+            {%- if b.settings.image -%}
+              <img src="{{ b.settings.image | image_url: width: 900 }}" alt="{{ b.settings.image.alt | default: b.settings.heading | escape }}" width="900" height="675" loading="lazy">
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ================= PARCOURS ================= {%- endcomment -%}
+    {%- if jalons.size > 0 -%}
+      <div class="sec">
+        <div class="head">
+          {%- if s.path_kicker != blank -%}<p class="kick">{{ s.path_kicker }}</p>{%- endif -%}
+          <h2>{{ s.path_heading }}</h2>
+          {%- if s.path_lead != blank -%}<p class="lead">{{ s.path_lead }}</p>{%- endif -%}
+        </div>
+        <div class="gp-path">
+          {%- for b in jalons -%}
+            <div class="gp-card gp-jal" {{ b.shopify_attributes }}>
+              <span class="when">{{ b.settings.when }}</span>
+              <h3>{{ b.settings.heading }}</h3>
+              <ul>
+                {%- assign lines = b.settings.points | newline_to_br | split: '<br />' -%}
+                {%- for line in lines -%}{%- assign c = line | strip -%}{%- if c != blank -%}<li>{{ ico_check }}<span>{{ c }}</span></li>{%- endif -%}{%- endfor -%}
+              </ul>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ================= MODE D'EMPLOI ================= {%- endcomment -%}
+    {%- if gestes.size > 0 -%}
+      <div class="sec">
+        <div class="head">
+          {%- if s.use_kicker != blank -%}<p class="kick">{{ s.use_kicker }}</p>{%- endif -%}
+          <h2>{{ s.use_heading }}</h2>
+          {%- if s.use_lead != blank -%}<p class="lead">{{ s.use_lead }}</p>{%- endif -%}
+        </div>
+        <div class="use{% unless s.use_image %} noimg{% endunless %}">
+          {%- if s.use_image -%}
+            <img src="{{ s.use_image | image_url: width: 1000 }}" alt="{{ s.use_image.alt | default: s.use_heading | escape }}" width="1000" height="750" loading="lazy">
+          {%- endif -%}
+          <div class="gst">
+            {%- for b in gestes -%}
+              <div class="gp-card ge" {{ b.shopify_attributes }}>
+                <span class="n">{{ forloop.index }}</span>
+                <div><b>{{ b.settings.heading }}</b><span>{{ b.settings.text }}</span></div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ================= COMPARATIF ================= {%- endcomment -%}
+    {%- if compares.size > 0 -%}
+      <div class="sec">
+        <div class="head">
+          {%- if s.cmp_kicker != blank -%}<p class="kick">{{ s.cmp_kicker }}</p>{%- endif -%}
+          <h2>{{ s.cmp_heading }}</h2>
+        </div>
+        <div class="gp-card cmp">
+          <table>
+            <thead><tr><th scope="col"><span class="visually-hidden">Critère</span></th><th scope="col" class="us">{{ s.cmp_us }}</th><th scope="col">{{ s.cmp_them }}</th></tr></thead>
+            <tbody>
+              {%- for b in compares -%}
+                <tr {{ b.shopify_attributes }}><td>{{ b.settings.label }}</td><td class="us">{{ b.settings.us }}</td><td class="them">{{ b.settings.them }}</td></tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ================= GARANTIE ================= {%- endcomment -%}
+    {%- if s.guar_heading != blank -%}
+      <div class="sec guar">
+        <div class="gi">{{ ico_shield }}</div>
+        <div><h2>{{ s.guar_heading }}</h2><p>{{ s.guar_text }}</p></div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ================= AVIS (reels uniquement) ================= {%- endcomment -%}
+    {%- if avis_count > 0 -%}
+      <div class="sec">
+        <div class="head">
+          <p class="kick">{{ avis_avg | replace: '.', ',' }}/5 sur {{ avis_count }} avis</p>
+          <h2>{{ s.reviews_heading }}</h2>
+        </div>
+        <div class="revs">
+          {%- for a in avis_list limit: 9 -%}
+            {%- assign n = a.note.value | plus: 0 -%}
+            <div class="gp-card rv">
+              <span class="stars" role="img" aria-label="Noté {{ n }} sur 5"><span style="width:{{ n | times: 20 }}%"></span></span>
+              {%- if a.titre.value != blank -%}<b>{{ a.titre.value | escape }}</b>{%- endif -%}
+              <p>{{ a.contenu.value | escape }}</p>
+              <span class="who">{{ a.auteur.value | escape }}{% if a.verifie.value %} · Achat vérifié{% endif %}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ================= FAQ ================= {%- endcomment -%}
+    {%- if faqs.size > 0 -%}
+      <div class="sec">
+        <div class="head">
+          {%- if s.faq_kicker != blank -%}<p class="kick">{{ s.faq_kicker }}</p>{%- endif -%}
+          <h2>{{ s.faq_heading }}</h2>
+        </div>
+        <div class="faq">
+          {%- for b in faqs -%}
+            <details {{ b.shopify_attributes }}>
+              <summary>{{ b.settings.question }}</summary>
+              <div class="ans">{{ b.settings.answer }}</div>
+            </details>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} ================= DERNIER APPEL ================= {%- endcomment -%}
+    {%- if s.end_heading != blank -%}
+      <div class="sec gp-card end">
+        <h2>{{ s.end_heading }}</h2>
+        {%- if s.end_text != blank -%}<p class="lead">{{ s.end_text }}</p>{%- endif -%}
+        <a class="cta" href="#{{ fid }}">{{ s.end_cta }}</a>
+      </div>
+    {%- endif -%}
+
+  </div>
+
+  <div class="bar" data-bar aria-hidden="true">
+    <div class="bi"><span data-bar-label>{{ p.title | truncate: 34 }}</span><b data-bar-price>{{ cur.price | money }}</b></div>
+    <button type="submit" form="{{ fid }}" class="cta" data-bar-atc tabindex="-1" {% unless cur.available %}disabled{% endunless %}>{{ s.cta_label }}</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById({{ rid | json }});
+  if(!root) return;
+  var variants = [
+    {%- for v in p.variants -%}
+      {"id": {{ v.id }}, "o1": {{ v.option1 | json }}, "o2": {{ v.option2 | json }}, "price": {{ v.price | money | json }}, "available": {{ v.available }}}{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ];
+  var hasTiers = {{ has_tiers }};
+  var unitLabel = {{ s.unit_label | json }};
+  var ctaLabel = {{ s.cta_label | json }};
+  var soldLabel = {{ s.sold_out_label | json }};
+  var sel = { o1: {{ cur.option1 | json }}, o2: {{ cur.option2 | json }} };
+  var popular = {{ s.popular_qty | json }};
+  if(hasTiers && variants.some(function(v){ return v.o1 === popular; })) sel.o1 = popular;
+
+  function q(a){ return root.querySelector(a); }
+  function qa(a){ return Array.prototype.slice.call(root.querySelectorAll(a)); }
+  var varInput = q("[data-varid]"), atc = q("[data-atc]"), barAtc = q("[data-bar-atc]");
+
+  function match(){
+    for(var i = 0; i < variants.length; i++){
+      var v = variants[i];
+      if(v.o1 === sel.o1 && (v.o2 === null || v.o2 === sel.o2)) return v;
+    }
+    return null;
+  }
+  function render(){
+    qa("[data-tier]").forEach(function(t){
+      var on = t.getAttribute("data-tier") === sel.o1;
+      t.classList.toggle("on", on); t.setAttribute("aria-checked", on ? "true" : "false");
+    });
+    qa("[data-sw]").forEach(function(w){
+      var on = w.getAttribute("data-sw") === sel.o2;
+      w.classList.toggle("on", on); w.setAttribute("aria-checked", on ? "true" : "false");
+    });
+    var cl = q("[data-color-label]"); if(cl) cl.textContent = sel.o2;
+    var v = match();
+    var ok = !!(v && v.available);
+    if(v && varInput) varInput.value = v.id;
+    if(atc){
+      atc.disabled = !ok;
+      q("[data-btnlabel]").textContent = ok ? ctaLabel : soldLabel;
+      q("[data-btnprice]").textContent = ok ? "· " + v.price : "";
+    }
+    if(barAtc) barAtc.disabled = !ok;
+    var bp = q("[data-bar-price]"); if(bp && v) bp.textContent = v.price;
+    var bl = q("[data-bar-label]");
+    if(bl && hasTiers) bl.textContent = sel.o1 + " " + unitLabel + (sel.o2 ? " · " + sel.o2 : "");
+  }
+
+  if(hasTiers){
+    qa("[data-tier]").forEach(function(t){
+      t.addEventListener("click", function(){ sel.o1 = t.getAttribute("data-tier"); render(); });
+    });
+    qa("[data-sw]").forEach(function(w){
+      w.addEventListener("click", function(){ sel.o2 = w.getAttribute("data-sw"); render(); });
+    });
+    qa("[data-prof]").forEach(function(b){
+      b.addEventListener("click", function(){
+        var tier = b.getAttribute("data-prof");
+        qa("[data-prof]").forEach(function(x){ var on = x === b; x.classList.toggle("on", on); x.setAttribute("aria-pressed", on ? "true" : "false"); });
+        qa("[data-tier]").forEach(function(t){ t.classList.toggle("reco-on", t.getAttribute("data-tier") === tier); });
+        var out = q("[data-hint-out]"); if(out) out.textContent = b.getAttribute("data-hint") || "";
+        if(variants.some(function(v){ return v.o1 === tier; })){ sel.o1 = tier; render(); }
+      });
+    });
+    render();
+  }
+
+  qa("[data-thumb]").forEach(function(th){
+    th.addEventListener("click", function(){
+      var main = q("[data-main]");
+      if(main){ main.removeAttribute("srcset"); main.src = th.getAttribute("data-thumb"); }
+      qa("[data-thumb]").forEach(function(x){ x.classList.toggle("on", x === th); });
+    });
+  });
+
+  qa("[data-tabs]").forEach(function(group){
+    var tabs = Array.prototype.slice.call(group.querySelectorAll("[data-tab]"));
+    var panes = Array.prototype.slice.call(group.querySelectorAll("[data-pane]"));
+    tabs.forEach(function(t){
+      t.addEventListener("click", function(){
+        var k = t.getAttribute("data-tab");
+        tabs.forEach(function(x){ var on = x === t; x.classList.toggle("on", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+        panes.forEach(function(pn){ pn.hidden = pn.getAttribute("data-pane") !== k; });
+      });
+    });
+  });
+
+  var bar = q("[data-bar]");
+  if(bar && atc && "IntersectionObserver" in window){
+    new IntersectionObserver(function(es){
+      var e = es[0];
+      var show = !e.isIntersecting && e.boundingClientRect.top < 0;
+      bar.classList.toggle("show", show);
+      bar.setAttribute("aria-hidden", show ? "false" : "true");
+      if(barAtc) barAtc.tabIndex = show ? 0 : -1;
+    }).observe(atc);
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Produit, achat guidé",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "header", "content": "Couleurs (palette de marque)" },
+    { "type": "color", "id": "color_bg", "label": "Fond de page", "default": "#efe7da" },
+    { "type": "color", "id": "color_card", "label": "Fond des encarts", "default": "#faf8f3" },
+    { "type": "color", "id": "color_primary", "label": "Vert foncé (texte, boutons)", "default": "#314431" },
+    { "type": "color", "id": "color_on_primary", "label": "Texte sur vert foncé", "default": "#efe7da" },
+    { "type": "color", "id": "color_accent", "label": "Accent terracotta", "default": "#c16b47" },
+    { "type": "color", "id": "color_sage", "label": "Vert sauge (pastille d'économie)", "default": "#b6bfa3" },
+
+    { "type": "header", "content": "Haut de page" },
+    { "type": "text", "id": "badge", "label": "Pastille au-dessus du titre", "default": "Choisi par un comportementaliste" },
+    { "type": "text", "id": "title_override", "label": "Titre (vide = titre du produit)", "default": "Tapis de léchage apaisant" },
+    { "type": "textarea", "id": "subtitle", "label": "Promesse en une phrase", "default": "Dix minutes de léchage, et votre chien redescend. Un geste simple pour les orages, les départs et les repas avalés trop vite." },
+    { "type": "textarea", "id": "chips", "label": "Pastilles de bénéfices (une par ligne)", "default": "Orages et pétards\nDéparts et absences\nRepas ralentis\nBain et griffes" },
+    { "type": "text", "id": "fact1_title", "label": "Repère 1, titre", "default": "Expédié de France" },
+    { "type": "text", "id": "fact1_text", "label": "Repère 1, texte", "default": "préparé par nos soins" },
+    { "type": "text", "id": "fact2_title", "label": "Repère 2, titre", "default": "Guide offert" },
+    { "type": "text", "id": "fact2_text", "label": "Repère 2, texte", "default": "reçu par e-mail dès la commande" },
+    { "type": "text", "id": "fact3_title", "label": "Repère 3, titre", "default": "14 jours pour changer d’avis" },
+    { "type": "text", "id": "fact3_text", "label": "Repère 3, texte", "default": "retour simple" },
+
+    { "type": "header", "content": "Étape 1 : choix guidé et paliers" },
+    { "type": "text", "id": "step1_kicker", "label": "Surtitre", "default": "Étape 1" },
+    { "type": "text", "id": "step1_heading", "label": "Titre", "default": "Votre situation" },
+    { "type": "text", "id": "step1_hint", "label": "Texte d'aide avant tout choix", "default": "Indiquez votre situation, nous vous conseillons le bon nombre de tapis." },
+    { "type": "text", "id": "unit_label", "label": "Nom de l'unité", "default": "tapis" },
+    { "type": "text", "id": "popular_qty", "label": "Palier présélectionné (valeur de l'option)", "default": "2" },
+    { "type": "text", "id": "popular_label", "label": "Pastille du palier conseillé", "default": "Conseillé" },
+    { "type": "text", "id": "tier1_text", "label": "Palier 1, contenu", "default": "+ le guide Le Rituel du Calme" },
+    { "type": "text", "id": "tier2_text", "label": "Palier 2, contenu", "default": "+ spatule et grattoir + le guide" },
+    { "type": "text", "id": "tier3_text", "label": "Palier 3, contenu", "default": "+ spatule et grattoir + le guide" },
+    { "type": "checkbox", "id": "show_compare", "label": "Afficher le prix barré", "info": "À n'activer que si ce prix a réellement été pratiqué auparavant.", "default": false },
+
+    { "type": "header", "content": "Étape 2 : couleur, contenu, bouton" },
+    { "type": "text", "id": "step2_kicker", "label": "Surtitre", "default": "Étape 2" },
+    { "type": "textarea", "id": "included", "label": "Lignes sous le choix (une par ligne)", "default": "Silicone de qualité alimentaire, lave-vaisselle et congélateur\nVentouses pour sol, baignoire ou vitre\nGuide Le Rituel du Calme envoyé par e-mail" },
+    { "type": "text", "id": "cta_label", "label": "Texte du bouton", "default": "Ajouter au panier" },
+    { "type": "text", "id": "sold_out_label", "label": "Texte si rupture", "default": "Rupture, réassort en cours" },
+    { "type": "text", "id": "cta_micro", "label": "Ligne sous le bouton", "default": "Paiement sécurisé. 14 jours pour changer d’avis." },
+
+    { "type": "header", "content": "Encart du comportementaliste" },
+    { "type": "image_picker", "id": "expert_image", "label": "Photo (carrée, 400 × 400)" },
+    { "type": "text", "id": "expert_kicker", "label": "Surtitre", "default": "Le mot du comportementaliste" },
+    { "type": "text", "id": "expert_name", "label": "Nom", "default": "Régis, fondateur de Gus et Frost" },
+    { "type": "textarea", "id": "expert_quote", "label": "Citation (vide = encart masqué)", "default": "Le léchage est un comportement d’apaisement naturel. En vingt ans de cabinet, c’est l’un des premiers outils que je fais mettre en place." },
+
+    { "type": "header", "content": "Bande de réassurance" },
+    { "type": "textarea", "id": "strip", "label": "Mentions (une par ligne)", "default": "Marque française\nChoisi par un comportementaliste\nExpédié de France" },
+
+    { "type": "header", "content": "Moments d'usage (onglets)" },
+    { "type": "text", "id": "moments_kicker", "label": "Surtitre", "default": "Un tapis, quatre moments" },
+    { "type": "text", "id": "moments_heading", "label": "Titre", "default": "À quoi il sert, concrètement" },
+    { "type": "textarea", "id": "moments_lead", "label": "Introduction", "default": "Lécher fait baisser la tension. Le tapis donne à votre chien quelque chose à faire au moment précis où il s’inquiète." },
+    { "type": "text", "id": "moments_points_label", "label": "Intertitre de la liste", "default": "Ce que vous verrez" },
+
+    { "type": "header", "content": "Parcours" },
+    { "type": "text", "id": "path_kicker", "label": "Surtitre", "default": "Semaine après semaine" },
+    { "type": "text", "id": "path_heading", "label": "Titre", "default": "Ce qui change, et quand" },
+    { "type": "textarea", "id": "path_lead", "label": "Introduction", "default": "Le tapis occupe dès le premier jour. L’effet sur le stress, lui, se construit avec la répétition." },
+
+    { "type": "header", "content": "Mode d'emploi" },
+    { "type": "text", "id": "use_kicker", "label": "Surtitre", "default": "Mode d’emploi" },
+    { "type": "text", "id": "use_heading", "label": "Titre", "default": "Trois gestes, deux minutes" },
+    { "type": "textarea", "id": "use_lead", "label": "Introduction" },
+    { "type": "image_picker", "id": "use_image", "label": "Photo (4:3, 1600 × 1200)" },
+
+    { "type": "header", "content": "Comparatif" },
+    { "type": "text", "id": "cmp_kicker", "label": "Surtitre", "default": "Comparaison" },
+    { "type": "text", "id": "cmp_heading", "label": "Titre", "default": "Ce qui le distingue d’un tapis à 10 €" },
+    { "type": "text", "id": "cmp_us", "label": "Colonne 1", "default": "Gus et Frost" },
+    { "type": "text", "id": "cmp_them", "label": "Colonne 2", "default": "Tapis d’entrée de gamme" },
+
+    { "type": "header", "content": "Garantie" },
+    { "type": "text", "id": "guar_heading", "label": "Titre (vide = bloc masqué)", "default": "14 jours pour changer d’avis" },
+    { "type": "textarea", "id": "guar_text", "label": "Texte", "default": "Si le tapis ne convient pas à votre chien, vous nous le renvoyez dans les 14 jours suivant sa réception et nous vous remboursons. Le guide reste à vous." },
+
+    { "type": "header", "content": "Avis" },
+    { "type": "paragraph", "content": "Les avis viennent du champ « Avis » du produit. Tant qu'il est vide, ni la note ni ce bloc ne s'affichent." },
+    { "type": "text", "id": "reviews_heading", "label": "Titre", "default": "Ce qu’en disent les maîtres" },
+
+    { "type": "header", "content": "FAQ" },
+    { "type": "text", "id": "faq_kicker", "label": "Surtitre", "default": "Avant de commander" },
+    { "type": "text", "id": "faq_heading", "label": "Titre", "default": "Questions fréquentes" },
+
+    { "type": "header", "content": "Dernier appel" },
+    { "type": "text", "id": "end_heading", "label": "Titre (vide = bloc masqué)", "default": "Commencez par le prochain moment difficile" },
+    { "type": "textarea", "id": "end_text", "label": "Texte", "default": "Garnissez le tapis ce soir, placez-le au congélateur, sortez-le au prochain départ. Vous verrez dès la première fois s’il accroche." },
+    { "type": "text", "id": "end_cta", "label": "Texte du bouton", "default": "Choisir mon pack" },
+
+    { "type": "header", "content": "Espacement" },
+    { "type": "range", "id": "padding_top", "label": "Marge haut", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "padding_bottom", "label": "Marge bas", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 96 }
+  ],
+  "blocks": [
+    { "type": "profil", "name": "Situation (étape 1)", "limit": 3, "settings": [
+      { "type": "text", "id": "label", "label": "Libellé", "default": "Un chien" },
+      { "type": "text", "id": "tier", "label": "Palier conseillé (valeur de l'option)", "default": "1" },
+      { "type": "text", "id": "hint", "label": "Conseil affiché", "default": "Un tapis suffit pour commencer." } ] },
+    { "type": "onglet", "name": "Onglet sous le bouton", "limit": 4, "settings": [
+      { "type": "text", "id": "title", "label": "Nom de l'onglet", "default": "Bénéfices" },
+      { "type": "text", "id": "heading", "label": "Titre" },
+      { "type": "richtext", "id": "content", "label": "Contenu", "default": "<p>Texte de l'onglet.</p>" } ] },
+    { "type": "moment", "name": "Moment d'usage", "limit": 5, "settings": [
+      { "type": "text", "id": "tab", "label": "Nom de l'onglet", "default": "Orages et pétards" },
+      { "type": "text", "id": "heading", "label": "Titre", "default": "Quand le bruit l'inquiète" },
+      { "type": "textarea", "id": "text", "label": "Texte" },
+      { "type": "textarea", "id": "points", "label": "Points (un par ligne)" },
+      { "type": "image_picker", "id": "image", "label": "Photo (4:3, 1600 × 1200)" } ] },
+    { "type": "jalon", "name": "Jalon du parcours", "limit": 3, "settings": [
+      { "type": "text", "id": "when", "label": "Moment", "default": "Jour 1" },
+      { "type": "text", "id": "heading", "label": "Titre", "default": "La découverte" },
+      { "type": "textarea", "id": "points", "label": "Points (un par ligne)" } ] },
+    { "type": "geste", "name": "Geste du mode d'emploi", "limit": 4, "settings": [
+      { "type": "text", "id": "heading", "label": "Titre", "default": "Garnissez" },
+      { "type": "textarea", "id": "text", "label": "Texte" } ] },
+    { "type": "compare", "name": "Ligne du comparatif", "settings": [
+      { "type": "text", "id": "label", "label": "Critère", "default": "Matière" },
+      { "type": "text", "id": "us", "label": "Nous" },
+      { "type": "text", "id": "them", "label": "Les autres" } ] },
+    { "type": "faq", "name": "Question", "settings": [
+      { "type": "text", "id": "question", "label": "Question", "default": "Ce tapis convient-il à mon animal ?" },
+      { "type": "richtext", "id": "answer", "label": "Réponse", "default": "<p>Réponse.</p>" } ] }
+  ],
+  "presets": [
+    {
+      "name": "Produit, achat guidé",
+      "blocks": [
+        { "type": "profil", "settings": { "label": "Un chien, un moment difficile", "tier": "1", "hint": "Un tapis suffit pour tester sur le moment qui pose problème." } },
+        { "type": "profil", "settings": { "label": "Un chien, plusieurs moments", "tier": "2", "hint": "Deux tapis : un au congélateur, prêt à sortir, pendant que l’autre sèche." } },
+        { "type": "profil", "settings": { "label": "Deux animaux ou plus", "tier": "3", "hint": "Trois tapis : un par animal, donnés à distance, et un d’avance au congélateur." } },
+
+        { "type": "onglet", "settings": { "title": "Bénéfices", "heading": "Pourquoi le léchage apaise", "content": "<p>Lécher de façon répétée ralentit le rythme de votre chien et détourne son attention de ce qui l’inquiète. Les reliefs du tapis allongent ce temps de dix à vingt minutes, davantage si la garniture est congelée.</p><p>Le tapis ne traite pas une anxiété installée à lui seul. Il rend le moment supportable et vous donne une prise pour travailler le reste.</p>" } },
+        { "type": "onglet", "settings": { "title": "Utilisation", "heading": "Dans quelles situations le sortir", "content": "<ul><li>Juste avant un départ, pour associer la porte qui se ferme à quelque chose d’agréable.</li><li>Aux premiers bruits d’orage ou de feu d’artifice, avant que la peur monte.</li><li>À l’heure du repas, pour un chien qui avale sa gamelle en trente secondes.</li><li>Collé à la paroi de la baignoire pendant le bain ou la coupe des griffes.</li></ul>" } },
+        { "type": "onglet", "settings": { "title": "Entretien", "heading": "Nettoyage et conservation", "content": "<p>Rincez le tapis à l’eau chaude juste après usage, ou passez-le au lave-vaisselle. Ne le laissez pas sécher garni.</p><p>Il supporte le congélateur. Retirez-le si votre chien commence à le mâcher : c’est un tapis à lécher, pas un jouet à mordre.</p>" } },
+        { "type": "onglet", "settings": { "title": "Matière", "heading": "De quoi il est fait", "content": "<p>Silicone souple de qualité alimentaire, format 20 × 20 cm, quatre textures de relief et ventouses au dos. Il tient sur une surface lisse et non poreuse : carrelage, verre, baignoire, sol stratifié.</p>" } },
+
+        { "type": "moment", "settings": { "tab": "Orages et pétards", "heading": "Quand le bruit l’inquiète", "text": "Un chien qui a peur du bruit halète, tourne en rond, cherche à se cacher. Le tapis garni, sorti aux premiers grondements, lui donne une occupation qui fait redescendre la tension avant qu’elle déborde.", "points": "Il se pose au lieu de faire les cent pas\nSon attention quitte la fenêtre\nVous avez un geste à faire, plutôt que d’assister à sa peur" } },
+        { "type": "moment", "settings": { "tab": "Départs", "heading": "Quand vous fermez la porte", "text": "Les premières minutes après votre départ sont les plus difficiles. Posez le tapis au moment où vous enfilez votre manteau : le signal du départ annonce désormais quelque chose de bon.", "points": "Moins d’agitation pendant vos préparatifs\nLes premières minutes seul sont occupées\nLe départ cesse d’être un événement" } },
+        { "type": "moment", "settings": { "tab": "Repas", "heading": "Quand il mange trop vite", "text": "Étalée dans les reliefs, la ration ne s’avale plus d’un coup. Votre chien doit la chercher à la langue, ce qui allonge le repas de plusieurs minutes.", "points": "Un repas qui dure\nMoins d’air avalé avec la nourriture\nUn chien plus calme en sortant de table" } },
+        { "type": "moment", "settings": { "tab": "Bain et griffes", "heading": "Quand il faut le manipuler", "text": "Collé à hauteur de museau sur la paroi de la baignoire, le tapis occupe votre chien pendant que vous le douchez, le brossez ou lui coupez les griffes.", "points": "Il reste en place sans être tenu\nLe soin s’associe à une récompense\nVous travaillez à deux mains" } },
+
+        { "type": "jalon", "settings": { "when": "Jour 1", "heading": "La découverte", "points": "Il comprend le principe en quelques secondes\nComptez dix à vingt minutes d’occupation\nCommencez par un moment calme, pas par l’orage" } },
+        { "type": "jalon", "settings": { "when": "Semaine 1", "heading": "Le rituel s’installe", "points": "Le tapis sort toujours au même moment\nVotre chien l’attend et se pose plus vite\nVous passez à la version congelée, plus longue" } },
+        { "type": "jalon", "settings": { "when": "Après un mois", "heading": "Le moment difficile change de sens", "points": "Le départ ou le bain annonce le tapis\nL’agitation d’avant diminue\nSi rien ne bouge, le guide vous dit quoi ajuster" } },
+
+        { "type": "geste", "settings": { "heading": "Garnissez", "text": "Étalez pâtée, yaourt nature ou purée de potiron dans les reliefs." } },
+        { "type": "geste", "settings": { "heading": "Fixez", "text": "Plaquez les ventouses sur une surface lisse : carrelage, vitre, baignoire." } },
+        { "type": "geste", "settings": { "heading": "Laissez lécher", "text": "Dix à vingt minutes. Congelez le tapis garni pour doubler la durée." } },
+
+        { "type": "compare", "settings": { "label": "Matière", "us": "Silicone de qualité alimentaire", "them": "Composition souvent non précisée" } },
+        { "type": "compare", "settings": { "label": "Tenue", "us": "Ventouses sur tout le dos", "them": "Variable selon les modèles" } },
+        { "type": "compare", "settings": { "label": "Mode d’emploi", "us": "Guide écrit par un comportementaliste", "them": "Aucun" } },
+        { "type": "compare", "settings": { "label": "Expédition", "us": "Depuis la France", "them": "Souvent depuis l’étranger" } },
+
+        { "type": "faq", "settings": { "question": "Ce tapis convient-il à mon animal ?", "answer": "<p>Le format 20 × 20 cm convient aux chats, aux chiots et aux chiens de petite à moyenne taille. Pour un très grand chien, il reste un outil d’apaisement, pas une gamelle.</p>" } },
+        { "type": "faq", "settings": { "question": "Est-ce que cela fonctionne sur tous les chiens ?", "answer": "<p>Non. La plupart des chiens s’y mettent tout de suite, quelques-uns s’en désintéressent. Un chien en pleine panique ne mange plus : le tapis se propose avant le pic, pas pendant. Si votre chien n’accroche pas, vous avez 14 jours pour nous le renvoyer.</p>" } },
+        { "type": "faq", "settings": { "question": "Les ventouses tiennent-elles vraiment ?", "answer": "<p>Oui, sur une surface lisse et non poreuse : carrelage, verre, baignoire, sol stratifié. Sur pierre brute ou bois texturé, l’adhérence est faible.</p>" } },
+        { "type": "faq", "settings": { "question": "Que puis-je étaler dessus ?", "answer": "<p>Pâtée, yaourt nature, purée de banane ou de potiron, fromage frais, beurre de cacahuète sans xylitol. Le guide offert donne des recettes et les aliments à écarter.</p>" } },
+        { "type": "faq", "settings": { "question": "Peut-on le mettre au congélateur ?", "answer": "<p>Oui, et c’est conseillé. Un tapis garni puis congelé occupe votre chien deux à trois fois plus longtemps.</p>" } },
+        { "type": "faq", "settings": { "question": "Comment vais-je recevoir le guide ?", "answer": "<p>Par e-mail, en PDF, juste après la commande. Vous pouvez le lire avant l’arrivée du colis.</p>" } },
+        { "type": "faq", "settings": { "question": "Pourquoi prendre plusieurs tapis ?", "answer": "<p>Pour en garder un prêt au congélateur pendant que l’autre sèche, et pour en donner un à chaque animal du foyer. Le prix à l’unité baisse avec le nombre.</p>" } },
+        { "type": "faq", "settings": { "question": "Comment le nettoyer ?", "answer": "<p>À l’eau chaude juste après usage, ou au lave-vaisselle.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

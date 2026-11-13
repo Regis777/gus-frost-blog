@@ -1,0 +1,269 @@
+{
+  "sections": {
+    "main": {
+      "type": "gf-produit-guide",
+      "blocks": {
+        "profil_1": {
+          "type": "profil",
+          "settings": {
+            "label": "Un chien, un moment difficile",
+            "tier": "1",
+            "hint": "Un tapis suffit pour tester sur le moment qui pose problème."
+          }
+        },
+        "profil_2": {
+          "type": "profil",
+          "settings": {
+            "label": "Un chien, plusieurs moments",
+            "tier": "2",
+            "hint": "Deux tapis : un au congélateur, prêt à sortir, pendant que l’autre sèche."
+          }
+        },
+        "profil_3": {
+          "type": "profil",
+          "settings": {
+            "label": "Deux animaux ou plus",
+            "tier": "3",
+            "hint": "Trois tapis : un par animal, donnés à distance, et un d’avance au congélateur."
+          }
+        },
+        "onglet_1": {
+          "type": "onglet",
+          "settings": {
+            "title": "Bénéfices",
+            "heading": "Pourquoi le léchage apaise",
+            "content": "<p>Lécher de façon répétée ralentit le rythme de votre chien et détourne son attention de ce qui l’inquiète. Les reliefs du tapis allongent ce temps de dix à vingt minutes, davantage si la garniture est congelée.</p><p>Le tapis ne traite pas une anxiété installée à lui seul. Il rend le moment supportable et vous donne une prise pour travailler le reste.</p>"
+          }
+        },
+        "onglet_2": {
+          "type": "onglet",
+          "settings": {
+            "title": "Utilisation",
+            "heading": "Dans quelles situations le sortir",
+            "content": "<ul><li>Juste avant un départ, pour associer la porte qui se ferme à quelque chose d’agréable.</li><li>Aux premiers bruits d’orage ou de feu d’artifice, avant que la peur monte.</li><li>À l’heure du repas, pour un chien qui avale sa gamelle en trente secondes.</li><li>Collé à la paroi de la baignoire pendant le bain ou la coupe des griffes.</li></ul>"
+          }
+        },
+        "onglet_3": {
+          "type": "onglet",
+          "settings": {
+            "title": "Entretien",
+            "heading": "Nettoyage et conservation",
+            "content": "<p>Rincez le tapis à l’eau chaude juste après usage, ou passez-le au lave-vaisselle. Ne le laissez pas sécher garni.</p><p>Il supporte le congélateur. Retirez-le si votre chien commence à le mâcher : c’est un tapis à lécher, pas un jouet à mordre.</p>"
+          }
+        },
+        "onglet_4": {
+          "type": "onglet",
+          "settings": {
+            "title": "Matière",
+            "heading": "De quoi il est fait",
+            "content": "<p>Silicone souple de qualité alimentaire, format 20 × 20 cm, quatre textures de relief et ventouses au dos. Il tient sur une surface lisse et non poreuse : carrelage, verre, baignoire, sol stratifié.</p>"
+          }
+        },
+        "moment_1": {
+          "type": "moment",
+          "settings": {
+            "tab": "Orages et pétards",
+            "heading": "Quand le bruit l’inquiète",
+            "text": "Un chien qui a peur du bruit halète, tourne en rond, cherche à se cacher. Le tapis garni, sorti aux premiers grondements, lui donne une occupation qui fait redescendre la tension avant qu’elle déborde.",
+            "points": "Il se pose au lieu de faire les cent pas\nSon attention quitte la fenêtre\nVous avez un geste à faire, plutôt que d’assister à sa peur"
+          }
+        },
+        "moment_2": {
+          "type": "moment",
+          "settings": {
+            "tab": "Départs",
+            "heading": "Quand vous fermez la porte",
+            "text": "Les premières minutes après votre départ sont les plus difficiles. Posez le tapis au moment où vous enfilez votre manteau : le signal du départ annonce désormais quelque chose de bon.",
+            "points": "Moins d’agitation pendant vos préparatifs\nLes premières minutes seul sont occupées\nLe départ cesse d’être un événement"
+          }
+        },
+        "moment_3": {
+          "type": "moment",
+          "settings": {
+            "tab": "Repas",
+            "heading": "Quand il mange trop vite",
+            "text": "Étalée dans les reliefs, la ration ne s’avale plus d’un coup. Votre chien doit la chercher à la langue, ce qui allonge le repas de plusieurs minutes.",
+            "points": "Un repas qui dure\nMoins d’air avalé avec la nourriture\nUn chien plus calme en sortant de table"
+          }
+        },
+        "moment_4": {
+          "type": "moment",
+          "settings": {
+            "tab": "Bain et griffes",
+            "heading": "Quand il faut le manipuler",
+            "text": "Collé à hauteur de museau sur la paroi de la baignoire, le tapis occupe votre chien pendant que vous le douchez, le brossez ou lui coupez les griffes.",
+            "points": "Il reste en place sans être tenu\nLe soin s’associe à une récompense\nVous travaillez à deux mains"
+          }
+        },
+        "jalon_1": {
+          "type": "jalon",
+          "settings": {
+            "when": "Jour 1",
+            "heading": "La découverte",
+            "points": "Il comprend le principe en quelques secondes\nComptez dix à vingt minutes d’occupation\nCommencez par un moment calme, pas par l’orage"
+          }
+        },
+        "jalon_2": {
+          "type": "jalon",
+          "settings": {
+            "when": "Semaine 1",
+            "heading": "Le rituel s’installe",
+            "points": "Le tapis sort toujours au même moment\nVotre chien l’attend et se pose plus vite\nVous passez à la version congelée, plus longue"
+          }
+        },
+        "jalon_3": {
+          "type": "jalon",
+          "settings": {
+            "when": "Après un mois",
+            "heading": "Le moment difficile change de sens",
+            "points": "Le départ ou le bain annonce le tapis\nL’agitation d’avant diminue\nSi rien ne bouge, le guide vous dit quoi ajuster"
+          }
+        },
+        "geste_1": {
+          "type": "geste",
+          "settings": {
+            "heading": "Garnissez",
+            "text": "Étalez pâtée, yaourt nature ou purée de potiron dans les reliefs."
+          }
+        },
+        "geste_2": {
+          "type": "geste",
+          "settings": {
+            "heading": "Fixez",
+            "text": "Plaquez les ventouses sur une surface lisse : carrelage, vitre, baignoire."
+          }
+        },
+        "geste_3": {
+          "type": "geste",
+          "settings": {
+            "heading": "Laissez lécher",
+            "text": "Dix à vingt minutes. Congelez le tapis garni pour doubler la durée."
+          }
+        },
+        "compare_1": {
+          "type": "compare",
+          "settings": {
+            "label": "Matière",
+            "us": "Silicone de qualité alimentaire",
+            "them": "Composition souvent non précisée"
+          }
+        },
+        "compare_2": {
+          "type": "compare",
+          "settings": {
+            "label": "Tenue",
+            "us": "Ventouses sur tout le dos",
+            "them": "Variable selon les modèles"
+          }
+        },
+        "compare_3": {
+          "type": "compare",
+          "settings": {
+            "label": "Mode d’emploi",
+            "us": "Guide écrit par un comportementaliste",
+            "them": "Aucun"
+          }
+        },
+        "compare_4": {
+          "type": "compare",
+          "settings": {
+            "label": "Expédition",
+            "us": "Depuis la France",
+            "them": "Souvent depuis l’étranger"
+          }
+        },
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Ce tapis convient-il à mon animal ?",
+            "answer": "<p>Le format 20 × 20 cm convient aux chats, aux chiots et aux chiens de petite à moyenne taille. Pour un très grand chien, il reste un outil d’apaisement, pas une gamelle.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Est-ce que cela fonctionne sur tous les chiens ?",
+            "answer": "<p>Non. La plupart des chiens s’y mettent tout de suite, quelques-uns s’en désintéressent. Un chien en pleine panique ne mange plus : le tapis se propose avant le pic, pas pendant. Si votre chien n’accroche pas, vous avez 14 jours pour nous le renvoyer.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Les ventouses tiennent-elles vraiment ?",
+            "answer": "<p>Oui, sur une surface lisse et non poreuse : carrelage, verre, baignoire, sol stratifié. Sur pierre brute ou bois texturé, l’adhérence est faible.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Que puis-je étaler dessus ?",
+            "answer": "<p>Pâtée, yaourt nature, purée de banane ou de potiron, fromage frais, beurre de cacahuète sans xylitol. Le guide offert donne des recettes et les aliments à écarter.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Peut-on le mettre au congélateur ?",
+            "answer": "<p>Oui, et c’est conseillé. Un tapis garni puis congelé occupe votre chien deux à trois fois plus longtemps.</p>"
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "Comment vais-je recevoir le guide ?",
+            "answer": "<p>Par e-mail, en PDF, juste après la commande. Vous pouvez le lire avant l’arrivée du colis.</p>"
+          }
+        },
+        "faq_7": {
+          "type": "faq",
+          "settings": {
+            "question": "Pourquoi prendre plusieurs tapis ?",
+            "answer": "<p>Pour en garder un prêt au congélateur pendant que l’autre sèche, et pour en donner un à chaque animal du foyer. Le prix à l’unité baisse avec le nombre.</p>"
+          }
+        },
+        "faq_8": {
+          "type": "faq",
+          "settings": {
+            "question": "Comment le nettoyer ?",
+            "answer": "<p>À l’eau chaude juste après usage, ou au lave-vaisselle.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "profil_1",
+        "profil_2",
+        "profil_3",
+        "onglet_1",
+        "onglet_2",
+        "onglet_3",
+        "onglet_4",
+        "moment_1",
+        "moment_2",
+        "moment_3",
+        "moment_4",
+        "jalon_1",
+        "jalon_2",
+        "jalon_3",
+        "geste_1",
+        "geste_2",
+        "geste_3",
+        "compare_1",
+        "compare_2",
+        "compare_3",
+        "compare_4",
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
