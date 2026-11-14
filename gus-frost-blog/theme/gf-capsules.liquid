@@ -98,6 +98,43 @@
       }
     {%- endif -%}
 
+    {%- comment -%}
+      FOIRE AUX QUESTIONS (14/11/2026, choix de Regis : « variante B avec les
+      pastilles de la variante A »). La section est celle de Dawn
+      (collapsible-content) : on ne la touche pas, le style est pose ici.
+      Une carte beige clair par question ; la question ouverte passe en creme,
+      liseré terracotta soutenu de 3px en haut, titre en gras (meme langage que
+      les onglets de la fiche « achat guide »). Le « ? » et la fleche sont en
+      terracotta : Dawn force le remplissage des chemins du « ? » en couleur
+      de texte, d'ou la regle sur `path`.
+      #f2ece1 = beige de la marque eclairci, hors des 5 couleurs.
+    {%- endcomment -%}
+    #MainContent .collapsible-content .accordion {
+      border: 0 !important;
+      margin-top: .8rem !important;
+    }
+    #MainContent .collapsible-content .accordion details {
+      background: #f2ece1;
+      border-radius: 12px;
+      border-top: 3px solid transparent;
+    }
+    #MainContent .collapsible-content .accordion details[open] {
+      background: #faf8f3;
+      border-top-color: #a8522f;
+      box-shadow: 0 0 0 1px rgba(193, 107, 71, .45) inset;
+    }
+    #MainContent .collapsible-content .accordion summary { padding: 1.4rem 1.6rem; }
+    #MainContent .collapsible-content .accordion .accordion__content { padding: 0 1.6rem 1.4rem 4.6rem; }
+    #MainContent .collapsible-content .accordion .icon-question-mark path { fill: #c16b47; }
+    #MainContent .collapsible-content .accordion .icon-caret { color: #c16b47; }
+    #MainContent .collapsible-content .accordion details[open] .accordion__title { font-weight: 700; }
+
+    @media screen and (max-width: 749px) {
+      #MainContent .collapsible-content .accordion summary { padding: 1.2rem; }
+      #MainContent .collapsible-content .accordion .accordion__content { padding: 0 1.2rem 1.2rem; }
+      #MainContent .collapsible-content .accordion { margin-top: .6rem !important; }
+    }
+
     @media screen and (max-width: 749px) {
       #MainContent {
         padding-bottom: {{ esp }}px;
