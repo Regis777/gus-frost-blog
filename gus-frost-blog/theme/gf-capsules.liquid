@@ -273,7 +273,14 @@
         #MainContent .collapsible-content__heading,
         #MainContent .image-with-text__heading { font-size: 2.2rem !important; }
         #MainContent .blog__post .article-card > .card__content { padding: 1.2rem !important; }
-        #MainContent .button { min-height: 4.4rem; }
+        /* Sur une ligne : a 375px « Decouvrir nos produits » se cassait en
+           deux dans son bouton (30px de marge de chaque cote chez Dawn). */
+        #MainContent .button {
+          min-height: 4.4rem;
+          white-space: nowrap;
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
       {%- endif -%}
     }
   {%- endstyle -%}
