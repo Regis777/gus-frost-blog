@@ -81,7 +81,7 @@
       "settings": {
         "hero_heading": "Le carnet de santé de votre chien ou de votre chat, toujours dans votre poche",
         "hero_text": "Vaccins, poids, rappels du vétérinaire, budget, souvenirs. Tout au même endroit, sans rien installer et sans créer de compte.",
-        "cta_label": "Ouvrir Le Carnet",
+        "cta_label": "Créer le carnet",
         "app_url": "/pages/mon-carnet",
         "preuves": "Gratuit | Sans inscription | Sans publicité",
         "atouts_heading": "Sans application à télécharger",
@@ -92,7 +92,9 @@
         "privacy_note": "Pensez à exporter une sauvegarde de temps en temps.",
         "final_heading": "Commencez par un animal, ça prend trois secondes",
         "final_text": "Pas de formulaire, pas de mot de passe. Vous remplissez, c'est enregistré.",
-        "privacy_mail": "Seule exception, si vous activez les rappels par e-mail : votre adresse, le nom de vos animaux et vos échéances à venir sont transmis à notre outil d’envoi."
+        "privacy_mail": "Seule exception, si vous activez les rappels par e-mail : votre adresse, le nom de vos animaux et vos échéances à venir sont transmis à notre outil d’envoi.",
+        "deja_question": "Vous avez déjà un carnet ?",
+        "deja_label": "Accéder à votre carnet"
       }
     }
   },

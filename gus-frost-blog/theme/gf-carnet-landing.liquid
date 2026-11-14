@@ -10,6 +10,19 @@
 
 {%- assign url_app = section.settings.app_url | default: '/pages/mon-carnet' -%}
 
+{%- comment -%}
+  « Vous avez déjà un carnet ? » : même adresse que le bouton principal (les données vivent
+  dans le navigateur, l'app rouvre le carnet existant), mais un libellé pour qui revient.
+{%- endcomment -%}
+{%- capture bloc_deja -%}
+  {%- if section.settings.deja_label != blank -%}
+    <p class="gfl-deja">
+      {%- if section.settings.deja_question != blank -%}<span>{{ section.settings.deja_question | escape }}</span>{%- endif -%}
+      <a class="gfl-btn-sec" href="{{ url_app }}">{{ section.settings.deja_label | escape }}</a>
+    </p>
+  {%- endif -%}
+{%- endcapture -%}
+
 <div class="gfl">
 
   <header class="gfl-hero">
@@ -18,6 +31,7 @@
       <p class="gfl-hero-sous">{{ section.settings.hero_text | escape }}</p>
     {%- endif -%}
     <a class="gfl-btn" href="{{ url_app }}">{{ section.settings.cta_label | escape }}</a>
+    {{- bloc_deja -}}
     {%- if section.settings.preuves != blank -%}
       <p class="gfl-preuves">
         {%- assign items = section.settings.preuves | split: '|' -%}
@@ -53,6 +67,7 @@
       <p>{{ section.settings.final_text | escape }}</p>
     {%- endif -%}
     <a class="gfl-btn" href="{{ url_app }}">{{ section.settings.cta_label | escape }}</a>
+    {{- bloc_deja -}}
   </section>
 
   {%- comment -%} « Le principe » : bandeau volontairement discret, après les fonctions. {%- endcomment -%}
@@ -119,8 +134,20 @@
     {
       "type": "text",
       "id": "cta_label",
-      "label": "Libellé des boutons",
-      "default": "Ouvrir Le Carnet"
+      "label": "Libellé du bouton principal",
+      "default": "Créer le carnet"
+    },
+    {
+      "type": "text",
+      "id": "deja_question",
+      "label": "Question pour qui a déjà un carnet",
+      "default": "Vous avez déjà un carnet ?"
+    },
+    {
+      "type": "text",
+      "id": "deja_label",
+      "label": "Petit bouton (laisser vide pour masquer)",
+      "default": "Accéder à votre carnet"
     },
     {
       "type": "url",
