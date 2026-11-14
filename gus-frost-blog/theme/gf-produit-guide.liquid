@@ -149,10 +149,9 @@
 
   /* ---------- ONGLETS ---------- */
   #{{ rid }} .tabs{ margin-top: 16px; overflow: hidden; }
-  #{{ rid }} .tabbar{ display: flex; background: var(--sage); }
-  #{{ rid }} .tabbar button{ flex: 1; min-height: 46px; padding: 8px 6px; font-size: 13.5px; font-weight: 600; color: var(--ink); background: transparent; border: 0; border-right: 1px solid rgba(49,68,49,.18); cursor: pointer; }
-  #{{ rid }} .tabbar button:last-child{ border-right: 0; }
-  #{{ rid }} .tabbar button.on{ background: var(--card); color: var(--ink); }
+  #{{ rid }} .tabbar{ display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 14px 0; }
+  #{{ rid }} .tabbar button{ flex: 1 1 auto; min-height: 44px; padding: 8px 14px; font-size: 14px; font-weight: 600; color: var(--ink); background: transparent; border: 1.5px solid var(--ac); border-radius: 999px; cursor: pointer; }
+    #{{ rid }} .tabbar button.on{ background: var(--acf); border-color: var(--acf); color: var(--on-ac); }
   #{{ rid }} .pane{ padding: 18px; font-size: 14.5px; }
   #{{ rid }} .pane[hidden]{ display: none; }
   #{{ rid }} .pane h4{ font-family: var(--font-body-family); font-size: 15px; font-weight: 700; margin: 0 0 8px; color: var(--ink); }
@@ -168,7 +167,7 @@
   /* ---------- MOMENTS ---------- */
   #{{ rid }} .mbar{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
   #{{ rid }} .mbar button{ min-height: 44px; padding: 8px 16px; font-size: 14.5px; font-weight: 600; color: var(--ink); background: transparent; border: 1.5px solid var(--ac); border-radius: 999px; cursor: pointer; }
-  #{{ rid }} .mbar button.on{ background: var(--acf); color: var(--on-ac); }
+  #{{ rid }} .mbar button.on{ background: var(--acf); border-color: var(--acf); color: var(--on-ac); }
   #{{ rid }} .mom{ display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); gap: 0; overflow: hidden; }
   #{{ rid }} .mom.noimg{ grid-template-columns: minmax(0,1fr); }
   #{{ rid }} .mom[hidden]{ display: none; }
@@ -258,6 +257,7 @@
   }
   @media (max-width: 479px){
     #{{ rid }} .facts{ grid-template-columns: 1fr; gap: 8px; }
+    #{{ rid }} .tabbar{ display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
     #{{ rid }} .prof button{ font-size: 12.5px; }
     #{{ rid }} .cmp th, #{{ rid }} .cmp td{ padding: 11px 9px; font-size: 13.5px; }
     #{{ rid }} .cmp td:first-child{ width: 24%; }
