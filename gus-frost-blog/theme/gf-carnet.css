@@ -99,6 +99,10 @@
   background: var(--gfc-beige); flex: none;
   display: grid; place-items: center; font-size: 16px; overflow: hidden;
 }
+/* Pictogrammes SVG (remplacent les emojis) */
+.gfc-ava-svg { width: 62%; height: 62%; fill: var(--gfc-terra); }
+.gfc-pet[aria-pressed='true'] .gfc-pet-ava { background: var(--gfc-creme); }
+.gfc-ico { width: 18px; height: 18px; display: block; margin: auto; }
 .gfc-pet-add {
   flex: none; min-height: 44px; padding: 8px 16px; border: 1.5px dashed var(--gfc-terra);
   border-radius: 999px; background: transparent; color: var(--gfc-vert);
