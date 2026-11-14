@@ -26,14 +26,31 @@
   }
 
   var ESPECES = ['Chien', 'Chat', 'Lapin', 'Cheval', 'Oiseau', 'Rongeur', 'Reptile', 'Autre'];
-  var EMOJIS = {
-    Chien: '🐕', Chat: '🐈', Lapin: '🐇', Cheval: '🐎',
-    Oiseau: '🦜', Rongeur: '🐹', Reptile: '🦎', Autre: '🐾'
-  };
   var CATEGORIES = ['Alimentation', 'Vétérinaire', 'Traitements', 'Toilettage',
     'Accessoires', 'Jouets', 'Assurance', 'Éducation', 'Garde', 'Autre'];
 
-  function emoji(espece) { return EMOJIS[espece] || '🐾'; }
+  /* Avatar sans photo : une patte dessinée (pas d'emoji, règle de la marque). */
+  var PATTE = '<svg class="gfc-ava-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<ellipse cx="6" cy="9.5" rx="2" ry="2.6"/><ellipse cx="10" cy="5.6" rx="2" ry="2.7"/>' +
+    '<ellipse cx="14" cy="5.6" rx="2" ry="2.7"/><ellipse cx="18" cy="9.5" rx="2" ry="2.6"/>' +
+    '<path d="M12 11c-2.6 0-5.5 3.4-5.5 6 0 1.8 1.3 2.6 2.8 2.6 1.1 0 1.8-.6 2.7-.6s1.6.6 2.7.6c1.5 0 2.8-.8 2.8-2.6 0-2.6-2.9-6-5.5-6z"/></svg>';
+  function avatarVide() { return PATTE; }
+
+  /* Valeur absente dans une fiche (pas de tiret cadratin). */
+  var VIDE = 'Non renseigné';
+
+  /* Pictogrammes des boutons-icônes (SVG, couleur du texte). */
+  function ico(d) {
+    return '<svg class="gfc-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" ' +
+      'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>';
+  }
+  var ICO = {
+    edit: ico('<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>'),
+    del: ico('<path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/>'),
+    fait: ico('<path d="M5 12.5l4.5 4.5L19 7"/>'),
+    voir: ico('<path d="M7 17L17 7"/><path d="M9 7h8v8"/>'),
+    rouvrir: ico('<path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/>')
+  };
 
   function aujourdhui() {
     var d = new Date();
@@ -58,7 +75,7 @@
 
   function dateFr(s) {
     var d = parseIso(s);
-    if (!d) return '—';
+    if (!d) return 'date inconnue';
     return d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
   }
 
@@ -291,7 +308,7 @@
 
   function statut(dateIso) {
     var d = parseIso(dateIso);
-    if (!d) return { cls: 'ok', texte: '—', j: 9999 };
+    if (!d) return { cls: 'ok', texte: 'Sans date', j: 9999 };
     var j = joursEntre(aujourdhui(), d);
     if (j < 0) return { cls: 'late', texte: 'En retard de&nbsp;' + (-j) + '&nbsp;j', j: j };
     if (j === 0) return { cls: 'late', texte: "Aujourd'hui", j: j };
@@ -404,7 +421,7 @@
       var sel = a.id === animalActif;
       var ava = a.photoId && photos[a.photoId]
         ? '<img class="gfc-pet-ava" src="' + photos[a.photoId] + '" alt="">'
-        : '<span class="gfc-pet-ava">' + emoji(a.espece) + '</span>';
+        : '<span class="gfc-pet-ava">' + avatarVide() + '</span>';
       return '<button type="button" class="gfc-pet" data-act="pet-pick" data-id="' + a.id + '" aria-pressed="' + sel + '">' +
         ava + '<span>' + esc(a.nom) + '</span></button>';
     }).join('');
@@ -443,8 +460,8 @@
   }
 
   function boutonsEdit(type, id) {
-    return '<button type="button" class="gfc-icon-btn" data-act="edit" data-type="' + type + '" data-id="' + id + '" title="Modifier" aria-label="Modifier">✏️</button>' +
-      '<button type="button" class="gfc-icon-btn" data-act="del" data-type="' + type + '" data-id="' + id + '" title="Supprimer" aria-label="Supprimer">🗑️</button>';
+    return '<button type="button" class="gfc-icon-btn" data-act="edit" data-type="' + type + '" data-id="' + id + '" title="Modifier" aria-label="Modifier">' + ICO.edit + '</button>' +
+      '<button type="button" class="gfc-icon-btn" data-act="del" data-type="' + type + '" data-id="' + id + '" title="Supprimer" aria-label="Supprimer">' + ICO.del + '</button>';
   }
 
   function vide(texte) { return '<div class="gfc-empty">' + texte + '</div>'; }
@@ -456,7 +473,7 @@
     var ag = age(a.naissance);
     var photo = a.photoId && photos[a.photoId]
       ? '<img class="gfc-id-photo" src="' + photos[a.photoId] + '" alt="Photo de ' + esc(a.nom) + '">'
-      : '<span class="gfc-id-photo">' + emoji(a.espece) + '</span>';
+      : '<span class="gfc-id-photo">' + avatarVide() + '</span>';
 
     var meta = [a.espece, a.race, a.sexe].filter(Boolean).join('&nbsp;· ');
 
@@ -470,10 +487,10 @@
           '<h2>' + esc(a.nom) + '</h2>' +
           '<p class="gfc-id-meta">' + (meta || 'Fiche à compléter') + '</p>' +
           '<dl class="gfc-facts">' +
-            fait('Âge', ag || '—') +
-            fait('Naissance', a.naissance ? dateFr(a.naissance) : '—') +
-            fait('Poids', dernier ? String(dernier.kg).replace('.', ',') + '&nbsp;kg' : '—') +
-            fait('Stérilisé', a.sterilise || '—') +
+            fait('Âge', ag || VIDE) +
+            fait('Naissance', a.naissance ? dateFr(a.naissance) : VIDE) +
+            fait('Poids', dernier ? String(dernier.kg).replace('.', ',') + '&nbsp;kg' : VIDE) +
+            fait('Stérilisé', a.sterilise || VIDE) +
           '</dl>' +
           '<p style="margin-top:14px"><button type="button" class="gfc-btn gfc-btn--sm" data-act="pet-edit">Modifier la fiche</button></p>' +
         '</div>' +
@@ -482,9 +499,9 @@
       '<div class="gfc-card">' +
         '<div class="gfc-sec-head"><h3>Identification &amp; vétérinaire</h3></div>' +
         '<dl class="gfc-facts">' +
-          fait('Puce / tatouage', a.puce ? esc(a.puce) : '—') +
-          fait('Vétérinaire', a.vetoNom ? esc(a.vetoNom) : '—') +
-          fait('Téléphone', a.vetoTel ? '<a href="tel:' + esc(a.vetoTel).replace(/\s/g, '') + '">' + esc(a.vetoTel) + '</a>' : '—') +
+          fait('Puce / tatouage', a.puce ? esc(a.puce) : VIDE) +
+          fait('Vétérinaire', a.vetoNom ? esc(a.vetoNom) : VIDE) +
+          fait('Téléphone', a.vetoTel ? '<a href="tel:' + esc(a.vetoTel).replace(/\s/g, '') + '">' + esc(a.vetoTel) + '</a>' : VIDE) +
         '</dl>' +
         (a.notes ? '<p style="margin-top:14px"><strong>Notes&nbsp;:</strong> ' + esc(a.notes) + '</p>' : '') +
       '</div>' +
@@ -514,7 +531,7 @@
         titre: esc(t.nom),
         sous: 'Dernière prise&nbsp;: ' + dateFr(t.date) + (t.freq ? '&nbsp;· tous les&nbsp;' + t.freq + '&nbsp;jours' : ''),
         badge: st ? '<span class="gfc-badge gfc-badge--' + st.cls + '">' + st.texte + '</span>' : '',
-        actions: '<button type="button" class="gfc-icon-btn" data-act="trait-fait" data-id="' + t.id + '" title="Marquer comme donné aujourd’hui" aria-label="Marquer comme donné aujourd’hui">✅</button>' +
+        actions: '<button type="button" class="gfc-icon-btn" data-act="trait-fait" data-id="' + t.id + '" title="Marquer comme donné aujourd’hui" aria-label="Marquer comme donné aujourd’hui">' + ICO.fait + '</button>' +
           boutonsEdit('traitements', t.id)
       });
     }).join('') + '</div>' : vide('Antipuces, vermifuge, traitement en cours… notez-les ici pour ne plus les oublier.');
@@ -583,7 +600,7 @@
     }
     var pts = points.map(function (p, i) {
       return '<circle class="gfc-chart-dot" cx="' + px(xs[i]).toFixed(1) + '" cy="' + py(ys[i]).toFixed(1) + '" r="4"><title>' +
-        String(p.kg).replace('.', ',') + ' kg — ' + dateFr(p.date).replace(/&nbsp;/g, ' ') + '</title></circle>';
+        String(p.kg).replace('.', ',') + ' kg, ' + dateFr(p.date).replace(/&nbsp;/g, ' ') + '</title></circle>';
     }).join('');
 
     var dg = '<text class="gfc-chart-txt" x="' + mg.g + '" y="' + (H - 9) + '">' + dateFr(points[0].date) + '</text>' +
@@ -602,8 +619,8 @@
     var corps = liste.length ? '<div class="gfc-list">' + liste.map(function (e) {
       var st = statut(e.date);
       var actions = e.type === 'rappel'
-        ? '<button type="button" class="gfc-icon-btn" data-act="rappel-fait" data-id="' + e.src.id + '" title="Marquer comme fait" aria-label="Marquer comme fait">✅</button>' + boutonsEdit('rappels', e.src.id)
-        : '<button type="button" class="gfc-icon-btn" data-act="goto-sante" data-id="' + e.petId + '" title="Voir dans Santé" aria-label="Voir dans Santé">↗</button>';
+        ? '<button type="button" class="gfc-icon-btn" data-act="rappel-fait" data-id="' + e.src.id + '" title="Marquer comme fait" aria-label="Marquer comme fait">' + ICO.fait + '</button>' + boutonsEdit('rappels', e.src.id)
+        : '<button type="button" class="gfc-icon-btn" data-act="goto-sante" data-id="' + e.petId + '" title="Voir dans Santé" aria-label="Voir dans Santé">' + ICO.voir + '</button>';
       return ligne({
         titre: e.titre,
         sous: esc(nomAnimal(e.petId)) + '&nbsp;· ' + dateFr(e.date),
@@ -618,14 +635,14 @@
           titre: esc(r.titre), fait: true,
           sous: esc(nomAnimal(r.petId)) + '&nbsp;· ' + dateFr(r.date),
           badge: '<span class="gfc-badge gfc-badge--done">Fait</span>',
-          actions: '<button type="button" class="gfc-icon-btn" data-act="rappel-refait" data-id="' + r.id + '" title="Rouvrir" aria-label="Rouvrir">↩️</button>' +
-            '<button type="button" class="gfc-icon-btn" data-act="del" data-type="rappels" data-id="' + r.id + '" title="Supprimer" aria-label="Supprimer">🗑️</button>'
+          actions: '<button type="button" class="gfc-icon-btn" data-act="rappel-refait" data-id="' + r.id + '" title="Rouvrir" aria-label="Rouvrir">' + ICO.rouvrir + '</button>' +
+            '<button type="button" class="gfc-icon-btn" data-act="del" data-type="rappels" data-id="' + r.id + '" title="Supprimer" aria-label="Supprimer">' + ICO.del + '</button>'
         });
       }).join('') + '</div></div>' : '';
 
     return '<section class="gfc-sec">' + carteMail() +
       '<div class="gfc-card">' +
-        '<div class="gfc-sec-head"><h3>À venir — tous vos animaux</h3>' +
+        '<div class="gfc-sec-head"><h3>À venir pour tous vos animaux</h3>' +
         '<button type="button" class="gfc-btn gfc-btn--sm" data-act="new" data-type="rappels">+&nbsp;Rappel</button></div>' +
         '<p class="gfc-hint">Votre navigateur ne peut pas sonner tout seul. Le bouton <strong>Agenda&nbsp;(.ics)</strong> en bas de page verse ces échéances dans le calendrier de votre téléphone&nbsp;: c’est lui qui vous préviendra, même app fermée.</p>' +
         corps +
@@ -677,7 +694,7 @@
 
     var htmlListe = dep.length ? '<div class="gfc-list">' + dep.slice(0, 60).map(function (d) {
       return ligne({
-        titre: esc(d.cat) + (d.note ? '&nbsp;— ' + esc(d.note) : ''),
+        titre: esc(d.cat) + (d.note ? ' · ' + esc(d.note) : ''),
         sous: esc(nomAnimal(d.petId)) + '&nbsp;· ' + dateFr(d.date),
         montant: euros(d.montant),
         actions: boutonsEdit('depenses', d.id)
@@ -702,7 +719,7 @@
     var corps = liste.length ? '<div class="gfc-gallery">' + liste.map(function (s) {
       var img = s.photoId && photos[s.photoId]
         ? '<img src="' + photos[s.photoId] + '" alt="' + esc(s.titre) + '" loading="lazy">'
-        : '<div style="aspect-ratio:1/1;display:grid;place-items:center;font-size:34px;background:var(--gfc-beige)">' + emoji(a.espece) + '</div>';
+        : '<div style="aspect-ratio:1/1;display:grid;place-items:center;background:var(--gfc-beige)">' + avatarVide() + '</div>';
       return '<figure class="gfc-memo" style="margin:0">' + img +
         '<figcaption class="gfc-memo-body">' +
           '<div class="gfc-memo-title">' + esc(s.titre) + '</div>' +
@@ -816,7 +833,7 @@
     if (c.t === 'select') {
       corps = '<select id="' + id + '" name="' + c.k + '">' + c.options.map(function (o) {
         return '<option value="' + esc(o) + '"' + (String(val || '') === o ? ' selected' : '') + '>' +
-          (o === '' ? '—' : esc(o)) + '</option>';
+          (o === '' ? 'Non précisé' : esc(o)) + '</option>';
       }).join('') + '</select>';
     } else if (c.t === 'textarea') {
       corps = '<textarea id="' + id + '" name="' + c.k + '">' + esc(val || '') + '</textarea>';
@@ -890,7 +907,7 @@
     }
 
     var html = '<div class="gfc-modal-box" role="dialog" aria-modal="true" aria-labelledby="gfc-modal-t">' +
-      '<h2 id="gfc-modal-t">' + (obj ? 'Modifier' : 'Ajouter') + '&nbsp;— ' + sch.titre + '</h2>' +
+      '<h2 id="gfc-modal-t">' + (obj ? 'Modifier' : 'Ajouter') + '&nbsp;: ' + sch.titre.toLowerCase() + '</h2>' +
       '<form data-gfc-form data-type="' + type + '" data-id="' + (id || '') + '" novalidate>' +
         choix + champsHtml(sch.champs, val) +
         '<div class="gfc-field-err" data-gfc-err hidden></div>' +
@@ -1016,7 +1033,7 @@
     rappelForce = true;
     alerteMasquee = false;
     renduSauvegarde();
-    toast('Échéance enregistrée — sur cet appareil seulement.', 5000);
+    toast('Échéance enregistrée, sur cet appareil seulement.', 5000);
   }
 
   function supprime(type, id) {
@@ -1155,7 +1172,7 @@
       if (!d) return;
       var debut = isoJour(d).replace(/-/g, '');
       var fin = ajouteJours(e.date, 1).replace(/-/g, '');
-      var titre = echapIcs(e.titre.replace(/<[^>]+>/g, '')) + ' — ' + echapIcs(nomAnimal(e.petId));
+      var titre = echapIcs(e.titre.replace(/<[^>]+>/g, '')) + ' (' + echapIcs(nomAnimal(e.petId)) + ')';
       l.push('BEGIN:VEVENT',
         'UID:' + (e.src.id || uid()) + '@gus-et-frost',
         'DTSTAMP:' + horodatage,
@@ -1175,7 +1192,7 @@
   }
 
   function tableau(entetes, lignes) {
-    if (!lignes.length) return '<p>—</p>';
+    if (!lignes.length) return '<p>Rien de noté.</p>';
     return '<table><thead><tr>' + entetes.map(function (h) { return '<th>' + h + '</th>'; }).join('') +
       '</tr></thead><tbody>' + lignes.map(function (r) {
         return '<tr>' + r.map(function (c) { return '<td>' + c + '</td>'; }).join('') + '</tr>';
@@ -1202,22 +1219,22 @@
 
         '<h2>Identité</h2>' +
         tableau(['Rubrique', 'Valeur'], [
-          ['Stérilisé', esc(a.sterilise || '—')],
-          ['Puce / tatouage', esc(a.puce || '—')],
-          ['Vétérinaire', esc(a.vetoNom || '—') + (a.vetoTel ? ' — ' + esc(a.vetoTel) : '')],
-          ['Poids le plus récent', poids[0] ? String(poids[0].kg).replace('.', ',') + ' kg (' + dateFr(poids[0].date).replace(/&nbsp;/g, ' ') + ')' : '—'],
-          ['Notes', esc(a.notes || '—')]
+          ['Stérilisé', esc(a.sterilise || VIDE)],
+          ['Puce / tatouage', esc(a.puce || VIDE)],
+          ['Vétérinaire', esc(a.vetoNom || VIDE) + (a.vetoTel ? ', ' + esc(a.vetoTel) : '')],
+          ['Poids le plus récent', poids[0] ? String(poids[0].kg).replace('.', ',') + ' kg (' + dateFr(poids[0].date).replace(/&nbsp;/g, ' ') + ')' : VIDE],
+          ['Notes', esc(a.notes || VIDE)]
         ]) +
 
         '<h2>Vaccins</h2>' +
         tableau(['Vaccin', 'Fait le', 'Rappel prévu'], vaccins.map(function (v) {
-          return [esc(v.nom), dateFr(v.date).replace(/&nbsp;/g, ' '), v.rappel ? dateFr(v.rappel).replace(/&nbsp;/g, ' ') : '—'];
+          return [esc(v.nom), dateFr(v.date).replace(/&nbsp;/g, ' '), v.rappel ? dateFr(v.rappel).replace(/&nbsp;/g, ' ') : VIDE];
         })) +
 
         '<h2>Traitements &amp; antiparasitaires</h2>' +
         tableau(['Produit', 'Dernière prise', 'Fréquence', 'Prochaine'], traitements.map(function (t) {
           return [esc(t.nom), dateFr(t.date).replace(/&nbsp;/g, ' '),
-            t.freq ? t.freq + ' j' : '—', t.prochaine ? dateFr(t.prochaine).replace(/&nbsp;/g, ' ') : '—'];
+            t.freq ? t.freq + ' j' : VIDE, t.prochaine ? dateFr(t.prochaine).replace(/&nbsp;/g, ' ') : VIDE];
         })) +
 
         '<h2>Suivi du poids</h2>' +
@@ -1227,7 +1244,7 @@
 
         '<h2>Visites vétérinaires</h2>' +
         tableau(['Date', 'Motif', 'Notes'], visites.map(function (v) {
-          return [dateFr(v.date).replace(/&nbsp;/g, ' '), esc(v.motif), esc(v.notes || '—')];
+          return [dateFr(v.date).replace(/&nbsp;/g, ' '), esc(v.motif), esc(v.notes || VIDE)];
         })) +
 
         '<p class="gfc-print-foot">Carnet établi le ' +
@@ -1324,13 +1341,13 @@
     return '<div class="gfc-shared-note">Vous consultez la fiche de <strong>' + esc(a.nom || 'cet animal') +
       '</strong>, partagée en lecture seule. Rien n’a été enregistré sur un serveur&nbsp;: tout est contenu dans le lien lui-même.</div>' +
       '<div class="gfc-card"><div class="gfc-id">' +
-        '<span class="gfc-id-photo">' + emoji(a.espece) + '</span>' +
-        '<div class="gfc-id-body"><h2>' + esc(a.nom || '—') + '</h2>' +
+        '<span class="gfc-id-photo">' + avatarVide() + '</span>' +
+        '<div class="gfc-id-body"><h2>' + esc(a.nom || VIDE) + '</h2>' +
         '<p class="gfc-id-meta">' + [a.espece, a.race, a.sexe].filter(Boolean).map(esc).join('&nbsp;· ') + '</p>' +
         '<dl class="gfc-facts">' +
-          '<div class="gfc-fact"><dt>Âge</dt><dd>' + (ag || '—') + '</dd></div>' +
-          '<div class="gfc-fact"><dt>Puce</dt><dd>' + esc(a.puce || '—') + '</dd></div>' +
-          '<div class="gfc-fact"><dt>Vétérinaire</dt><dd>' + esc(a.vetoNom || '—') + '</dd></div>' +
+          '<div class="gfc-fact"><dt>Âge</dt><dd>' + (ag || VIDE) + '</dd></div>' +
+          '<div class="gfc-fact"><dt>Puce</dt><dd>' + esc(a.puce || VIDE) + '</dd></div>' +
+          '<div class="gfc-fact"><dt>Vétérinaire</dt><dd>' + esc(a.vetoNom || VIDE) + '</dd></div>' +
         '</dl>' + (a.notes ? '<p style="margin-top:12px"><strong>Notes&nbsp;:</strong> ' + esc(a.notes) + '</p>' : '') +
       '</div></div></div>' +
       bloc('Vaccins', vaccins) +
@@ -1379,7 +1396,7 @@
       return j <= limite;
     }).map(function (e) {
       var titre = e.titre.replace(/&nbsp;/g, ' ').replace(/<[^>]+>/g, '');
-      return nomAnimal(e.petId) + ' — ' + titre + ' le ' + dateFr(e.date).replace(/&nbsp;/g, ' ');
+      return nomAnimal(e.petId) + ' : ' + titre + ' le ' + dateFr(e.date).replace(/&nbsp;/g, ' ');
     });
     return lignes.join(' ; ');
   }
@@ -1496,7 +1513,7 @@
           '<span>J’accepte que mon adresse e-mail, <strong>le nom de mes animaux</strong> et ' +
             '<strong>mes échéances à venir</strong> (libellé, date, vaccin concerné) soient ' +
             'transmis à notre outil d’envoi pour recevoir ces rappels. ' +
-            'Le reste du carnet — poids, budget, souvenirs, photos — ne quitte pas cet appareil.</span>' +
+            'Le reste du carnet (poids, budget, souvenirs, photos) ne quitte pas cet appareil.</span>' +
         '</label>' +
         '<div class="gfc-field-err" data-gfc-err hidden></div>' +
         '<div class="gfc-modal-foot">' +
@@ -1559,7 +1576,7 @@
     if (r.actif) {
       return '<div class="gfc-card gfc-mail gfc-mail--on">' +
         '<div class="gfc-mail-txt">' +
-          '<div class="gfc-row-title">✅ Rappels par e-mail activés</div>' +
+          '<div class="gfc-row-title">Rappels par e-mail activés</div>' +
           '<div class="gfc-row-sub">Envoyés à ' + esc(r.email) + '. ' +
             'Si vous n’avez rien reçu, pensez à confirmer votre inscription depuis l’e-mail de Klaviyo.</div>' +
         '</div>' +
@@ -1568,9 +1585,10 @@
     }
     return '<div class="gfc-card gfc-mail">' +
       '<div class="gfc-mail-txt">' +
-        '<div class="gfc-row-title">📬 Recevoir les rappels par e-mail</div>' +
+        '<div class="gfc-row-title">Recevoir les rappels par e-mail</div>' +
         '<div class="gfc-row-sub">Un e-mail avant chaque échéance, sans rien installer. ' +
-          'Seules vos dates sont transmises&nbsp;; le reste du carnet ne bouge pas.</div>' +
+          'Votre adresse, le nom de vos animaux et vos échéances à venir sont transmis à notre outil d’envoi&nbsp;; ' +
+          'le reste du carnet ne quitte pas cet appareil.</div>' +
       '</div>' +
       '<button type="button" class="gfc-btn gfc-btn--sm gfc-btn--primary" data-act="mail-on">Activer</button>' +
     '</div>';
