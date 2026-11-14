@@ -149,11 +149,11 @@
   #{{ rid }} .expert q{ display: block; font-size: 14.5px; line-height: 1.45; margin-top: 4px; quotes: none; font-style: italic; }
 
   /* ---------- ONGLETS ---------- */
-  #{{ rid }} .tabs{ margin-top: 16px; overflow: hidden; }
-  #{{ rid }} .tabbar{ display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 14px 0; }
-  #{{ rid }} .tabbar button{ flex: 1 1 auto; min-height: 44px; padding: 8px 14px; font-size: 14px; font-weight: 600; color: var(--ink); background: transparent; border: 1.5px solid var(--ac); border-radius: 999px; cursor: pointer; }
-    #{{ rid }} .tabbar button.on{ background: var(--acf); border-color: var(--acf); color: var(--on-ac); }
-  #{{ rid }} .pane{ padding: 18px; font-size: 14.5px; }
+  #{{ rid }} .tabs{ margin-top: 16px; background: transparent; border: 0; border-radius: 0; }
+  #{{ rid }} .tabbar{ display: flex; align-items: flex-end; gap: 4px; margin-bottom: -1px; position: relative; z-index: 1; }
+  #{{ rid }} .tabbar button{ flex: 1 1 0; min-width: 0; min-height: 48px; padding: 9px 6px; font-size: 14px; font-weight: 600; line-height: 1.2; color: var(--mut); background: rgba(49,68,49,.07); border: 1px solid var(--line); border-top: 3px solid transparent; border-radius: 12px 12px 0 0; cursor: pointer; }
+    #{{ rid }} .tabbar button.on{ min-height: 54px; background: var(--card); color: var(--ink); font-weight: 700; border-top-color: var(--acf); border-bottom-color: var(--card); }
+  #{{ rid }} .pane{ padding: 18px; font-size: 14.5px; background: var(--card); border: 1px solid var(--line); border-radius: 0 0 16px 16px; }
   #{{ rid }} .pane[hidden]{ display: none; }
   #{{ rid }} .pane h4{ font-family: var(--font-body-family); font-size: 15px; font-weight: 700; margin: 0 0 8px; color: var(--ink); }
   #{{ rid }} .pane p + p{ margin-top: 10px; }
@@ -282,7 +282,7 @@
     #{{ rid }} .expert{ margin-top: 10px; padding: 12px; gap: 10px; }
     #{{ rid }} .expert img{ width: 64px; height: 64px; }
     #{{ rid }} .tabs{ margin-top: 10px; }
-    #{{ rid }} .tabbar{ padding: 10px 10px 0; gap: 6px; }
+    #{{ rid }} .tabbar{ gap: 3px; }
     #{{ rid }} .pane{ padding: 12px; }
     #{{ rid }} .strip{ padding: 10px 2px; gap: 4px 18px; }
     #{{ rid }} .mbar{ gap: 3px; }
@@ -306,14 +306,14 @@
     #{{ rid }} .end{ padding: 20px 14px; }
     #{{ rid }} .end .cta{ margin-top: 12px; }
     #{{ rid }} .mtx ul, #{{ rid }} .gp-jal ul{ gap: 4px; }
-    #{{ rid }} .tabbar button{ min-height: 40px; padding: 6px 12px; }
+    #{{ rid }} .tabbar button{ min-height: 50px; padding: 6px 3px; font-size: 12.5px; border-radius: 10px 10px 0 0; }
+    #{{ rid }} .tabbar button.on{ min-height: 56px; }
     #{{ rid }} .sws{ gap: 8px; }
     #{{ rid }} .clab{ margin-bottom: 8px; }
     #{{ rid }} .pane p + p{ margin-top: 8px; }
   }
   @media (max-width: 479px){
     #{{ rid }} .facts{ grid-template-columns: 1fr; gap: 8px; }
-    #{{ rid }} .tabbar{ display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
     #{{ rid }} .cmp table{ font-size: 13px; }
     #{{ rid }} .cmp th, #{{ rid }} .cmp td{ padding: 11px 8px; }
     #{{ rid }} .cmp thead th{ font-size: 11.5px; letter-spacing: .03em; }
