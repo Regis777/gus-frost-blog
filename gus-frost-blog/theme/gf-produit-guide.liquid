@@ -58,7 +58,8 @@
 {%- style -%}
   #{{ rid }}{
     --bg: {{ s.color_bg }}; --card: {{ s.color_card }}; --g: {{ s.color_primary }};
-    --on-g: {{ s.color_on_primary }}; --ac: {{ s.color_accent }}; --sage: {{ s.color_sage }};
+    --ac: {{ s.color_accent }}; --on-ac: {{ s.color_on_accent }}; --sage: {{ s.color_sage }};
+    --sage-l: color-mix(in srgb, {{ s.color_sage }} 42%, {{ s.color_card }});
     --ink: {{ s.color_primary }}; --mut: rgba(49,68,49,.82); --line: rgba(49,68,49,.16);
     background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.55;
     padding: {{ s.padding_top }}px 16px {{ s.padding_bottom }}px;
@@ -83,7 +84,7 @@
   #{{ rid }} .gmain{ width: 100%; height: auto; aspect-ratio: 1/1; object-fit: cover; border-radius: 18px; border: 1px solid var(--line); background: var(--card); display: block; }
   #{{ rid }} .gth{ display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
   #{{ rid }} .gth button{ flex: 0 0 64px; width: 64px; height: 64px; padding: 0; border: 2px solid transparent; border-radius: 10px; overflow: hidden; background: var(--card); cursor: pointer; opacity: .72; }
-  #{{ rid }} .gth button.on{ border-color: var(--g); opacity: 1; }
+  #{{ rid }} .gth button.on{ border-color: var(--ac); opacity: 1; }
   #{{ rid }} .gth img{ width: 100%; height: 100%; object-fit: cover; display: block; }
 
   #{{ rid }} .badge{ display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
@@ -95,7 +96,7 @@
   #{{ rid }} h1{ font-size: 36px; line-height: 1.1; margin-top: 14px; }
   #{{ rid }} .sub{ font-size: 17px; color: var(--mut); margin-top: 10px; }
   #{{ rid }} .chips{ list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
-  #{{ rid }} .chips li{ display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 600; background: var(--g); color: var(--on-g); border-radius: 8px; padding: 6px 11px; }
+  #{{ rid }} .chips li{ display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 600; background: var(--sage); color: var(--ink); border-radius: 8px; padding: 6px 11px; }
   #{{ rid }} .chips svg.i{ width: 15px; height: 15px; }
   #{{ rid }} .facts{ display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; margin-top: 18px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   #{{ rid }} .fact{ display: flex; gap: 9px; align-items: flex-start; font-size: 13px; line-height: 1.35; }
@@ -109,15 +110,15 @@
   #{{ rid }} .box h3{ font-size: 19px; margin: 2px 0 12px; }
   #{{ rid }} .prof{ display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
   #{{ rid }} .prof button{ display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 84px; padding: 10px 6px; font-size: 13.5px; font-weight: 600; line-height: 1.25; text-align: center; color: var(--ink); background: var(--bg); border: 2px solid var(--line); border-radius: 12px; cursor: pointer; }
-  #{{ rid }} .prof button.on{ background: var(--g); border-color: var(--g); color: var(--on-g); }
+  #{{ rid }} .prof button.on{ background: var(--sage); border-color: var(--ac); color: var(--ink); }
   #{{ rid }} .hint{ font-size: 13.5px; color: var(--mut); margin-top: 10px; min-height: 20px; }
   #{{ rid }} .hint b{ color: var(--ink); }
   #{{ rid }} .tiers{ display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
   #{{ rid }} .tier{ position: relative; display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; color: var(--ink); background: var(--bg); border: 2px solid var(--line); border-radius: 12px; padding: 14px; cursor: pointer; }
-  #{{ rid }} .tier.on{ border-color: var(--g); box-shadow: 0 0 0 3px rgba(49,68,49,.12); background: var(--card); }
+  #{{ rid }} .tier.on{ border-color: var(--ac); box-shadow: 0 0 0 3px rgba(193,107,71,.18); background: var(--card); }
   #{{ rid }} .rad{ width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(49,68,49,.45); flex: 0 0 auto; display: flex; align-items: center; justify-content: center; }
-  #{{ rid }} .tier.on .rad{ border-color: var(--g); }
-  #{{ rid }} .tier.on .rad::after{ content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--g); }
+  #{{ rid }} .tier.on .rad{ border-color: var(--ac); }
+  #{{ rid }} .tier.on .rad::after{ content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--ac); }
   #{{ rid }} .tb{ flex: 1; min-width: 0; }
   #{{ rid }} .tt{ display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 16px; font-weight: 700; }
   #{{ rid }} .pct{ font-size: 11.5px; font-weight: 700; background: var(--sage); color: var(--ink); border-radius: 6px; padding: 2px 7px; }
@@ -126,30 +127,30 @@
   #{{ rid }} .tp b{ display: block; font-size: 18px; font-weight: 700; line-height: 1.15; }
   #{{ rid }} .tp small{ display: block; font-size: 12px; color: var(--mut); }
   #{{ rid }} .tp s{ display: block; font-size: 12px; color: var(--mut); }
-  #{{ rid }} .reco{ position: absolute; top: -11px; right: 12px; display: none; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--ac); color: #17110c; border-radius: 999px; padding: 3px 10px; }
+  #{{ rid }} .reco{ position: absolute; top: -11px; right: 12px; display: none; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--ac); color: var(--on-ac); border-radius: 999px; padding: 3px 10px; }
   #{{ rid }} .tier.reco-on .reco{ display: block; }
   #{{ rid }} .clab{ font-size: 14px; font-weight: 700; margin-bottom: 10px; }
   #{{ rid }} .clab span{ font-weight: 400; color: var(--mut); }
   #{{ rid }} .sws{ display: flex; flex-wrap: wrap; gap: 10px; }
   #{{ rid }} .sw{ width: 38px; height: 38px; padding: 0; border-radius: 50%; border: 2px solid var(--line); cursor: pointer; }
-  #{{ rid }} .sw.on{ border-color: var(--g); box-shadow: 0 0 0 3px var(--card) inset; }
+  #{{ rid }} .sw.on{ border-color: var(--ac); box-shadow: 0 0 0 3px var(--card) inset; }
   #{{ rid }} .incl{ list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-direction: column; gap: 7px; font-size: 14px; }
   #{{ rid }} .incl li{ display: flex; gap: 9px; align-items: flex-start; }
   #{{ rid }} .incl svg.i{ margin-top: 2px; color: var(--ac); }
-  #{{ rid }} .cta{ display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 16px; min-height: 56px; padding: 14px 20px; font-size: 16px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--on-g); background: var(--g); border: 0; border-radius: 12px; cursor: pointer; text-decoration: none; }
-  #{{ rid }} .cta:hover{ filter: brightness(1.12); }
+  #{{ rid }} .cta{ display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 16px; min-height: 56px; padding: 14px 20px; font-size: 16px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--on-ac); background: var(--ac); border: 0; border-radius: 12px; cursor: pointer; text-decoration: none; }
+  #{{ rid }} .cta:hover{ filter: brightness(1.07); }
   #{{ rid }} .cta:disabled{ opacity: .5; cursor: not-allowed; }
   #{{ rid }} .micro{ display: flex; gap: 8px; justify-content: center; align-items: center; font-size: 13px; color: var(--mut); margin-top: 10px; text-align: center; }
-  #{{ rid }} .expert{ display: flex; gap: 16px; align-items: center; margin-top: 16px; padding: 18px; background: var(--g); color: var(--on-g); border-radius: 16px; }
+  #{{ rid }} .expert{ display: flex; gap: 16px; align-items: center; margin-top: 16px; padding: 18px; background: var(--sage-l); color: var(--ink); border: 1px solid var(--sage); border-radius: 16px; }
   #{{ rid }} .expert img{ width: 84px; height: 84px; border-radius: 50%; object-fit: cover; flex: 0 0 auto; }
-  #{{ rid }} .expert .ek{ display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: var(--on-g); color: var(--g); border-radius: 999px; padding: 3px 10px; }
+  #{{ rid }} .expert .ek{ display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: var(--ac); color: var(--on-ac); border-radius: 999px; padding: 3px 10px; }
   #{{ rid }} .expert b{ display: block; font-size: 16px; margin-top: 8px; }
   #{{ rid }} .expert q{ display: block; font-size: 14.5px; line-height: 1.45; margin-top: 4px; quotes: none; font-style: italic; }
 
   /* ---------- ONGLETS ---------- */
   #{{ rid }} .tabs{ margin-top: 16px; overflow: hidden; }
-  #{{ rid }} .tabbar{ display: flex; background: var(--g); }
-  #{{ rid }} .tabbar button{ flex: 1; min-height: 46px; padding: 8px 6px; font-size: 13.5px; font-weight: 600; color: var(--on-g); background: transparent; border: 0; border-right: 1px solid rgba(239,231,218,.25); cursor: pointer; }
+  #{{ rid }} .tabbar{ display: flex; background: var(--sage); }
+  #{{ rid }} .tabbar button{ flex: 1; min-height: 46px; padding: 8px 6px; font-size: 13.5px; font-weight: 600; color: var(--ink); background: transparent; border: 0; border-right: 1px solid rgba(49,68,49,.18); cursor: pointer; }
   #{{ rid }} .tabbar button:last-child{ border-right: 0; }
   #{{ rid }} .tabbar button.on{ background: var(--card); color: var(--ink); }
   #{{ rid }} .pane{ padding: 18px; font-size: 14.5px; }
@@ -166,8 +167,8 @@
 
   /* ---------- MOMENTS ---------- */
   #{{ rid }} .mbar{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-  #{{ rid }} .mbar button{ min-height: 44px; padding: 8px 16px; font-size: 14.5px; font-weight: 600; color: var(--ink); background: transparent; border: 1.5px solid var(--g); border-radius: 999px; cursor: pointer; }
-  #{{ rid }} .mbar button.on{ background: var(--g); color: var(--on-g); }
+  #{{ rid }} .mbar button{ min-height: 44px; padding: 8px 16px; font-size: 14.5px; font-weight: 600; color: var(--ink); background: transparent; border: 1.5px solid var(--ac); border-radius: 999px; cursor: pointer; }
+  #{{ rid }} .mbar button.on{ background: var(--ac); color: var(--on-ac); }
   #{{ rid }} .mom{ display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); gap: 0; overflow: hidden; }
   #{{ rid }} .mom.noimg{ grid-template-columns: minmax(0,1fr); }
   #{{ rid }} .mom[hidden]{ display: none; }
@@ -182,7 +183,7 @@
   /* ---------- PARCOURS ---------- */
   #{{ rid }} .gp-path{ display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
   #{{ rid }} .gp-jal{ padding: 22px; position: relative; }
-  #{{ rid }} .gp-jal .when{ display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--g); color: var(--on-g); border-radius: 999px; padding: 4px 12px; }
+  #{{ rid }} .gp-jal .when{ display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--ac); color: var(--on-ac); border-radius: 999px; padding: 4px 12px; }
   #{{ rid }} .gp-jal h3{ font-size: 19px; margin: 12px 0 10px; }
   #{{ rid }} .gp-jal ul{ list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; font-size: 14.5px; }
   #{{ rid }} .gp-jal li{ display: flex; gap: 9px; align-items: flex-start; }
@@ -195,7 +196,7 @@
   #{{ rid }} .gst{ display: flex; flex-direction: column; gap: 12px; }
   #{{ rid }} .use.noimg .gst{ display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
   #{{ rid }} .ge{ display: flex; gap: 14px; padding: 18px; }
-  #{{ rid }} .ge .n{ width: 34px; height: 34px; border-radius: 50%; background: var(--g); color: var(--on-g); font-weight: 700; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+  #{{ rid }} .ge .n{ width: 34px; height: 34px; border-radius: 50%; background: var(--ac); color: var(--on-ac); font-weight: 700; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
   #{{ rid }} .ge b{ display: block; font-size: 16px; }
   #{{ rid }} .ge span{ display: block; font-size: 14.5px; color: var(--mut); margin-top: 2px; }
 
@@ -205,16 +206,16 @@
   #{{ rid }} .cmp th, #{{ rid }} .cmp td{ padding: 13px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); border-left: 0; border-right: 0; border-top: 0; color: var(--ink); overflow-wrap: break-word; hyphens: auto; }
   #{{ rid }} .cmp tr:last-child td{ border-bottom: 0; }
   #{{ rid }} .cmp thead th{ font-size: 13px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
-  #{{ rid }} .cmp .us{ background: var(--g); color: var(--on-g); }
-  #{{ rid }} .cmp td.us{ font-weight: 600; border-bottom-color: rgba(239,231,218,.22); }
+  #{{ rid }} .cmp .us{ background: var(--sage); color: var(--ink); }
+  #{{ rid }} .cmp td.us{ font-weight: 600; border-bottom-color: rgba(49,68,49,.16); }
   #{{ rid }} .cmp td.them{ color: var(--mut); }
   #{{ rid }} .cmp td:first-child{ font-weight: 700; width: 28%; }
 
   /* ---------- GARANTIE ---------- */
-  #{{ rid }} .guar{ display: flex; gap: 20px; align-items: center; padding: 30px; background: var(--g); color: var(--on-g); border-radius: 18px; }
-  #{{ rid }} .guar h2{ color: var(--on-g); font-size: 26px; }
+  #{{ rid }} .guar{ display: flex; gap: 20px; align-items: center; padding: 30px; background: var(--sage); color: var(--ink); border-radius: 18px; }
+  #{{ rid }} .guar h2{ color: var(--ink); font-size: 26px; }
   #{{ rid }} .guar p{ margin-top: 8px; max-width: 700px; }
-  #{{ rid }} .guar .gi{ width: 60px; height: 60px; border-radius: 50%; background: rgba(239,231,218,.14); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+  #{{ rid }} .guar .gi{ width: 60px; height: 60px; border-radius: 50%; background: var(--ac); color: var(--on-ac); display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
   #{{ rid }} .guar .gi svg.i{ width: 28px; height: 28px; }
 
   /* ---------- AVIS ---------- */
@@ -742,10 +743,10 @@
     { "type": "header", "content": "Couleurs (palette de marque)" },
     { "type": "color", "id": "color_bg", "label": "Fond de page", "default": "#efe7da" },
     { "type": "color", "id": "color_card", "label": "Fond des encarts", "default": "#faf8f3" },
-    { "type": "color", "id": "color_primary", "label": "Vert foncé (texte, boutons)", "default": "#314431" },
-    { "type": "color", "id": "color_on_primary", "label": "Texte sur vert foncé", "default": "#efe7da" },
-    { "type": "color", "id": "color_accent", "label": "Accent terracotta", "default": "#c16b47" },
-    { "type": "color", "id": "color_sage", "label": "Vert sauge (pastille d'économie)", "default": "#b6bfa3" },
+    { "type": "color", "id": "color_primary", "label": "Vert foncé (texte, titres)", "default": "#314431" },
+    { "type": "color", "id": "color_accent", "label": "Terracotta (boutons, sélection, repères)", "default": "#c16b47" },
+    { "type": "color", "id": "color_on_accent", "label": "Texte sur terracotta", "default": "#17110c" },
+    { "type": "color", "id": "color_sage", "label": "Vert clair (pastilles, onglets, encarts)", "default": "#b6bfa3" },
 
     { "type": "header", "content": "Haut de page" },
     { "type": "text", "id": "badge", "label": "Pastille au-dessus du titre", "default": "Choisi par un comportementaliste" },
