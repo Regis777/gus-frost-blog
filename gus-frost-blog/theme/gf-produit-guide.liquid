@@ -111,6 +111,7 @@
   #{{ rid }} .prof{ display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
   #{{ rid }} .prof button{ display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 84px; padding: 10px 6px; font-size: 13.5px; font-weight: 600; line-height: 1.25; text-align: center; color: var(--ink); background: transparent; border: 1.5px solid var(--ac); border-radius: 12px; cursor: pointer; }
   #{{ rid }} .prof button.on{ background: var(--acf); border-color: var(--acf); color: var(--on-ac); }
+  #{{ rid }} .how{ font-size: 15px; font-weight: 600; line-height: 1.4; color: var(--ink); margin: -4px 0 12px; }
   #{{ rid }} .hint{ font-size: 13.5px; color: var(--mut); margin-top: 10px; min-height: 20px; }
   #{{ rid }} .hint b{ color: var(--ink); }
   #{{ rid }} .tiers{ display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
@@ -334,6 +335,7 @@
               <p class="stp">{{ s.step1_kicker }}</p>
               <h3>{{ s.step1_heading }}</h3>
               {%- if profils.size > 0 -%}
+                {%- if s.step1_intro != blank -%}<p class="how">{{ s.step1_intro }}</p>{%- endif -%}
                 <div class="prof" role="group" aria-label="{{ s.step1_heading | escape }}">
                   {%- for b in profils -%}
                     <button type="button" data-prof="{{ b.settings.tier | escape }}" data-hint="{{ b.settings.hint | escape }}" aria-pressed="false" {{ b.shopify_attributes }}>{{ b.settings.label }}</button>
@@ -764,7 +766,8 @@
     { "type": "header", "content": "Étape 1 : choix guidé et paliers" },
     { "type": "text", "id": "step1_kicker", "label": "Surtitre", "default": "Étape 1" },
     { "type": "text", "id": "step1_heading", "label": "Titre", "default": "Votre situation" },
-    { "type": "text", "id": "step1_hint", "label": "Texte d'aide avant tout choix", "default": "Indiquez votre situation, nous vous conseillons le bon nombre de tapis." },
+    { "type": "text", "id": "step1_intro", "label": "Consigne au-dessus des choix", "default": "Cliquez sur la situation qui ressemble à la vôtre. Nous vous indiquons aussitôt le nombre de tapis qu’il vous faut." },
+    { "type": "text", "id": "step1_hint", "label": "Texte sous les choix, avant tout clic (facultatif)" },
     { "type": "text", "id": "unit_label", "label": "Nom de l'unité", "default": "tapis" },
     { "type": "text", "id": "popular_qty", "label": "Palier présélectionné (valeur de l'option)", "default": "2" },
     { "type": "text", "id": "popular_label", "label": "Pastille du palier conseillé", "default": "Conseillé" },
