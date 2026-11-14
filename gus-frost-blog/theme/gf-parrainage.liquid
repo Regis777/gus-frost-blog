@@ -1,0 +1,228 @@
+{% comment %}
+  ============================================================================
+  Gus & Frost — Page Programme Ambassadeurs (parrainage)
+  Section autonome + formulaire de contact Shopify natif (candidatures par e-mail).
+  Couleurs de marque en dur ; polices héritées du thème.
+  ============================================================================
+{% endcomment %}
+
+<style>
+  #gf-parr {
+    --forest: #2c3f2b; --forest-2: #35502f;
+    --paper: #efe7da; --paper-2: #f6f1e6; --card: #fffdf8;
+    --ink: #2b3a26; --ink-soft: #5c6a54; --line: #ddd0ba;
+    --terra: {{ section.settings.accent }}; --terra-deep: {{ section.settings.accent | color_darken: 12 }};
+    --sage: #9dae8b; --sage-soft: #e6ebda; --lime: #a8ff6a;
+    --radius: 20px;
+    color: var(--ink); font-family: var(--font-body-family); line-height: 1.6;
+  }
+  #gf-parr, #gf-parr * { box-sizing: border-box; }
+  #gf-parr h1, #gf-parr h2, #gf-parr h3, #gf-parr .gf-eyebrow, #gf-parr .gf-btn,
+  #gf-parr .gf-stat-num, #gf-parr label, #gf-parr .gf-step-num, #gf-parr .gf-chip { font-family: var(--font-heading-family); }
+  /* forcer la couleur des titres (sinon ils héritent de la couleur de titre du thème) */
+  #gf-parr h2, #gf-parr h3 { color: var(--ink); }
+  #gf-parr .gf-hero h1 { color: #f4efe2; }
+  #gf-parr .gf-wrap { max-width: 108rem; margin: 0 auto; padding: 0 2.4rem; }
+  #gf-parr .gf-btn { display: inline-flex; align-items: center; gap: .8rem; cursor: pointer; font-weight: 700; font-size: 1.6rem; border-radius: 14px; padding: 1.5rem 2.6rem; border: 1.5px solid transparent; text-decoration: none; transition: transform .12s, background .2s; }
+  #gf-parr .gf-btn:active { transform: translateY(1px); }
+  #gf-parr .gf-primary { background: var(--terra); color: #fff; box-shadow: 0 14px 26px -14px var(--terra); }
+  #gf-parr .gf-primary:hover { background: var(--terra-deep); }
+  #gf-parr .gf-ghost { background: transparent; color: #f4efe2; border-color: rgba(244,239,226,.5); }
+
+  #gf-parr .gf-hero { background: radial-gradient(1100px 500px at 78% -12%, rgba(168,255,106,.18), transparent 60%), linear-gradient(150deg, var(--forest), var(--forest-2)); color: #f4efe2; position: relative; overflow: hidden; }
+  #gf-parr .gf-hero::after { content: "🐾"; position: absolute; right: -1rem; bottom: -3rem; font-size: 19rem; opacity: .12; transform: rotate(-12deg); }
+  #gf-parr .gf-hero-inner { padding: 7.4rem 2.4rem 8rem; max-width: 108rem; margin: 0 auto; position: relative; z-index: 1; }
+  #gf-parr .gf-eyebrow { text-transform: uppercase; letter-spacing: 3px; font-size: 1.25rem; font-weight: 700; color: var(--lime); }
+  #gf-parr .gf-hero h1 { font-size: clamp(3.2rem, 5.5vw, 5.4rem); line-height: 1.03; margin: 1.6rem 0; max-width: 16ch; }
+  #gf-parr .gf-hero p { font-size: 1.9rem; max-width: 52ch; opacity: .92; margin: 0 0 3rem; }
+  #gf-parr .gf-hero-cta { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+
+  #gf-parr .gf-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; margin-top: 5.4rem; }
+  #gf-parr .gf-stat { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); border-radius: 16px; padding: 2rem 2.2rem; }
+  #gf-parr .gf-stat-num { font-size: 3.4rem; font-weight: 800; color: var(--lime); line-height: 1; }
+  #gf-parr .gf-stat-num span { font-size: 1.8rem; }
+  #gf-parr .gf-stat-label { font-size: 1.45rem; opacity: .9; margin-top: .8rem; }
+
+  #gf-parr .gf-sec { padding: 7.6rem 0; }
+  #gf-parr .gf-benefits { background: var(--paper-2); }
+  #gf-parr .gf-apply { background: linear-gradient(150deg, var(--forest), var(--forest-2)); color: #f4efe2; }
+  #gf-parr .gf-sec-head { max-width: 60ch; margin-bottom: 4rem; }
+  #gf-parr .gf-sec-head .gf-eyebrow { color: var(--terra-deep); }
+  #gf-parr .gf-apply .gf-sec-head .gf-eyebrow { color: var(--lime); }
+  #gf-parr h2 { font-size: clamp(2.6rem, 3.6vw, 3.8rem); line-height: 1.1; margin: 1.2rem 0 0; }
+  #gf-parr .gf-apply h2 { color: #fff; }
+  #gf-parr .gf-lead { font-size: 1.8rem; color: var(--ink-soft); margin: 1.4rem 0 0; }
+  #gf-parr .gf-apply .gf-lead { color: rgba(244,239,226,.85); }
+
+  #gf-parr .gf-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  #gf-parr .gf-step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 2.6rem 2.4rem; }
+  #gf-parr .gf-step-num { width: 4rem; height: 4rem; border-radius: 12px; display: grid; place-items: center; font-weight: 800; color: #fff; background: var(--terra); margin-bottom: 1.6rem; font-size: 1.8rem; }
+  #gf-parr .gf-step h3 { font-size: 2rem; margin: 0 0 .8rem; }
+  #gf-parr .gf-step p { margin: 0; color: var(--ink-soft); font-size: 1.55rem; }
+
+  #gf-parr .gf-bgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.8rem; }
+  #gf-parr .gf-benefit { display: flex; gap: 1.6rem; align-items: flex-start; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 2.2rem; }
+  #gf-parr .gf-benefit .gf-ico { flex: none; width: 4.6rem; height: 4.6rem; border-radius: 12px; display: grid; place-items: center; font-size: 2.4rem; background: var(--sage-soft); }
+  #gf-parr .gf-benefit h3 { margin: .2rem 0 .6rem; font-size: 1.8rem; }
+  #gf-parr .gf-benefit p { margin: 0; color: var(--ink-soft); font-size: 1.5rem; }
+
+  #gf-parr .gf-chips { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+  #gf-parr .gf-chip { border: 1.5px solid var(--line); border-radius: 999px; padding: 1rem 1.8rem; font-weight: 600; font-size: 1.5rem; }
+  #gf-parr .gf-chip span { color: var(--terra-deep); }
+
+  #gf-parr .gf-form-card { background: var(--card); color: var(--ink); border-radius: 24px; padding: 3.4rem; margin-top: 3.4rem; box-shadow: 0 30px 60px -34px rgba(44,63,43,.5); max-width: 72rem; }
+  #gf-parr .gf-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem; }
+  #gf-parr .gf-field { display: flex; flex-direction: column; gap: .7rem; }
+  #gf-parr .gf-field.gf-full { grid-column: 1 / -1; }
+  #gf-parr label { font-size: 1.35rem; font-weight: 600; }
+  #gf-parr label .gf-req { color: var(--terra); }
+  #gf-parr input, #gf-parr select, #gf-parr textarea { font-family: var(--font-body-family); font-size: 1.55rem; color: var(--ink); background: var(--paper-2); border: 1.5px solid var(--line); border-radius: 12px; padding: 1.3rem 1.4rem; width: 100%; }
+  #gf-parr textarea { resize: vertical; min-height: 11rem; }
+  #gf-parr input:focus, #gf-parr select:focus, #gf-parr textarea:focus { outline: 3px solid var(--sage); outline-offset: 1px; border-color: var(--sage); }
+  #gf-parr .gf-form-foot { display: flex; align-items: center; gap: 1.6rem; flex-wrap: wrap; margin-top: 2.2rem; }
+  #gf-parr .gf-form-foot small { color: var(--ink-soft); font-size: 1.3rem; max-width: 40ch; }
+  #gf-parr .gf-success { background: rgba(26,127,75,.12); color: #1a7f4b; border-radius: 14px; padding: 1.6rem 2rem; font-family: var(--font-heading-family); font-weight: 700; font-size: 1.6rem; }
+
+  #gf-parr .gf-faq details { border-bottom: 1px solid var(--line); }
+  #gf-parr .gf-faq summary { list-style: none; cursor: pointer; padding: 1.8rem 0; font-family: var(--font-heading-family); font-weight: 600; font-size: 1.75rem; display: flex; justify-content: space-between; gap: 1.6rem; }
+  #gf-parr .gf-faq summary::-webkit-details-marker { display: none; }
+  #gf-parr .gf-faq summary::after { content: "+"; color: var(--terra); font-size: 2.4rem; line-height: 1; }
+  #gf-parr .gf-faq details[open] summary::after { content: "–"; }
+  #gf-parr .gf-faq p { margin: 0 0 1.8rem; color: var(--ink-soft); font-size: 1.55rem; max-width: 68ch; }
+
+  #gf-parr .gf-final { text-align: center; }
+  #gf-parr .gf-final h2 { max-width: 20ch; margin-inline: auto; }
+  #gf-parr .gf-final p { color: var(--ink-soft); max-width: 52ch; margin: 1.4rem auto 2.6rem; font-size: 1.8rem; }
+
+  @media (max-width: 760px) { #gf-parr .gf-steps, #gf-parr .gf-bgrid, #gf-parr .gf-stats { grid-template-columns: 1fr; } }
+  @media (max-width: 620px) { #gf-parr .gf-form-grid { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { #gf-parr * { transition: none !important; } }
+</style>
+
+<div id="gf-parr">
+  <header class="gf-hero">
+    <div class="gf-hero-inner">
+      <div class="gf-eyebrow">{{ section.settings.eyebrow }}</div>
+      <h1>{{ section.settings.title }}</h1>
+      <p>{{ section.settings.subtitle }}</p>
+      <div class="gf-hero-cta">
+        <a href="#gf-candidature" class="gf-btn gf-primary">{{ section.settings.cta_label }} 🐾</a>
+        <a href="#gf-comment" class="gf-btn gf-ghost">Comment ça marche</a>
+      </div>
+      <div class="gf-stats">
+        <div class="gf-stat"><div class="gf-stat-num">{{ section.settings.commission }}&nbsp;<span>%</span></div><div class="gf-stat-label">de commission sur chaque commande générée par votre code</div></div>
+        <div class="gf-stat"><div class="gf-stat-num">−{{ section.settings.discount }}&nbsp;<span>%</span></div><div class="gf-stat-label">offerts à votre communauté avec votre code perso</div></div>
+        <div class="gf-stat"><div class="gf-stat-num">0&nbsp;<span>€</span></div><div class="gf-stat-label">à avancer : pas de stock, pas de frais, pas d'engagement</div></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="gf-sec" id="gf-comment">
+    <div class="gf-wrap">
+      <div class="gf-sec-head"><div class="gf-eyebrow">Simple et transparent</div><h2>Comment ça marche</h2><p class="gf-lead">Trois étapes, et vous commencez à recommander ce que vous utilisez déjà.</p></div>
+      <div class="gf-steps">
+        <div class="gf-step"><div class="gf-step-num">1</div><h3>Vous candidatez</h3><p>Remplissez le formulaire ci-dessous. On regarde chaque candidature à la main et on revient vers vous sous 72&nbsp;h.</p></div>
+        <div class="gf-step"><div class="gf-step-num">2</div><h3>Vous recevez votre code</h3><p>Un code promo personnalisé à votre nom. Vous le partagez sur vos réseaux, à vos clients ou à vos proches.</p></div>
+        <div class="gf-step"><div class="gf-step-num">3</div><h3>Vous touchez vos commissions</h3><p>À chaque commande passée avec votre code, vous gagnez {{ section.settings.commission }}&nbsp;%. Suivi transparent, versement mensuel.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gf-sec gf-benefits">
+    <div class="gf-wrap">
+      <div class="gf-sec-head"><div class="gf-eyebrow">Ce que vous y gagnez</div><h2>Des avantages concrets, pas des promesses</h2></div>
+      <div class="gf-bgrid">
+        <div class="gf-benefit"><div class="gf-ico">💸</div><div><h3>Une commission à chaque vente</h3><p>{{ section.settings.commission }}&nbsp;% sur toutes les commandes passées avec votre code. Plus vous partagez, plus vous gagnez.</p></div></div>
+        <div class="gf-benefit"><div class="gf-ico">🎁</div><div><h3>Une réduction pour votre communauté</h3><p>Votre code offre −{{ section.settings.discount }}&nbsp;% à ceux qui vous suivent : vous leur rendez service.</p></div></div>
+        <div class="gf-benefit"><div class="gf-ico">📦</div><div><h3>Des produits offerts</h3><p>Les ambassadeurs les plus actifs reçoivent nos nouveautés à tester en avant-première.</p></div></div>
+        <div class="gf-benefit"><div class="gf-ico">🐶</div><div><h3>Une communauté qui a du chien</h3><p>Vous rejoignez des passionnés de chiens et de chats, avec des conseils et des contenus prêts à partager.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gf-sec">
+    <div class="gf-wrap">
+      <div class="gf-sec-head"><div class="gf-eyebrow">C'est pour vous si…</div><h2>Nul besoin d'être une star</h2><p class="gf-lead">On cherche des voix sincères, pas forcément des gros comptes.</p></div>
+      <div class="gf-chips">
+        <div class="gf-chip"><span>◆</span> Créateur·rice de contenu chien / chat</div>
+        <div class="gf-chip"><span>◆</span> Éleveur, éducateur, comportementaliste</div>
+        <div class="gf-chip"><span>◆</span> Vétérinaire ou ASV</div>
+        <div class="gf-chip"><span>◆</span> Passionné·e avec une communauté engagée</div>
+        <div class="gf-chip"><span>◆</span> Client·e convaincu·e qui veut en parler</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gf-sec gf-apply" id="gf-candidature">
+    <div class="gf-wrap">
+      <div class="gf-sec-head"><div class="gf-eyebrow">Candidature</div><h2>Posez votre candidature</h2><p class="gf-lead">2 minutes. On vous répond sous 72&nbsp;h avec votre code et tout le nécessaire pour démarrer.</p></div>
+
+      {% form 'contact', id: 'gf-parrainage-form', class: 'gf-form-card' %}
+        {% if form.posted_successfully? %}
+          <p class="gf-success">🐾 Merci ! Votre candidature est bien reçue — réponse sous 72&nbsp;h.</p>
+        {% else %}
+          {% if form.errors %}
+            <p class="gf-success" style="background:rgba(193,107,71,.14);color:#a5522f;">Oups — vérifiez votre e-mail et réessayez.</p>
+          {% endif %}
+          <div class="gf-form-grid">
+            <div class="gf-field"><label>Prénom <span class="gf-req">*</span></label><input type="text" name="contact[Prénom]" required></div>
+            <div class="gf-field"><label>Nom <span class="gf-req">*</span></label><input type="text" name="contact[Nom]" required></div>
+            <div class="gf-field gf-full"><label>E-mail <span class="gf-req">*</span></label><input type="email" name="contact[email]" required></div>
+            <div class="gf-field"><label>Réseau principal</label>
+              <select name="contact[Réseau principal]"><option>Instagram</option><option>TikTok</option><option>YouTube</option><option>Facebook</option><option>Blog / site</option><option>Autre</option></select>
+            </div>
+            <div class="gf-field"><label>Votre @ / lien</label><input type="text" name="contact[Lien ou pseudo]"></div>
+            <div class="gf-field gf-full"><label>Taille de votre communauté</label>
+              <select name="contact[Taille communauté]"><option>Moins de 1 000</option><option>1 000 – 10 000</option><option>10 000 – 50 000</option><option>Plus de 50 000</option></select>
+            </div>
+            <div class="gf-field gf-full"><label>Pourquoi vous&nbsp;? Parlez-nous de vous et de votre animal</label><textarea name="contact[body]"></textarea></div>
+          </div>
+          <div class="gf-form-foot">
+            <button type="submit" class="gf-btn gf-primary">Envoyer ma candidature</button>
+            <small>En envoyant ce formulaire, vous acceptez d'être recontacté·e par e-mail au sujet du programme.</small>
+          </div>
+        {% endif %}
+      {% endform %}
+    </div>
+  </section>
+
+  <section class="gf-sec gf-faq">
+    <div class="gf-wrap">
+      <div class="gf-sec-head"><div class="gf-eyebrow">Questions fréquentes</div><h2>Tout ce que vous vous demandez</h2></div>
+      <details open><summary>Combien je gagne exactement&nbsp;?</summary><p>Vous touchez {{ section.settings.commission }}&nbsp;% sur le montant de chaque commande passée avec votre code (hors frais de port).</p></details>
+      <details><summary>Quand et comment suis-je payé·e&nbsp;?</summary><p>Les commissions sont validées ~30&nbsp;jours après la commande (le temps de la période de retour), puis versées chaque mois dès que votre solde atteint {{ section.settings.payout_min }}&nbsp;€. Vous recevez un récapitulatif clair de vos ventes.</p></details>
+      <details><summary>Faut-il beaucoup d'abonnés&nbsp;?</summary><p>Non. On regarde surtout la sincérité et l'engagement de votre communauté. Les micro-communautés convertissent souvent très bien.</p></details>
+      <details><summary>Est-ce que ça m'engage&nbsp;?</summary><p>Aucun engagement. Vous partagez à votre rythme et pouvez arrêter quand vous voulez. Pas de stock à gérer, rien à avancer.</p></details>
+      <details><summary>Puis-je utiliser mon propre code&nbsp;?</summary><p>Votre code offre une réduction à votre communauté ; les conditions d'utilisation personnelle vous sont précisées dans le kit ambassadeur.</p></details>
+    </div>
+  </section>
+
+  <section class="gf-sec gf-final">
+    <div class="gf-wrap">
+      <div class="gf-eyebrow" style="color:var(--terra-deep);">Prêt·e&nbsp;?</div>
+      <h2>Rejoignez la meute Gus &amp; Frost</h2>
+      <p>Recommander ce que vous aimez, aider d'autres maîtres, et être récompensé·e pour ça. On vous attend.</p>
+      <a href="#gf-candidature" class="gf-btn gf-primary">{{ section.settings.cta_label }} 🐾</a>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Page parrainage",
+  "settings": [
+    { "type": "header", "content": "Conditions du programme" },
+    { "type": "text", "id": "commission", "label": "Commission ambassadeur (%)", "default": "15" },
+    { "type": "text", "id": "discount", "label": "Réduction communauté (%)", "default": "10" },
+    { "type": "text", "id": "payout_min", "label": "Seuil de versement (€)", "default": "25" },
+    { "type": "header", "content": "En-tête (hero)" },
+    { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "Programme Ambassadeurs · Gus & Frost" },
+    { "type": "textarea", "id": "title", "label": "Titre", "default": "Vous aimez nos produits. Faites-les connaître, on vous récompense." },
+    { "type": "textarea", "id": "subtitle", "label": "Sous-titre", "default": "Rejoignez les ambassadeurs Gus & Frost : partagez votre code, offrez une réduction à votre communauté, et touchez une commission sur chaque vente. Sans stock, sans engagement." },
+    { "type": "text", "id": "cta_label", "label": "Bouton principal", "default": "Devenir ambassadeur" },
+    { "type": "color", "id": "accent", "label": "Couleur d'accent", "default": "#c16b47" }
+  ],
+  "presets": [ { "name": "Page parrainage" } ],
+  "enabled_on": { "templates": ["page"] }
+}
+{% endschema %}
