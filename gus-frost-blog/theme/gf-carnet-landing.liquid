@@ -1,10 +1,12 @@
 {%- comment -%}
-  Section « Le Carnet — présentation » : la page qui vend l'outil.
+  Section « Le Carnet, présentation » : la page qui vend l'outil.
   L'app elle-même vit sur une autre page (section gf-carnet, sans encart commercial).
   Pré-requis : assets/gf-carnet-landing.css déposé dans le thème.
 {%- endcomment -%}
 
 {{ 'gf-carnet-landing.css' | asset_url | stylesheet_tag }}
+{%- comment -%} Fond de page beige (charte du 14/11/2026), pas de blanc pur. {%- endcomment -%}
+<style>#shopify-section-{{ section.id }}{ background: #efe7da; }</style>
 
 {%- assign url_app = section.settings.app_url | default: '/pages/mon-carnet' -%}
 
@@ -27,7 +29,10 @@
   {%- assign atouts = section.blocks | where: 'type', 'atout' -%}
   {%- if atouts.size > 0 -%}
     <section class="gfl-compare">
-      <h2>{{ section.settings.atouts_heading | escape }}</h2>
+      <div class="gfl-compare-tete">
+        {%- if section.settings.atouts_kick != blank -%}<span class="gfl-kick">{{ section.settings.atouts_kick | escape }}</span>{%- endif -%}
+        <h2>{{ section.settings.atouts_heading | escape }}</h2>
+      </div>
       <div class="gfl-compare-grille">
         {%- for b in atouts -%}
           <div class="gfl-compare-item" {{ b.shopify_attributes }}>
@@ -42,16 +47,16 @@
   {%- assign fonctions = section.blocks | where: 'type', 'fonction' -%}
   {%- if fonctions.size > 0 -%}
     <section class="gfl-sec">
-      <h2 class="gfl-sec-titre">{{ section.settings.fonctions_heading | escape }}</h2>
-      {%- if section.settings.fonctions_chapo != blank -%}
-        <p class="gfl-sec-chapo">{{ section.settings.fonctions_chapo | escape }}</p>
-      {%- endif -%}
+      <div class="gfl-sec-tete">
+        {%- if section.settings.fonctions_kick != blank -%}<span class="gfl-kick">{{ section.settings.fonctions_kick | escape }}</span>{%- endif -%}
+        <h2 class="gfl-sec-titre">{{ section.settings.fonctions_heading | escape }}</h2>
+        {%- if section.settings.fonctions_chapo != blank -%}
+          <p class="gfl-sec-chapo">{{ section.settings.fonctions_chapo | escape }}</p>
+        {%- endif -%}
+      </div>
       <div class="gfl-grille">
         {%- for b in fonctions -%}
           <div class="gfl-carte" {{ b.shopify_attributes }}>
-            {%- if b.settings.icone != blank -%}
-              <span class="gfl-carte-ico" aria-hidden="true">{{ b.settings.icone | escape }}</span>
-            {%- endif -%}
             <h3>{{ b.settings.titre | escape }}</h3>
             <p>{{ b.settings.texte | escape }}</p>
           </div>
@@ -62,6 +67,7 @@
 
   {%- if section.settings.privacy_heading != blank -%}
     <section class="gfl-privacy">
+      {%- if section.settings.privacy_kick != blank -%}<span class="gfl-kick">{{ section.settings.privacy_kick | escape }}</span>{%- endif -%}
       <h2>{{ section.settings.privacy_heading | escape }}</h2>
       {%- if section.settings.privacy_text != blank -%}
         <p>{{ section.settings.privacy_text | escape }}</p>
@@ -101,7 +107,7 @@
 
 {% schema %}
 {
-  "name": "Le Carnet — présentation",
+  "name": "Le Carnet, présentation",
   "tag": "section",
   "settings": [
     {
@@ -114,7 +120,7 @@
       "type": "textarea",
       "id": "hero_text",
       "label": "Accroche",
-      "default": "Vaccins, poids, rappels du vétérinaire, budget, souvenirs. Tout au même endroit — sans rien installer et sans créer de compte."
+      "default": "Vaccins, poids, rappels du vétérinaire, budget, souvenirs. Tout au même endroit, sans rien installer et sans créer de compte."
     },
     {
       "type": "text",
@@ -133,14 +139,32 @@
       "label": "Réassurances (séparées par |)",
       "default": "Gratuit | Sans inscription | Sans publicité"
     },
-    { "type": "header", "content": "Bloc « pourquoi pas une application »" },
+    {
+      "type": "header",
+      "content": "Bloc « pourquoi pas une application »"
+    },
+    {
+      "type": "text",
+      "id": "atouts_kick",
+      "label": "Surtitre",
+      "default": "Le principe"
+    },
     {
       "type": "text",
       "id": "atouts_heading",
       "label": "Titre du bloc",
       "default": "Pourquoi ce n'est pas une application à télécharger"
     },
-    { "type": "header", "content": "Bloc « ce que vous pouvez suivre »" },
+    {
+      "type": "header",
+      "content": "Bloc « ce que vous pouvez suivre »"
+    },
+    {
+      "type": "text",
+      "id": "fonctions_kick",
+      "label": "Surtitre",
+      "default": "Les fonctions"
+    },
     {
       "type": "text",
       "id": "fonctions_heading",
@@ -153,7 +177,16 @@
       "label": "Chapô",
       "default": "Un animal ou toute la maisonnée : chacun a sa fiche."
     },
-    { "type": "header", "content": "Bloc confidentialité" },
+    {
+      "type": "header",
+      "content": "Bloc confidentialité"
+    },
+    {
+      "type": "text",
+      "id": "privacy_kick",
+      "label": "Surtitre",
+      "default": "Confidentialité"
+    },
     {
       "type": "text",
       "id": "privacy_heading",
@@ -171,7 +204,7 @@
       "id": "privacy_mail",
       "label": "Exception rappels e-mail",
       "info": "À REMPLIR dès que les rappels par e-mail sont activés, sinon la page promet à tort que rien ne sort de l'appareil. Le texte par défaut ci-dessous est prêt à coller.",
-      "default": "Une seule exception, et c'est vous qui la déclenchez : si vous activez les rappels par e-mail, votre adresse, le nom de vos animaux et vos échéances à venir (libellé, date, vaccin concerné) sont transmis à notre outil d'envoi. Le reste — poids, budget, souvenirs, photos — ne quitte jamais votre appareil."
+      "default": "Une seule exception, et c'est vous qui la déclenchez : si vous activez les rappels par e-mail, votre adresse, le nom de vos animaux et vos échéances à venir (libellé, date, vaccin concerné) sont transmis à notre outil d'envoi. Le reste (poids, budget, souvenirs, photos) ne quitte jamais votre appareil."
     },
     {
       "type": "textarea",
@@ -179,7 +212,10 @@
       "label": "Note sous le texte",
       "default": "Revers de la médaille : pensez à exporter votre sauvegarde de temps en temps. C'est votre copie de sécurité, et elle vous appartient."
     },
-    { "type": "header", "content": "Rappel final" },
+    {
+      "type": "header",
+      "content": "Rappel final"
+    },
     {
       "type": "text",
       "id": "final_heading",
@@ -196,29 +232,65 @@
   "blocks": [
     {
       "type": "atout",
-      "name": "Atout (bloc vert)",
+      "name": "Atout",
       "settings": [
-        { "type": "text", "id": "titre", "label": "Titre" },
-        { "type": "textarea", "id": "texte", "label": "Texte" }
+        {
+          "type": "text",
+          "id": "titre",
+          "label": "Titre"
+        },
+        {
+          "type": "textarea",
+          "id": "texte",
+          "label": "Texte"
+        }
       ]
     },
     {
       "type": "fonction",
       "name": "Fonction (carte)",
       "settings": [
-        { "type": "text", "id": "icone", "label": "Émoji" },
-        { "type": "text", "id": "titre", "label": "Titre" },
-        { "type": "textarea", "id": "texte", "label": "Texte" }
+        {
+          "type": "text",
+          "id": "titre",
+          "label": "Titre"
+        },
+        {
+          "type": "textarea",
+          "id": "texte",
+          "label": "Texte"
+        }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Le Carnet — présentation",
+      "name": "Le Carnet, présentation",
       "blocks": [
-        { "type": "atout" }, { "type": "atout" }, { "type": "atout" },
-        { "type": "fonction" }, { "type": "fonction" }, { "type": "fonction" },
-        { "type": "fonction" }, { "type": "fonction" }
+        {
+          "type": "atout"
+        },
+        {
+          "type": "atout"
+        },
+        {
+          "type": "atout"
+        },
+        {
+          "type": "fonction"
+        },
+        {
+          "type": "fonction"
+        },
+        {
+          "type": "fonction"
+        },
+        {
+          "type": "fonction"
+        },
+        {
+          "type": "fonction"
+        }
       ]
     }
   ]
