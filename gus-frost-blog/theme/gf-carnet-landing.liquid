@@ -47,6 +47,14 @@
     </section>
   {%- endif -%}
 
+  <section class="gfl-final">
+    <h2>{{ section.settings.final_heading | escape }}</h2>
+    {%- if section.settings.final_text != blank -%}
+      <p>{{ section.settings.final_text | escape }}</p>
+    {%- endif -%}
+    <a class="gfl-btn" href="{{ url_app }}">{{ section.settings.cta_label | escape }}</a>
+  </section>
+
   {%- comment -%} « Le principe » : bandeau volontairement discret, après les fonctions. {%- endcomment -%}
   {%- assign atouts = section.blocks | where: 'type', 'atout' -%}
   {%- if atouts.size > 0 -%}
@@ -64,34 +72,21 @@
     </section>
   {%- endif -%}
 
+  {%- comment -%}
+    Confidentialité : court paragraphe discret en bas de page (demande de Régis, 14/11/2026).
+    La phrase « rappels par e-mail » doit rester alignée sur proprietesKlaviyo() (gf-carnet.js) :
+    les rappels sont actifs, sans elle la page promettrait que rien ne sort de l'appareil.
+  {%- endcomment -%}
   {%- if section.settings.privacy_heading != blank -%}
     <section class="gfl-privacy">
-      {%- if section.settings.privacy_kick != blank -%}<span class="gfl-kick">{{ section.settings.privacy_kick | escape }}</span>{%- endif -%}
-      <h2>{{ section.settings.privacy_heading | escape }}</h2>
-      {%- if section.settings.privacy_text != blank -%}
-        <p>{{ section.settings.privacy_text | escape }}</p>
-      {%- endif -%}
-      {%- comment -%}
-        À REMPLIR le jour où les rappels par e-mail sont activés (clé Klaviyo posée
-        sur la section « Le Carnet »). Sans ce paragraphe, la page promet que rien
-        ne sort de l'appareil, ce qui deviendrait faux. Voir le libellé par défaut.
-      {%- endcomment -%}
-      {%- if section.settings.privacy_mail != blank -%}
-        <p>{{ section.settings.privacy_mail | escape }}</p>
-      {%- endif -%}
-      {%- if section.settings.privacy_note != blank -%}
-        <p class="gfl-privacy-note">{{ section.settings.privacy_note | escape }}</p>
-      {%- endif -%}
+      <h2 class="gfl-privacy-titre">{{ section.settings.privacy_heading | escape }}</h2>
+      <p>
+        {%- if section.settings.privacy_text != blank -%}{{ section.settings.privacy_text | escape }}{%- endif -%}
+        {%- if section.settings.privacy_mail != blank %} {{ section.settings.privacy_mail | escape }}{%- endif -%}
+        {%- if section.settings.privacy_note != blank %} {{ section.settings.privacy_note | escape }}{%- endif -%}
+      </p>
     </section>
   {%- endif -%}
-
-  <section class="gfl-final">
-    <h2>{{ section.settings.final_heading | escape }}</h2>
-    {%- if section.settings.final_text != blank -%}
-      <p>{{ section.settings.final_text | escape }}</p>
-    {%- endif -%}
-    <a class="gfl-btn" href="{{ url_app }}">{{ section.settings.cta_label | escape }}</a>
-  </section>
 
 </div>
 
@@ -176,34 +171,28 @@
     },
     {
       "type": "text",
-      "id": "privacy_kick",
-      "label": "Surtitre",
-      "default": "Confidentialité"
-    },
-    {
-      "type": "text",
       "id": "privacy_heading",
       "label": "Titre",
-      "default": "Où vont vos données ? Nulle part."
+      "default": "Où vont vos données ?"
     },
     {
       "type": "textarea",
       "id": "privacy_text",
       "label": "Texte",
-      "default": "Tout est enregistré dans votre navigateur, sur votre appareil. Rien ne transite par un serveur, y compris les nôtres. C'est aussi pour cela qu'il n'y a aucun compte à créer : nous n'avons rien à stocker."
+      "default": "Le carnet est enregistré sur votre appareil, pas sur nos serveurs."
     },
     {
       "type": "textarea",
       "id": "privacy_mail",
       "label": "Exception rappels e-mail",
-      "info": "À REMPLIR dès que les rappels par e-mail sont activés, sinon la page promet à tort que rien ne sort de l'appareil. Le texte par défaut ci-dessous est prêt à coller.",
-      "default": "Une seule exception, et c'est vous qui la déclenchez : si vous activez les rappels par e-mail, votre adresse, le nom de vos animaux et vos échéances à venir (libellé, date, vaccin concerné) sont transmis à notre outil d'envoi. Le reste (poids, budget, souvenirs, photos) ne quitte jamais votre appareil."
+      "info": "Obligatoire tant que les rappels par e-mail sont actifs : sans elle, la page promet à tort que rien ne sort de l'appareil.",
+      "default": "Seule exception, si vous activez les rappels par e-mail : votre adresse, le nom de vos animaux et vos échéances à venir sont transmis à notre outil d’envoi."
     },
     {
       "type": "textarea",
       "id": "privacy_note",
       "label": "Note sous le texte",
-      "default": "Revers de la médaille : pensez à exporter votre sauvegarde de temps en temps. C'est votre copie de sécurité, et elle vous appartient."
+      "default": "Pensez à exporter une sauvegarde de temps en temps."
     },
     {
       "type": "header",

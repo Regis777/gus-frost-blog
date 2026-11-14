@@ -87,12 +87,12 @@
         "atouts_heading": "Sans application à télécharger",
         "fonctions_heading": "Ce que vous pouvez suivre",
         "fonctions_chapo": "Un animal ou toute la maisonnée : chacun a sa fiche.",
-        "privacy_heading": "Où vont vos données ? Nulle part.",
-        "privacy_text": "Le carnet est enregistré dans votre navigateur, sur votre appareil. Par défaut, rien n'en sort : ni vers nos serveurs, ni ailleurs. C'est aussi pour cela qu'il n'y a aucun compte à créer : nous n'avons rien à stocker.",
-        "privacy_note": "Revers de la médaille : pensez à exporter votre sauvegarde de temps en temps. C'est votre copie de sécurité, et elle vous appartient.",
+        "privacy_heading": "Où vont vos données ?",
+        "privacy_text": "Le carnet est enregistré sur votre appareil, pas sur nos serveurs.",
+        "privacy_note": "Pensez à exporter une sauvegarde de temps en temps.",
         "final_heading": "Commencez par un animal, ça prend trois secondes",
         "final_text": "Pas de formulaire, pas de mot de passe. Vous remplissez, c'est enregistré.",
-        "privacy_mail": "Une seule exception, et c'est vous qui la déclenchez : si vous activez les rappels par e-mail, votre adresse, le nom de vos animaux et vos échéances à venir (libellé, date, vaccin concerné) sont transmis à notre outil d'envoi. Le reste (poids, budget, souvenirs, photos) ne quitte jamais votre appareil."
+        "privacy_mail": "Seule exception, si vous activez les rappels par e-mail : votre adresse, le nom de vos animaux et vos échéances à venir sont transmis à notre outil d’envoi."
       }
     }
   },

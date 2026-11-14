@@ -119,22 +119,19 @@
   .gfl-principe-liste { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* ---------- Confidentialité (grand encart de texte : sauge) ---------- */
+/* ---------- Confidentialité : court paragraphe discret, sous le bandeau « principe » ---------- */
 .gfl-privacy {
-  background: var(--gfl-sauge); color: var(--gfl-vert);
-  border-radius: 16px; padding: 28px 32px; margin-top: 56px;
+  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline; gap: 4px 28px;
+  padding: 14px 0 16px; border-bottom: 1px solid var(--gfl-ligne);
 }
-.gfl-privacy .gfl-kick { color: var(--gfl-vert); }
-.gfl-privacy h2 { font-size: 26px; margin-bottom: 10px; }
-.gfl-privacy p { margin: 0 0 10px; font-size: 16px; }
-.gfl-privacy p:last-child { margin-bottom: 0; }
-.gfl-privacy-note {
-  font-size: 14.5px !important; font-weight: 600;
-  border-top: 1px solid rgba(49, 68, 49, .25); padding-top: 10px; margin-top: 4px !important;
+.gfl-privacy-titre { font-size: 18px; white-space: nowrap; }
+.gfl-privacy p { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--gfl-mut); }
+@media (max-width: 989px) {
+  .gfl-privacy { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* ---------- Rappel final ---------- */
-.gfl-final { text-align: center; margin-top: 60px; }
+.gfl-final { text-align: center; margin-top: 40px; }
 .gfl-final h2 { font-size: 28px; margin-bottom: 10px; }
 .gfl-final p { font-size: 17px; color: var(--gfl-mut); margin: 0 auto 22px; max-width: 560px; }
 
@@ -146,19 +143,20 @@
   .gfl-hero-sous { font-size: 15.5px; line-height: 1.45; margin-bottom: 14px; }
   .gfl-preuves { margin-top: 10px; gap: 5px 14px; font-size: 13.5px; }
   .gfl-btn { display: flex; width: 100%; padding: 12px 16px; }
-  .gfl-sec, .gfl-privacy, .gfl-final { margin-top: 22px; }
+  .gfl-sec, .gfl-final { margin-top: 22px; }
   .gfl-principe { margin-top: 22px; padding: 10px 0; gap: 6px; }
   .gfl-principe-titre { font-size: 17px; white-space: normal; }
   .gfl-principe-liste { font-size: 14px; gap: 4px; }
   .gfl-sec-tete { margin-bottom: 10px; }
-  .gfl-sec-titre, .gfl-privacy h2, .gfl-final h2 { font-size: 22px; }
+  .gfl-sec-titre, .gfl-final h2 { font-size: 22px; }
   .gfl-sec-chapo { font-size: 15px; line-height: 1.45; margin-top: 4px; }
   .gfl-kick { margin-bottom: 2px; }
   .gfl-grille { gap: 6px; }
   .gfl-carte { padding: 12px; }
   .gfl-carte::before { margin-bottom: 8px; }
   .gfl-carte h3 { font-size: 18px; margin-bottom: 4px; }
-  .gfl-privacy { padding: 12px; }
-  .gfl-privacy h2 { margin-bottom: 6px; }
+  .gfl-privacy { padding: 10px 0 12px; }
+  .gfl-privacy-titre { font-size: 17px; white-space: normal; }
+  .gfl-privacy p { font-size: 14px; }
   .gfl-final p { font-size: 15.5px; margin-bottom: 12px; }
 }
