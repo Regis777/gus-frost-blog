@@ -58,7 +58,7 @@
 {%- style -%}
   #{{ rid }}{
     --bg: {{ s.color_bg }}; --card: {{ s.color_card }}; --g: {{ s.color_primary }};
-    --ac: {{ s.color_accent }}; --on-ac: {{ s.color_on_accent }}; --acf: {{ s.color_accent_fill }}; --sage: {{ s.color_sage }};
+    --ac: {{ s.color_accent }}; --on-ac: {{ s.color_on_accent }}; --acf: {{ s.color_accent_fill }}; --cta: {{ s.color_cta }}; --on-cta: {{ s.color_on_cta }}; --sage: {{ s.color_sage }};
     --sage-l: color-mix(in srgb, {{ s.color_sage }} 42%, {{ s.color_card }});
     --ink: {{ s.color_primary }}; --mut: rgba(49,68,49,.82); --line: rgba(49,68,49,.16);
     background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.55;
@@ -138,8 +138,8 @@
   #{{ rid }} .incl{ list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-direction: column; gap: 7px; font-size: 14px; }
   #{{ rid }} .incl li{ display: flex; gap: 9px; align-items: flex-start; }
   #{{ rid }} .incl svg.i{ margin-top: 2px; color: var(--ac); }
-  #{{ rid }} .cta{ display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 16px; min-height: 56px; padding: 14px 20px; font-size: 16px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--on-ac); background: var(--acf); border: 0; border-radius: 12px; cursor: pointer; text-decoration: none; }
-  #{{ rid }} .cta:hover{ filter: brightness(1.07); }
+  #{{ rid }} .cta{ display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 16px; min-height: 56px; padding: 14px 20px; font-size: 16px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--on-cta); background: var(--cta); border: 2px solid var(--on-cta); border-radius: 12px; cursor: pointer; text-decoration: none; }
+  #{{ rid }} .cta:hover{ filter: brightness(.95); }
   #{{ rid }} .cta:disabled{ opacity: .5; cursor: not-allowed; }
   #{{ rid }} .micro{ display: flex; gap: 8px; justify-content: center; align-items: center; font-size: 13px; color: var(--mut); margin-top: 10px; text-align: center; }
   #{{ rid }} .expert{ display: flex; gap: 16px; align-items: center; margin-top: 16px; padding: 18px; background: var(--sage-l); color: var(--ink); border: 1px solid var(--sage); border-radius: 16px; }
@@ -749,6 +749,8 @@
     { "type": "color", "id": "color_accent", "label": "Terracotta (boutons, sélection, repères)", "default": "#c16b47" },
     { "type": "color", "id": "color_accent_fill", "label": "Terracotta soutenu (fond des boutons et pastilles)", "default": "#a8522f" },
     { "type": "color", "id": "color_on_accent", "label": "Texte sur terracotta", "default": "#faf8f3" },
+    { "type": "color", "id": "color_cta", "label": "Bouton d'achat, fond", "default": "#a8ff6a" },
+    { "type": "color", "id": "color_on_cta", "label": "Bouton d'achat, texte et contour", "default": "#314431" },
     { "type": "color", "id": "color_sage", "label": "Vert clair (pastilles, onglets, encarts)", "default": "#b6bfa3" },
 
     { "type": "header", "content": "Haut de page" },
