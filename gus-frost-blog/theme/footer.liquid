@@ -145,6 +145,20 @@
   .footer__content-bottom .copyright__content a { color: rgba(239, 231, 218, .9); }
   .footer__blocks-wrapper .list-menu__item--link,
   .footer__blocks-wrapper .rte a { color: #efe7da; }
+  /* « Suivez-nous » dans la colonne de la marque, comme chez Barky. */
+  .footer .gf-suivez { margin-top: 1.6rem; }
+  .footer .gf-suivez__titre {
+    margin: 0 0 .6rem; font-family: var(--font-heading-family); font-weight: 700;
+    font-size: 1.6rem; color: #a8ff6a;
+  }
+  .footer .gf-suivez .footer__list-social { justify-content: flex-start; margin: 0 0 .6rem -1.1rem; }
+  .footer .gf-suivez .list-social__link { color: #efe7da; padding: 1.1rem; }
+  .footer .gf-suivez .list-social__link .svg-wrapper,
+  .footer .gf-suivez .list-social__link svg { width: 2.2rem; height: 2.2rem; }
+  .footer .gf-suivez__groupe {
+    display: inline-block; font-size: 1.4rem; line-height: 1.4; color: #efe7da;
+    text-decoration: underline; text-underline-offset: .3rem;
+  }
 {%- endstyle -%}
 
 <footer class="footer color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
@@ -248,8 +262,24 @@
                       {%- if settings.brand_description != blank -%}
                         <div class="rte">{{ settings.brand_description }}</div>
                       {%- endif -%}
-                      {%- if block.settings.show_social and has_social_icons -%}
-                        {%- render 'social-icons', class: 'footer__list-social' -%}
+                      {%- comment -%}
+                        « Suivez-nous » (14/11/2026) : icones Instagram et page
+                        Facebook (reglages du theme, rubrique Reseaux sociaux),
+                        puis un lien texte vers le GROUPE Facebook — Dawn n'a
+                        qu'un seul lien Facebook, et un groupe n'est pas une page.
+                      {%- endcomment -%}
+                      {%- if block.settings.show_social and has_social_icons or section.settings.groupe_facebook_url != blank -%}
+                        <div class="gf-suivez">
+                          <p class="gf-suivez__titre">{{ section.settings.suivez_titre | default: 'Suivez-nous' | escape }}</p>
+                          {%- if block.settings.show_social and has_social_icons -%}
+                            {%- render 'social-icons', class: 'footer__list-social' -%}
+                          {%- endif -%}
+                          {%- if section.settings.groupe_facebook_url != blank -%}
+                            <a class="gf-suivez__groupe" href="{{ section.settings.groupe_facebook_url }}" target="_blank" rel="noopener">
+                              {{- section.settings.groupe_facebook_label | default: 'Rejoindre le groupe Facebook' | escape -}}
+                            </a>
+                          {%- endif -%}
+                        </div>
                       {%- endif -%}
                     </div>
                   {%- when 'image' -%}
@@ -621,6 +651,24 @@
       "type": "textarea",
       "id": "newsletter_sous_titre",
       "label": "Phrase sous le titre de la newsletter"
+    },
+    {
+      "type": "text",
+      "id": "suivez_titre",
+      "label": "Titre au-dessus des réseaux sociaux",
+      "default": "Suivez-nous"
+    },
+    {
+      "type": "url",
+      "id": "groupe_facebook_url",
+      "label": "Lien du groupe Facebook",
+      "info": "Affiché sous les icônes, dans la colonne de la marque."
+    },
+    {
+      "type": "text",
+      "id": "groupe_facebook_label",
+      "label": "Texte du lien du groupe",
+      "default": "Rejoindre le groupe Facebook"
     },
     {
       "type": "header",
