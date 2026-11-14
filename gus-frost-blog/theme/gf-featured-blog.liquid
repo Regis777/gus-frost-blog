@@ -54,6 +54,40 @@
       width: 100%;
     }
   }
+
+  /* Variante B choisie par Regis le 14/11/2026, d'apres la charte de la fiche
+     « achat guide » : le fond sauge de la capsule reste, les articles sont poses
+     sur des cartes creme (aucun lien vert fonce directement sur le sauge), sans
+     contour. Boutons en terracotta soutenu + texte creme (5,06:1), dates en
+     terracotta soutenu. */
+  #shopify-section-{{ section.id }} .blog__button {
+    --color-button: 168, 82, 47;
+    --color-button-text: 250, 248, 243;
+    --alpha-button-background: 1;
+  }
+  #shopify-section-{{ section.id }} .article-card {
+    background: #faf8f3;
+    border-radius: 14px;
+    overflow: hidden;
+    height: 100%;
+  }
+  #shopify-section-{{ section.id }} .article-card .card__inner { background: transparent; }
+  #shopify-section-{{ section.id }} .article-card > .card__content { padding: 0 1.2rem 1.2rem !important; }
+  #shopify-section-{{ section.id }} .article-card__info,
+  #shopify-section-{{ section.id }} .article-card__info time {
+    color: #a8522f !important;
+    opacity: 1;
+    font-weight: 600;
+  }
+  /* Dawn coupe les titres n'importe ou (« Alimentatio / n ») : cesure
+     francaise, reservee aux mots longs. */
+  #shopify-section-{{ section.id }} .card__heading {
+    overflow-wrap: normal;
+    word-break: normal;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    hyphenate-limit-chars: 10 4 4;
+  }
 {%- endstyle -%}
 
 {%- liquid
@@ -267,7 +301,7 @@
           {%- if b.articles_count > 0 -%}
             <a href="{{ b.url }}" class="blog__button button">
               {{- section.settings.prefixe_bouton | escape }} {{ b.title | downcase | escape -}}
-              &nbsp;({{ b.articles_count }})
+              &nbsp;({{ b.articles_count }}&nbsp;articles)
             </a>
           {%- endif -%}
         {%- endfor -%}
