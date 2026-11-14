@@ -283,7 +283,9 @@
   var MODE = {{ section.settings.reopen_mode | json }};
   var LINK = {{ section.settings.footer_link_label | json }};
   function mountFooterLink() {
-    if (!LINK || document.querySelector('[data-gf-footer-link]')) return;
+    // Pas de second lien si le pied de page en porte deja un (menu
+    // « Informations » depuis le 14/11/2026, element « /#gf-cookies »).
+    if (!LINK || document.querySelector('[data-gf-footer-link], .footer a[href$="#gf-cookies"]')) return;
     var ul = document.querySelector('.footer .policies');
     var host = ul || document.querySelector('.footer__content-bottom-wrapper')
                   || document.querySelector('.footer__copyright')

@@ -74,6 +74,59 @@
     .footer .policies li { margin: 0; }
     .footer .policies li::before { content: none; }
   }
+
+  /* ---------- Gus & Frost : organisation du pied de page (14/11/2026) ----------
+     Demande de Regis : reprendre l'organisation du bas de page de barky.club,
+     a nos couleurs. De haut en bas : newsletter centree (titre + phrase +
+     champ), quatre colonnes (marque, Menu, Informations, Contactez-nous),
+     filet, logos de paiement a gauche et copyright a droite. Les colonnes sont
+     les blocs natifs de Dawn (brand_information, link_list, text) : Regis peut
+     les modifier dans l'editeur de theme et l'admin (menus). */
+  .footer__content-top { display: flex; flex-direction: column; padding-bottom: 0; }
+  .footer-block--newsletter {
+    order: -1; display: block; width: 100%; max-width: 64rem;
+    margin: 0 auto; padding: 1.6rem 0 3.2rem; text-align: center;
+  }
+  .footer-block--newsletter .footer-block__newsletter { text-align: center; }
+  .footer-block--newsletter .footer-block__heading { font-size: 3rem; line-height: 1.15; margin: 0 0 .6rem; }
+  .footer .gf-nl-sous-titre {
+    margin: 0 auto 1.6rem; max-width: 52rem;
+    font-size: 1.5rem; line-height: 1.45; color: rgba(var(--color-foreground), .9);
+  }
+  .footer-block--newsletter .footer__newsletter { margin: 0 auto; max-width: 42rem; }
+  .footer__blocks-wrapper {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.4rem 1.6rem;
+    margin: 0; padding: 3.2rem 0;
+    border-top: 1px solid rgba(var(--color-foreground), .2);
+  }
+  .footer__blocks-wrapper > .footer-block { width: auto; max-width: none; margin: 0; padding: 0; }
+  .footer__blocks-wrapper > .footer-block:has(.footer-block__brand-info) { grid-column: 1 / -1; }
+  .footer__blocks-wrapper .footer-block__heading { font-size: 1.8rem; margin: 0 0 1.2rem; }
+  .footer__blocks-wrapper .footer-block__details-content { margin: 0; }
+  .footer__blocks-wrapper .list-menu__item--link { padding: .3rem 0; font-size: 1.4rem; line-height: 1.4; }
+  .footer__blocks-wrapper .rte,
+  .footer__blocks-wrapper .rte p { font-size: 1.4rem; line-height: 1.5; margin: 0 0 1rem; }
+  .footer__blocks-wrapper .footer-block__brand-info .footer-block__image-wrapper { margin-bottom: 1.2rem; }
+  .footer__content-bottom {
+    border-top: 1px solid rgba(var(--color-foreground), .2);
+    padding-top: 1.6rem; padding-bottom: 2rem;
+  }
+  .footer__content-bottom .footer__copyright { text-align: center; }
+  @media screen and (min-width: 750px) {
+    .footer-block--newsletter { padding-top: 3.2rem; }
+    .footer__blocks-wrapper { grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr)); gap: 3.2rem; }
+    .footer__blocks-wrapper > .footer-block:has(.footer-block__brand-info) { grid-column: auto; }
+    .footer__content-bottom {
+      display: flex; justify-content: space-between; align-items: center; gap: 1.6rem;
+      max-width: var(--page-width); margin: 0 auto; padding-left: 5rem; padding-right: 5rem;
+    }
+    .footer__content-bottom .footer__content-bottom-wrapper { padding: 0; margin: 0; max-width: none; width: auto; }
+    .footer__content-bottom .footer__copyright { text-align: right; }
+    .footer__content-bottom .list-payment { justify-content: flex-start; margin: 0; }
+  }
+  @media screen and (max-width: 749px) {
+    .footer-block--newsletter .footer-block__heading { font-size: 2.4rem; }
+  }
 {%- endstyle -%}
 
 <footer class="footer color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
@@ -218,6 +271,9 @@
             <div class="footer-block__newsletter">
               {%- if section.settings.newsletter_heading != blank -%}
                 <h2 class="footer-block__heading inline-richtext">{{ section.settings.newsletter_heading }}</h2>
+              {%- endif -%}
+              {%- if section.settings.newsletter_sous_titre != blank -%}
+                <p class="gf-nl-sous-titre">{{ section.settings.newsletter_sous_titre | escape }}</p>
               {%- endif -%}
               {%- form 'customer', id: 'ContactFooter', class: 'footer__newsletter newsletter-form' -%}
                 <input type="hidden" name="contact[tags]" value="newsletter">
@@ -542,6 +598,11 @@
       "id": "newsletter_heading",
       "default": "t:sections.footer.settings.newsletter_heading.default",
       "label": "t:sections.footer.settings.newsletter_heading.label"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_sous_titre",
+      "label": "Phrase sous le titre de la newsletter"
     },
     {
       "type": "header",
