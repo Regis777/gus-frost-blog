@@ -146,6 +146,15 @@
         padding-left: 2rem;
         padding-right: 2rem;
       }
+      /* Texte compact (demande de Regis le 14/11/2026, sans couper de mots) :
+         Dawn laisse 40px de marge de chaque cote, le texte n'occupait que 230px
+         sur 360. Marges a 12px (densite de la fiche « achat guide »),
+         interligne 1,5 -> 1,4, paragraphes plus rapproches. Capsule mesuree a
+         375px : 1 132 -> 860px ; a 320px : 1 298 -> 972px. */
+      #MainContent .image-with-text .image-with-text__content { padding: 1.6rem 1.2rem 2rem !important; }
+      #MainContent .image-with-text .image-with-text__text { margin-top: 1rem !important; }
+      #MainContent .image-with-text .rte p { line-height: 1.4 !important; margin-bottom: .6rem !important; }
+      #MainContent .image-with-text .button { margin-top: 1.6rem !important; }
       #MainContent .collapsible-content .accordion summary { padding: 1.2rem; }
       #MainContent .collapsible-content .accordion .accordion__content { padding: 0 1.2rem 1.2rem; }
       #MainContent .collapsible-content .accordion { margin-top: .6rem !important; }
