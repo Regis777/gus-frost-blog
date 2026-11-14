@@ -79,9 +79,11 @@
 }
 
 /* ---------- Grille de cartes ---------- */
-.gfl-grille {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 14px;
-}
+/* 6 cartes : 3 colonnes sur grand écran, 2 sur tablette, 1 sur téléphone (jamais de carte orpheline). */
+.gfl-grille { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 989px) { .gfl-grille { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 599px) { .gfl-grille { grid-template-columns: minmax(0, 1fr); } }
+.gfl-hero + .gfl-sec { margin-top: 8px; }
 .gfl-carte {
   min-width: 0; background: var(--gfl-creme); border: 1px solid var(--gfl-ligne);
   border-radius: 16px; padding: 22px 24px;
@@ -93,20 +95,29 @@
 .gfl-carte h3 { font-size: 19px; margin-bottom: 6px; }
 .gfl-carte p { margin: 0; font-size: 16px; color: var(--gfl-mut); }
 
-/* ---------- Bloc « pourquoi pas une app » ---------- */
-.gfl-compare {
-  background: var(--gfl-creme); border: 1px solid var(--gfl-ligne);
-  border-top: 3px solid var(--gfl-terra); border-radius: 16px;
-  padding: 34px 32px; margin-top: 8px;
+/* ---------- Bandeau « Le principe » : discret, après les fonctions ---------- */
+.gfl-principe {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 8px 28px;
+  margin-top: 28px; padding: 16px 0;
+  border-top: 1px solid var(--gfl-ligne); border-bottom: 1px solid var(--gfl-ligne);
 }
-.gfl-compare-tete { text-align: center; margin-bottom: 24px; }
-.gfl-compare h2 { font-size: 28px; }
-.gfl-compare-grille {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 22px;
+.gfl-principe-titre { font-size: 18px; white-space: nowrap; }
+.gfl-principe-liste {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 20px;
+  font-size: 14.5px; line-height: 1.45; color: var(--gfl-mut);
 }
-.gfl-compare-item { min-width: 0; border-left: 2px solid var(--gfl-terra); padding-left: 16px; }
-.gfl-compare-item h3 { font-size: 18px; margin-bottom: 6px; }
-.gfl-compare-item p { margin: 0; font-size: 16px; color: var(--gfl-mut); }
+.gfl-principe-liste li { position: relative; padding-left: 20px; min-width: 0; }
+.gfl-principe-liste li::before {
+  content: ''; position: absolute; left: 2px; top: 5px; width: 11px; height: 6px;
+  border-left: 2px solid var(--gfl-terra); border-bottom: 2px solid var(--gfl-terra);
+  transform: rotate(-45deg);
+}
+.gfl-principe-liste strong { color: var(--gfl-vert); font-weight: 700; }
+@media (max-width: 989px) {
+  .gfl-principe { grid-template-columns: minmax(0, 1fr); }
+  .gfl-principe-liste { grid-template-columns: minmax(0, 1fr); }
+}
 
 /* ---------- Confidentialité (grand encart de texte : sauge) ---------- */
 .gfl-privacy {
@@ -136,17 +147,17 @@
   .gfl-preuves { margin-top: 10px; gap: 5px 14px; font-size: 13.5px; }
   .gfl-btn { display: flex; width: 100%; padding: 12px 16px; }
   .gfl-sec, .gfl-privacy, .gfl-final { margin-top: 22px; }
-  .gfl-compare { margin-top: 22px; padding: 12px; }
-  .gfl-sec-tete, .gfl-compare-tete { margin-bottom: 10px; }
-  .gfl-sec-titre, .gfl-compare h2, .gfl-privacy h2, .gfl-final h2 { font-size: 22px; }
+  .gfl-principe { margin-top: 22px; padding: 10px 0; gap: 6px; }
+  .gfl-principe-titre { font-size: 17px; white-space: normal; }
+  .gfl-principe-liste { font-size: 14px; gap: 4px; }
+  .gfl-sec-tete { margin-bottom: 10px; }
+  .gfl-sec-titre, .gfl-privacy h2, .gfl-final h2 { font-size: 22px; }
   .gfl-sec-chapo { font-size: 15px; line-height: 1.45; margin-top: 4px; }
   .gfl-kick { margin-bottom: 2px; }
   .gfl-grille { gap: 6px; }
   .gfl-carte { padding: 12px; }
   .gfl-carte::before { margin-bottom: 8px; }
-  .gfl-carte h3, .gfl-compare-item h3 { font-size: 18px; margin-bottom: 4px; }
-  .gfl-compare-grille { gap: 10px; }
-  .gfl-compare-item { padding-left: 12px; }
+  .gfl-carte h3 { font-size: 18px; margin-bottom: 4px; }
   .gfl-privacy { padding: 12px; }
   .gfl-privacy h2 { margin-bottom: 6px; }
   .gfl-final p { font-size: 15.5px; margin-bottom: 12px; }

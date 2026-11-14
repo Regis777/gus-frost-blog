@@ -6,22 +6,22 @@
         "atout1": {
           "type": "atout",
           "settings": {
-            "titre": "Rien à installer",
-            "texte": "Pas de téléchargement, pas de mise à jour, pas de place prise sur votre téléphone. Vous ouvrez une page, et c'est tout."
+            "titre": "Rien à installer.",
+            "texte": "Une simple page web."
           }
         },
         "atout2": {
           "type": "atout",
           "settings": {
-            "titre": "Rien à créer",
-            "texte": "Aucun compte, aucun mot de passe à retenir. Vous commencez à remplir le carnet de votre chien ou de votre chat dans les trois secondes."
+            "titre": "Rien à créer.",
+            "texte": "Ni compte, ni mot de passe."
           }
         },
         "atout3": {
           "type": "atout",
           "settings": {
-            "titre": "Vos données restent chez vous",
-            "texte": "Elles sont enregistrées dans votre appareil, pas sur nos serveurs. Nous ne les voyons jamais, personne ne les revend."
+            "titre": "Vos données restent chez vous.",
+            "texte": "Enregistrées sur votre appareil, pas sur nos serveurs."
           }
         },
         "f1": {
@@ -62,37 +62,21 @@
         "f6": {
           "type": "fonction",
           "settings": {
-            "titre": "Le carnet PDF pour le vétérinaire",
-            "texte": "Un document propre, prêt à imprimer ou à envoyer, avec tout l'historique. Plus jamais de carnet oublié à la maison."
-          }
-        },
-        "f7": {
-          "type": "fonction",
-          "settings": {
-            "titre": "Le partage sans compte",
-            "texte": "Un lien à envoyer au pet-sitter ou à la famille. Ils voient la fiche, sans rien installer ni créer."
-          }
-        },
-        "f8": {
-          "type": "fonction",
-          "settings": {
-            "titre": "Une sauvegarde qui vous appartient",
-            "texte": "Un fichier que vous exportez et rangez où vous voulez. Vous changez de téléphone quand vous voulez, sans dépendre de personne."
+            "titre": "Partager le carnet",
+            "texte": "Un PDF prêt à imprimer pour le vétérinaire, ou un lien pour le pet-sitter et la famille : ils voient la fiche sans rien installer."
           }
         }
       },
       "block_order": [
-        "atout1",
-        "atout2",
-        "atout3",
         "f1",
         "f2",
         "f3",
         "f4",
         "f5",
         "f6",
-        "f7",
-        "f8"
+        "atout1",
+        "atout2",
+        "atout3"
       ],
       "settings": {
         "hero_heading": "Le carnet de santé de votre chien ou de votre chat, toujours dans votre poche",
@@ -100,7 +84,7 @@
         "cta_label": "Ouvrir Le Carnet",
         "app_url": "/pages/mon-carnet",
         "preuves": "Gratuit | Sans inscription | Sans publicité",
-        "atouts_heading": "Pourquoi ce n'est pas une application à télécharger",
+        "atouts_heading": "Sans application à télécharger",
         "fonctions_heading": "Ce que vous pouvez suivre",
         "fonctions_chapo": "Un animal ou toute la maisonnée : chacun a sa fiche.",
         "privacy_heading": "Où vont vos données ? Nulle part.",

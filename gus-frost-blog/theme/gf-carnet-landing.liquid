@@ -26,24 +26,6 @@
     {%- endif -%}
   </header>
 
-  {%- assign atouts = section.blocks | where: 'type', 'atout' -%}
-  {%- if atouts.size > 0 -%}
-    <section class="gfl-compare">
-      <div class="gfl-compare-tete">
-        {%- if section.settings.atouts_kick != blank -%}<span class="gfl-kick">{{ section.settings.atouts_kick | escape }}</span>{%- endif -%}
-        <h2>{{ section.settings.atouts_heading | escape }}</h2>
-      </div>
-      <div class="gfl-compare-grille">
-        {%- for b in atouts -%}
-          <div class="gfl-compare-item" {{ b.shopify_attributes }}>
-            <h3>{{ b.settings.titre | escape }}</h3>
-            <p>{{ b.settings.texte | escape }}</p>
-          </div>
-        {%- endfor -%}
-      </div>
-    </section>
-  {%- endif -%}
-
   {%- assign fonctions = section.blocks | where: 'type', 'fonction' -%}
   {%- if fonctions.size > 0 -%}
     <section class="gfl-sec">
@@ -62,6 +44,23 @@
           </div>
         {%- endfor -%}
       </div>
+    </section>
+  {%- endif -%}
+
+  {%- comment -%} « Le principe » : bandeau volontairement discret, après les fonctions. {%- endcomment -%}
+  {%- assign atouts = section.blocks | where: 'type', 'atout' -%}
+  {%- if atouts.size > 0 -%}
+    <section class="gfl-principe">
+      {%- if section.settings.atouts_heading != blank -%}
+        <h2 class="gfl-principe-titre">{{ section.settings.atouts_heading | escape }}</h2>
+      {%- endif -%}
+      <ul class="gfl-principe-liste">
+        {%- for b in atouts -%}
+          <li {{ b.shopify_attributes }}><strong>{{ b.settings.titre | escape }}</strong>
+            {%- if b.settings.texte != blank %} {{ b.settings.texte | escape }}{% endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
     </section>
   {%- endif -%}
 
@@ -141,19 +140,13 @@
     },
     {
       "type": "header",
-      "content": "Bloc « pourquoi pas une application »"
-    },
-    {
-      "type": "text",
-      "id": "atouts_kick",
-      "label": "Surtitre",
-      "default": "Le principe"
+      "content": "Bandeau « Le principe » (après les fonctions)"
     },
     {
       "type": "text",
       "id": "atouts_heading",
       "label": "Titre du bloc",
-      "default": "Pourquoi ce n'est pas une application à télécharger"
+      "default": "Sans application à télécharger"
     },
     {
       "type": "header",
@@ -232,7 +225,7 @@
   "blocks": [
     {
       "type": "atout",
-      "name": "Atout",
+      "name": "Principe (ligne courte)",
       "settings": [
         {
           "type": "text",
@@ -268,6 +261,24 @@
       "name": "Le Carnet, présentation",
       "blocks": [
         {
+          "type": "fonction"
+        },
+        {
+          "type": "fonction"
+        },
+        {
+          "type": "fonction"
+        },
+        {
+          "type": "fonction"
+        },
+        {
+          "type": "fonction"
+        },
+        {
+          "type": "fonction"
+        },
+        {
           "type": "atout"
         },
         {
@@ -275,21 +286,6 @@
         },
         {
           "type": "atout"
-        },
-        {
-          "type": "fonction"
-        },
-        {
-          "type": "fonction"
-        },
-        {
-          "type": "fonction"
-        },
-        {
-          "type": "fonction"
-        },
-        {
-          "type": "fonction"
         }
       ]
     }
