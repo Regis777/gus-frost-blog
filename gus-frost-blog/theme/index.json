@@ -263,15 +263,15 @@
         "text_Gcf67A": {
           "type": "text",
           "settings": {
-            "text": "<p>Nous avons créé Gus et Frost avec une idée simple : proposer moins de produits, mais de meilleurs produits.</p><p>Chaque article est sélectionné avec soin, en privilégiant la qualité, l’utilité réelle et la satisfaction client sur le long terme.</p>",
+            "text": "<p>Un chien qui aboie dès que la porte se ferme, un chat qui griffe le canapé, un chiot qui mordille tout : derrière la plupart des difficultés du quotidien, il y a une explication, et des façons concrètes d’apaiser la situation.</p><p>Gus et Frost rassemble ces réponses : plus de 450 articles gratuits sur le comportement, la santé et la vie à la maison, écrits par un comportementaliste qui exerce depuis vingt ans. Vous y trouverez aussi Le Carnet, un carnet de santé en ligne pour votre chien ou votre chat, gratuit et sans inscription.</p><p>Un objet seul règle rarement un problème. Nous partons donc de votre situation : un conseil à lire, un guide à suivre pas à pas, un produit quand il est utile, et bientôt un accompagnement personnalisé. Notre premier chantier : ramener le calme dans votre foyer. D’autres suivront.</p>",
             "text_style": "body"
           }
         },
         "button_nBNayp": {
           "type": "button",
           "settings": {
-            "button_label": "Découvrir nos produits",
-            "button_link": "shopify://collections/all",
+            "button_label": "Découvrir Le Carnet",
+            "button_link": "shopify://pages/le-carnet",
             "button_style_secondary": false
           }
         }
