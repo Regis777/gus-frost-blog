@@ -203,7 +203,7 @@
   /* ---------- COMPARATIF ---------- */
   #{{ rid }} .cmp{ overflow: hidden; }
   #{{ rid }} .cmp table{ width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 14.5px; }
-  #{{ rid }} .cmp th, #{{ rid }} .cmp td{ padding: 13px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); border-left: 0; border-right: 0; border-top: 0; color: var(--ink); overflow-wrap: break-word; hyphens: auto; }
+  #{{ rid }} .cmp th, #{{ rid }} .cmp td{ padding: 13px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); border-left: 0; border-right: 0; border-top: 0; color: var(--ink); overflow-wrap: break-word; hyphens: auto; hyphenate-limit-chars: 12 5 5; -webkit-hyphenate-limit-before: 5; -webkit-hyphenate-limit-after: 5; }
   #{{ rid }} .cmp tr:last-child td{ border-bottom: 0; }
   #{{ rid }} .cmp thead th{ font-size: 13px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
   #{{ rid }} .cmp .us{ background: var(--acf); color: var(--on-ac); }
@@ -259,6 +259,10 @@
   @media (max-width: 479px){
     #{{ rid }} .facts{ grid-template-columns: 1fr; gap: 8px; }
     #{{ rid }} .tabbar{ display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+    #{{ rid }} .cmp table{ font-size: 13px; }
+    #{{ rid }} .cmp th, #{{ rid }} .cmp td{ padding: 11px 8px; }
+    #{{ rid }} .cmp thead th{ font-size: 11.5px; letter-spacing: .03em; }
+    #{{ rid }} .cmp td:first-child{ width: 25%; }
     #{{ rid }} .prof button{ font-size: 12.5px; }
     #{{ rid }} .cmp th, #{{ rid }} .cmp td{ padding: 11px 9px; font-size: 13.5px; }
     #{{ rid }} .cmp td:first-child{ width: 24%; }
@@ -266,6 +270,12 @@
     #{{ rid }} .expert img{ width: 64px; height: 64px; }
   }
   @media (prefers-reduced-motion: reduce){ #{{ rid }} .bar{ transition: none; } }
+  @media (max-width: 359px){
+    #{{ rid }} .cmp table{ font-size: 12px; }
+    #{{ rid }} .cmp th, #{{ rid }} .cmp td{ padding: 10px 6px; hyphenate-limit-chars: 9 4 4; -webkit-hyphenate-limit-before: 4; -webkit-hyphenate-limit-after: 4; }
+    #{{ rid }} .cmp thead th{ font-size: 10.5px; letter-spacing: 0; }
+    #{{ rid }} .cmp td:first-child{ width: 27%; }
+  }
 {%- endstyle -%}
 
 {%- capture ico_check -%}<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>{%- endcapture -%}
@@ -321,7 +331,7 @@
         {%- endif -%}
 
         <div class="facts">
-          {%- if s.fact1_title != blank -%}<div class="fact">{{ ico_truck }}<div><b>{{ s.fact1_title }}</b><span>{{ s.fact1_text }}</span></div></div>{%- endif -%}
+          {%- if s.fact1_title != blank -%}<div class="fact">{{ ico_paw }}<div><b>{{ s.fact1_title }}</b><span>{{ s.fact1_text }}</span></div></div>{%- endif -%}
           {%- if s.fact2_title != blank -%}<div class="fact">{{ ico_book }}<div><b>{{ s.fact2_title }}</b><span>{{ s.fact2_text }}</span></div></div>{%- endif -%}
           {%- if s.fact3_title != blank -%}<div class="fact">{{ ico_shield }}<div><b>{{ s.fact3_title }}</b><span>{{ s.fact3_text }}</span></div></div>{%- endif -%}
         </div>
