@@ -11,7 +11,9 @@
   "sections": {
     "parrainage": {
       "type": "gf-parrainage",
-      "settings": {}
+      "settings": {
+        "mise_en_page": "colonnes"
+      }
     }
   },
   "order": [
