@@ -94,13 +94,20 @@
     font-size: 1.5rem; line-height: 1.45; color: rgba(var(--color-foreground), .9);
   }
   .footer-block--newsletter .footer__newsletter { margin: 0 auto; max-width: 42rem; }
+  /* `.footer .footer__blocks-wrapper.grid` : Dawn repasse la grille en
+     `display: block` sous 750px, les colonnes s'empilaient une par une. */
+  .footer .footer__blocks-wrapper.grid,
   .footer__blocks-wrapper {
     display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.4rem 1.6rem;
     margin: 0; padding: 3.2rem 0;
     border-top: 1px solid rgba(var(--color-foreground), .2);
   }
   .footer__blocks-wrapper > .footer-block { width: auto; max-width: none; margin: 0; padding: 0; }
-  .footer__blocks-wrapper > .footer-block:has(.footer-block__brand-info) { grid-column: 1 / -1; }
+  /* Telephone : la marque et « Contactez-nous » (dernier bloc) sur toute la
+     largeur, Menu et Informations cote a cote. Dans une demi-colonne de 132px,
+     « Contactez-nous » se coupait au trait d'union. */
+  .footer__blocks-wrapper > .footer-block:has(.footer-block__brand-info),
+  .footer__blocks-wrapper > .footer-block:last-child { grid-column: 1 / -1; }
   .footer__blocks-wrapper .footer-block__heading { font-size: 1.8rem; margin: 0 0 1.2rem; }
   .footer__blocks-wrapper .footer-block__details-content { margin: 0; }
   .footer__blocks-wrapper .list-menu__item--link { padding: .3rem 0; font-size: 1.4rem; line-height: 1.4; }
@@ -114,8 +121,10 @@
   .footer__content-bottom .footer__copyright { text-align: center; }
   @media screen and (min-width: 750px) {
     .footer-block--newsletter { padding-top: 3.2rem; }
+    .footer .footer__blocks-wrapper.grid,
     .footer__blocks-wrapper { grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr)); gap: 3.2rem; }
-    .footer__blocks-wrapper > .footer-block:has(.footer-block__brand-info) { grid-column: auto; }
+    .footer__blocks-wrapper > .footer-block:has(.footer-block__brand-info),
+    .footer__blocks-wrapper > .footer-block:last-child { grid-column: auto; }
     .footer__content-bottom {
       display: flex; justify-content: space-between; align-items: center; gap: 1.6rem;
       max-width: var(--page-width); margin: 0 auto; padding-left: 5rem; padding-right: 5rem;
@@ -127,6 +136,15 @@
   @media screen and (max-width: 749px) {
     .footer-block--newsletter .footer-block__heading { font-size: 2.4rem; }
   }
+  /* Titres en vert clair (nuancier 5), textes et liens en creme, comme sur la
+     maquette validee : le vert clair partout faisait un bloc uniforme. */
+  .footer .gf-nl-sous-titre,
+  .footer__blocks-wrapper .rte,
+  .footer__blocks-wrapper .rte p,
+  .footer__content-bottom .copyright__content,
+  .footer__content-bottom .copyright__content a { color: rgba(239, 231, 218, .9); }
+  .footer__blocks-wrapper .list-menu__item--link,
+  .footer__blocks-wrapper .rte a { color: #efe7da; }
 {%- endstyle -%}
 
 <footer class="footer color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
