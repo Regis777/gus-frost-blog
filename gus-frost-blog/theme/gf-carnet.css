@@ -1,32 +1,44 @@
 /* gf-carnet.css — « Le Carnet » de Gus & Frost
    Web app carnet de santé / rappels / budget / souvenirs.
-   Identité : vert #314431, beige #EFE7DA, fond #faf8f3, bordure #e3ddcf.
+   Charte reprise du modèle « achat guidé » (gf-produit-guide, 14/11/2026) :
+   - vert foncé #314431 = texte et titres seulement, aucun bloc rempli en vert ;
+   - terracotta #c16b47 = filets, contours, coches, barres de graphique ;
+   - terracotta soutenu #a8522f + crème #faf8f3 (5,06:1) = tout fond rempli qui porte du texte
+     (onglet du nombre, animal sélectionné, bouton principal, totaux, message flottant) ;
+   - sauge #b6bfa3 = encart texte (rappels e-mail activés) ;
+   - fond de page #efe7da, encarts #faf8f3, ni blanc pur ni noir pur.
+   Exception assumée : rouge / ocre / vert d'état des échéances (en retard, bientôt, à jour),
+   qui portent une information et restent hors palette.
    NB : tout est en px — le thème Dawn met 1rem = 10px, on ne s'y fie pas. */
 
 .gfc-app {
   --gfc-vert: #314431;
-  --gfc-vert-clair: #3d4f3d;
+  --gfc-mut: rgba(49, 68, 49, .8);
+  --gfc-ligne: rgba(49, 68, 49, .16);
   --gfc-beige: #efe7da;
-  --gfc-fond: #faf8f3;
-  --gfc-bord: #e3ddcf;
-  --gfc-texte: #2a2a2a;
-  --gfc-doux: #6b6b6b;
+  --gfc-creme: #faf8f3;
+  --gfc-creme-2: #f5efe5;
+  --gfc-champ: #fdfcf9;
+  --gfc-terra: #c16b47;
+  --gfc-terra-f: #a8522f;
+  --gfc-sauge: #b6bfa3;
   --gfc-rouge: #a8443a;
-  --gfc-ambre: #b07c22;
-  --gfc-ok: #4a7c4a;
+  --gfc-ambre: #8f6418;
+  --gfc-ok: #3f6b3f;
   max-width: 940px;
   margin: 0 auto;
   padding: 0 16px 64px;
   font-family: var(--font-body-family, Georgia, 'Times New Roman', serif);
   font-size: 16px;
   line-height: 1.6;
-  color: var(--gfc-texte);
+  color: var(--gfc-vert);
   -webkit-text-size-adjust: 100%;
 }
 
 .gfc-app *,
 .gfc-app *::before,
 .gfc-app *::after { box-sizing: border-box; }
+.gfc-app button, .gfc-app input, .gfc-app select, .gfc-app textarea { font-family: inherit; }
 
 /* Nos .gfc-petbar / .gfc-tabs sont en display:flex, ce qui l'emporterait sur
    la règle [hidden]{display:none} du navigateur. On rétablit l'attribut. */
@@ -34,56 +46,53 @@
 
 .gfc-app h1, .gfc-app h2, .gfc-app h3 {
   font-family: var(--font-heading-family, var(--font-body-family, inherit));
-  color: var(--gfc-vert);
-  margin: 0;
-  line-height: 1.25;
+  font-weight: 600; color: var(--gfc-vert); margin: 0; line-height: 1.22; letter-spacing: 0;
 }
+.gfc-app p { color: inherit; }
+.gfc-app a:not(.gfc-btn) { color: var(--gfc-vert); text-decoration: underline; text-decoration-color: var(--gfc-terra); text-underline-offset: 2px; }
 
 /* ---------- En-tête ---------- */
-.gfc-head { text-align: center; padding: 8px 0 20px; }
-.gfc-head h1 { font-size: 32px; margin-bottom: 8px; }
-.gfc-head p { font-size: 17px; color: var(--gfc-vert-clair); margin: 0 auto; max-width: 560px; }
+.gfc-head { text-align: center; padding: 18px 0 20px; }
+.gfc-head h1 { font-size: 34px; margin-bottom: 8px; }
+.gfc-head p { font-size: 17px; color: var(--gfc-mut); margin: 0 auto; max-width: 560px; }
 .gfc-privacy {
   display: inline-flex; align-items: center; gap: 7px;
-  margin-top: 14px; padding: 7px 15px;
-  background: var(--gfc-beige); color: var(--gfc-vert);
-  border-radius: 999px; font-size: 14px; font-weight: 600;
-  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  margin-top: 12px; padding: 6px 14px;
+  background: var(--gfc-terra-f); color: var(--gfc-creme);
+  border-radius: 999px; font-size: 13.5px; font-weight: 600;
 }
 
-/* ---------- Bandeau d'alerte (sauvegarde, stockage bloque) ---------- */
+/* ---------- Bandeau d'alerte (sauvegarde, stockage bloqué) ---------- */
 .gfc-alert {
   display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
   margin: 0 0 18px; padding: 13px 16px;
   background: #fbf3e2; border: 1px solid var(--gfc-ambre);
-  border-left-width: 4px; border-radius: 10px;
+  border-left-width: 4px; border-radius: 12px;
 }
 .gfc-alert[hidden] { display: none; }
 .gfc-alert-txt {
   flex: 1 1 280px; margin: 0;
-  font-size: 14px; line-height: 1.5; color: var(--gfc-texte);
+  font-size: 14px; line-height: 1.5; color: var(--gfc-vert);
 }
 .gfc-alert-actions { display: flex; flex: none; gap: 8px; }
 .gfc-alert--bloque { background: #f9ece9; border-color: var(--gfc-rouge); }
 
-/* ---------- Barre des animaux ---------- */
+/* ---------- Barre des animaux (choix : contour terracotta, sélection pleine) ---------- */
 .gfc-petbar {
-  display: flex; align-items: center; gap: 10px;
-  overflow-x: auto; padding: 14px 2px; margin-bottom: 4px;
-  border-bottom: 1px solid var(--gfc-bord);
+  display: flex; align-items: center; gap: 8px;
+  overflow-x: auto; padding: 12px 2px; margin-bottom: 4px;
   scrollbar-width: thin;
 }
 .gfc-pet {
-  flex: none; display: flex; align-items: center; gap: 9px;
-  padding: 7px 15px 7px 7px; border: 1px solid var(--gfc-bord);
-  border-radius: 999px; background: #fff; cursor: pointer;
-  font-size: 15px; color: var(--gfc-texte);
-  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
-  transition: border-color .15s, background .15s;
+  flex: none; display: flex; align-items: center; gap: 9px; min-height: 44px;
+  padding: 6px 15px 6px 6px; border: 1.5px solid var(--gfc-terra);
+  border-radius: 999px; background: var(--gfc-creme); cursor: pointer;
+  font-size: 15px; font-weight: 600; color: var(--gfc-vert);
+  transition: background .15s, color .15s;
 }
-.gfc-pet:hover { border-color: var(--gfc-vert-clair); }
+.gfc-pet:hover { background: var(--gfc-creme-2); }
 .gfc-pet[aria-pressed='true'] {
-  background: var(--gfc-vert); color: #fff; border-color: var(--gfc-vert);
+  background: var(--gfc-terra-f); color: var(--gfc-creme); border-color: var(--gfc-terra-f);
 }
 .gfc-pet-ava {
   width: 30px; height: 30px; border-radius: 50%; object-fit: cover;
@@ -91,161 +100,171 @@
   display: grid; place-items: center; font-size: 16px; overflow: hidden;
 }
 .gfc-pet-add {
-  flex: none; padding: 8px 16px; border: 1px dashed var(--gfc-vert-clair);
+  flex: none; min-height: 44px; padding: 8px 16px; border: 1.5px dashed var(--gfc-terra);
   border-radius: 999px; background: transparent; color: var(--gfc-vert);
   cursor: pointer; font-size: 15px; font-weight: 600;
-  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
 }
-.gfc-pet-add:hover { background: var(--gfc-beige); }
+.gfc-pet-add:hover { background: var(--gfc-creme); }
 
-/* ---------- Onglets ---------- */
+/* ---------- Onglets : intercalaires soudés au panneau ---------- */
 .gfc-tabs {
-  display: flex; gap: 4px; overflow-x: auto;
-  padding: 12px 2px; margin-bottom: 18px;
-  scrollbar-width: none;
+  display: flex; gap: 4px; align-items: flex-end;
+  padding: 10px 0 0; margin: 0;
 }
-.gfc-tabs::-webkit-scrollbar { display: none; }
 .gfc-tab {
-  flex: none; padding: 9px 16px; border: 0; border-radius: 8px;
-  background: transparent; color: var(--gfc-vert-clair); cursor: pointer;
-  font-size: 15px; font-weight: 600; white-space: nowrap;
-  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  flex: 0 1 auto; min-height: 46px; padding: 10px 18px;
+  border: 1px solid transparent; border-bottom: 0; border-radius: 12px 12px 0 0;
+  background: rgba(49, 68, 49, .07); color: var(--gfc-vert); cursor: pointer;
+  font-size: 15px; font-weight: 600; white-space: nowrap; line-height: 1.2;
 }
-.gfc-tab:hover { background: var(--gfc-beige); }
-.gfc-tab[aria-selected='true'] { background: var(--gfc-vert); color: #fff; }
+.gfc-tab:hover { background: rgba(49, 68, 49, .12); }
+.gfc-tab[aria-selected='true'] {
+  position: relative; z-index: 1; min-height: 52px; margin-bottom: -1px;
+  background: var(--gfc-creme); color: var(--gfc-vert); font-weight: 700;
+  border-color: var(--gfc-ligne); box-shadow: inset 0 3px 0 var(--gfc-terra-f);
+}
+.gfc-tab:focus-visible { outline: 3px solid var(--gfc-terra-f); outline-offset: -3px; }
 .gfc-tab-count {
   display: inline-block; min-width: 19px; margin-left: 6px; padding: 0 5px;
-  border-radius: 999px; background: var(--gfc-rouge); color: #fff;
+  border-radius: 999px; background: var(--gfc-rouge); color: var(--gfc-creme);
   font-size: 12px; line-height: 19px; text-align: center;
 }
 
 /* ---------- Panneaux & sections ---------- */
+.gfc-app [data-gfc-panels] {
+  background: var(--gfc-creme); border: 1px solid var(--gfc-ligne);
+  border-radius: 0 16px 16px 16px; padding: 22px 22px 6px;
+}
+/* Fiche partagée : la barre d'onglets est masquée, le panneau retrouve ses quatre coins. */
+.gfc-app .gfc-tabs[hidden] + [data-gfc-panels] { border-radius: 16px; }
 .gfc-panel[hidden] { display: none; }
-.gfc-sec { margin-bottom: 30px; }
+.gfc-sec { margin-bottom: 26px; }
 .gfc-sec-head {
   display: flex; align-items: center; justify-content: space-between;
   gap: 12px; margin-bottom: 12px;
 }
-.gfc-sec-head h2 { font-size: 21px; }
+.gfc-sec-head h2 { font-size: 22px; }
 .gfc-sec-head h3 { font-size: 18px; }
-.gfc-hint { font-size: 14px; color: var(--gfc-doux); margin: -4px 0 12px; }
+.gfc-hint { font-size: 14px; color: var(--gfc-mut); margin: -4px 0 12px; }
 
 /* ---------- Cartes & lignes ---------- */
 .gfc-card {
-  background: var(--gfc-fond); border: 1px solid var(--gfc-bord);
-  border-radius: 12px; padding: 18px 20px; margin-bottom: 16px;
+  background: var(--gfc-creme-2); border: 1px solid var(--gfc-ligne);
+  border-radius: 14px; padding: 18px 20px; margin-bottom: 16px;
 }
 .gfc-list { display: grid; gap: 8px; }
 .gfc-row {
-  display: flex; align-items: center; gap: 12px;
-  background: #fff; border: 1px solid var(--gfc-bord);
-  border-radius: 10px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 12px; min-width: 0;
+  background: var(--gfc-creme); border: 1px solid var(--gfc-ligne);
+  border-radius: 12px; padding: 12px 14px;
 }
 .gfc-row-main { flex: 1; min-width: 0; }
 .gfc-row-title { font-weight: 600; color: var(--gfc-vert); }
-.gfc-row-sub { font-size: 14px; color: var(--gfc-doux); }
+.gfc-row-sub { font-size: 14px; color: var(--gfc-mut); }
 .gfc-row-amount {
   flex: none; font-weight: 700; color: var(--gfc-vert);
   font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .gfc-row-act { flex: none; display: flex; gap: 4px; }
 .gfc-icon-btn {
-  width: 32px; height: 32px; border: 0; border-radius: 8px;
+  width: 36px; height: 36px; border: 0; border-radius: 10px;
   background: transparent; cursor: pointer; font-size: 15px;
-  color: var(--gfc-doux); line-height: 1;
+  color: var(--gfc-mut); line-height: 1;
 }
 .gfc-icon-btn:hover { background: var(--gfc-beige); color: var(--gfc-vert); }
 
 .gfc-empty {
-  text-align: center; padding: 30px 20px; border: 1px dashed var(--gfc-bord);
-  border-radius: 12px; color: var(--gfc-doux); font-size: 15px;
-  background: var(--gfc-fond);
+  text-align: center; padding: 28px 20px; border: 1.5px dashed var(--gfc-terra);
+  border-radius: 14px; color: var(--gfc-mut); font-size: 15px;
+  background: var(--gfc-creme-2);
 }
 
 /* ---------- Fiche identité ---------- */
 .gfc-id { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
 .gfc-id-photo {
   width: 108px; height: 108px; border-radius: 14px; object-fit: cover;
-  background: var(--gfc-beige); border: 1px solid var(--gfc-bord); flex: none;
+  background: var(--gfc-beige); border: 1px solid var(--gfc-ligne); flex: none;
   display: grid; place-items: center; font-size: 40px; overflow: hidden;
 }
-.gfc-id-body { flex: 1; min-width: 240px; }
-.gfc-id-body h2 { font-size: 25px; margin-bottom: 3px; }
-.gfc-id-meta { color: var(--gfc-doux); font-size: 15px; margin-bottom: 12px; }
+.gfc-id-body { flex: 1; min-width: min(240px, 100%); }
+.gfc-id-body h2 { font-size: 26px; margin-bottom: 3px; }
+.gfc-id-meta { color: var(--gfc-mut); font-size: 15px; margin-bottom: 12px; }
 .gfc-facts {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
-  gap: 10px; margin: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(128px, 100%), 1fr));
+  gap: 8px; margin: 0;
 }
 .gfc-fact {
-  background: #fff; border: 1px solid var(--gfc-bord);
-  border-radius: 10px; padding: 9px 12px;
+  min-width: 0; background: var(--gfc-creme); border: 1px solid var(--gfc-ligne);
+  border-top: 2px solid var(--gfc-terra); border-radius: 10px; padding: 9px 12px;
 }
 .gfc-fact dt {
-  font-size: 11px; letter-spacing: .07em; text-transform: uppercase;
-  color: var(--gfc-doux); font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--gfc-terra-f);
 }
-.gfc-fact dd { margin: 2px 0 0; font-size: 17px; font-weight: 600; color: var(--gfc-vert); }
+.gfc-fact dd { margin: 2px 0 0; font-size: 17px; font-weight: 600; color: var(--gfc-vert); overflow-wrap: anywhere; }
 
-/* ---------- Badges d'échéance ---------- */
+/* ---------- Badges d'échéance (couleurs d'état, hors palette) ---------- */
 .gfc-badge {
   flex: none; display: inline-block; padding: 3px 11px; border-radius: 999px;
   font-size: 12px; font-weight: 700; white-space: nowrap;
-  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
 }
 .gfc-badge--late { background: #f6e2e0; color: var(--gfc-rouge); }
 .gfc-badge--soon { background: #f7ecd6; color: var(--gfc-ambre); }
 .gfc-badge--ok   { background: #e6efe4; color: var(--gfc-ok); }
-.gfc-badge--done { background: #eee; color: var(--gfc-doux); }
-.gfc-row--done .gfc-row-title { text-decoration: line-through; color: var(--gfc-doux); }
+.gfc-badge--done { background: rgba(49, 68, 49, .08); color: var(--gfc-mut); }
+.gfc-row--done .gfc-row-title { text-decoration: line-through; color: var(--gfc-mut); }
 
 /* ---------- Boutons ---------- */
 .gfc-btn {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 10px 18px; border: 1px solid var(--gfc-vert); border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 42px;
+  padding: 9px 18px; border: 1.5px solid var(--gfc-vert); border-radius: 12px;
   background: transparent; color: var(--gfc-vert); cursor: pointer;
   font-size: 15px; font-weight: 600; text-decoration: none; line-height: 1.3;
-  font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
 }
 .gfc-btn:hover { background: var(--gfc-beige); color: var(--gfc-vert); }
-.gfc-btn--primary { background: var(--gfc-vert); color: #fff; }
-.gfc-btn--primary:hover { background: var(--gfc-vert-clair); color: #fff; }
-.gfc-btn--sm { padding: 7px 14px; font-size: 14px; }
+.gfc-btn--primary {
+  background: var(--gfc-terra-f); border-color: var(--gfc-terra-f); color: var(--gfc-creme);
+}
+.gfc-btn--primary:hover { background: var(--gfc-terra-f); color: var(--gfc-creme); filter: brightness(.93); }
+.gfc-btn--sm { min-height: 40px; padding: 7px 14px; font-size: 14px; }
 .gfc-btn--danger { border-color: var(--gfc-rouge); color: var(--gfc-rouge); }
 .gfc-btn--danger:hover { background: #f6e2e0; color: var(--gfc-rouge); }
+.gfc-btn:focus-visible { outline: 3px solid var(--gfc-terra-f); outline-offset: 2px; }
 .gfc-btn[disabled] { opacity: .45; cursor: not-allowed; }
 .gfc-btn[hidden] { display: none; }
 
 /* ---------- Graphiques ---------- */
 .gfc-chart { width: 100%; height: auto; display: block; overflow: visible; }
-.gfc-chart-line { fill: none; stroke: var(--gfc-vert); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
-.gfc-chart-area { fill: rgba(49, 68, 49, .09); stroke: none; }
-.gfc-chart-dot { fill: #fff; stroke: var(--gfc-vert); stroke-width: 2.5; }
-.gfc-chart-grid { stroke: var(--gfc-bord); stroke-width: 1; }
-.gfc-chart-txt { fill: var(--gfc-doux); font-size: 11px; font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+.gfc-chart-line { fill: none; stroke: var(--gfc-terra-f); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.gfc-chart-area { fill: rgba(193, 107, 71, .12); stroke: none; }
+.gfc-chart-dot { fill: var(--gfc-creme); stroke: var(--gfc-terra-f); stroke-width: 2.5; }
+.gfc-chart-grid { stroke: var(--gfc-ligne); stroke-width: 1; }
+.gfc-chart-txt { fill: var(--gfc-mut); font-size: 11px; }
 
 .gfc-bars { display: grid; gap: 9px; }
-.gfc-bar-row { display: grid; grid-template-columns: 118px 1fr auto; align-items: center; gap: 11px; font-size: 14px; }
+.gfc-bar-row { display: grid; grid-template-columns: 118px minmax(0, 1fr) auto; align-items: center; gap: 11px; font-size: 14px; }
 .gfc-bar-track { background: var(--gfc-beige); border-radius: 999px; height: 11px; overflow: hidden; }
-.gfc-bar-fill { background: var(--gfc-vert); height: 100%; border-radius: 999px; min-width: 3px; }
+.gfc-bar-fill { background: var(--gfc-terra); height: 100%; border-radius: 999px; min-width: 3px; }
 .gfc-bar-val { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--gfc-vert); }
 
 /* ---------- Totaux budget ---------- */
-.gfc-totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 18px; }
-.gfc-total { background: var(--gfc-vert); color: #fff; border-radius: 12px; padding: 14px 16px; }
+.gfc-totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr)); gap: 10px; margin-bottom: 18px; }
+.gfc-total { min-width: 0; background: var(--gfc-terra-f); color: var(--gfc-creme); border-radius: 14px; padding: 14px 16px; }
 .gfc-total span {
-  display: block; font-size: 11px; letter-spacing: .07em; text-transform: uppercase;
-  opacity: .78; font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  display: block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  opacity: .9;
 }
 .gfc-total strong { font-size: 24px; font-variant-numeric: tabular-nums; }
-.gfc-total--soft { background: var(--gfc-beige); color: var(--gfc-vert); }
+.gfc-total--soft { background: var(--gfc-creme-2); color: var(--gfc-vert); border: 1px solid var(--gfc-ligne); }
+.gfc-total--soft span { color: var(--gfc-terra-f); opacity: 1; }
 
 /* ---------- Souvenirs ---------- */
-.gfc-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 12px; }
-.gfc-memo { border: 1px solid var(--gfc-bord); border-radius: 12px; overflow: hidden; background: #fff; }
+.gfc-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(148px, 100%), 1fr)); gap: 10px; }
+.gfc-memo { min-width: 0; border: 1px solid var(--gfc-ligne); border-radius: 14px; overflow: hidden; background: var(--gfc-creme); }
 .gfc-memo img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; background: var(--gfc-beige); }
 .gfc-memo-body { padding: 9px 11px; }
 .gfc-memo-title { font-size: 14px; font-weight: 600; color: var(--gfc-vert); }
-.gfc-memo-date { font-size: 12px; color: var(--gfc-doux); }
+.gfc-memo-date { font-size: 12px; color: var(--gfc-mut); }
 
 /* ---------- Modale ---------- */
 .gfc-modal {
@@ -255,35 +274,36 @@
 }
 .gfc-modal[hidden] { display: none; }
 .gfc-modal-box {
-  background: #fff; border-radius: 16px; width: 100%; max-width: 480px;
+  background: var(--gfc-creme); color: var(--gfc-vert); border-radius: 16px; width: 100%; max-width: 480px;
   max-height: 88vh; overflow-y: auto; padding: 22px;
+  border-top: 3px solid var(--gfc-terra);
   box-shadow: 0 18px 48px rgba(30, 38, 30, .3);
 }
-.gfc-modal-box h2 { font-size: 21px; margin-bottom: 16px; }
+.gfc-modal-box h2 { font-size: 22px; margin-bottom: 16px; }
 .gfc-modal-foot { display: flex; gap: 9px; justify-content: flex-end; margin-top: 20px; flex-wrap: wrap; }
 .gfc-modal-foot .gfc-btn--danger { margin-right: auto; }
 
 .gfc-field { margin-bottom: 14px; }
 .gfc-field label, .gfc-field-lab {
-  display: block; margin-bottom: 5px; font-size: 13px; font-weight: 600;
-  color: var(--gfc-vert); font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  display: block; margin-bottom: 5px; font-size: 13.5px; font-weight: 700;
+  color: var(--gfc-vert);
 }
 .gfc-field input, .gfc-field select, .gfc-field textarea {
-  width: 100%; padding: 10px 12px; font-size: 16px; /* 16px : évite le zoom auto iOS */
-  border: 1px solid var(--gfc-bord); border-radius: 9px;
-  background: #fff; color: var(--gfc-texte); font-family: inherit;
+  width: 100%; min-height: 44px; padding: 10px 12px; font-size: 16px; /* 16px : évite le zoom auto iOS */
+  border: 1px solid rgba(49, 68, 49, .3); border-radius: 10px;
+  background: var(--gfc-champ); color: var(--gfc-vert); font-family: inherit;
 }
 .gfc-field input:focus, .gfc-field select:focus, .gfc-field textarea:focus {
-  outline: 2px solid var(--gfc-vert-clair); outline-offset: 1px; border-color: var(--gfc-vert-clair);
+  outline: 2px solid var(--gfc-terra); outline-offset: 1px; border-color: var(--gfc-terra);
 }
 .gfc-field textarea { min-height: 78px; resize: vertical; }
-.gfc-field-note { font-size: 12px; color: var(--gfc-doux); margin-top: 4px; }
+.gfc-field-note { font-size: 12.5px; color: var(--gfc-mut); margin-top: 4px; }
 .gfc-field-err { color: var(--gfc-rouge); font-size: 13px; margin-top: 4px; }
-.gfc-field--row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.gfc-field--row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
 .gfc-photo-pick { display: flex; align-items: center; gap: 12px; }
 .gfc-photo-prev {
   width: 62px; height: 62px; border-radius: 10px; object-fit: cover; flex: none;
-  background: var(--gfc-beige); border: 1px solid var(--gfc-bord);
+  background: var(--gfc-beige); border: 1px solid var(--gfc-ligne);
 }
 /* Le bouton natif de l'input[type=file] parle la langue du navigateur, pas celle
    de la page : on masque l'input (il reste focusable) et son <label> fait office
@@ -298,68 +318,112 @@
 }
 .gfc-field .gfc-file-lab:hover { background: var(--gfc-beige); }
 .gfc-file-input:focus-visible + .gfc-file-lab {
-  outline: 2px solid var(--gfc-vert-clair); outline-offset: 2px;
+  outline: 2px solid var(--gfc-terra-f); outline-offset: 2px;
 }
-.gfc-file-nom { font-size: 12px; color: var(--gfc-doux); }
+.gfc-file-nom { font-size: 12px; color: var(--gfc-mut); }
 
 /* ---------- Rappels par e-mail ---------- */
 .gfc-mail {
   display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-  border-left: 5px solid var(--gfc-vert);
+  border-left: 4px solid var(--gfc-terra);
 }
-.gfc-mail-txt { flex: 1; min-width: 230px; }
+.gfc-mail-txt { flex: 1; min-width: min(230px, 100%); }
 .gfc-mail .gfc-btn { flex: none; }
-.gfc-mail--on { background: #eef3e6; border-color: #9dae8b; border-left-color: var(--gfc-ok); }
+.gfc-mail--on { background: var(--gfc-sauge); border-color: var(--gfc-sauge); border-left-color: var(--gfc-vert); }
+.gfc-mail--on .gfc-hint, .gfc-mail--on .gfc-row-sub { color: var(--gfc-vert); }
 
 .gfc-consent {
   display: flex; gap: 10px; align-items: flex-start;
-  margin: 4px 0 6px; font-size: 14px; line-height: 1.5; color: var(--gfc-texte);
+  margin: 4px 0 6px; font-size: 14px; line-height: 1.5; color: var(--gfc-vert);
   cursor: pointer;
 }
 .gfc-consent input {
-  flex: none; width: 18px; height: 18px; margin: 2px 0 0; cursor: pointer;
-  accent-color: var(--gfc-vert);
+  flex: none; width: 20px; height: 20px; margin: 1px 0 0; cursor: pointer;
+  accent-color: var(--gfc-terra-f);
 }
 
 /* ---------- Pied : sauvegarde & outils ---------- */
-.gfc-tools { border-top: 1px solid var(--gfc-bord); margin-top: 34px; padding-top: 22px; }
-.gfc-tools h2 { font-size: 19px; margin-bottom: 6px; }
-.gfc-tools-grid { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
+.gfc-tools { margin-top: 34px; padding: 22px; background: var(--gfc-creme); border: 1px solid var(--gfc-ligne); border-radius: 16px; }
+.gfc-tools h2 { font-size: 22px; margin-bottom: 8px; }
+.gfc-tools-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 
 .gfc-cta {
-  background: var(--gfc-vert); color: #fff; border-radius: 12px;
-  padding: 20px 22px; margin-top: 26px; text-align: center;
+  background: var(--gfc-creme); color: var(--gfc-vert); border: 1px solid var(--gfc-ligne);
+  border-top: 3px solid var(--gfc-terra); border-radius: 16px;
+  padding: 22px; margin-top: 22px; text-align: center;
 }
-.gfc-cta h2 { color: #fff; font-size: 20px; margin-bottom: 7px; }
-.gfc-cta p { margin: 0 0 14px; font-size: 16px; }
-.gfc-cta .gfc-btn { background: var(--gfc-beige); border-color: var(--gfc-beige); color: var(--gfc-vert); }
-.gfc-cta .gfc-btn:hover { background: #fff; border-color: #fff; }
+.gfc-cta h2 { font-size: 22px; margin-bottom: 7px; }
+.gfc-cta p { margin: 0 0 14px; font-size: 16px; color: var(--gfc-mut); }
+.gfc-cta .gfc-btn { background: var(--gfc-terra-f); border-color: var(--gfc-terra-f); color: var(--gfc-creme); }
+.gfc-cta .gfc-btn:hover { filter: brightness(.93); }
 
 /* ---------- Bandeau « fiche partagée » (lecture seule) ---------- */
 .gfc-shared-note {
-  background: var(--gfc-beige); border-left: 4px solid var(--gfc-vert);
-  border-radius: 0 10px 10px 0; padding: 13px 16px; margin-bottom: 20px; font-size: 15px;
+  background: var(--gfc-creme); border-left: 4px solid var(--gfc-terra);
+  border-radius: 0 12px 12px 0; padding: 13px 16px; margin-bottom: 20px; font-size: 15px;
 }
 
 /* ---------- Message flottant ---------- */
 .gfc-toast {
   position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%);
-  z-index: 10000; background: var(--gfc-vert); color: #fff;
-  padding: 11px 20px; border-radius: 999px; font-size: 15px;
+  z-index: 10000; background: var(--gfc-terra-f); color: var(--gfc-creme);
+  padding: 11px 20px; border-radius: 999px; font-size: 15px; font-weight: 600;
   box-shadow: 0 8px 24px rgba(30, 38, 30, .3); max-width: calc(100vw - 32px);
 }
 .gfc-toast[hidden] { display: none; }
 
-/* ---------- Mobile ---------- */
-@media (max-width: 640px) {
-  .gfc-app { padding: 0 12px 48px; }
-  .gfc-head h1 { font-size: 26px; }
-  .gfc-card { padding: 15px 14px; }
-  .gfc-row { padding: 11px 12px; }
-  .gfc-field--row { grid-template-columns: 1fr; }
-  .gfc-bar-row { grid-template-columns: 92px 1fr auto; }
+/* ---------- Mobile : mise en page dense (même grille que l'achat guidé) ---------- */
+@media (max-width: 749px) {
+  .gfc-app { padding: 0 12px 24px; }
+  .gfc-head { padding: 10px 0 8px; }
+  .gfc-head h1 { font-size: 26px; margin-bottom: 4px; }
+  .gfc-head p { font-size: 15px; line-height: 1.45; }
+  .gfc-privacy { margin-top: 8px; font-size: 12.5px; padding: 5px 12px; }
+  .gfc-petbar { padding: 8px 2px; gap: 6px; }
+  /* Une seule ligne, largeurs égales */
+  .gfc-tabs { gap: 3px; padding-top: 6px; }
+  .gfc-tab {
+    flex: 1 1 0; min-width: 0; min-height: 48px; padding: 6px 2px;
+    font-size: 12.5px; border-radius: 10px 10px 0 0;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+  .gfc-tab[aria-selected='true'] { min-height: 52px; }
+  .gfc-tab-count { display: block; width: max-content; margin: 2px auto 0; min-width: 17px; font-size: 11px; line-height: 17px; }
+  .gfc-app [data-gfc-panels] { border-radius: 0 0 14px 14px; padding: 12px 12px 2px; }
+  .gfc-sec { margin-bottom: 22px; }
+  .gfc-sec-head { margin-bottom: 8px; flex-wrap: wrap; }
+  .gfc-sec-head h2, .gfc-tools h2, .gfc-cta h2, .gfc-modal-box h2 { font-size: 22px; }
+  .gfc-hint { margin: -2px 0 8px; }
+  .gfc-card { padding: 12px; margin-bottom: 10px; }
+  .gfc-list { gap: 6px; }
+  .gfc-row { padding: 10px 12px; gap: 6px 8px; flex-wrap: wrap; }
+  /* Le texte garde au moins 170 px ; sinon pastille et boutons passent dessous, à droite. */
+  .gfc-row-main { flex: 1 1 170px; }
+  .gfc-row-main ~ .gfc-badge, .gfc-row-act { margin-left: auto; }
+  .gfc-row-main ~ .gfc-badge + .gfc-row-act { margin-left: 0; }
+  .gfc-icon-btn { width: 40px; height: 40px; }
+  .gfc-id { gap: 12px; }
+  .gfc-id-photo { width: 84px; height: 84px; }
+  .gfc-id-body h2 { font-size: 22px; }
+  .gfc-facts, .gfc-totals, .gfc-gallery { gap: 6px; }
+  .gfc-totals { margin-bottom: 12px; }
+  .gfc-total { padding: 10px 12px; }
+  .gfc-total strong { font-size: 21px; }
+  .gfc-field--row { grid-template-columns: minmax(0, 1fr); }
+  .gfc-bar-row { grid-template-columns: 92px minmax(0, 1fr) auto; gap: 8px; }
+  .gfc-tools { margin-top: 22px; padding: 12px; }
+  .gfc-tools-grid { gap: 6px; margin-top: 10px; }
+  .gfc-tools-grid .gfc-btn { flex: 1 1 calc(50% - 3px); }
+  .gfc-cta { margin-top: 22px; padding: 12px; }
+  .gfc-cta .gfc-btn { display: flex; width: 100%; }
   .gfc-modal { padding: 0; align-items: flex-end; }
-  .gfc-modal-box { max-width: none; border-radius: 16px 16px 0 0; max-height: 92vh; }
+  .gfc-modal-box { max-width: none; border-radius: 16px 16px 0 0; max-height: 92vh; padding: 16px 12px; }
+}
+
+/* Très petits écrans : « Souvenirs » doit tenir entier dans un cinquième de largeur. */
+@media (max-width: 359px) {
+  .gfc-tabs { gap: 2px; }
+  .gfc-tab { padding: 6px 0; font-size: 11.5px; letter-spacing: -.01em; }
 }
 
 /* ---------- Impression : le carnet véto ---------- */

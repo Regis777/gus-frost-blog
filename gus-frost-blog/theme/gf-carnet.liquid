@@ -1,5 +1,5 @@
 {%- comment -%}
-  Section « Le Carnet » — carnet de santé / rappels / budget / souvenirs.
+  Section « Le Carnet » : carnet de santé / rappels / budget / souvenirs.
   Web app côté navigateur : aucune donnée n'est envoyée à Shopify. Seule exception,
   déclenchée par le client et sous consentement : les rappels e-mail transmettent
   à Klaviyo l'adresse, le nom des animaux et les échéances à venir.
@@ -8,6 +8,8 @@
 {%- endcomment -%}
 
 {{ 'gf-carnet.css' | asset_url | stylesheet_tag }}
+{%- comment -%} Fond de page beige (charte du 14/11/2026), pas de blanc pur. {%- endcomment -%}
+<style>#shopify-section-{{ section.id }}{ background: #efe7da; }</style>
 
 <div class="gfc-app" id="gfc-{{ section.id }}"
      data-klaviyo-cle="{{ section.settings.klaviyo_cle | escape }}"
@@ -21,7 +23,7 @@
       <p>{{ section.settings.tagline | escape }}</p>
     {%- endif -%}
     {%- if section.settings.show_privacy -%}
-      <p><span class="gfc-privacy">🔒 {{ section.settings.privacy_label | escape }}</span></p>
+      <p><span class="gfc-privacy">{{ section.settings.privacy_label | escape }}</span></p>
     {%- endif -%}
   </header>
 
@@ -46,11 +48,11 @@
       l’effacerait&nbsp;: exportez une sauvegarde de temps en temps, c’est votre filet.
     </p>
     <div class="gfc-tools-grid">
-      <button type="button" class="gfc-btn gfc-btn--sm gfc-btn--primary" data-act="print">🖨️ Carnet PDF</button>
-      <button type="button" class="gfc-btn gfc-btn--sm" data-act="ics">📅 Agenda (.ics)</button>
-      <button type="button" class="gfc-btn gfc-btn--sm" data-act="share">🔗 Partager la fiche</button>
-      <button type="button" class="gfc-btn gfc-btn--sm" data-act="export">⬇️ Exporter ma sauvegarde</button>
-      <button type="button" class="gfc-btn gfc-btn--sm" data-act="import">⬆️ Restaurer une sauvegarde</button>
+      <button type="button" class="gfc-btn gfc-btn--sm gfc-btn--primary" data-act="print">Carnet PDF</button>
+      <button type="button" class="gfc-btn gfc-btn--sm" data-act="ics">Agenda (.ics)</button>
+      <button type="button" class="gfc-btn gfc-btn--sm" data-act="share">Partager la fiche</button>
+      <button type="button" class="gfc-btn gfc-btn--sm" data-act="export">Exporter ma sauvegarde</button>
+      <button type="button" class="gfc-btn gfc-btn--sm" data-act="import">Restaurer une sauvegarde</button>
       <button type="button" class="gfc-btn gfc-btn--sm gfc-btn--danger" data-act="raz">Tout effacer</button>
     </div>
     <p class="gfc-hint" style="margin-top:14px">
