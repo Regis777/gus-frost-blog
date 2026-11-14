@@ -159,17 +159,33 @@
         "compare_3": {
           "type": "compare",
           "settings": {
-            "label": "Mode d’emploi",
-            "us": "Guide écrit par un comportementaliste",
-            "them": "Aucun"
+            "label": "Reliefs",
+            "us": "Quatre textures pour ralentir le léchage",
+            "them": "Un seul relief, le plus souvent"
           }
         },
         "compare_4": {
           "type": "compare",
           "settings": {
-            "label": "Expédition",
-            "us": "Depuis la France",
-            "them": "Souvent depuis l’étranger"
+            "label": "Accessoires",
+            "us": "Spatule et grattoir inclus dès 2 tapis",
+            "them": "Rarement fournis"
+          }
+        },
+        "compare_5": {
+          "type": "compare",
+          "settings": {
+            "label": "Mode d’emploi",
+            "us": "Guide écrit par un comportementaliste",
+            "them": "Aucun"
+          }
+        },
+        "compare_6": {
+          "type": "compare",
+          "settings": {
+            "label": "Vos questions",
+            "us": "Un comportementaliste vous répond sous 48 h",
+            "them": "Service client généraliste"
           }
         },
         "faq_1": {
@@ -251,6 +267,8 @@
         "compare_2",
         "compare_3",
         "compare_4",
+        "compare_5",
+        "compare_6",
         "faq_1",
         "faq_2",
         "faq_3",
