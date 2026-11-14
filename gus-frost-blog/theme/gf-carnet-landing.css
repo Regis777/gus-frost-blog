@@ -4,6 +4,7 @@
    - vert foncé #314431 = texte et titres seulement, aucun bloc rempli en vert ;
    - terracotta #c16b47 = filets, coches, surtitres ;
    - terracotta soutenu #a8522f + crème #faf8f3 (5,06:1) = tout fond rempli qui porte du texte ;
+   - bouton « Ouvrir Le Carnet » = vert tendre #c6efa3, texte et contour #314431, comme le bouton panier ;
    - sauge #b6bfa3 = grand encart de texte (confidentialité) ;
    - fond de page #efe7da, encarts #faf8f3, ni blanc pur ni noir pur.
    En px : le thème Dawn met 1rem = 10px, on ne s'y fie pas. */
@@ -17,6 +18,8 @@
   --gfl-terra: #c16b47;
   --gfl-terra-f: #a8522f;
   --gfl-sauge: #b6bfa3;
+  /* Même bouton que « Ajouter au panier » (gf-produit-guide : color_cta / color_on_cta). */
+  --gfl-cta: #c6efa3;
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 16px 72px;
@@ -57,16 +60,16 @@
   transform: rotate(-45deg); flex: none;
 }
 
-/* ---------- Bouton (action principale, pas un achat) ---------- */
+/* ---------- Bouton : même couleur que « Ajouter au panier » (demande de Régis, 14/11/2026) ---------- */
 .gfl-btn {
   display: inline-flex; align-items: center; justify-content: center;
   min-height: 52px; padding: 13px 34px; border-radius: 12px;
-  background: var(--gfl-terra-f); color: var(--gfl-creme) !important;
-  border: 2px solid var(--gfl-terra-f); text-decoration: none;
+  background: var(--gfl-cta); color: var(--gfl-vert) !important;
+  border: 2px solid var(--gfl-vert); text-decoration: none;
   font-family: inherit; font-size: 16px; font-weight: 700; letter-spacing: .03em;
   text-transform: uppercase; line-height: 1.3; transition: filter .15s;
 }
-.gfl-btn:hover { filter: brightness(.93); color: var(--gfl-creme) !important; }
+.gfl-btn:hover { filter: brightness(.95); color: var(--gfl-vert) !important; }
 .gfl-btn:focus-visible { outline: 3px solid var(--gfl-vert); outline-offset: 3px; }
 
 /* ---------- Sections ---------- */
