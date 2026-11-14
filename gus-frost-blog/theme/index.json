@@ -9,6 +9,23 @@
  */
 {
   "sections": {
+    "gf_capsules": {
+      "type": "gf-capsules",
+      "settings": {
+        "actif": true,
+        "fond_page": "#efe7da",
+        "fond_capsule": "#faf8f3",
+        "bordure": "#9dae8b",
+        "rayon": 26,
+        "espacement": 28,
+        "largeur": 1220,
+        "alternance": true,
+        "fond_alterne": "#b6bfa3",
+        "compact_mobile": true,
+        "ombre": true,
+        "capsule_banniere": false
+      }
+    },
     "image_banner": {
       "type": "image-banner",
       "blocks": {
@@ -35,6 +52,7 @@
         "heading",
         "button"
       ],
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/Banniere_GusFrost.png",
         "image_overlay_opacity": 50,
@@ -47,6 +65,16 @@
         "stack_images_on_mobile": false,
         "mobile_content_alignment": "center",
         "show_text_below": true
+      }
+    },
+    "custom_liquid_P6VUQN": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "<div class=\"banner\" style=\"display:none !important\" aria-hidden=\"true\"></div><h1 class=\"visually-hidden\">Des produits utiles et de qualité pour le bien-être de votre chien et de votre chat</h1><div class=\"gf-video-accueil\"><video autoplay muted loop playsinline preload=\"metadata\" poster=\"https://cdn.shopify.com/s/files/1/0614/7119/5357/files/accueil-boucle-chien-chat_poster.jpg?v=1794477840&width=1920\" aria-label=\"Un chien et un chat paisibles à la maison\" width=\"1920\" height=\"1080\"><source media=\"(max-width: 749px)\" src=\"https://cdn.shopify.com/videos/c/vp/cc85a3ab7b9e4ffaa86a4b50ab3c4ae6/cc85a3ab7b9e4ffaa86a4b50ab3c4ae6.HD-720p-1.6Mbps-101024182.mp4\" type=\"video/mp4\"><source src=\"https://cdn.shopify.com/videos/c/vp/cc85a3ab7b9e4ffaa86a4b50ab3c4ae6/cc85a3ab7b9e4ffaa86a4b50ab3c4ae6.HD-1080p-2.5Mbps-101024182.mp4\" type=\"video/mp4\"></video></div><style>.gf-video-accueil{width:100%;background:#efe6d8}.gf-video-accueil video{display:block;width:100%;height:auto;aspect-ratio:16/9;max-height:78vh;object-fit:cover;object-position:center 45%}@media (max-width:749px){.gf-video-accueil video{aspect-ratio:auto;height:70vh;height:70svh;max-height:none;object-position:46% center}}</style>",
+        "color_scheme": "scheme-2",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "featured_product_LpUW38": {
@@ -103,6 +131,7 @@
         "buy_buttons_qyXfbG",
         "share_eCyqnj"
       ],
+      "disabled": true,
       "name": "t:sections.featured-product.presets.name",
       "settings": {
         "product": "tapis-de-lechage-chien-chat",
@@ -170,6 +199,7 @@
         "column_nmRMxY",
         "column_CJnqAy"
       ],
+      "disabled": true,
       "custom_css": [
         ".multicolumn-card__info p {line-height: 1.2;}"
       ],
@@ -193,6 +223,7 @@
     },
     "featured_collection": {
       "type": "featured-collection",
+      "disabled": true,
       "settings": {
         "collection": "all",
         "products_to_show": 4,
@@ -272,15 +303,15 @@
       "name": "Articles de blog maison",
       "settings": {
         "blog": "chats",
-        "blog_bouton_1": "chiens",
-        "blog_bouton_2": "chats",
-        "melanger_blogs": true,
-        "prefixe_bouton": "Conseils",
         "post_limit": 4,
         "heading": "Articles de blog",
         "heading_size": "h1",
         "columns_desktop": 4,
         "show_view_all": true,
+        "blog_bouton_1": "chiens",
+        "melanger_blogs": true,
+        "blog_bouton_2": "chats",
+        "prefixe_bouton": "Conseils",
         "show_image": true,
         "show_date": true,
         "show_author": false,
@@ -304,9 +335,9 @@
         "collapsible_row_XN4aVA": {
           "type": "collapsible_row",
           "settings": {
-            "heading": "Livrez-vous en France et en Europe ?",
+            "heading": "Où livrez-vous ?",
             "icon": "question_mark",
-            "row_content": "<p>Oui. Nous livrons en France et dans la plupart des pays européens avec un suivi de commande à chaque étape.</p>",
+            "row_content": "<p>Nous livrons en France (Monaco compris), en Belgique, en Suisse et au Luxembourg, avec un suivi de commande à chaque étape.</p>",
             "page": ""
           }
         },
@@ -333,7 +364,7 @@
           "settings": {
             "heading": "Pourquoi faire confiance à Gus & Frost ?",
             "icon": "question_mark",
-            "row_content": "<p>Nous sélectionnons uniquement des produits utiles, testés et validés pour le bien-être de votre animal. Pas de gadgets, pas de compromis sur la qualité.</p>",
+            "row_content": "<p>Nous ne retenons que des produits utiles au bien-être de votre animal, choisis pour leur qualité. Pas de gadgets.</p>",
             "page": ""
           }
         }
@@ -366,18 +397,12 @@
         "padding_top": 24,
         "padding_bottom": 20
       }
-    },
-    "gf_capsules": {
-      "type": "gf-capsules",
-      "settings": {
-        "actif": true,
-        "bordure": "#9dae8b"
-      }
     }
   },
   "order": [
     "gf_capsules",
     "image_banner",
+    "custom_liquid_P6VUQN",
     "featured_product_LpUW38",
     "multicolumn_Ap9ixY",
     "featured_collection",
