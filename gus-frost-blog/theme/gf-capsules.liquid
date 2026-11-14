@@ -129,7 +129,23 @@
     #MainContent .collapsible-content .accordion .icon-caret { color: #c16b47; }
     #MainContent .collapsible-content .accordion details[open] .accordion__title { font-weight: 700; }
 
+    /* « Pourquoi Gus et Frost ? » (image-with-text de Dawn), 14/11/2026,
+       variante A choisie par Regis : seul le bouton change, terracotta soutenu
+       + texte creme (5,06:1), comme les boutons du blog. */
+    #MainContent .image-with-text .button:not(.button--secondary) {
+      --color-button: 168, 82, 47;
+      --color-button-text: 250, 248, 243;
+      --alpha-button-background: 1;
+    }
+
     @media screen and (max-width: 749px) {
+      /* A 375 et 320px « Decouvrir nos produits » se cassait en deux lignes
+         dans son bouton (30px de marge de chaque cote chez Dawn). */
+      #MainContent .image-with-text .button {
+        white-space: nowrap;
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
       #MainContent .collapsible-content .accordion summary { padding: 1.2rem; }
       #MainContent .collapsible-content .accordion .accordion__content { padding: 0 1.2rem 1.2rem; }
       #MainContent .collapsible-content .accordion { margin-top: .6rem !important; }
