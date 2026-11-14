@@ -14,7 +14,7 @@
           "type": "atout",
           "settings": {
             "titre": "Rien à créer",
-            "texte": "Aucun compte, aucun mot de passe à retenir. Vous commencez à remplir le carnet de votre chien dans les trois secondes."
+            "texte": "Aucun compte, aucun mot de passe à retenir. Vous commencez à remplir le carnet de votre chien ou de votre chat dans les trois secondes."
           }
         },
         "atout3": {
@@ -95,7 +95,7 @@
         "f8"
       ],
       "settings": {
-        "hero_heading": "Le carnet de santé de votre chien, toujours dans votre poche",
+        "hero_heading": "Le carnet de santé de votre chien ou de votre chat, toujours dans votre poche",
         "hero_text": "Vaccins, poids, rappels du vétérinaire, budget, souvenirs. Tout au même endroit, sans rien installer et sans créer de compte.",
         "cta_label": "Ouvrir Le Carnet",
         "app_url": "/pages/mon-carnet",
