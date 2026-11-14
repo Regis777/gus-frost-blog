@@ -166,10 +166,10 @@
   #{{ rid }} .strip svg.i{ color: var(--ac); }
 
   /* ---------- MOMENTS ---------- */
-  #{{ rid }} .mbar{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-  #{{ rid }} .mbar button{ min-height: 44px; padding: 8px 16px; font-size: 14.5px; font-weight: 600; color: var(--ink); background: transparent; border: 1.5px solid var(--ac); border-radius: 999px; cursor: pointer; }
-  #{{ rid }} .mbar button.on{ background: var(--acf); border-color: var(--acf); color: var(--on-ac); }
-  #{{ rid }} .mom{ display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); gap: 0; overflow: hidden; }
+  #{{ rid }} .mbar{ display: flex; align-items: flex-end; gap: 4px; margin-bottom: -1px; position: relative; z-index: 1; }
+  #{{ rid }} .mbar button{ min-height: 48px; padding: 9px 20px; font-size: 14.5px; font-weight: 600; line-height: 1.2; color: var(--mut); background: rgba(49,68,49,.07); border: 1px solid var(--line); border-top: 3px solid transparent; border-radius: 12px 12px 0 0; cursor: pointer; }
+  #{{ rid }} .mbar button.on{ min-height: 54px; background: var(--card); color: var(--ink); font-weight: 700; border-top-color: var(--acf); border-bottom-color: var(--card); }
+  #{{ rid }} .mom{ display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); gap: 0; overflow: hidden; border-top-left-radius: 0; }
   #{{ rid }} .mom.noimg{ grid-template-columns: minmax(0,1fr); }
   #{{ rid }} .mom[hidden]{ display: none; }
   #{{ rid }} .mtx{ padding: 28px; }
@@ -285,7 +285,10 @@
     #{{ rid }} .tabbar{ padding: 10px 10px 0; gap: 6px; }
     #{{ rid }} .pane{ padding: 12px; }
     #{{ rid }} .strip{ padding: 10px 2px; gap: 4px 18px; }
-    #{{ rid }} .mbar{ margin-bottom: 8px; gap: 6px; }
+    #{{ rid }} .mbar{ gap: 3px; }
+    #{{ rid }} .mbar button{ flex: 1 1 0; min-width: 0; min-height: 50px; padding: 6px 3px; font-size: 12.5px; border-radius: 10px 10px 0 0; }
+    #{{ rid }} .mbar button.on{ min-height: 56px; }
+    #{{ rid }} .mom{ border-top-right-radius: 0; }
     #{{ rid }} .mtx{ padding: 14px; }
     #{{ rid }} .mtx h3{ font-size: 20px; margin-bottom: 6px; }
     #{{ rid }} .mtx h4{ margin: 10px 0 6px; }
@@ -303,7 +306,7 @@
     #{{ rid }} .end{ padding: 20px 14px; }
     #{{ rid }} .end .cta{ margin-top: 12px; }
     #{{ rid }} .mtx ul, #{{ rid }} .gp-jal ul{ gap: 4px; }
-    #{{ rid }} .mbar button, #{{ rid }} .tabbar button{ min-height: 40px; padding: 6px 12px; }
+    #{{ rid }} .tabbar button{ min-height: 40px; padding: 6px 12px; }
     #{{ rid }} .sws{ gap: 8px; }
     #{{ rid }} .clab{ margin-bottom: 8px; }
     #{{ rid }} .pane p + p{ margin-top: 8px; }
