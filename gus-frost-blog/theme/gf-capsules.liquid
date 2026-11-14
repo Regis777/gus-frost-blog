@@ -111,7 +111,7 @@
     {%- endcomment -%}
     #MainContent .collapsible-content .accordion {
       border: 0 !important;
-      margin-top: .8rem !important;
+      margin-top: .6rem !important;
     }
     #MainContent .collapsible-content .accordion details {
       background: #f2ece1;
@@ -123,7 +123,8 @@
       border-top-color: #a8522f;
       box-shadow: 0 0 0 1px rgba(193, 107, 71, .45) inset;
     }
-    #MainContent .collapsible-content .accordion summary { padding: 1.4rem 1.6rem; }
+    #MainContent .collapsible-content .accordion summary { padding: 1rem 1.6rem; }
+    #MainContent .collapsible-content .accordion .accordion__content p { line-height: 1.4 !important; }
     #MainContent .collapsible-content .accordion .accordion__content { padding: 0 1.6rem 1.4rem 4.6rem; }
     #MainContent .collapsible-content .accordion .icon-question-mark path { fill: #c16b47; }
     #MainContent .collapsible-content .accordion .icon-caret { color: #c16b47; }
@@ -136,6 +137,30 @@
       --color-button: 168, 82, 47;
       --color-button-text: 250, 248, 243;
       --alpha-button-background: 1;
+    }
+
+    /* ---------- Accueil compact, ordinateur ET telephone (14/11/2026) ----------
+       Demande de Regis : resserrer les interlignes plutot que couper des mots,
+       sur « Pourquoi », les articles de blog et la FAQ. Dawn met le texte a 1,8
+       d'interligne (28,8px pour 16px) : ramene a 1,4. Mesures a 1440px :
+       blog 828 -> 720, Pourquoi 655 -> 465, FAQ 451 -> 411. */
+    #MainContent .image-with-text .rte p { line-height: 1.4 !important; margin-bottom: .6rem !important; }
+    #MainContent .image-with-text .image-with-text__text { margin-top: 1.2rem !important; }
+    #MainContent .image-with-text .button { margin-top: 1.6rem !important; }
+    #MainContent .blog__post .article-card__excerpt { line-height: 1.4 !important; }
+    #MainContent .blog__post .card__heading { line-height: 1.15 !important; }
+    /* Dawn pose 30px au-dessus de CHAQUE bouton du blog : empiles sur
+       telephone, ils occupaient 164px pour deux boutons de 47. L'air sous les
+       boutons (16px, valide le 12/09/2026) est garde. */
+    #MainContent .gf-blog-boutons { margin-top: 1.2rem !important; gap: .8rem 1.2rem !important; }
+    #MainContent .gf-blog-boutons .blog__button { margin-top: 0 !important; }
+
+    @media screen and (min-width: 750px) {
+      #MainContent .image-with-text .image-with-text__content { padding: 3.2rem 4rem !important; }
+      /* La photo prend la hauteur du texte au lieu d'imposer la sienne
+         (645px pour un texte de 366) : recadree, sans deformation. */
+      #MainContent .image-with-text .image-with-text__media-item { align-self: stretch !important; }
+      #MainContent .image-with-text .image-with-text__media { padding-bottom: 0 !important; height: 100% !important; min-height: 0 !important; }
     }
 
     @media screen and (max-width: 749px) {
@@ -153,11 +178,9 @@
          375px : 1 132 -> 860px ; a 320px : 1 298 -> 972px. */
       #MainContent .image-with-text .image-with-text__content { padding: 1.6rem 1.2rem 2rem !important; }
       #MainContent .image-with-text .image-with-text__text { margin-top: 1rem !important; }
-      #MainContent .image-with-text .rte p { line-height: 1.4 !important; margin-bottom: .6rem !important; }
-      #MainContent .image-with-text .button { margin-top: 1.6rem !important; }
-      #MainContent .collapsible-content .accordion summary { padding: 1.2rem; }
+      #MainContent .collapsible-content .accordion summary { padding: 1rem 1.2rem; }
       #MainContent .collapsible-content .accordion .accordion__content { padding: 0 1.2rem 1.2rem; }
-      #MainContent .collapsible-content .accordion { margin-top: .6rem !important; }
+      #MainContent .gf-blog-boutons { gap: .6rem !important; }
     }
 
     @media screen and (max-width: 749px) {
