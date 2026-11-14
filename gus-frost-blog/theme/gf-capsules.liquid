@@ -98,58 +98,6 @@
       }
     {%- endif -%}
 
-    {%- if section.settings.charte -%}
-      {%- comment -%}
-        CHARTE « ACHAT GUIDE » (14/11/2026). Reprise sur l'accueil des choix
-        valides par Regis sur la fiche du tapis (section gf-produit-guide) :
-          - vert fonce = texte et titres seulement, plus aucun bouton rempli
-            en vert fonce ;
-          - terracotta #c16b47 = filets, contours, icones ;
-          - terracotta soutenu #a8522f + creme #faf8f3 (5,06:1) = tout fond
-            rempli qui porte du texte (les boutons) ;
-          - sauge = grand encart seulement : dans la capsule sauge, les
-            articles sont poses sur des cartes creme, pour qu'aucun lien ne
-            soit en vert fonce sur sauge.
-        Le vert tendre #c6efa3 reste reserve au bouton d'achat : il n'y en a
-        pas sur l'accueil. Decoche, l'accueil reprend l'aspect precedent.
-      {%- endcomment -%}
-      #MainContent > .shopify-section:not(:has(> .gf-capsules-marqueur))
-        {%- unless section.settings.capsule_banniere %}:not(:has(.banner)){% endunless %} {
-        border-color: #c16b47;
-      }
-      #MainContent .button:not(.button--secondary):not(.button--tertiary) {
-        --color-button: 168, 82, 47;
-        --color-button-text: 250, 248, 243;
-        --alpha-button-background: 1;
-      }
-      #MainContent .blog__post .article-card {
-        background: #faf8f3;
-        border: 1px solid #c16b47;
-        border-radius: 14px;
-        overflow: hidden;
-        height: 100%;
-      }
-      #MainContent .blog__post .article-card .card__inner { background: transparent; }
-      #MainContent .blog__post .article-card > .card__content { padding: 1.2rem 1.2rem 1.4rem !important; }
-      #MainContent .blog__post .article-card :is(p, .card__heading, .card__heading a) { color: #314431 !important; }
-      #MainContent .blog__post .card__heading {
-        overflow-wrap: normal;
-        word-break: normal;
-        -webkit-hyphens: auto;
-        hyphens: auto;
-        hyphenate-limit-chars: 10 4 4;
-      }
-      #MainContent .blog__post .article-card__info,
-      #MainContent .blog__post .article-card__info time {
-        color: #a8522f !important;
-        opacity: 1;
-        font-weight: 600;
-      }
-      #MainContent .accordion .icon-question-mark,
-      #MainContent .accordion .icon-caret { color: #c16b47; }
-      #MainContent .accordion { border-color: rgba(193, 107, 71, .45) !important; }
-    {%- endif -%}
-
     @media screen and (max-width: 749px) {
       #MainContent {
         padding-bottom: {{ esp }}px;
@@ -261,27 +209,6 @@
         #MainContent .center .button,
         #MainContent .blog__view-all { margin-top: 1.2rem !important; }
       {%- endif -%}
-
-      {%- if section.settings.charte -%}
-        /* Densite de la fiche du tapis : titres de section a 22px, encarts a
-           12px de marge interieure, boutons d'au moins 44px. L'interligne des
-           paragraphes n'est pas touche. */
-        #MainContent .title.h0,
-        #MainContent .title.h1,
-        #MainContent .title.h2,
-        #MainContent .blog__title,
-        #MainContent .collapsible-content__heading,
-        #MainContent .image-with-text__heading { font-size: 2.2rem !important; }
-        #MainContent .blog__post .article-card > .card__content { padding: 1.2rem !important; }
-        /* Sur une ligne : a 375px « Decouvrir nos produits » se cassait en
-           deux dans son bouton (30px de marge de chaque cote chez Dawn). */
-        #MainContent .button {
-          min-height: 4.4rem;
-          white-space: nowrap;
-          padding-left: 2rem;
-          padding-right: 2rem;
-        }
-      {%- endif -%}
     }
   {%- endstyle -%}
 {%- endif -%}
@@ -363,13 +290,6 @@
       "default": "#b6bfa3",
       "label": "Fond alterné",
       "info": "Par défaut, le sauge de la marque (#9dae8b) adouci sur le beige : le vert foncé y reste lisible (5,5:1)."
-    },
-    {
-      "type": "checkbox",
-      "id": "charte",
-      "default": true,
-      "label": "Couleurs de la fiche « achat guidé »",
-      "info": "Boutons terracotta, filets terracotta, articles du blog sur cartes crème. Prend le pas sur « Filet des capsules ». Décochez pour revenir à l'aspect précédent."
     },
     {
       "type": "checkbox",
