@@ -151,6 +151,36 @@
   @media (prefers-reduced-motion: reduce) {
     #gf-cc *, #gf-cc *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
   }
+
+  {%- comment -%}
+    ---------- Charte de l'accueil, bandeau compact (14/11/2026) ----------
+    Valide par Regis sur capture : photo du site a la place de l'illustration
+    (reglage « photo »), bandeau plus petit (380 -> 300px de large, photo de
+    130px), contour terracotta, « Tout accepter » en vert tendre #c6efa3 avec
+    texte et contour vert fonce (sa demande : « un bouton vert »), « Tout
+    refuser » de meme taille avec un contour terracotta, pour que refuser reste
+    aussi visible qu'accepter (CNIL). Mesure : 357 x 365 -> 300 x 304 sur
+    ordinateur ; 417 -> 294px de haut a 375px.
+  {%- endcomment -%}
+  #gf-cc .gf-banner,
+  #gf-cc .gf-modal { border: 1px solid #c16b47; }
+  #gf-cc .gf-banner { width: 300px; font-size: 1.3rem; line-height: 1.4; border-radius: 16px; }
+  #gf-cc .gf-photo { height: 130px; object-position: center 32%; }
+  #gf-cc .gf-body { padding: 10px 14px 0; }
+  #gf-cc .gf-body h2 { font-size: 1.6rem; margin: 0 0 4px; }
+  #gf-cc .gf-body p { font-size: 1.3rem; line-height: 1.4; }
+  #gf-cc .gf-actions { padding: 10px 14px; gap: 6px; }
+  #gf-cc .gf-banner .gf-btn { min-height: 40px; padding: 6px 10px; font-size: 1.3rem; border-radius: 10px; }
+  #gf-cc .gf-banner .gf-text { min-height: 0; padding: 2px; font-size: 1.25rem; }
+  #gf-cc .gf-primary,
+  #gf-cc .gf-primary:hover { background: #c6efa3; color: #314431; border: 2px solid #314431; box-shadow: none; }
+  #gf-cc .gf-ghost,
+  #gf-cc .gf-modal .gf-btn:not(.gf-primary) { background: transparent; color: #314431; border: 2px solid #c16b47; }
+  #gf-cc .gf-text { color: #314431; }
+  @media screen and (max-width: 480px) {
+    #gf-cc .gf-banner { width: auto; }
+    #gf-cc .gf-photo { height: 120px; }
+  }
 </style>
 
 <div id="gf-cc" hidden>
