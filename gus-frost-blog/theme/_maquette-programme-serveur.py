@@ -5,7 +5,7 @@ import http.server, os, re, sys
 THEME = r"C:\Users\regis\gfbrepo\gus-frost-blog\theme"
 # section -> variante retenue ; None = section en cours (on garde les deux)
 CHOIX = [("1-ouverture", "gfpA"), ("2-jour10", "A"), ("3-contenu", "B"), ("4-prix", "B"),
-         ("5-garantie", "A"), ("6-accompagne", "A"), ("7-cadre", None)]
+         ("5-garantie", "A"), ("6-accompagne", "A"), ("7-cadre", "B"), ("8-faq", None)]
 
 def page():
     out = ["document.querySelector('#MainContent').innerHTML='';",
