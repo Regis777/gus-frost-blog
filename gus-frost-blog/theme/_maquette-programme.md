@@ -9,3 +9,4 @@ injecté dans Chrome pour les captures ; la section Liquid `gf-programme.liquid`
 3. Ce que comprend le Programme : **variante A** (15/11/2026). Capsule sauge, cinq cartes numérotées (3 + 2), photo du carnet sur la méthode écrite, deux tapis sur le coffret, encadré terracotta de durée.
 4. Le prix : **variante A** (15/11/2026). Deux cartes : « En cabinet » (110 + 145 = environ 255 €) et carte terracotta du Programme (179 €, liste incluse, bouton).
 5. La garantie : **variante B** (15/11/2026), choisie par Régis malgré mon avis (texte contractuel à déplier). Trois étapes en cartes + `<details>` « Le texte exact de la garantie ».
+6. Qui vous accompagne : **variante B** (15/11/2026), photo `hero-chien-dort` recadrée (4/3, object-position 88% 55%) pour que le chien soit entier.

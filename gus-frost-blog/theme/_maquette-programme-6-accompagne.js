@@ -13,14 +13,14 @@ const css = `
 .gfp6A-faits b{display:block;font:600 26px/1.1 Fraunces,serif;color:var(--ts);margin:0 0 4px}
 .gfp6A-faits span{font-size:15px;line-height:1.4}
 /* B : photo + texte */
-.gfp6B{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:36px;align-items:center}
-.gfp6B img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:18px;display:block}
+.gfp6B{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px;align-items:center}
+.gfp6B img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:88% 55%;border-radius:18px;display:block}
 .gfp6B p.gfp-p{margin:0 0 12px}
 @media (max-width:749px){
  .gfp6A,.gfp6B{grid-template-columns:minmax(0,1fr);gap:16px}
  .gfp6A-faits b{font-size:22px}
  .gfp6-cit{font-size:18px;padding-left:14px}
- .gfp6B img{aspect-ratio:16/10;order:-1}
+ .gfp6B img{aspect-ratio:16/10;object-position:80% 55%;order:-1}
  .gfp6-transp{padding:14px}
 }`;
 const titre = 'Qui vous accompagne';
