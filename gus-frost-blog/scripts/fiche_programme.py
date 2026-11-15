@@ -54,8 +54,8 @@ a("<li><strong>L'analyse d'une vidéo de votre chien.</strong> Vous filmez deux 
 a("<li><strong>Vos questions par e-mail, illimitées, pendant toute la durée.</strong> "
   "Réponse sous 48" + NB + "h ouvrées. C'est la partie qui empêche l'abandon.</li>")
 a("<li><strong>La méthode écrite.</strong> Le manuel du Foyer Apaisé, 30 recettes "
-  "classées par besoin et par moment, la feuille de route jour par jour, et le carnet de "
-  "bord qui vous fait tenir.</li>")
+  "classées par besoin et par moment, la feuille de route jour par jour, et le journal de "
+  "suivi qui vous fait tenir.</li>")
 a("<li><strong>Le coffret d'accessoires</strong>, expédié chez vous" + NB + ": tapis de "
   "léchage, tapis de fouille, jouet de mastication. Le léchage est l'outil du calme, "
   "la fouille celui de la dépense mentale.</li>")
@@ -81,10 +81,10 @@ a("<p>Soit environ 255" + NB + "€, sans les outils, sans les recettes, et sans
   "entre les rendez-vous. Le Programme est à 179" + NB + "€.</p>")
 
 a("<h3>La garantie</h3>")
-a("<p>Si, après avoir suivi le Programme et rempli votre carnet de bord pendant "
+a("<p>Si, après avoir suivi le Programme et rempli votre journal de suivi pendant "
   "trente (30) jours consécutifs, vous ne constatez aucune évolution, le prix vous est "
   "intégralement remboursé sur simple demande adressée à "
-  "contact@gusetfrost.fr, accompagnée du carnet renseigné. Vous conservez alors le "
+  "contact@gusetfrost.fr, accompagnée du journal renseigné. Vous conservez alors le "
   "coffret et l'ensemble des supports remis. Cette garantie ne restreint ni votre droit de "
   "rétractation, ni les garanties légales.</p>")
 
@@ -157,7 +157,8 @@ oblig = {
     "trente (30) jours consecutifs": "trente (30) jours consécutifs" in HTML,
     "integralement rembourse": "intégralement remboursé" in HTML,
     "demande a contact@gusetfrost.fr": "contact@gusetfrost.fr" in HTML,
-    "carnet renseigne": "carnet renseigné" in HTML,
+    "journal renseigne": "journal renseigné" in HTML,
+    "plus de carnet (15/11/2026)": "carnet" not in HTML.lower(),
     "conserve le coffret et les supports": "conservez alors le coffret" in HTML,
     "non-substitution veterinaire": "ne se substitue pas" in HTML,
     "Politique d'expedition citee": "Politique d'expédition" in HTML,
