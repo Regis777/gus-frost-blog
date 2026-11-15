@@ -13,3 +13,6 @@ injecté dans Chrome pour les captures ; la section Liquid `gf-programme.liquid`
 7. Le cadre : **variante A** pour la forme (15/11/2026) ; **texte à retravailler** selon Régis (pas encore précisé).
 8. FAQ : **variante A** (accordéon, 15/11/2026). Réponse « beaucoup d'e-mails » réécrite d'après Régis (« Non. … c'est surtout vous qui nous écrirez »).
 9. Inscription : **variante B** (15/11/2026). Bandeau terracotta, photo tapis de léchage, trois raisons, formulaire + mention de confidentialité.
+10. Barre fixe téléphone : **variante A** (15/11/2026). Crème, filet terracotta, « 179 € · Ouverture prochaine » + bouton « Être prévenu ».
+
+Toutes les formes sont choisies. Reste : texte de la section 7 (cadre) à retravailler avec Régis, puis écriture de `gf-programme.liquid`.

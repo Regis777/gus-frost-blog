@@ -1,0 +1,465 @@
+{% comment %}
+  Gus et Frost - Page du Programme du Foyer Apaisé (/pages/programme-foyer-apaise)
+  Section autonome (template page.programme.json, sans main-page : un seul H1).
+  Construite section par section le 15/11/2026 (maquettes : theme/_maquette-programme-*.js).
+  Deux modes (réglage « Mode de la page ») :
+    - attente : formulaire e-mail branché sur Klaviyo (endpoints client, clé publique) ;
+    - ouvert  : bouton qui ajoute le produit au panier ; la case de renoncement du panier prend le relais.
+  La page COMPLÈTE LE CONTRAT (CGV art. 8 bis.1) : délai 72 h / 7 jours ouvrés, garantie 8 bis.8 mot pour mot,
+  cadre vétérinaire, coffret et Politique d'expédition. Ne pas modifier ces textes sans relire les CGV.
+  Aucun prix barré. Insécables écrites en dur (U+00A0) : éditer ce fichier par script, jamais à la main.
+{% endcomment %}
+
+{%- assign s = section.settings -%}
+{%- assign produit = s.produit -%}
+{%- assign ouvert = false -%}
+{%- if s.mode == 'ouvert' and produit != blank and produit.available -%}{%- assign ouvert = true -%}{%- endif -%}
+{%- if produit != blank -%}{%- assign prix = produit.price | money_without_trailing_zeros | replace: ' €', ' €' -%}{%- else -%}{%- assign prix = '179 €' -%}{%- endif -%}
+{%- assign cdn = 'https://cdn.shopify.com/s/files/1/0614/7119/5357/' -%}
+{%- capture img_hero -%}{%- if s.img_hero != blank -%}{{ s.img_hero | image_url: width: 1800 }}{%- else -%}{{ cdn }}articles/hero-maison-apaisante.png?width=1800{%- endif -%}{%- endcapture -%}
+{%- capture img_j10 -%}{%- if s.img_jour10 != blank -%}{{ s.img_jour10 | image_url: width: 900 }}{%- else -%}{{ cdn }}files/hero-chien-anxieux-comprendre-apaiser.png?width=900{%- endif -%}{%- endcapture -%}
+{%- capture img_carnet -%}{%- if s.img_carnet != blank -%}{{ s.img_carnet | image_url: width: 800 }}{%- else -%}{{ cdn }}files/hero-suivre-progres-chien-anxieux.png?width=800{%- endif -%}{%- endcapture -%}
+{%- capture img_lech -%}{%- if s.img_lechage != blank -%}{{ s.img_lechage | image_url: width: 900 }}{%- else -%}{{ cdn }}files/hero-tapis-lechage-apaiser-chien.png?width=900{%- endif -%}{%- endcapture -%}
+{%- capture img_fouil -%}{%- if s.img_fouille != blank -%}{{ s.img_fouille | image_url: width: 700 }}{%- else -%}{{ cdn }}files/hero-tapis-fouille-chien.png?width=700{%- endif -%}{%- endcapture -%}
+{%- capture img_qui -%}{%- if s.img_accompagne != blank -%}{{ s.img_accompagne | image_url: width: 1000 }}{%- else -%}{{ cdn }}articles/hero-chien-dort.png?width=1000{%- endif -%}{%- endcapture -%}
+
+{%- capture bouton -%}
+  {%- if ouvert -%}
+    <form action="/cart/add" method="post" class="gfp-achat">
+      <input type="hidden" name="id" value="{{ produit.selected_or_first_available_variant.id }}">
+      <input type="hidden" name="return_to" value="/cart">
+      <button type="submit" class="gfp-btn">Commencer le Programme</button>
+    </form>
+  {%- else -%}
+    <a class="gfp-btn" href="#gfp-inscription">Être prévenu de l’ouverture</a>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture formulaire -%}
+  <form class="gfp-form" data-gfp-form novalidate>
+    <input type="email" name="email" required autocomplete="email" placeholder="Votre adresse e-mail" aria-label="Votre adresse e-mail">
+    <button class="gfp-btn" type="submit">Être prévenu</button>
+  </form>
+  <p class="gfp-msg" data-gfp-msg role="status" hidden></p>
+{%- endcapture -%}
+
+<style>
+#gf-prog{--vf:#314431;--bg:#efe7da;--cr:#faf8f3;--tc:#c16b47;--ts:#a8522f;--sg:#b6bfa3;--cta:#c6efa3;--be:#f2ece1;
+  background:var(--bg);color:var(--vf);font-family:var(--font-body-family);padding:20px 16px 48px;line-height:1.5}
+#gf-prog *,#gf-prog *::before,#gf-prog *::after{box-sizing:border-box}
+#gf-prog h1,#gf-prog h2,#gf-prog h3,#gf-prog h4{font-family:var(--font-heading-family);font-weight:600;color:var(--vf);letter-spacing:0}
+#gf-prog p,#gf-prog li,#gf-prog summary,#gf-prog span{color:inherit}
+#gf-prog img{max-width:100%;height:auto}
+#gf-prog .gfp-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+#gf-prog .gfp-pile{display:grid;gap:13px;max-width:1220px;margin:0 auto}
+#gf-prog h2{font-size:clamp(24px,2.6vw,36px);line-height:1.15;margin:0 0 14px}
+#gf-prog h3{font-size:22px;line-height:1.2;margin:0 0 10px}
+#gf-prog p.gfp-p{font-size:17px;line-height:1.55;margin:0 0 12px}
+#gf-prog .gfp-cap{border-radius:26px;padding:40px 44px;min-width:0}
+#gf-prog .gfp-cap--sauge{background:var(--sg)}
+#gf-prog .gfp-cap--creme{background:var(--cr);border:1px solid var(--tc)}
+#gf-prog .gfp-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 22px;background:var(--cta);color:var(--vf);border:2px solid var(--vf);border-radius:10px;font:700 17px/1.2 var(--font-body-family);text-decoration:none;cursor:pointer}
+#gf-prog .gfp-btn:hover{background:#b5e88d}
+#gf-prog .gfp-num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--ts);color:var(--cr);font:600 16px/1 var(--font-heading-family);margin:0 0 10px;flex:none}
+#gf-prog .gfp-chute,#gf-prog .gfp-duree{margin:18px 0 0;padding:16px 18px;border-radius:16px;background:var(--ts);color:var(--cr);font-size:17px;line-height:1.45}
+#gf-prog .gfp-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:0}
+#gf-prog .gfp-form input{min-height:50px;border:2px solid var(--vf);border-radius:10px;padding:0 14px;font:16px var(--font-body-family);background:var(--cr);color:var(--vf);min-width:0}
+#gf-prog .gfp-msg{margin:10px 0 0;font-size:15px;font-weight:600}
+#gf-prog .gfp-achat{margin:0}
+/* 1. Ouverture */
+#gf-prog .gfp1{position:relative;border-radius:26px;overflow:hidden;min-height:560px;display:flex;align-items:center}
+#gf-prog .gfp1>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 50%}
+#gf-prog .gfp1-carte{position:relative;margin:36px;max-width:560px;background:var(--cr);border:1px solid var(--tc);border-radius:20px;padding:30px 30px 26px;min-width:0}
+#gf-prog .gfp-sur{display:inline-block;background:var(--ts);color:var(--cr);font-size:13px;font-weight:600;line-height:1.2;padding:7px 12px;border-radius:999px;margin:0 0 14px}
+#gf-prog h1{font-size:clamp(28px,3.4vw,46px);line-height:1.12;margin:0 0 14px}
+#gf-prog .gfp1-sous{font-size:18px;line-height:1.5;margin:0 0 18px}
+#gf-prog .gfp1-prix{font:600 20px/1.2 var(--font-heading-family);margin:0 0 16px}
+#gf-prog .gfp1-prix span{font:500 15px/1.2 var(--font-body-family)}
+#gf-prog .gfp-note{font-size:14px;line-height:1.45;margin:10px 0 0}
+/* 2. Jour 10 */
+#gf-prog .gfp2-haut{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:36px;align-items:center}
+#gf-prog .gfp2-haut img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:18px;display:block}
+#gf-prog .gfp2-frise{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:30px 0 0;padding:26px 0 0}
+#gf-prog .gfp2-frise:before{content:"";position:absolute;left:0;right:0;top:0;border-top:2px solid var(--tc)}
+#gf-prog .gfp2-frise>div{position:relative}
+#gf-prog .gfp2-frise>div:before{content:"";position:absolute;top:-33px;left:0;width:12px;height:12px;border-radius:50%;background:var(--ts)}
+#gf-prog .gfp2-frise b{display:block;font:600 20px/1.2 var(--font-heading-family);color:var(--ts);margin:0 0 6px}
+#gf-prog .gfp2-frise span{font-size:16px;line-height:1.45}
+/* 3. Contenu */
+#gf-prog .gfp-intro{font-size:17px;line-height:1.5;margin:0 0 20px;max-width:760px}
+#gf-prog .gfp3{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+#gf-prog .gfp3-carte{background:var(--cr);border-radius:16px;padding:18px;min-width:0;grid-column:span 2}
+#gf-prog .gfp3-carte:nth-child(4),#gf-prog .gfp3-carte:nth-child(5){grid-column:span 3}
+#gf-prog .gfp3-carte h3{font-size:20px;margin:0 0 8px}
+#gf-prog .gfp3-carte p{font-size:16px;line-height:1.5;margin:0}
+#gf-prog .gfp3-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0 0}
+#gf-prog .gfp3-photos--une{grid-template-columns:minmax(0,1fr)}
+#gf-prog .gfp3-photos img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;display:block}
+#gf-prog .gfp3-photos--une img{aspect-ratio:16/7}
+/* 4. Prix */
+#gf-prog .gfp4-titre{text-align:center;margin:0 auto 6px}
+#gf-prog .gfp4-sous{text-align:center;font-size:17px;line-height:1.5;margin:0 auto 22px;max-width:640px}
+#gf-prog .gfp4-pied{text-align:center;font-size:14px;margin:14px 0 0}
+#gf-prog .gfp4{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;max-width:900px;margin:0 auto}
+#gf-prog .gfp4-cab{background:var(--be);border-radius:20px;padding:24px;min-width:0}
+#gf-prog .gfp4-pro{background:var(--ts);color:var(--cr);border-radius:20px;padding:24px;min-width:0}
+#gf-prog .gfp4-et{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:0 0 14px;color:var(--ts)}
+#gf-prog .gfp4-pro .gfp4-et{color:var(--cr)}
+#gf-prog .gfp4-l{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #e0d7c6;font-size:16px}
+#gf-prog .gfp4-l b{white-space:nowrap}
+#gf-prog .gfp4-tot{display:flex;justify-content:space-between;gap:12px;padding:14px 0 0;font:600 22px/1.2 var(--font-heading-family)}
+#gf-prog .gfp4-sans{font-size:15px;line-height:1.45;margin:12px 0 0}
+#gf-prog .gfp4-prix{font:600 46px/1 var(--font-heading-family);margin:0 0 4px;color:var(--cr)}
+#gf-prog .gfp4-prix small{font:500 16px/1 var(--font-body-family)}
+#gf-prog .gfp4-3x{font-size:14px;margin:6px 0 0}
+#gf-prog .gfp4-pro ul{list-style:none;padding:0;margin:14px 0 18px}
+#gf-prog .gfp4-pro li{position:relative;padding:5px 0 5px 24px;font-size:16px;line-height:1.4;color:var(--cr)}
+#gf-prog .gfp4-pro li:before{content:"";position:absolute;left:2px;top:11px;width:10px;height:6px;border-left:2px solid var(--cr);border-bottom:2px solid var(--cr);transform:rotate(-45deg)}
+#gf-prog .gfp4-pro .gfp-btn{width:100%}
+/* 5. Garantie */
+#gf-prog .gfp5-et{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 14px}
+#gf-prog .gfp5-et>div{background:var(--cr);border-radius:16px;padding:16px;min-width:0}
+#gf-prog .gfp5-et b{display:block;font:600 19px/1.25 var(--font-heading-family);margin:8px 0 6px}
+#gf-prog .gfp5-et p{font-size:15px;line-height:1.45;margin:0}
+#gf-prog .gfp5 details{background:var(--cr);border-radius:16px;padding:14px 18px}
+#gf-prog .gfp5 summary{cursor:pointer;font-weight:700;color:var(--ts)}
+#gf-prog .gfp5 details p{font-size:15px;line-height:1.55;margin:10px 0 0}
+#gf-prog .gfp5 a{color:var(--ts);font-weight:600}
+#gf-prog .gfp5-pq{font-size:16px;line-height:1.5;margin:14px 0 0}
+/* 6. Qui vous accompagne */
+#gf-prog .gfp6{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px;align-items:center}
+#gf-prog .gfp6 img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:88% 55%;border-radius:18px;display:block}
+#gf-prog .gfp6-transp{background:var(--sg);border-radius:16px;padding:16px 18px;font-size:16px;line-height:1.5;margin:0 0 16px}
+#gf-prog .gfp6-transp strong{display:block;font:600 18px/1.3 var(--font-heading-family);margin:0 0 4px}
+#gf-prog .gfp6-cit{font:italic 500 21px/1.45 var(--font-heading-family);margin:0;padding:0 0 0 18px;border-left:3px solid var(--tc)}
+#gf-prog .gfp6-gf{font-size:15px;line-height:1.5;margin:14px 0 0}
+/* 7. Cadre */
+#gf-prog .gfp7{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+#gf-prog .gfp7>div{background:var(--cr);border-radius:18px;padding:22px;min-width:0}
+#gf-prog .gfp7 h3{font-size:20px}
+#gf-prog .gfp7 p{font-size:16px;line-height:1.55;margin:0 0 10px}
+#gf-prog .gfp7 p:last-child{margin:0}
+#gf-prog .gfp7-veto{font-weight:700;color:var(--ts)}
+/* 8. FAQ */
+#gf-prog .gfp8{display:grid;gap:10px;max-width:900px;margin:0 auto}
+#gf-prog .gfp8 details{background:var(--be);border-radius:14px;border-left:3px solid transparent}
+#gf-prog .gfp8 details[open]{background:var(--cr);border-left-color:var(--ts)}
+#gf-prog .gfp8 summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px;font-weight:600;font-size:17px;line-height:1.35}
+#gf-prog .gfp8 summary::-webkit-details-marker{display:none}
+#gf-prog .gfp8 summary:before{content:"?";display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;border:2px solid var(--tc);color:var(--tc);font-weight:700;font-size:14px}
+#gf-prog .gfp8 summary:after{content:"";width:9px;height:9px;border-right:2px solid var(--tc);border-bottom:2px solid var(--tc);transform:rotate(45deg);margin:0 4px 4px 0}
+#gf-prog .gfp8 details[open] summary:after{transform:rotate(-135deg);margin:4px 4px 0 0}
+#gf-prog .gfp8 details p{margin:0;padding:0 16px 16px 54px;font-size:16px;line-height:1.55}
+#gf-prog .gfp8 a{color:var(--ts);font-weight:600}
+/* 9. Inscription */
+#gf-prog .gfp9{background:var(--ts);color:var(--cr);border-radius:26px;overflow:hidden;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+#gf-prog .gfp9>img{width:100%;height:100%;object-fit:cover;display:block}
+#gf-prog .gfp9-t{padding:36px 40px;min-width:0}
+#gf-prog .gfp9 h2{color:var(--cr)}
+#gf-prog .gfp9-intro{font-size:17px;line-height:1.5;margin:0 0 18px}
+#gf-prog .gfp9-r{display:grid;gap:10px;margin:0 0 20px;padding:0;list-style:none}
+#gf-prog .gfp9-r li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;font-size:16px;line-height:1.45}
+#gf-prog .gfp9-r li b{display:block;font:600 18px/1.3 var(--font-heading-family)}
+#gf-prog .gfp9-r .gfp-num{background:var(--cr);color:var(--ts);margin:0}
+#gf-prog .gfp9 .gfp-form input{border-color:var(--cr)}
+#gf-prog .gfp9-rgpd{font-size:13px;line-height:1.45;margin:10px 0 0}
+#gf-prog .gfp9-rgpd a{color:inherit;text-decoration:underline}
+/* 10. Barre téléphone */
+#gf-prog .gfp10{display:none}
+@media (max-width:749px){
+ #gf-prog{padding:12px 12px 90px}
+ #gf-prog .gfp-cap{padding:20px 16px;border-radius:20px}
+ #gf-prog h2{font-size:22px}
+ #gf-prog h3{font-size:19px}
+ #gf-prog p.gfp-p,#gf-prog .gfp-intro,#gf-prog .gfp4-sous,#gf-prog .gfp9-intro{font-size:16px;line-height:1.5}
+ #gf-prog .gfp-btn{width:100%}
+ #gf-prog .gfp-form{grid-template-columns:minmax(0,1fr)}
+ #gf-prog .gfp-chute,#gf-prog .gfp-duree{font-size:16px;padding:14px}
+ #gf-prog .gfp1{display:block;min-height:0;background:var(--cr);border:1px solid var(--tc);border-radius:20px}
+ #gf-prog .gfp1>img{position:static;height:220px}
+ #gf-prog .gfp1-carte{margin:0;border:0;border-radius:0;padding:20px 16px 18px;max-width:none}
+ #gf-prog .gfp-sur{font-size:12px}
+ #gf-prog h1{font-size:27px}
+ #gf-prog .gfp1-sous{font-size:16px;margin-bottom:14px}
+ #gf-prog .gfp2-haut{grid-template-columns:minmax(0,1fr);gap:16px}
+ #gf-prog .gfp2-haut img{aspect-ratio:16/10}
+ #gf-prog .gfp2-frise{grid-template-columns:minmax(0,1fr);gap:14px;margin-top:20px;padding:0 0 0 22px}
+ #gf-prog .gfp2-frise:before{top:4px;bottom:4px;left:5px;right:auto;border-top:0;border-left:2px solid var(--tc)}
+ #gf-prog .gfp2-frise>div:before{top:5px;left:-22px}
+ #gf-prog .gfp3{grid-template-columns:minmax(0,1fr);gap:10px}
+ #gf-prog .gfp3-carte,#gf-prog .gfp3-carte:nth-child(4),#gf-prog .gfp3-carte:nth-child(5){grid-column:auto;padding:14px}
+ #gf-prog .gfp3-carte h3{font-size:18px}
+ #gf-prog .gfp4{grid-template-columns:minmax(0,1fr);gap:10px}
+ #gf-prog .gfp4-cab,#gf-prog .gfp4-pro{padding:16px 14px}
+ #gf-prog .gfp4-prix{font-size:38px}
+ #gf-prog .gfp5-et{grid-template-columns:minmax(0,1fr);gap:8px}
+ #gf-prog .gfp5-et>div{padding:12px 14px}
+ #gf-prog .gfp6{grid-template-columns:minmax(0,1fr);gap:16px}
+ #gf-prog .gfp6 img{aspect-ratio:16/10;object-position:80% 55%;order:-1}
+ #gf-prog .gfp6-cit{font-size:18px;padding-left:14px}
+ #gf-prog .gfp6-transp{padding:14px}
+ #gf-prog .gfp7{grid-template-columns:minmax(0,1fr);gap:10px}
+ #gf-prog .gfp7>div{padding:16px 14px}
+ #gf-prog .gfp8 summary{padding:12px;font-size:16px;gap:10px}
+ #gf-prog .gfp8 details p{padding:0 12px 14px 12px;font-size:15px}
+ #gf-prog .gfp9{grid-template-columns:minmax(0,1fr);border-radius:20px}
+ #gf-prog .gfp9>img{height:200px}
+ #gf-prog .gfp9-t{padding:20px 16px}
+ #gf-prog .gfp10{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:var(--cr);border-top:2px solid var(--tc);box-shadow:0 -4px 14px rgba(49,68,49,.12);transform:translateY(110%);transition:transform .25s ease}
+ #gf-prog .gfp10.est-visible{transform:none}
+ #gf-prog .gfp10-t{min-width:0;line-height:1.2}
+ #gf-prog .gfp10-t b{display:block;font:600 18px/1.1 var(--font-heading-family)}
+ #gf-prog .gfp10-t span{font-size:13px}
+ #gf-prog .gfp10 .gfp-btn,#gf-prog .gfp10 .gfp-achat{width:auto}
+ #gf-prog .gfp10 .gfp-btn{min-height:44px;padding:8px 16px;font-size:16px;white-space:nowrap}
+}
+@media (prefers-reduced-motion:reduce){#gf-prog .gfp10{transition:none}}
+</style>
+
+<div id="gf-prog" data-cle="{{ s.klaviyo_cle | escape }}" data-liste="{{ s.klaviyo_liste | escape }}">
+<div class="gfp-pile">
+
+  {%- comment -%} 1. Ouverture {%- endcomment -%}
+  <section class="gfp1" data-gfp-ouverture>
+    <img src="{{ img_hero }}" alt="Un chien endormi dans un salon calme" width="1800" height="1013" fetchpriority="high">
+    <div class="gfp1-carte">
+      <span class="gfp-sur">Accompagnement de 90 jours · pour les chiens</span>
+      <h1>Votre chien ne se calmera pas parce que vous avez acheté le bon objet.</h1>
+      <p class="gfp1-sous">Il se calmera parce que quelqu’un vous aura suivi assez longtemps pour que ça tienne. Un bilan écrit à son nom, l’analyse d’une vidéo, et vos questions par e-mail pendant 90 jours.</p>
+      <p class="gfp1-prix">{{ prix }} {% unless ouvert %}<span>· ouverture prochaine</span>{% endunless %}</p>
+      {%- if ouvert -%}
+        {{ bouton }}
+        <p class="gfp-note">Paiement unique. Votre questionnaire vous est envoyé dès la commande.</p>
+      {%- else -%}
+        {{ formulaire }}
+        <p class="gfp-note">Inscription gratuite, sans engagement. Dès que vous confirmez votre adresse, vous recevez le guide « Les 5 erreurs qui aggravent le stress de votre chien ».</p>
+      {%- endif -%}
+    </div>
+  </section>
+
+  {%- comment -%} 2. Le mur du jour 10 {%- endcomment -%}
+  <section class="gfp-cap gfp-cap--creme">
+    <div class="gfp2-haut">
+      <img src="{{ img_j10 }}" alt="Un chien inquiet, le regard tourné vers son maître" loading="lazy" width="900" height="675">
+      <div>
+        <h2>Ce n’est jamais l’objet qui échoue. C’est la suite.</h2>
+        <p class="gfp-p">Vous avez déjà essayé. Un tapis, un diffuseur, plus de balades, peut-être même une consultation. Pendant trois jours, ça allait mieux. Puis la semaine a repris, un soir vous avez sauté l’étape, le lendemain aussi, et au bout de dix jours l’objet était au fond du placard.</p>
+        <p class="gfp-p"><strong>Ce n’est pas un manque de volonté.</strong> C’est ce qui arrive à presque tout le monde quand personne ne vient voir où vous en êtes.</p>
+      </div>
+    </div>
+    <h3 style="margin-top:28px">Une séance donne des consignes. Elle ne vous accompagne pas.</h3>
+    <div class="gfp2-frise">
+      <div><b>Jour 4</b><span>Votre chien régresse, et vous ne savez pas si c’est normal.</span></div>
+      <div><b>Jour 9</b><span>Vous n’avez plus le temps, et personne ne le remarque.</span></div>
+      <div><b>Jour 21</b><span>Ça marche, et vous ne savez pas quoi faire ensuite.</span></div>
+    </div>
+    <p class="gfp-chute">Le Programme est construit autour de ces moments : non pas vous expliquer quoi faire, mais faire en sorte que vous le fassiez pendant 90 jours.</p>
+  </section>
+
+  {%- comment -%} 3. Ce que comprend le Programme (CGV 8 bis.1, 8 bis.5, 8 bis.7) {%- endcomment -%}
+  <section class="gfp-cap gfp-cap--sauge">
+    <h2>Ce que comprend le Programme</h2>
+    <p class="gfp-intro">Tout part d’un bilan écrit pour votre chien, pas pour un chien moyen. Le reste sert à le tenir jusqu’au bout.</p>
+    <div class="gfp3">
+      <div class="gfp3-carte"><span class="gfp-num">1</span><h3>Votre bilan écrit, à son nom</h3><p>Après votre commande, vous recevez un questionnaire détaillé sur votre chien, votre foyer et les situations qui déclenchent le stress. Votre bilan écrit vous est adressé habituellement sous 72 h, et au plus tard sous 7 jours ouvrés à compter de la réception de votre questionnaire.</p></div>
+      <div class="gfp3-carte"><span class="gfp-num">2</span><h3>L’analyse d’une vidéo de votre chien</h3><p>Vous filmez deux minutes de la situation qui coince : le départ, l’orage, le retour du soir. Je la regarde et je vous réponds par écrit.</p></div>
+      <div class="gfp3-carte"><span class="gfp-num">3</span><h3>Vos questions par e-mail, pendant 90 jours</h3><p>Autant de questions qu’il vous en faut, réponse sous 48 h ouvrées. C’est la partie qui empêche l’abandon.</p></div>
+      <div class="gfp3-carte"><span class="gfp-num">4</span><h3>La méthode écrite</h3><p>Le manuel du Foyer Apaisé, 30 recettes classées par besoin et par moment, la feuille de route jour par jour, et le carnet de bord qui vous fait tenir.</p>
+        <div class="gfp3-photos gfp3-photos--une"><img src="{{ img_carnet }}" alt="Un carnet de bord rempli à côté d’un chien couché" loading="lazy" width="800" height="350"></div></div>
+      <div class="gfp3-carte"><span class="gfp-num">5</span><h3>Le coffret d’accessoires, expédié chez vous</h3><p>Un tapis de léchage, l’outil du calme. Un tapis de fouille, celui de la dépense mentale. Un jouet de mastication. Son expédition suit notre <a href="{{ shop.shipping_policy.url | default: '/policies/shipping-policy' }}">Politique d’expédition</a>, et le délai de votre bilan ne dépend pas de l’arrivée du colis.</p>
+        <div class="gfp3-photos"><img src="{{ img_lech }}" alt="Un chien sur un tapis de léchage" loading="lazy" width="900" height="675"><img src="{{ img_fouil }}" alt="Un chien qui fouille un tapis de fouille" loading="lazy" width="700" height="525"></div></div>
+    </div>
+    <p class="gfp-duree"><strong>90 jours à compter de l’envoi de votre bilan.</strong> Vous disposez de six mois après votre commande pour renvoyer votre questionnaire : rien ne se périme si vous démarrez plus tard.</p>
+  </section>
+
+  {%- comment -%} 4. Le prix (aucun prix barré) {%- endcomment -%}
+  <section class="gfp-cap gfp-cap--creme">
+    <h2 class="gfp4-titre">Ce que le même parcours coûte en cabinet</h2>
+    <p class="gfp4-sous">Un bilan d’une heure, puis deux séances de suivi. C’est le parcours habituel. Voici ce qu’il coûte, et ce qu’il ne comprend pas.</p>
+    <div class="gfp4">
+      <div class="gfp4-cab"><p class="gfp4-et">En cabinet</p>
+        <div class="gfp4-l"><span>Un bilan comportemental d’une heure</span><b>environ 110 €</b></div>
+        <div class="gfp4-l"><span>Deux séances de suivi</span><b>environ 145 €</b></div>
+        <div class="gfp4-tot"><span>Total</span><span>environ 255 €</span></div>
+        <p class="gfp4-sans">Sans les outils, sans les recettes, et sans personne entre les rendez-vous.</p></div>
+      <div class="gfp4-pro"><p class="gfp4-et">Le Programme du Foyer Apaisé</p>
+        <p class="gfp4-prix">{{ prix }} <small>· 90 jours</small></p>
+        {%- if s.paiement_3x and s.texte_3x != blank -%}<p class="gfp4-3x">{{ s.texte_3x }}</p>{%- endif -%}
+        <ul><li>Votre bilan écrit, à son nom</li><li>L’analyse d’une vidéo</li><li>Vos questions par e-mail pendant 90 jours</li><li>Le manuel, 30 recettes, la feuille de route et le carnet</li><li>Le coffret de trois accessoires</li></ul>
+        {{ bouton }}</div>
+    </div>
+    <p class="gfp4-pied">Prix TTC, payé une fois. Ce n’est pas un abonnement.</p>
+  </section>
+
+  {%- comment -%} 5. La garantie (CGV 8 bis.8, texte exact dans le details) {%- endcomment -%}
+  <section class="gfp-cap gfp-cap--sauge gfp5">
+    <h2>Trente jours de carnet. Si rien ne bouge, vous êtes remboursé.</h2>
+    <div class="gfp5-et">
+      <div><span class="gfp-num" style="margin:0">1</span><b>Vous tenez votre carnet</b><p>Trente jours consécutifs, en suivant le Programme.</p></div>
+      <div><span class="gfp-num" style="margin:0">2</span><b>Aucune évolution ?</b><p>Vous écrivez à contact@gusetfrost.fr, avec le carnet renseigné.</p></div>
+      <div><span class="gfp-num" style="margin:0">3</span><b>Vous êtes remboursé</b><p>Intégralement. Vous conservez le coffret et tous les supports.</p></div>
+    </div>
+    <details><summary>Le texte exact de la garantie</summary><p>Si, après avoir suivi le Programme et rempli votre carnet de bord pendant trente (30) jours consécutifs, vous ne constatez aucune évolution, le prix vous est intégralement remboursé sur simple demande adressée à <a href="mailto:contact@gusetfrost.fr">contact@gusetfrost.fr</a>, accompagnée du carnet renseigné. Vous conservez alors le coffret et l’ensemble des supports remis. Cette garantie ne restreint ni votre droit de rétractation, ni les garanties légales.</p></details>
+    <p class="gfp5-pq">Pourquoi le carnet ? Parce qu’il montre ce qui a été fait, jour après jour. C’est aussi lui qui vous fait tenir les semaines où l’envie retombe.</p>
+  </section>
+
+  {%- comment -%} 6. Qui vous accompagne (le comportementaliste reste anonyme) {%- endcomment -%}
+  <section class="gfp-cap gfp-cap--creme">
+    <div class="gfp6">
+      <div>
+        <h2>Qui vous accompagne</h2>
+        <p class="gfp6-transp"><strong>Le métier n’est pas réglementé en France.</strong>N’importe qui peut se dire comportementaliste. C’est pour cela que nous vous disons exactement qui accompagne votre chien, et vous laissons juger.</p>
+        <p class="gfp-p">Un comportementaliste qui exerce depuis vingt ans, majoritairement en cabinet, au Canada, à recevoir des chiens et des chats. Ces dernières années, il s’est concentré sur un seul sujet : la gestion du stress chez le chien. Il est titulaire de l’ACACED, l’attestation de connaissances pour les animaux de compagnie.</p>
+        <p class="gfp6-cit">« En cabinet, je voyais le même mur revenir : une heure de consultation, des consignes justes, et un foyer qui abandonne au bout de dix jours parce que personne n’est là entre les rendez-vous. Ce programme est ma réponse. »</p>
+        <p class="gfp6-gf">Gus était un chien. Frost était un chat. C’est leur nom qui est sur cette boutique.</p>
+      </div>
+      <img src="{{ img_qui }}" alt="Un chien endormi sur son coussin" loading="lazy" width="1000" height="750">
+    </div>
+  </section>
+
+  {%- comment -%} 7. Le cadre (CGV 8 bis.2, 8 bis.3, 8 bis.6, 8 ter) - TEXTE À RETRAVAILLER {%- endcomment -%}
+  <section class="gfp-cap gfp-cap--sauge">
+    <h2>Le cadre, et ce qui se passe après votre commande</h2>
+    <div class="gfp7">
+      <div><h3>Ce que le Programme n’est pas</h3>
+        <p>Le Programme est un accompagnement éducatif et comportemental. Il ne constitue ni un diagnostic, ni une prescription, ni un traitement, et il ne se substitue pas à une consultation vétérinaire : certains troubles du comportement ont une origine médicale.</p>
+        <p class="gfp7-veto">Pour une anxiété sévère, voyez votre vétérinaire avant toute chose.</p>
+        <p>Si votre questionnaire révèle une situation qui relève d’un vétérinaire, nous vous le dirons et vous orienterons vers lui. Votre commande vous est alors intégralement remboursée si aucun bilan ne vous a été remis.</p>
+        <p>L’évolution d’un chien dépend de la mise en œuvre effective des recommandations. Aucun résultat comportemental ne peut être garanti.</p></div>
+      <div><h3>Après votre commande</h3>
+        <p>Vous recevez par e-mail le lien vers votre questionnaire comportemental. Vous le remplissez à votre rythme, vous y joignez votre vidéo, et votre bilan suit. Le coffret part de son côté.</p>
+        <p>Avant de payer, vous confirmez que l’accompagnement peut démarrer sans attendre le délai de rétractation de 14 jours : c’est ce qui permet de vous envoyer votre questionnaire tout de suite. Vous gardez la possibilité de vous rétracter, seule la part déjà fournie restant due, et la garantie de 30 jours va plus loin.</p></div>
+    </div>
+  </section>
+
+  {%- comment -%} 8. FAQ {%- endcomment -%}
+  <section class="gfp-cap gfp-cap--creme">
+    <h2 style="text-align:center">Vos questions</h2>
+    <div class="gfp8">
+      <details open><summary>Est-ce un abonnement ?</summary><p>Non. Le Programme dure 90 jours, payés une fois.</p></details>
+      <details><summary>Mon chien est âgé, craintif ou adopté. Est-il concerné ?</summary><p>C’est l’objet du bilan de départ : il est écrit pour votre chien, pas pour un chien moyen. Si votre situation relève d’un vétérinaire, nous vous le dirons.</p></details>
+      <details><summary>Combien de temps cela prend-il par jour ?</summary><p>Une dizaine de minutes. Le Programme est pensé pour des gens qui travaillent.</p></details>
+      <details><summary>Quand commencent les 90 jours ?</summary><p>À l’envoi de votre bilan. Vous avez six mois après votre commande pour renvoyer votre questionnaire.</p></details>
+      <details><summary>Quand le coffret arrive-t-il ?</summary><p>Il est expédié selon notre <a href="{{ shop.shipping_policy.url | default: '/policies/shipping-policy' }}">Politique d’expédition</a>. Votre bilan n’attend pas le colis : vous commencez à sa lecture.</p></details>
+      <details><summary>Puis-je me rétracter ?</summary><p>Oui. Avant de payer, vous acceptez que l’accompagnement démarre tout de suite. Si vous vous rétractez ensuite, seule la part déjà fournie reste due, et vous renvoyez le coffret. La garantie de 30 jours va plus loin.</p></details>
+      <details><summary>Le Programme existe-t-il pour les chats ?</summary><p>Pas encore. Il est conçu pour les chiens. Un programme pour les chats viendra plus tard.</p></details>
+      {%- unless ouvert -%}
+      <details><summary>À quoi est-ce que je m’inscris, exactement ?</summary><p>À une liste d’attente. Une fois votre adresse confirmée, vous recevez le guide « Les 5 erreurs qui aggravent le stress de votre chien », puis un e-mail à l’ouverture. Vous décidez à ce moment-là.</p></details>
+      <details><summary>Allez-vous m’envoyer beaucoup d’e-mails ?</summary><p>Non. Le guide, quelques e-mails courts, un par semaine au plus, et l’annonce de l’ouverture. Ensuite, c’est surtout vous qui nous écrirez, et nous vous répondrons. Désinscription en un clic.</p></details>
+      {%- endunless -%}
+    </div>
+  </section>
+
+  {%- comment -%} 9. Inscription (ou achat quand le Programme est ouvert) {%- endcomment -%}
+  <section class="gfp9" id="gfp-inscription" data-gfp-fin>
+    <img src="{{ img_lech }}" alt="Un chien sur un tapis de léchage" loading="lazy" width="900" height="675">
+    <div class="gfp9-t">
+      {%- if ouvert -%}
+        <h2>Commencer le Programme</h2>
+        <p class="gfp9-intro">{{ prix }}, payé une fois. Votre questionnaire vous est envoyé dès la commande, et le coffret part de son côté.</p>
+        {{ bouton }}
+      {%- else -%}
+        <h2>Être prévenu de l’ouverture</h2>
+        <p class="gfp9-intro">Le Programme du Foyer Apaisé ouvre bientôt, à {{ prix }}. Laissez votre adresse, vous serez parmi les premiers à le savoir.</p>
+        <ul class="gfp9-r">
+          <li><span class="gfp-num">1</span><span><b>Le guide, tout de suite</b>Dès que vous confirmez votre adresse, vous recevez « Les 5 erreurs qui aggravent le stress de votre chien ». Il est à vous, quoi que vous décidiez ensuite.</span></li>
+          <li><span class="gfp-num">2</span><span><b>Avant l’ouverture publique</b>Vous êtes prévenu par e-mail avant tout le monde.</span></li>
+          <li><span class="gfp-num">3</span><span><b>Aucun paiement, aucun engagement</b>Vous décidez à l’ouverture, ou jamais.</span></li>
+        </ul>
+        {{ formulaire }}
+        <p class="gfp9-rgpd">Votre adresse sert uniquement à vous envoyer le guide et les nouvelles du Programme. Désinscription en un clic, à tout moment. <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}">Politique de confidentialité</a>.</p>
+      {%- endif -%}
+    </div>
+  </section>
+
+</div>
+
+  {%- comment -%} 10. Barre fixe sur téléphone {%- endcomment -%}
+  <div class="gfp10" data-gfp-barre aria-hidden="true">
+    <div class="gfp10-t"><b>{{ prix }}</b><span>{% if ouvert %}90 jours d’accompagnement{% else %}Ouverture prochaine{% endif %}</span></div>
+    {%- if ouvert -%}{{ bouton }}{%- else -%}<a class="gfp-btn" href="#gfp-inscription" tabindex="-1">Être prévenu</a>{%- endif -%}
+  </div>
+</div>
+
+<script>
+(function () {
+  var racine = document.getElementById('gf-prog');
+  if (!racine) return;
+
+  /* Barre fixe : visible une fois l'ouverture dépassée, masquée quand l'inscription est à l'écran */
+  var barre = racine.querySelector('[data-gfp-barre]');
+  var haut = racine.querySelector('[data-gfp-ouverture]');
+  var fin = racine.querySelector('[data-gfp-fin]');
+  if (barre && haut && fin && 'IntersectionObserver' in window) {
+    var hautVu = true, finVue = false;
+    var maj = function () {
+      var montrer = !hautVu && !finVue;
+      barre.classList.toggle('est-visible', montrer);
+      barre.setAttribute('aria-hidden', montrer ? 'false' : 'true');
+      var lien = barre.querySelector('a,button');
+      if (lien) lien.tabIndex = montrer ? 0 : -1;
+    };
+    new IntersectionObserver(function (e) { hautVu = e[0].isIntersecting; maj(); }).observe(haut);
+    new IntersectionObserver(function (e) { finVue = e[0].isIntersecting; maj(); }).observe(fin);
+  }
+
+  /* Inscription Klaviyo (endpoints client : clé publique uniquement, liste en double opt-in) */
+  var cle = racine.getAttribute('data-cle'), liste = racine.getAttribute('data-liste');
+  var formulaires = racine.querySelectorAll('[data-gfp-form]');
+  Array.prototype.forEach.call(formulaires, function (f) {
+    var msg = f.nextElementSibling;
+    f.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var champ = f.querySelector('input[type=email]');
+      var email = (champ.value || '').trim();
+      var dire = function (t) { if (msg) { msg.textContent = t; msg.hidden = false; } };
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { dire('Cette adresse ne semble pas valide.'); champ.focus(); return; }
+      if (!cle || !liste) { dire('L’inscription n’est pas encore ouverte. Revenez bientôt.'); return; }
+      var bouton = f.querySelector('button'); bouton.disabled = true;
+      fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + encodeURIComponent(cle), {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', revision: '2024-10-15' },
+        body: JSON.stringify({ data: { type: 'subscription', attributes: {
+          custom_source: 'Page du Programme',
+          profile: { data: { type: 'profile', attributes: { email: email, properties: { source_lead: 'page_programme' } } } } },
+          relationships: { list: { data: { type: 'list', id: liste } } } } })
+      }).then(function (r) {
+        if (!(r.ok || r.status === 202)) throw new Error('Klaviyo ' + r.status);
+        f.hidden = true;
+        dire('C’est noté. Un e-mail vous demande de confirmer votre adresse : le guide arrive juste après. Pensez à regarder dans les indésirables.');
+      }).catch(function (e) {
+        console.warn('[programme] inscription impossible', e);
+        bouton.disabled = false;
+        dire('L’inscription n’a pas pu aboutir. Réessayez dans un instant, ou écrivez-nous à contact@gusetfrost.fr.');
+      });
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Programme Foyer Apaisé",
+  "class": "gf-programme-section",
+  "settings": [
+    { "type": "select", "id": "mode", "label": "Mode de la page", "default": "attente",
+      "options": [ { "value": "attente", "label": "Liste d'attente (formulaire e-mail)" }, { "value": "ouvert", "label": "Ouvert à l'achat (bouton panier)" } ],
+      "info": "« Ouvert » n'agit que si le produit ci-dessous est choisi, actif et disponible." },
+    { "type": "product", "id": "produit", "label": "Produit du Programme" },
+    { "type": "checkbox", "id": "paiement_3x", "label": "Afficher le paiement en 3 fois", "default": false,
+      "info": "À cocher seulement quand un moyen de paiement fractionné est installé." },
+    { "type": "text", "id": "texte_3x", "label": "Texte du paiement en 3 fois", "default": "ou 3 × 59,67 € sans frais" },
+    { "type": "header", "content": "Klaviyo (liste d'attente)" },
+    { "type": "text", "id": "klaviyo_cle", "label": "Clé publique (Site ID)", "default": "VyiAUH" },
+    { "type": "text", "id": "klaviyo_liste", "label": "Identifiant de liste", "default": "XFNa4P" },
+    { "type": "header", "content": "Images (une image vide reprend la photo d'origine)" },
+    { "type": "image_picker", "id": "img_hero", "label": "Ouverture" },
+    { "type": "image_picker", "id": "img_jour10", "label": "Le mur du jour 10" },
+    { "type": "image_picker", "id": "img_carnet", "label": "La méthode écrite (carnet)" },
+    { "type": "image_picker", "id": "img_lechage", "label": "Coffret et inscription (tapis de léchage)" },
+    { "type": "image_picker", "id": "img_fouille", "label": "Coffret (tapis de fouille)" },
+    { "type": "image_picker", "id": "img_accompagne", "label": "Qui vous accompagne" }
+  ],
+  "presets": [ { "name": "Programme Foyer Apaisé" } ]
+}
+{% endschema %}

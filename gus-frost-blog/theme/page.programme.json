@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "programme": {
+      "type": "gf-programme",
+      "settings": {
+        "mode": "attente",
+        "produit": "le-programme-du-foyer-apaise",
+        "paiement_3x": false,
+        "klaviyo_cle": "VyiAUH",
+        "klaviyo_liste": "XFNa4P"
+      }
+    }
+  },
+  "order": ["programme"]
+}
