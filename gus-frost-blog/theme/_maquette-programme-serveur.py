@@ -5,7 +5,7 @@ import http.server, os, re, sys
 THEME = r"C:\Users\regis\gfbrepo\gus-frost-blog\theme"
 # section -> variante retenue ; None = section en cours (on garde les deux)
 CHOIX = [("1-ouverture", "gfpA"), ("2-jour10", "A"), ("3-contenu", "B"), ("4-prix", "B"),
-         ("5-garantie", "A"), ("6-accompagne", "A")]
+         ("5-garantie", "A"), ("6-accompagne", "A"), ("7-cadre", None)]
 
 def page():
     out = ["document.querySelector('#MainContent').innerHTML='';",
@@ -31,7 +31,7 @@ def page():
         elif a_retirer:
             n = nom[0]
             out.append("document.querySelectorAll('[data-s%s=\"%s\"]').forEach(e=>e.remove());" % (n, a_retirer))
-            if n != "6":
+            if True:
                 out.append("document.querySelectorAll('[data-s%s]').forEach(e=>{if(e.classList.contains('gfp-lbl'))e.remove()});" % n)
     return "\n".join(out)
 
