@@ -224,9 +224,9 @@
   <section class="gfp1" data-gfp-ouverture>
     <img src="{{ img_hero }}" alt="Un chien endormi dans un salon calme" width="1800" height="1013" fetchpriority="high">
     <div class="gfp1-carte">
-      <span class="gfp-sur">Accompagnement de 90 jours · pour les chiens</span>
+      <span class="gfp-sur">Accompagnement de 60 jours · pour les chiens</span>
       <h1>Votre chien ne se calmera pas parce que vous avez acheté le bon objet.</h1>
-      <p class="gfp1-sous">Il se calmera parce que quelqu’un vous aura suivi assez longtemps pour que ça tienne. Un bilan écrit à son nom, l’analyse d’une vidéo, et vos questions par e-mail pendant 90 jours.</p>
+      <p class="gfp1-sous">Il se calmera parce que quelqu’un vous aura suivi assez longtemps pour que ça tienne. Un bilan écrit à son nom, l’analyse d’une vidéo, et vos questions par e-mail pendant 60 jours.</p>
       <p class="gfp1-prix">{{ prix }} {% unless ouvert %}<span>· ouverture prochaine</span>{% endunless %}</p>
       {%- if ouvert -%}
         {{ bouton }}
@@ -254,7 +254,7 @@
       <div><b>Jour 9</b><span>Vous n’avez plus le temps, et personne ne le remarque.</span></div>
       <div><b>Jour 21</b><span>Ça marche, et vous ne savez pas quoi faire ensuite.</span></div>
     </div>
-    <p class="gfp-chute">Le Programme est construit autour de ces moments : non pas vous expliquer quoi faire, mais faire en sorte que vous le fassiez pendant 90 jours.</p>
+    <p class="gfp-chute">Le Programme est construit autour de ces moments : non pas vous expliquer quoi faire, mais faire en sorte que vous le fassiez pendant 60 jours.</p>
   </section>
 
   {%- comment -%} 3. Ce que comprend le Programme (CGV 8 bis.1, 8 bis.5, 8 bis.7) {%- endcomment -%}
@@ -264,13 +264,13 @@
     <div class="gfp3">
       <div class="gfp3-carte"><span class="gfp-num">1</span><h3>Votre bilan écrit, à son nom</h3><p>Après votre commande, vous recevez un questionnaire détaillé sur votre chien, votre foyer et les situations qui déclenchent le stress. Votre bilan écrit vous est adressé habituellement sous 72 h, et au plus tard sous 7 jours ouvrés à compter de la réception de votre questionnaire.</p></div>
       <div class="gfp3-carte"><span class="gfp-num">2</span><h3>L’analyse d’une vidéo de votre chien</h3><p>Vous filmez deux minutes de la situation qui coince : le départ, l’orage, le retour du soir. Je la regarde et je vous réponds par écrit.</p></div>
-      <div class="gfp3-carte"><span class="gfp-num">3</span><h3>Vos questions par e-mail, pendant 90 jours</h3><p>Autant de questions qu’il vous en faut, réponse sous 48 h ouvrées. C’est la partie qui empêche l’abandon.</p></div>
+      <div class="gfp3-carte"><span class="gfp-num">3</span><h3>Vos questions par e-mail, pendant 60 jours</h3><p>Autant de questions qu’il vous en faut, réponse sous 48 h ouvrées. C’est la partie qui empêche l’abandon.</p></div>
       <div class="gfp3-carte"><span class="gfp-num">4</span><h3>La méthode écrite</h3><p>Le manuel du Foyer Apaisé, 30 recettes classées par besoin et par moment, la feuille de route jour par jour, et le journal de suivi qui vous fait tenir.</p>
         <div class="gfp3-photos gfp3-photos--une"><img src="{{ img_carnet }}" alt="Un journal de suivi rempli à côté d’un chien couché" loading="lazy" width="800" height="350"></div></div>
       <div class="gfp3-carte"><span class="gfp-num">5</span><h3>Le coffret d’accessoires, expédié chez vous</h3><p>Un tapis de léchage, l’outil du calme. Un tapis de fouille, celui de la dépense mentale. Un jouet de mastication. Son expédition suit notre <a href="{{ shop.shipping_policy.url | default: '/policies/shipping-policy' }}">Politique d’expédition</a>, et le délai de votre bilan ne dépend pas de l’arrivée du colis.</p>
         <div class="gfp3-photos"><img src="{{ img_lech }}" alt="Un chien sur un tapis de léchage" loading="lazy" width="900" height="675"><img src="{{ img_fouil }}" alt="Un chien qui fouille un tapis de fouille" loading="lazy" width="700" height="525"></div></div>
     </div>
-    <p class="gfp-duree"><strong>90 jours à compter de l’envoi de votre bilan.</strong> Vous disposez de six mois après votre commande pour renvoyer votre questionnaire : rien ne se périme si vous démarrez plus tard.</p>
+    <p class="gfp-duree"><strong>60 jours à compter de l’envoi de votre bilan.</strong> Vous disposez de six mois après votre commande pour renvoyer votre questionnaire : rien ne se périme si vous démarrez plus tard.</p>
   </section>
 
   {%- comment -%} 4. Le prix (aucun prix barré) {%- endcomment -%}
@@ -284,9 +284,9 @@
         <div class="gfp4-tot"><span>Total</span><span>environ 255 €</span></div>
         <p class="gfp4-sans">Sans les outils, sans les recettes, et sans personne entre les rendez-vous.</p></div>
       <div class="gfp4-pro"><p class="gfp4-et">Le Programme du Foyer Apaisé</p>
-        <p class="gfp4-prix">{{ prix }} <small>· 90 jours</small></p>
+        <p class="gfp4-prix">{{ prix }} <small>· 60 jours</small></p>
         {%- if s.paiement_3x and s.texte_3x != blank -%}<p class="gfp4-3x">{{ s.texte_3x }}</p>{%- endif -%}
-        <ul><li>Votre bilan écrit, à son nom</li><li>L’analyse d’une vidéo</li><li>Vos questions par e-mail pendant 90 jours</li><li>Le manuel, 30 recettes, la feuille de route et le journal de suivi</li><li>Le coffret de trois accessoires</li></ul>
+        <ul><li>Votre bilan écrit, à son nom</li><li>L’analyse d’une vidéo</li><li>Vos questions par e-mail pendant 60 jours</li><li>Le manuel, 30 recettes, la feuille de route et le journal de suivi</li><li>Le coffret de trois accessoires</li></ul>
         {{ bouton }}</div>
     </div>
     <p class="gfp4-pied">Prix TTC, payé une fois. Ce n’est pas un abonnement.</p>
@@ -338,10 +338,10 @@
   <section class="gfp-cap gfp-cap--creme">
     <h2 style="text-align:center">Vos questions</h2>
     <div class="gfp8">
-      <details open><summary>Est-ce un abonnement ?</summary><p>Non. Le Programme dure 90 jours, payés une fois.</p></details>
+      <details open><summary>Est-ce un abonnement ?</summary><p>Non. Le Programme dure 60 jours, payés une fois.</p></details>
       <details><summary>Mon chien est âgé, craintif ou adopté. Est-il concerné ?</summary><p>C’est l’objet du bilan de départ : il est écrit pour votre chien, pas pour un chien moyen. Si votre situation relève d’un vétérinaire, nous vous le dirons.</p></details>
       <details><summary>Combien de temps cela prend-il par jour ?</summary><p>Une dizaine de minutes. Le Programme est pensé pour des gens qui travaillent.</p></details>
-      <details><summary>Quand commencent les 90 jours ?</summary><p>À l’envoi de votre bilan. Vous avez six mois après votre commande pour renvoyer votre questionnaire.</p></details>
+      <details><summary>Quand commencent les 60 jours ?</summary><p>À l’envoi de votre bilan. Vous avez six mois après votre commande pour renvoyer votre questionnaire.</p></details>
       <details><summary>Quand le coffret arrive-t-il ?</summary><p>Il est expédié selon notre <a href="{{ shop.shipping_policy.url | default: '/policies/shipping-policy' }}">Politique d’expédition</a>. Votre bilan n’attend pas le colis : vous commencez à sa lecture.</p></details>
       <details><summary>Puis-je me rétracter ?</summary><p>Oui. Avant de payer, vous acceptez que l’accompagnement démarre tout de suite. Si vous vous rétractez ensuite, seule la part déjà fournie reste due, et vous renvoyez le coffret. La garantie de 30 jours va plus loin.</p></details>
       <details><summary>Le Programme existe-t-il pour les chats ?</summary><p>Pas encore. Il est conçu pour les chiens. Un programme pour les chats viendra plus tard.</p></details>
@@ -378,7 +378,7 @@
 
   {%- comment -%} 10. Barre fixe sur téléphone {%- endcomment -%}
   <div class="gfp10" data-gfp-barre aria-hidden="true">
-    <div class="gfp10-t"><b>{{ prix }}</b><span>{% if ouvert %}90 jours d’accompagnement{% else %}Ouverture prochaine{% endif %}</span></div>
+    <div class="gfp10-t"><b>{{ prix }}</b><span>{% if ouvert %}60 jours d’accompagnement{% else %}Ouverture prochaine{% endif %}</span></div>
     {%- if ouvert -%}{{ bouton }}{%- else -%}<a class="gfp-btn" href="#gfp-inscription" tabindex="-1">Être prévenu</a>{%- endif -%}
   </div>
 </div>

@@ -8,13 +8,13 @@ import json, io, re, sys
 
 NB = " "
 
-TITRE = "Le Programme du Foyer Apaisé" + NB + ": 90" + NB + "jours d'accompagnement"
+TITRE = "Le Programme du Foyer Apaisé" + NB + ": 60" + NB + "jours d'accompagnement"
 
-SEO_TITRE = "Le Programme du Foyer Apaisé" + NB + ": 90" + NB + "jours pour un chien serein"
+SEO_TITRE = "Le Programme du Foyer Apaisé" + NB + ": 60" + NB + "jours pour un chien serein"
 
 SEO_DESC = (
     "Un bilan écrit à son nom, l'analyse d'une vidéo de votre chien, "
-    "vos questions par e-mail pendant 90" + NB + "jours "
+    "vos questions par e-mail pendant 60" + NB + "jours "
     "et le coffret d'accessoires. L'accompagnement d'un comportementaliste, "
     "pas un guide de plus."
 )
@@ -39,7 +39,7 @@ a("<p>Un rendez-vous, c'est un bilan et des consignes justes. Le vrai travail co
   "précis, et ce sont les seuls qui comptent.</p>")
 
 a("<p>Le Programme du Foyer Apaisé est construit autour de cela" + NB + ": non pas vous "
-  "expliquer quoi faire, mais faire en sorte que vous le fassiez pendant 90" + NB + "jours.</p>")
+  "expliquer quoi faire, mais faire en sorte que vous le fassiez pendant 60" + NB + "jours.</p>")
 
 a("<h3>Ce que comprend le Programme</h3>")
 a("<ul>")
@@ -61,7 +61,7 @@ a("<li><strong>Le coffret d'accessoires</strong>, expédié chez vous" + NB + ":
   "la fouille celui de la dépense mentale.</li>")
 a("</ul>")
 
-a("<p>L'accompagnement court sur 90" + NB + "jours à compter de l'envoi de votre bilan. "
+a("<p>L'accompagnement court sur 60" + NB + "jours à compter de l'envoi de votre bilan. "
   "Vous disposez de six mois après votre commande pour renvoyer votre questionnaire" + NB +
   ": rien ne se périme si vous démarrez plus tard.</p>")
 
@@ -163,7 +163,7 @@ oblig = {
     "non-substitution veterinaire": "ne se substitue pas" in HTML,
     "Politique d'expedition citee": "Politique d'expédition" in HTML,
     "delai independant du colis": "ne dépend pas de l'arrivée du colis" in HTML,
-    "duree 90 jours": "90" + NB + "jours" in HTML,
+    "duree 60 jours": "60" + NB + "jours" in HTML,
     "bilan ecrit": "bilan écrit" in HTML,
     "analyse video": "analyse d'une vidéo" in HTML,
     "echanges e-mail": "questions par e-mail" in HTML,
