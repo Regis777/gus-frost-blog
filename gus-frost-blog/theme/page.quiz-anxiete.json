@@ -177,9 +177,11 @@
       "settings": {
         "klaviyo_cle": "VyiAUH",
         "klaviyo_liste": "XsbyXa",
-        "vert_cta_url": "/collections/stress",
-        "orange_cta_url": "/collections/stress",
-        "rouge_cta_url": "/collections/stress"
+        "vert_cta_url": "/blogs/chiens/stimulation-mentale-chien",
+        "orange_cta_url": "/pages/programme-foyer-apaise",
+        "rouge_cta_url": "/pages/programme-foyer-apaise",
+        "orange_cta_label": "Découvrir notre accompagnement de 90 jours →",
+        "rouge_cta_label": "Découvrir notre accompagnement de 90 jours →"
       }
     }
   },

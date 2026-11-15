@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "gf_capsules": {
@@ -263,7 +254,7 @@
         "text_Gcf67A": {
           "type": "text",
           "settings": {
-            "text": "<p>Un chien qui aboie dès que la porte se ferme, un chat qui griffe le canapé, un chiot qui mordille tout : derrière la plupart des difficultés du quotidien, il y a une explication, et des façons concrètes d’apaiser la situation.</p><p>Gus et Frost rassemble ces réponses : plus de 450 articles gratuits sur le comportement, la santé et la vie à la maison, écrits par un comportementaliste qui exerce depuis vingt ans. Vous y trouverez aussi Le Carnet, un carnet de santé en ligne pour votre chien ou votre chat, gratuit et sans inscription.</p><p>Un objet seul règle rarement un problème. Nous partons donc de votre situation : un conseil à lire, un guide à suivre pas à pas, un produit quand il est utile, et bientôt un accompagnement personnalisé. Notre premier chantier : ramener le calme dans votre foyer. D’autres suivront.</p>",
+            "text": "<p>Un chien qui aboie dès que la porte se ferme, un chat qui griffe le canapé, un chiot qui mordille tout : derrière la plupart des difficultés du quotidien, il y a une explication, et des façons concrètes d’apaiser la situation.</p><p>Gus et Frost rassemble ces réponses : plus de 450 articles gratuits sur le comportement, la santé et la vie à la maison, écrits par un comportementaliste qui exerce depuis vingt ans. Vous y trouverez aussi Le Carnet, un carnet de santé en ligne pour votre chien ou votre chat, gratuit et sans inscription.</p><p>Un objet seul règle rarement un problème. Nous partons donc de votre situation : un conseil à lire, un guide à suivre pas à pas, un produit quand il est utile, et bientôt <a href=\"/pages/programme-foyer-apaise\">un accompagnement de 90 jours</a>. Notre premier chantier : ramener le calme dans votre foyer. D’autres suivront.</p>",
             "text_style": "body"
           }
         },
