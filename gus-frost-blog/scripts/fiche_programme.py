@@ -14,7 +14,7 @@ SEO_TITRE = "Le Programme du Foyer Apaisé" + NB + ": 90" + NB + "jours pour un 
 
 SEO_DESC = (
     "Un bilan écrit à son nom, l'analyse d'une vidéo de votre chien, "
-    "vos questions par e-mail pendant 90" + NB + "jours, un rendez-vous mensuel en visio "
+    "vos questions par e-mail pendant 90" + NB + "jours "
     "et le coffret d'accessoires. L'accompagnement d'un comportementaliste, "
     "pas un guide de plus."
 )
@@ -53,8 +53,6 @@ a("<li><strong>L'analyse d'une vidéo de votre chien.</strong> Vous filmez deux 
   "et je vous réponds par écrit.</li>")
 a("<li><strong>Vos questions par e-mail, illimitées, pendant toute la durée.</strong> "
   "Réponse sous 48" + NB + "h ouvrées. C'est la partie qui empêche l'abandon.</li>")
-a("<li><strong>Un rendez-vous en visioconférence chaque mois.</strong> 45" + NB + "minutes, "
-  "toutes vos questions, trois mois durant.</li>")
 a("<li><strong>La méthode écrite.</strong> Le manuel du Foyer Apaisé, 30 recettes "
   "classées par besoin et par moment, la feuille de route jour par jour, et le carnet de "
   "bord qui vous fait tenir.</li>")
@@ -168,7 +166,7 @@ oblig = {
     "bilan ecrit": "bilan écrit" in HTML,
     "analyse video": "analyse d'une vidéo" in HTML,
     "echanges e-mail": "questions par e-mail" in HTML,
-    "visio mensuelle": "visioconférence chaque mois" in HTML,
+    "pas de visio (decision du 15/11/2026)": "visio" not in HTML.lower(),
     "supports numeriques": "manuel du Foyer Apaisé" in HTML,
     "coffret": "coffret d'accessoires" in HTML,
     "ancrage 255 sans prix barre": "255" + NB + "€" in HTML,
