@@ -7,3 +7,4 @@ injecté dans Chrome pour les captures ; la section Liquid `gf-programme.liquid`
    champ e-mail dans l'ouverture. La variante A du fichier est écartée.
 2. Le mur du jour 10 : **variante B** (15/11/2026). Capsule crème, photo `hero-chien-anxieux-comprendre-apaiser` à gauche, frise des jours 4, 9, 21 (verticale sur téléphone), encadré terracotta de conclusion.
 3. Ce que comprend le Programme : **variante A** (15/11/2026). Capsule sauge, cinq cartes numérotées (3 + 2), photo du carnet sur la méthode écrite, deux tapis sur le coffret, encadré terracotta de durée.
+4. Le prix : **variante A** (15/11/2026). Deux cartes : « En cabinet » (110 + 145 = environ 255 €) et carte terracotta du Programme (179 €, liste incluse, bouton).
