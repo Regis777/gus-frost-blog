@@ -6,3 +6,4 @@ injecté dans Chrome pour les captures ; la section Liquid `gf-programme.liquid`
 1. Ouverture : **variante B** (15/11/2026). Grande photo `hero-maison-apaisante`, carte crème,
    champ e-mail dans l'ouverture. La variante A du fichier est écartée.
 2. Le mur du jour 10 : **variante B** (15/11/2026). Capsule crème, photo `hero-chien-anxieux-comprendre-apaiser` à gauche, frise des jours 4, 9, 21 (verticale sur téléphone), encadré terracotta de conclusion.
+3. Ce que comprend le Programme : **variante A** (15/11/2026). Capsule sauge, cinq cartes numérotées (3 + 2), photo du carnet sur la méthode écrite, deux tapis sur le coffret, encadré terracotta de durée.
