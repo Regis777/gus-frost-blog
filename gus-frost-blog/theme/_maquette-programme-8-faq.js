@@ -30,7 +30,7 @@ const F = [
  ['Puis-je me rétracter' + N + '?', 'Oui. Avant de payer, vous acceptez que l' + Q + 'accompagnement démarre tout de suite. Si vous vous rétractez ensuite, seule la part déjà fournie reste due, et vous renvoyez le coffret. La garantie de 30' + N + 'jours va plus loin.'],
  ['Le Programme existe-t-il pour les chats' + N + '?', 'Pas encore. Il est conçu pour les chiens. Un programme pour les chats viendra plus tard.'],
  ['À quoi est-ce que je m' + Q + 'inscris, exactement' + N + '?', 'À une liste d' + Q + 'attente. Une fois votre adresse confirmée, vous recevez le guide «' + N + 'Les 5 erreurs qui aggravent le stress de votre chien' + N + '», puis un e-mail à l' + Q + 'ouverture. Vous décidez à ce moment-là.'],
- ['Allez-vous m' + Q + 'envoyer beaucoup d' + Q + 'e-mails' + N + '?', 'Le guide, quelques e-mails courts, un par semaine au plus, et l' + Q + 'annonce de l' + Q + 'ouverture. Désinscription en un clic.'],
+ ['Allez-vous m' + Q + 'envoyer beaucoup d' + Q + 'e-mails' + N + '?', 'Non. Le guide, quelques e-mails courts, un par semaine au plus, et l' + Q + 'annonce de l' + Q + 'ouverture. Ensuite, c' + Q + 'est surtout vous qui nous écrirez, et nous vous répondrons. Désinscription en un clic.'],
 ];
 const A = `<div class="gfp-lbl" style="margin-top:34px" data-s8="A">Section 8, variante A : questions repliées, à ouvrir (comme sur l${Q}accueil)</div>
 <div class="gfp-cap gfp-cap--creme gfp8" data-s8="A"><h2 style="text-align:center">Vos questions</h2><div class="gfp8A">${F.map((f, i) => `<details${i === 0 ? ' open' : ''}><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('')}</div></div>`;
